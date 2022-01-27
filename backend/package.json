@@ -1,0 +1,44 @@
+{
+  "name": "stock-trading-system-backend",
+  "version": "1.0.0",
+  "description": "Implementation for my MSc stock trading system",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamcole123/stock-trading-system.git"
+  },
+  "keywords": [
+    "stock",
+    "trading",
+    "system",
+    "unit-testing",
+    "clean-architecture"
+  ],
+  "author": "Adam Cole",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamcole123/stock-trading-system/issues"
+  },
+  "homepage": "https://github.com/adamcole123/stock-trading-system#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "module-alias": "^2.2.2",
+    "module-alias-jest": "0.0.3",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.1",
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.7",
+    "jest-mock-extended": "^2.0.4",
+    "ts-jest": "^27.1.3",
+    "ts-node": "8.4.0",
+    "typescript": "^3.5.3"
+  }
+}
