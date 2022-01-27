@@ -1,0 +1,5 @@
+{ 
+    "watch": ["src/**/*.ts", "src/**/*.spec.ts"],
+    "exec": "npm test",
+	"ext": "ts, spec.ts"
+}

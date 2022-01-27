@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  stock-trading-system-backend:
+    build: ./backend
+    container_name: stock-trading-system-backend
+    volumes:
+      - ./backend/src:/home/node/app/backend/src 
+      - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json
+    restart: always
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
