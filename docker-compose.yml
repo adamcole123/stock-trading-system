@@ -6,7 +6,7 @@ services:
     container_name: stock-trading-system-backend
     volumes:
       - ./backend/src:/home/node/app/backend/src 
-      - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json
+      - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json 
     restart: always
     expose:
       - "3000"
