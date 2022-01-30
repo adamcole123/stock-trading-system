@@ -18,7 +18,7 @@ describe('User Use Cases', () => {
 	
 	beforeAll(async () => {
 		mock(userReadOnlyRepository).fetch.mockResolvedValue(new User('test1username', 'test1email@test.com', 'test1fname', 'test1lname', new Date(), [], '1', await bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))));
-		mock(userWriteOnlyRepository).create.mockResolvedValue({ id: '', username: 'test2username', password: '', email: 'test2email@test.com', firstName: 'test1fname', lastName: 'test1lname', birthDate: new Date(), reports: [] });
+		mock(userWriteOnlyRepository).create.mockResolvedValue({ id: '', username: 'test2username', password: '', email: 'test2email@test.com', firstName: 'test2fname', lastName: 'test2lname', birthDate: new Date(), reports: [] });
 	});
 	
 	it('User sign in use case', async () => {
@@ -34,6 +34,10 @@ describe('User Use Cases', () => {
 
 		// Assert
 		expect(userDto.username).toBe('test1username');
+		expect(userDto.password).toBe('');
+		expect(userDto.firstName).toBe('test1fname');
+		expect(userDto.lastName).toBe('test1lname');
+		expect(userDto.email).toBe('test1email@test.com');
 	});
 
 	it('User register use case', async () => {
@@ -48,5 +52,11 @@ describe('User Use Cases', () => {
 
 		//Assert
 		expect(userDto.password).toBe('')
+		expect(userDto.id).toBe('')
+		expect(userDto.username).toBe('test2username')
+		expect(userDto.email).toBe('test2email@test.com')
+		expect(userDto.firstName).toBe('test2fname')
+		expect(userDto.lastName).toBe('test2lname')
+
 	});
 });
