@@ -8,11 +8,12 @@ import IUserDto from "../data_tranfer_objects/IUserDto";
 import IUserSignInUseCase from "../IUserSignInUseCase";
 import UserSignInUseCase from "../UserSignInUseCase";
 
-let userReadOnlyRepository: IUserReadOnlyRepository = mock<IUserReadOnlyRepository>();;
 
 describe('User Use Cases', () => {
+	let userReadOnlyRepository: IUserReadOnlyRepository = mock<IUserReadOnlyRepository>();
+	
 	beforeAll(async () => {
-		mock(userReadOnlyRepository).fetch.mockResolvedValue(new User('1', 'test1username', await bcrypt.hash('test1password', 6), 'test1email@test.com', 'test1fname', 'test1lname', new Date(), []));
+		mock(userReadOnlyRepository).fetch.mockResolvedValue(new User('1', 'test1username', await bcrypt.hashSync('test1password', bcrypt.genSaltSync(10)), 'test1email@test.com', 'test1fname', 'test1lname', new Date(), []));
 	});
 	
 	it('User sign in use case', async () => {
@@ -27,6 +28,14 @@ describe('User Use Cases', () => {
 		userDto = await userSignInUseCase.invoke(new User('1', '', 'test1password', '', '', '', new Date(), []));
 
 		// Assert
-		expect(userDto.username).toBeDefined();
+		expect(userDto.username).toBe('test1username');
+	});
+
+	it('User register use case', () => {
+		//Arrange
+
+		//Act
+
+		//Assert
 	});
 });
