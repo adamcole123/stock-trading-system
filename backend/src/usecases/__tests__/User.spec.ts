@@ -66,11 +66,12 @@ describe('User Use Cases', () => {
 
 	it('Edit user details use case', async () => {
 		//Arrange
+		userWriteOnlyRepository = new FakeUserWriteOnlyRepository();
+		userReadOnlyRepository = new FakeUserReadOnlyRepository();
 		let userDto: IUserDto;
 		let foundUser: IUserDto;
-		userWriteOnlyRepository = new FakeUserWriteOnlyRepository();
+		
 		let editUserDetailsUseCase: IEditUserDetailsUseCase = new EditUserDetailsUseCase(userWriteOnlyRepository);
-		userReadOnlyRepository = new FakeUserReadOnlyRepository();
 		
 		//Act
 		userDto = await editUserDetailsUseCase.invoke({username: 'test1username', email: 'test1changedemail@test.com', firstName: 'test1fname', lastName: 'test1lname'});
