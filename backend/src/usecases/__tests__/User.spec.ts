@@ -10,6 +10,10 @@ import UserSignInUseCase from "../UserSignInUseCase";
 import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
 import IUserRegisterUseCase from "../IUserRegisterUseCase";
 import UserRegisterUseCase from "../UserRegisterUseCase";
+import IEditUserDetailsUseCase from "../IEditUserDetailsUseCase";
+import EditUserDetailsUseCase from "../EditUserDetailsUseCase";
+import FakeUserReadOnlyRepository from "../../application/repositories/FakeUserReadOnlyRepository";
+import FakeUserWriteOnlyRepository from '../../application/repositories/FakeUserWriteOnlyRepository';
 
 
 describe('User Use Cases', () => {
@@ -58,5 +62,21 @@ describe('User Use Cases', () => {
 		expect(userDto.firstName).toBe('test2fname')
 		expect(userDto.lastName).toBe('test2lname')
 
+	});
+
+	it('Edit user details use case', async () => {
+		//Arrange
+		let userDto: IUserDto;
+		let foundUser: IUserDto;
+		userWriteOnlyRepository = new FakeUserWriteOnlyRepository();
+		let editUserDetailsUseCase: IEditUserDetailsUseCase = new EditUserDetailsUseCase(userWriteOnlyRepository);
+		userReadOnlyRepository = new FakeUserReadOnlyRepository();
+		
+		//Act
+		userDto = await editUserDetailsUseCase.invoke({username: 'test1username', email: 'test1changedemail@test.com', firstName: 'test1fname', lastName: 'test1lname'});
+		foundUser = await userReadOnlyRepository.fetch({ id: '', username: 'test1username', email: '', firstName: '', lastName: '' });
+
+		//Assert
+		expect(foundUser.email).toBe('test1changedemail@test.com');
 	});
 });

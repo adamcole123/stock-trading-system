@@ -1,6 +1,7 @@
 import Report from "../entities/Report";
 
 export default interface IUserDto {
+	[x: string]: any;
 	id?: string,
 	username: string,
 	email: string,
