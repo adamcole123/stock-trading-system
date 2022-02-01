@@ -4,7 +4,7 @@
   "description": "Implementation for my MSc stock trading system",
   "main": "src/index.ts",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --collectCoverage",
     "build": "tsc",
     "start": "nodemon --legacy-watch"
   },

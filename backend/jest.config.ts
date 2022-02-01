@@ -5,6 +5,8 @@ module.exports = {
   testMatch: ['<rootDir>/**/__tests__/**/*.spec.ts'],
   testPathIgnorePatterns: ['/node_modules/'],
   coverageDirectory: './coverage',
+  coveragePathIgnorePatterns: ["/node_modules/"],
+  coverageReporters: ["clover", "json", "lcov", ["text", {"skipFull": true}]],
   globals: { 'ts-jest': { diagnostics: false } },
   transform: {},
 };

@@ -7,6 +7,7 @@ services:
     volumes:
       - ./backend/src:/home/node/app/backend/src 
       - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json 
+      - ./backend/coverage/:/home/node/app/backend/coverage/
     restart: always
     expose:
       - "3000"
