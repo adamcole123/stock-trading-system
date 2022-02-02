@@ -15,7 +15,7 @@ export default class EditUserDetailsUseCase implements IEditUserDetailsUseCase {
 
 				resolve(editedUser);
 			} catch (e) {
-				throw new Error('Could not edit user details: ' + e);
+				reject('Could not edit user details: ' + e);
 			}
 		});
 

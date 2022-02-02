@@ -1,5 +1,5 @@
 TN:
-SF:src\application\repositories\FakeUserData.ts
+SF:src/application/repositories/FakeUserData.ts
 FNF:0
 FNH:0
 DA:2,1
@@ -11,7 +11,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\application\repositories\FakeUserReadOnlyRepository.ts
+SF:src/application/repositories/FakeUserReadOnlyRepository.ts
 FN:7,(anonymous_1)
 FN:10,(anonymous_2)
 FN:13,(anonymous_3)
@@ -39,7 +39,7 @@ BRF:1
 BRH:1
 end_of_record
 TN:
-SF:src\application\repositories\FakeUserWriteOnlyRepository.ts
+SF:src/application/repositories/FakeUserWriteOnlyRepository.ts
 FN:10,(anonymous_1)
 FN:13,(anonymous_2)
 FN:17,(anonymous_3)
@@ -71,7 +71,7 @@ BRF:2
 BRH:2
 end_of_record
 TN:
-SF:src\usecases\EditUserDetailsUseCase.ts
+SF:src/usecases/EditUserDetailsUseCase.ts
 FN:7,(anonymous_7)
 FN:11,(anonymous_8)
 FN:12,(anonymous_9)
@@ -95,7 +95,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\usecases\UserRegisterUseCase.ts
+SF:src/usecases/UserRegisterUseCase.ts
 FN:8,(anonymous_0)
 FN:12,(anonymous_1)
 FN:13,(anonymous_2)
@@ -117,7 +117,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\usecases\UserSignInUseCase.ts
+SF:src/usecases/UserSignInUseCase.ts
 FN:9,(anonymous_8)
 FN:13,(anonymous_9)
 FN:14,(anonymous_10)
@@ -150,7 +150,7 @@ BRF:4
 BRH:4
 end_of_record
 TN:
-SF:src\usecases\entities\User.ts
+SF:src/usecases/entities/User.ts
 FN:4,(anonymous_0)
 FNF:1
 FNH:1
