@@ -10,6 +10,7 @@ export default class FakeUserReadOnlyRepository implements IUserReadOnlyReposito
 	fetchAll(): Promise<IUserDto[]> {
 		throw new Error('Method not implemented.');
 	}
+	
 	fetch(userDto: IUserDto): Promise<IUserDto> {
 		return new Promise((resolve, reject) => {
 			let foundUser = users.find(x => x.username == userDto.username);

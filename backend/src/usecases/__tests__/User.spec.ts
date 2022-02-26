@@ -34,7 +34,7 @@ describe('User Use Cases', () => {
 		userSignInUseCase = new UserSignInUseCase(userReadOnlyRepository);
 
 		// Act
-		userDto = await userSignInUseCase.invoke({id: '1', username: '', password: 'test1password', email: '', firstName: '', lastName: '', reports: []});
+		userDto = await userSignInUseCase.invoke({id: '1', username: 'test1username', password: 'test1password', email: '', firstName: '', lastName: '', reports: []});
 
 		// Assert
 		expect(userDto.username).toBe('test1username');
