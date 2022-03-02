@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for application/repositories/FakeUserReadOnlyRepository.ts</title>
+    <title>Code coverage report for usecases/Users/UserSignInUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">application/repositories</a> FakeUserReadOnlyRepository.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">usecases/Users</a> UserSignInUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/9</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/8</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -86,50 +86,77 @@
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
-import IUserReadOnlyRepository from './IUserReadOnlyRepository';
-import users from './FakeUserData';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IUserSignInUseCase from './IUserSignInUseCase';
+import bcrypt from 'bcryptjs';
+import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
+import IUserDto from '../data_tranfer_objects/IUserDto';
 &nbsp;
-export default class FakeUserReadOnlyRepository implements IUserReadOnlyRepository {
+export default class UserSignInUseCase implements IUserSignInUseCase{
+	userReadOnlyRepository: IUserReadOnlyRepository;
+	bc = bcrypt;
 &nbsp;
-	constructor() {
+	constructor(_userReadOnlyRepository: IUserReadOnlyRepository){
+		this.userReadOnlyRepository = _userReadOnlyRepository;
 	}
 &nbsp;
-<span class="fstat-no" title="function not covered" >	fetchAll(</span>): Promise&lt;IUserDto[]&gt; {
-<span class="cstat-no" title="statement not covered" >		throw new Error('Method not implemented.');</span>
-	}
-	
-	fetch(userDto: IUserDto): Promise&lt;IUserDto&gt; {
-		return new Promise((resolve, reject) =&gt; {
-			let foundUser = users.find(x =&gt; x.username == userDto.username);
+	invoke(userDto: IUserDto): Promise&lt;IUserDto&gt; {
+		return new Promise(async (resolve, reject) =&gt; {
+			let foundUser = await this.userReadOnlyRepository.fetch(userDto);
+&nbsp;
+			let passwordCheck;
 			
-			if(foundUser)
-				resolve(foundUser);
+			if(userDto.password &amp;&amp; foundUser.password) {
+				passwordCheck = this.bc.compareSync(userDto.password, foundUser.password);
+			}
+			
+			if(passwordCheck){
+				foundUser.password = '';
 &nbsp;
-			throw new Error('Could not find user');
+				resolve(foundUser);
+			}
+	
+			reject('Authentication unsuccessful');
 		})
 	}
 }</pre></td></tr></table></pre>

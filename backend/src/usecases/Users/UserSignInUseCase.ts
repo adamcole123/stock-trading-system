@@ -1,7 +1,8 @@
-import IUserDto from './data_tranfer_objects/IUserDto';
 import IUserSignInUseCase from './IUserSignInUseCase';
-import IUserReadOnlyRepository from '../application/repositories/IUserReadOnlyRepository';
 import bcrypt from 'bcryptjs';
+import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
+import IUserDto from '../data_tranfer_objects/IUserDto';
+
 export default class UserSignInUseCase implements IUserSignInUseCase{
 	userReadOnlyRepository: IUserReadOnlyRepository;
 	bc = bcrypt;
