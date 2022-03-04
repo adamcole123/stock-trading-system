@@ -1,5 +1,5 @@
-import IUserWriteOnlyRepository from "../application/repositories/IUserWriteOnlyRepository";
-import IUserDto from "./data_tranfer_objects/IUserDto";
+import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
+import IUserDto from "../data_tranfer_objects/IUserDto";
 import IUserRegisterUseCase from "./IUserRegisterUseCase";
 
 export default class UserRegisterUseCase implements IUserRegisterUseCase{
@@ -10,9 +10,11 @@ export default class UserRegisterUseCase implements IUserRegisterUseCase{
 	}
 
 	invoke(userDto: IUserDto): Promise<IUserDto> {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			try{
-				let createdUser = this.userWriteOnlyRepository.create(userDto);
+				let createdUser = await this.userWriteOnlyRepository.create(userDto);
+
+				createdUser.password = "";
 
 				resolve(createdUser)
 			} catch (error) {

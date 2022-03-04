@@ -1,7 +1,9 @@
-import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
-import IUserReadOnlyRepository from './IUserReadOnlyRepository';
+import { injectable } from "inversify";
+import IUserReadOnlyRepository from "../application/repositories/IUserReadOnlyRepository";
+import IUserDto from "../usecases/data_tranfer_objects/IUserDto";
 import users from './FakeUserData';
 
+@injectable()
 export default class FakeUserReadOnlyRepository implements IUserReadOnlyRepository {
 
 	constructor() {
@@ -10,15 +12,16 @@ export default class FakeUserReadOnlyRepository implements IUserReadOnlyReposito
 	fetchAll(): Promise<IUserDto[]> {
 		throw new Error('Method not implemented.');
 	}
-	
 	fetch(userDto: IUserDto): Promise<IUserDto> {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			let foundUser = users.find(x => x.username == userDto.username);
 			
-			if(foundUser)
+			if(!foundUser){
+				reject('Could not find user');
+			} else{	
 				resolve(foundUser);
-
-			throw new Error('Could not find user');
+			}
+			
 		})
 	}
 }

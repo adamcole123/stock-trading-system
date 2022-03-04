@@ -3,17 +3,17 @@ import "jest";
 import bcrypt from "bcryptjs";
 
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
-import User from "../entities/User";``
-import IUserDto from "../data_tranfer_objects/IUserDto";
-import IUserSignInUseCase from "../IUserSignInUseCase";
-import UserSignInUseCase from "../UserSignInUseCase";
+import User from "../entities/User";
 import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
-import IUserRegisterUseCase from "../IUserRegisterUseCase";
-import UserRegisterUseCase from "../UserRegisterUseCase";
-import IEditUserDetailsUseCase from "../IEditUserDetailsUseCase";
-import EditUserDetailsUseCase from "../EditUserDetailsUseCase";
+import EditUserDetailsUseCase from "../Users/EditUserDetailsUseCase";
 import FakeUserReadOnlyRepository from "../../application/repositories/FakeUserReadOnlyRepository";
 import FakeUserWriteOnlyRepository from '../../application/repositories/FakeUserWriteOnlyRepository';
+import IEditUserDetailsUseCase from "../Users/IEditUserDetailsUseCase";
+import IUserRegisterUseCase from "../Users/IUserRegisterUseCase";
+import IUserSignInUseCase from "../Users/IUserSignInUseCase";
+import UserRegisterUseCase from "../Users/UserRegisterUseCase";
+import UserSignInUseCase from "../Users/UserSignInUseCase";
+import IUserDto from "../data_tranfer_objects/IUserDto";
 
 
 describe('User Use Cases', () => {
@@ -34,7 +34,7 @@ describe('User Use Cases', () => {
 		userSignInUseCase = new UserSignInUseCase(userReadOnlyRepository);
 
 		// Act
-		userDto = await userSignInUseCase.invoke({id: '1', username: '', password: 'test1password', email: '', firstName: '', lastName: '', reports: []});
+		userDto = await userSignInUseCase.invoke({id: '1', username: 'test1username', password: 'test1password', email: '', firstName: '', lastName: '', reports: []});
 
 		// Assert
 		expect(userDto.username).toBe('test1username');

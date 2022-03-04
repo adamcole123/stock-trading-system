@@ -1,6 +1,7 @@
-import IUserWriteOnlyRepository from '../application/repositories/IUserWriteOnlyRepository';
-import IUserDto from './data_tranfer_objects/IUserDto';
+import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
+import IUserDto from '../data_tranfer_objects/IUserDto';
 import IEditUserDetailsUseCase from './IEditUserDetailsUseCase';
+
 export default class EditUserDetailsUseCase implements IEditUserDetailsUseCase {
 	userWriteOnlyRepository: IUserWriteOnlyRepository;
 
