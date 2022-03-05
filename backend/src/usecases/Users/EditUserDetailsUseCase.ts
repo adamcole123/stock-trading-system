@@ -9,10 +9,10 @@ export default class EditUserDetailsUseCase implements IEditUserDetailsUseCase {
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;		
 	}
 
-	invoke(userDto: IUserDto): Promise<IUserDto> {
+	invoke(username: String, userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
 			try{
-				let editedUser: IUserDto = await this.userWriteOnlyRepository.edit(userDto);
+				let editedUser: IUserDto = await this.userWriteOnlyRepository.edit(username, userDto);
 
 				resolve(editedUser);
 			} catch (e) {

@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for usecases/Users/UserSignInUseCase.ts</title>
+    <title>Code coverage report for infrastructure/FakeUserWriteOnlyRepository.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">usecases/Users</a> UserSignInUseCase.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">infrastructure</a> FakeUserWriteOnlyRepository.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>12/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">81.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>9/11</span>
             </div>
         
             
@@ -97,66 +97,66 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IUserSignInUseCase from './IUserSignInUseCase';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IUserWriteOnlyRepository from "../application/repositories/IUserWriteOnlyRepository";
+import users from './FakeUserData';
 import bcrypt from 'bcryptjs';
-import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
-import IUserDto from '../data_tranfer_objects/IUserDto';
+import IUserDto from "../usecases/data_tranfer_objects/IUserDto";
+import User from "../usecases/entities/User";
+import { injectable } from "inversify";
 &nbsp;
-export default class UserSignInUseCase implements IUserSignInUseCase{
-	userReadOnlyRepository: IUserReadOnlyRepository;
-	bc = bcrypt;
-&nbsp;
-	constructor(_userReadOnlyRepository: IUserReadOnlyRepository){
-		this.userReadOnlyRepository = _userReadOnlyRepository;
+@injectable()
+export default class FakeUserWriteOnlyRepository implements IUserWriteOnlyRepository {
+<span class="fstat-no" title="function not covered" >	edit(</span>userDto: IUserDto): Promise&lt;IUserDto&gt; {
+<span class="cstat-no" title="statement not covered" >		throw new Error("Method not implemented.");</span>
 	}
-&nbsp;
-	invoke(userDto: IUserDto): Promise&lt;IUserDto&gt; {
-		return new Promise(async (resolve, reject) =&gt; {
-			let foundUser = await this.userReadOnlyRepository.fetch(userDto);
-&nbsp;
-			let passwordCheck;
-			
-			if(userDto.password &amp;&amp; foundUser.password) {
-				passwordCheck = this.bc.compareSync(userDto.password, foundUser.password);
+	create(user: IUserDto): Promise&lt;IUserDto&gt; {
+		return new Promise((resolve, reject) =&gt; {
+			<span class="missing-if-branch" title="if path not taken" >I</span>if(users.find(x =&gt; x.username == user.username)){
+<span class="cstat-no" title="statement not covered" >				reject('Existing user already has that username')</span>
 			}
-			
-			if(passwordCheck){
-				foundUser.password = '';
 &nbsp;
-				resolve(foundUser);
-			}
-	
-			reject('Authentication unsuccessful');
+			users.push(new User(
+				user.username!,
+				user.email!,
+				user.firstName!,
+				user.lastName!,
+				new Date(user.birthDate!),
+				user.reports!,
+				`test${users.length + 1}_id`,
+				bcrypt.hashSync(user.password!, bcrypt.genSaltSync(10))
+			))
+			
+			resolve(user)
 		})
 	}
 }</pre></td></tr></table></pre>
@@ -168,14 +168,14 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at Fri Mar 04 2022 17:50:59 GMT+0000 (Greenwich Mean Time)
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

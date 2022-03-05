@@ -14,20 +14,21 @@ export default class FakeUserWriteOnlyRepository implements IUserWriteOnlyReposi
 		throw new Error('Method not implemented.');
 	}
 
-	edit(userDto: IUserDto): Promise<IUserDto> {
+	edit(username: String, userDto: IUserDto): Promise<IUserDto> {
 		return new Promise((resolve, reject) => {
-			let foundUser = users.find(x => x.username == userDto.username);
+			let foundUser: IUserDto | undefined = users.find(x => x.username == username);
 
 			if(foundUser){
-				for(const key in userDto){
-					if(key){
-						foundUser[key] = userDto[key];
+				for(const key in foundUser){
+					if(key in userDto){
+						(foundUser as any)[key] = (userDto as any)[key];
 					}
 				}
+				foundUser = userDto;
 				resolve(foundUser);
 			}
 
-			throw new Error('Could not find user to edit');
+			reject('Could not find user to edit');
 		});
 	}
 }

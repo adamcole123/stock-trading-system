@@ -74,10 +74,13 @@ describe('User Use Cases', () => {
 		let editUserDetailsUseCase: IEditUserDetailsUseCase = new EditUserDetailsUseCase(userWriteOnlyRepository);
 		
 		//Act
-		userDto = await editUserDetailsUseCase.invoke({username: 'test1username', email: 'test1changedemail@test.com', firstName: 'test1fname', lastName: 'test1lname'});
-		foundUser = await userReadOnlyRepository.fetch({ id: '', username: 'test1username', email: '', firstName: '', lastName: '' });
+		userDto = await editUserDetailsUseCase.invoke('test1username', {username: 'test1changedusername', email: 'test1changedemail@test.com', firstName: 'test1changedfname', lastName: 'test1changedlname'});
+		foundUser = await userReadOnlyRepository.fetch({ id: '', username: 'test1changedusername', email: '', firstName: '', lastName: '' });
 
 		//Assert
+		expect(foundUser.username).toBe('test1changedusername');
 		expect(foundUser.email).toBe('test1changedemail@test.com');
+		expect(foundUser.firstName).toBe('test1changedfname');
+		expect(foundUser.lastName).toBe('test1changedlname');
 	});
 });
