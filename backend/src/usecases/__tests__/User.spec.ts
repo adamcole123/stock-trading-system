@@ -1,6 +1,8 @@
 import { mock } from "jest-mock-extended";
 import "jest";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import User from "../entities/User";
@@ -14,11 +16,18 @@ import IUserSignInUseCase from "../Users/IUserSignInUseCase";
 import UserRegisterUseCase from "../Users/UserRegisterUseCase";
 import UserSignInUseCase from "../Users/UserSignInUseCase";
 import IUserDto from "../data_tranfer_objects/IUserDto";
+import ReportType from '../entities/ReportType';
+import Report from "../entities/Report";
+import ValidateUserTokenUseCase from '../Users/ValidateUserTokenUseCase';
+import { ensureFullyBound } from "inversify/lib/utils/binding_utils";
+import { JwtPayload } from 'jsonwebtoken';
 
 
 describe('User Use Cases', () => {
 	let userReadOnlyRepository: IUserReadOnlyRepository = mock<IUserReadOnlyRepository>();
 	let userWriteOnlyRepository: IUserWriteOnlyRepository = mock<IUserWriteOnlyRepository>();
+
+	dotenv.config();
 	
 	beforeAll(async () => {
 		mock(userReadOnlyRepository).fetch.mockResolvedValue(new User('test1username', 'test1email@test.com', 'test1fname', 'test1lname', new Date(), [], '1', await bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))));
@@ -78,9 +87,65 @@ describe('User Use Cases', () => {
 		foundUser = await userReadOnlyRepository.fetch({ id: '', username: 'test1changedusername', email: '', firstName: '', lastName: '' });
 
 		//Assert
-		expect(foundUser.username).toBe('test1changedusername');
+		expect(foundUser.username).toBe(`test1changedusername`);
 		expect(foundUser.email).toBe('test1changedemail@test.com');
 		expect(foundUser.firstName).toBe('test1changedfname');
 		expect(foundUser.lastName).toBe('test1changedlname');
 	});
+
+	it('Validate user token use case', async () => {
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+		let userData: IUserDto = {
+			id: 'testid',
+			firstName: 'firstName',
+			lastName: 'lastName',
+			username: 'username',
+			email: 'test@test.com',
+			password: 'testpassword',
+			birthDate: new Date('0'),
+			reports: [
+				new Report('report_id', 'report data', 0)
+			]
+		};
+
+		let token = jwt.sign(userData, jwtSecretKey!);
+
+		let validateUserTokenUseCase = new ValidateUserTokenUseCase();
+
+		let validated: string | JwtPayload = await validateUserTokenUseCase.invoke(token);
+
+		let expectedResult: Object = {
+			"birthDate": "2000-01-01T00:00:00.000Z", 
+			"email": "test@test.com", 
+			"firstName": "firstName",
+			"id": "testid",
+			"lastName": "lastName", 
+			"password": "testpassword", 
+			"reports": [
+				{
+					"id": "report_id", 
+					"report_data": "report data", 
+					"report_type": 0
+				}
+			], 
+			"username": "username"
+		};
+		expect(validated).toEqual(expect.objectContaining({
+			birthDate: "2000-01-01T00:00:00.000Z",
+			email: "test@test.com", 
+			firstName: "firstName",
+			id: "testid",
+			lastName: "lastName", 
+			password: "testpassword", 
+			reports: [
+				{
+					id: "report_id", 
+					report_data: "report data", 
+					report_type: 0
+				}
+			],
+			username: "username"
+		  }))
+	})
 });

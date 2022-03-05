@@ -1,11 +1,11 @@
 import { promises } from 'stream';
 import IValidateUserTokenUseCase from './IValidateUserTokenUseCase';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import IUserDto from '../data_tranfer_objects/IUserDto';
 
 export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCase{
-	invoke(token: string): Promise<string | IUserDto> {
-		return new Promise((reject, resolve) => {
+	invoke(token: string): Promise<string | JwtPayload> {
+		return new Promise((resolve, reject) => {
 			// Tokens are generally passed in the header of the request
 			// Due to security reasons.
 
@@ -17,11 +17,11 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 					resolve(verified);
 				}else{
 					// Access Denied
-					reject("Could not verify user");
+					reject('Could not validate user');
 				}
 			} catch (error) {
 				// Access Denied
-				return reject("Could not verify user");
+				reject('Could not validate user');
 			}
 		});
 	}

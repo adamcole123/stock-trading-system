@@ -7,7 +7,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export default class FakeUserWriteOnlyRepository implements IUserWriteOnlyRepository {
-	edit(userDto: IUserDto): Promise<IUserDto> {
+	edit(username: String, userDto: IUserDto): Promise<IUserDto> {
 		throw new Error("Method not implemented.");
 	}
 	create(user: IUserDto): Promise<IUserDto> {
