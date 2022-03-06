@@ -115,22 +115,6 @@ describe('User Use Cases', () => {
 
 		let validated: string | JwtPayload = await validateUserTokenUseCase.invoke(token);
 
-		let expectedResult: Object = {
-			"birthDate": "2000-01-01T00:00:00.000Z", 
-			"email": "test@test.com", 
-			"firstName": "firstName",
-			"id": "testid",
-			"lastName": "lastName", 
-			"password": "testpassword", 
-			"reports": [
-				{
-					"id": "report_id", 
-					"report_data": "report data", 
-					"report_type": 0
-				}
-			], 
-			"username": "username"
-		};
 		expect(validated).toEqual(expect.objectContaining({
 			birthDate: "2000-01-01T00:00:00.000Z",
 			email: "test@test.com", 
@@ -146,6 +130,6 @@ describe('User Use Cases', () => {
 				}
 			],
 			username: "username"
-		  }))
+		}))
 	})
 });
