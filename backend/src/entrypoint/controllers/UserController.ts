@@ -1,7 +1,7 @@
 import { inject } from "inversify";
 import { controller, httpGet, httpPost, interfaces, request, response } from "inversify-express-utils";
 import * as express from "express";
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import UserServiceLocator from "../../configuration/UserServiceLocator";
 import { TYPES } from "../../constants/types";
 import IUserDto from "../../usecases/data_tranfer_objects/IUserDto";
@@ -60,7 +60,7 @@ export default class UserController implements interfaces.Controller {
 	@httpGet('/validate')
 	public async validateUser(@request() req: express.Request, @response() res: express.Response){
 		return this.validateUserTokenUseCase.invoke(req.body.token)
-			.then((validated: IUserDto | string) => {
+			.then((validated: string | JwtPayload) => {
 				res.status(200).json(validated)
 			})
 			.catch((err: Error) => res.status(401).send(err));
