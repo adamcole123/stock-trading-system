@@ -1,7 +1,5 @@
 import 'reflect-metadata';
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
-import FakeUserReadOnlyRepository from '../FakeUserReadOnlyRepository';
-import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
 import FakeUserWriteOnlyRepository from '../FakeUserWriteOnlyRepository';
 describe('User Repository Tests', () => {

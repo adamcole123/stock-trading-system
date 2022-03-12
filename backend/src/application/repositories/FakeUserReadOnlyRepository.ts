@@ -18,7 +18,7 @@ export default class FakeUserReadOnlyRepository implements IUserReadOnlyReposito
 			if(foundUser)
 				resolve(foundUser);
 
-			throw new Error('Could not find user');
+			reject('Could not find user');
 		})
 	}
 }

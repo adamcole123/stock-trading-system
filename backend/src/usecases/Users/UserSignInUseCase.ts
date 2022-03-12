@@ -13,18 +13,23 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 
 	invoke(userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
-			let foundUser = await this.userReadOnlyRepository.fetch(userDto);
+			let foundUser: IUserDto;
+			try{
+				foundUser = await this.userReadOnlyRepository.fetch(userDto);
+			} catch (err) {
+				return reject(err);
+			}
 
 			let passwordCheck;
 			
-			if(userDto.password && foundUser.password) {
-				passwordCheck = this.bc.compareSync(userDto.password, foundUser.password);
+			if(userDto.password && foundUser!.password) {
+				passwordCheck = this.bc.compareSync(userDto.password, foundUser!.password);
 			}
 			
 			if(passwordCheck){
-				foundUser.password = '';
+				foundUser!.password = '';
 
-				resolve(foundUser);
+				return resolve(foundUser!);
 			}
 	
 			reject('Authentication unsuccessful');

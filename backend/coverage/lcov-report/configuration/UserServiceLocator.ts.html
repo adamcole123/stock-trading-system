@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for usecases/Users/UserRegisterUseCase.ts</title>
+    <title>Code coverage report for configuration/UserServiceLocator.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">usecases/Users</a> UserRegisterUseCase.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">configuration</a> UserServiceLocator.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/9</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/8</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -88,7 +88,26 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -96,48 +115,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
-import IUserDto from "../data_tranfer_objects/IUserDto";
-import IUserRegisterUseCase from "./IUserRegisterUseCase";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { injectable, inject } from "inversify";
+import IUserReadOnlyRepository from "../application/repositories/IUserReadOnlyRepository";
+import IUserWriteOnlyRepository from "../application/repositories/IUserWriteOnlyRepository";
+import { TYPES } from "../constants/types";
+import IUserRegisterUseCase from "../usecases/Users/IUserRegisterUseCase";
+import IUserSignInUseCase from "../usecases/Users/IUserSignInUseCase";
+import UserRegisterUseCase from "../usecases/Users/UserRegisterUseCase";
+import UserSignInUseCase from "../usecases/Users/UserSignInUseCase";
+import IValidateUserTokenUseCase from '../usecases/Users/IValidateUserTokenUseCase';
+import ValidateUserTokenUseCase from "../usecases/Users/ValidateUserTokenUseCase";
 &nbsp;
-export default class UserRegisterUseCase implements IUserRegisterUseCase{
-	userWriteOnlyRepository: IUserWriteOnlyRepository;
+@injectable()
+export default class UserServiceLocator {
 &nbsp;
-	constructor(_userWriteOnlyRepository: IUserWriteOnlyRepository){
-		this.userWriteOnlyRepository = _userWriteOnlyRepository;
+	constructor(@inject(TYPES.IUserReadOnlyRepository) private readRepository: IUserReadOnlyRepository, @inject(TYPES.IUserWriteOnlyRepository) private writeRepository: IUserWriteOnlyRepository){}
+&nbsp;
+	public GetUserRegisterUseCase(): IUserRegisterUseCase {
+		return new UserRegisterUseCase(this.writeRepository);
 	}
 &nbsp;
-	invoke(userDto: IUserDto): Promise&lt;IUserDto&gt; {
-		return new Promise(async (resolve, reject) =&gt; {
-			try{
-				let createdUser = await this.userWriteOnlyRepository.create(userDto);
-&nbsp;
-				createdUser.password = "";
-&nbsp;
-				resolve(createdUser)
-			} catch (error) {
-<span class="cstat-no" title="statement not covered" >				reject('User could not be registered');</span>
-			}
-		});
+	public GetUserSignInUseCase(): IUserSignInUseCase {
+		return new UserSignInUseCase(this.readRepository);
 	}
-	
+&nbsp;
+	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
+		return new ValidateUserTokenUseCase();
+	}
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -147,14 +153,14 @@ export default class UserRegisterUseCase implements IUserRegisterUseCase{
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at Sat Mar 12 2022 18:05:00 GMT+0000 (Greenwich Mean Time)
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     
