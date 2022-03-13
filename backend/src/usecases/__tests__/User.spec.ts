@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { mock } from "jest-mock-extended";
 import "jest";
 import bcrypt from "bcryptjs";
@@ -8,19 +9,18 @@ import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnl
 import User from "../entities/User";
 import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
 import EditUserDetailsUseCase from "../Users/EditUserDetailsUseCase";
-import FakeUserReadOnlyRepository from "../../application/repositories/FakeUserReadOnlyRepository";
-import FakeUserWriteOnlyRepository from '../../application/repositories/FakeUserWriteOnlyRepository';
+import FakeUserReadOnlyRepository from "../../infrastructure/FakeUserReadOnlyRepository";
+import FakeUserWriteOnlyRepository from '../../infrastructure/FakeUserWriteOnlyRepository';
 import IEditUserDetailsUseCase from "../Users/IEditUserDetailsUseCase";
 import IUserRegisterUseCase from "../Users/IUserRegisterUseCase";
 import IUserSignInUseCase from "../Users/IUserSignInUseCase";
 import UserRegisterUseCase from "../Users/UserRegisterUseCase";
 import UserSignInUseCase from "../Users/UserSignInUseCase";
-import IUserDto from "../data_tranfer_objects/IUserDto";
-import ReportType from '../entities/ReportType';
+import IUserDto from '../data_tranfer_objects/IUserDto';
 import Report from "../entities/Report";
 import ValidateUserTokenUseCase from '../Users/ValidateUserTokenUseCase';
-import { ensureFullyBound } from "inversify/lib/utils/binding_utils";
 import { JwtPayload } from 'jsonwebtoken';
+import CardDetails from '../entities/CardDetails';
 
 
 describe('User Use Cases', () => {
@@ -81,9 +81,11 @@ describe('User Use Cases', () => {
 		let foundUser: IUserDto;
 		
 		let editUserDetailsUseCase: IEditUserDetailsUseCase = new EditUserDetailsUseCase(userWriteOnlyRepository);
+
+		let userDetails = {username: 'test3_username'};
 		
 		//Act
-		userDto = await editUserDetailsUseCase.invoke('test1username', {username: 'test1changedusername', email: 'test1changedemail@test.com', firstName: 'test1changedfname', lastName: 'test1changedlname'});
+		userDto = await editUserDetailsUseCase.invoke('test3_username', {username: 'test1changedusername', email: 'test1changedemail@test.com', firstName: 'test1changedfname', lastName: 'test1changedlname'}, jwt.sign(userDetails, process.env.JWT_SECRET_KEY!));
 		foundUser = await userReadOnlyRepository.fetch({ id: '', username: 'test1changedusername', email: '', firstName: '', lastName: '' });
 
 		//Assert
@@ -106,6 +108,10 @@ describe('User Use Cases', () => {
 			birthDate: new Date('0'),
 			reports: [
 				new Report('report_id', 'report data', 0)
+			],
+			cardDetails: [
+				new CardDetails('card_id', "9999999999999999", "09/22", "378"),
+				new CardDetails('card_id1', "1111111111111111", "08/19", "348")
 			]
 		};
 
@@ -116,20 +122,29 @@ describe('User Use Cases', () => {
 		let validated: string | JwtPayload = await validateUserTokenUseCase.invoke(token);
 
 		expect(validated).toEqual(expect.objectContaining({
-			birthDate: "2000-01-01T00:00:00.000Z",
-			email: "test@test.com", 
-			firstName: "firstName",
-			id: "testid",
-			lastName: "lastName", 
-			password: "testpassword", 
-			reports: [
-				{
-					id: "report_id", 
-					report_data: "report data", 
-					report_type: 0
-				}
-			],
-			username: "username"
+			"birthDate": "2000-01-01T00:00:00.000Z",
+			"cardDetails": [{
+				"cardNumber": "9999",
+				"expirationDate": "09/22",
+				"id": "card_id",
+				"securityCode": ""
+			}, {
+				"cardNumber": "1111",
+				"expirationDate": "08/19",
+				"id": "card_id1",
+				"securityCode": ""
+			}],
+			"email": "test@test.com",
+			"firstName": "firstName",
+			"id": "testid",
+			"lastName": "lastName",
+			"password": "",
+			"reports": [{
+				"id": "report_id",
+				"report_data": "report data",
+				"report_type": 0
+			}],
+			"username": "username"
 		}))
 	})
 });

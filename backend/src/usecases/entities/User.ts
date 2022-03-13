@@ -1,4 +1,6 @@
 import Report from "./Report";
+import Role from "./Role";
+import CardDetails from './CardDetails';
 
 export default class User {
 	constructor(
@@ -10,6 +12,10 @@ export default class User {
 		public reports?: Report[],
 		public id?: string,
 		public password?: string,
+		public credit?: Number,
+		public role?: Role,
+		public isDeleted?: boolean,
+		public cardDetails?: CardDetails[]
 	){
 
 	}

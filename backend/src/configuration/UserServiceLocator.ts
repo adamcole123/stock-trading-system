@@ -8,6 +8,8 @@ import UserRegisterUseCase from "../usecases/Users/UserRegisterUseCase";
 import UserSignInUseCase from "../usecases/Users/UserSignInUseCase";
 import IValidateUserTokenUseCase from '../usecases/Users/IValidateUserTokenUseCase';
 import ValidateUserTokenUseCase from "../usecases/Users/ValidateUserTokenUseCase";
+import IEditUserDetailsUseCase from '../usecases/Users/IEditUserDetailsUseCase';
+import EditUserDetailsUseCase from '../usecases/Users/EditUserDetailsUseCase';
 
 @injectable()
 export default class UserServiceLocator {
@@ -24,5 +26,8 @@ export default class UserServiceLocator {
 
 	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
 		return new ValidateUserTokenUseCase();
+	}
+	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
+		return new EditUserDetailsUseCase(this.writeRepository);
 	}
 }

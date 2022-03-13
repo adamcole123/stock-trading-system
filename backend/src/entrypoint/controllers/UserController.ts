@@ -1,7 +1,7 @@
 import { inject } from "inversify";
 import { controller, httpGet, httpPost, interfaces, request, response } from "inversify-express-utils";
 import * as express from "express";
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import UserServiceLocator from "../../configuration/UserServiceLocator";
 import { TYPES } from "../../constants/types";
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
@@ -9,6 +9,7 @@ import IUserRegisterUseCase from "../../usecases/Users/IUserRegisterUseCase";
 import IUserSignInUseCase from "../../usecases/Users/IUserSignInUseCase";
 import IValidateUserTokenUseCase from "../../usecases/Users/IValidateUserTokenUseCase";
 import dotenv from 'dotenv';
+import IEditUserDetailsUseCase from '../../usecases/Users/IEditUserDetailsUseCase';
 
 dotenv.config();
 
@@ -17,11 +18,13 @@ export default class UserController implements interfaces.Controller {
 	private readonly userSignInUseCase: IUserSignInUseCase;
 	private readonly userRegisterUseCase: IUserRegisterUseCase;
 	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
+	private readonly editUserDetailsUseCase: IEditUserDetailsUseCase;
 	
 	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator){
 		this.userSignInUseCase = serviceLocator.GetUserSignInUseCase();
 		this.userRegisterUseCase = serviceLocator.GetUserRegisterUseCase();
 		this.validateUserTokenUseCase = serviceLocator.GetValidateUserTokenUseCase();
+		this.editUserDetailsUseCase = serviceLocator.GetEditUserDetailsUseCase();
 	}
 	
 	@httpPost('/signin')
@@ -60,25 +63,51 @@ export default class UserController implements interfaces.Controller {
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
     		password: req.body.password,
+			reports: req.body.reports
 		}
 
 		return await this.userRegisterUseCase.invoke(newUser)
 			.then((registeredUserDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 			
-				const token = jwt.sign({registeredUserDto}, jwtSecretKey!, {expiresIn: "7 days"});
+				const token = jwt.sign(registeredUserDto, jwtSecretKey!, {expiresIn: "7 days"});
 
 				res.status(200).json(token)
 			})
-			.catch((err: Error) => res.status(400).json({error: err.message}));
+			.catch((err: Error) => res.status(400).json({error: err}));
 	}
 
 	@httpGet('/validate')
 	public async validateUser(@request() req: express.Request, @response() res: express.Response){
 		return await this.validateUserTokenUseCase.invoke(req.body.token)
-			.then((validated: string | JwtPayload) => {
+			.then((validated: IUserDto) => {
 				res.status(200).json(validated)
 			})
 			.catch((err: Error) => res.status(401).send(err));
+	}
+
+	@httpPost('/edit')
+	public async editUser(@request() req: express.Request, @response() res: express.Response){
+		let editedUser: IUserDto = {
+			username: req.body.username,
+			email: req.body.email,
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+    		password: req.body.password,
+			reports: req.body.reports,
+			id: req.body.id
+		}
+
+		let userToEdit = req.body.userToEdit
+
+		let jwtSecretKey = process.env.JWT_SECRET_KEY
+
+		return await this.editUserDetailsUseCase.invoke(userToEdit, editedUser, req.body.token)
+			.then((editedUserDto: IUserDto) => {
+				const token = jwt.sign(editedUserDto, jwtSecretKey!, {expiresIn: "7 days"});
+
+				res.status(200).json(token)
+			})
+			.catch((err: Error) => res.status(400).json({error: err.message}));
 	}
 }
