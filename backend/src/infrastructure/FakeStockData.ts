@@ -27,6 +27,15 @@ let stocks: Stock[] = [
 		898.5,
 		967.2
 	),
+	new Stock(
+		"teststock4id",
+		"teststock4symbol",
+		"teststock4name",
+		500,
+		100,
+		898.5,
+		967.2
+	),
 ]
 
 export default stocks;
