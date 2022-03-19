@@ -3,6 +3,7 @@ import IStockWriteOnlyRepository from '../../application/repositories/IStockWrit
 import IStockDto from '../data_tranfer_objects/IStockDto';
 import Stock from '../entities/Stock';
 import IGetAllStocksUseCase from './IGetAllStocksUseCase';
+import StockOptions from '../../application/repositories/StockOptions';
 export default class GetAllStocksUseCase implements IGetAllStocksUseCase{
 	stockReadOnlyRepository: IStockReadOnlyRepository;
 	/**
@@ -12,20 +13,17 @@ export default class GetAllStocksUseCase implements IGetAllStocksUseCase{
 		this.stockReadOnlyRepository = _stockReadOnlyRepository;
 	}
 
-	invoke(criteria?: IStockDto): Promise<IStockDto[]> {
+	invoke(criteria?: IStockDto, options?: StockOptions): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let returnValues: Stock[];
-				if(criteria == undefined){
+				let returnValues: IStockDto[];
+				if(criteria == undefined && options == undefined){
 					returnValues = await this.stockReadOnlyRepository.fetchAll();
 				} else{
-					returnValues = await this.stockReadOnlyRepository.fetch(criteria);
+					returnValues = await this.stockReadOnlyRepository.fetch(criteria, options);
 				}
-				
 
-				let returnDto = <IStockDto[]>returnValues;
-
-				resolve(returnDto);
+				resolve(returnValues);
 			} catch (error) {
 				reject(error);
 			}
