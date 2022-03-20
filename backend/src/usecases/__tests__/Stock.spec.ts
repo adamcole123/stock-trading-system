@@ -8,6 +8,7 @@ import IStockWriteOnlyRepository from '../../application/repositories/IStockWrit
 import Stock from '../entities/Stock';
 import GetAllStocksUseCase from '../Stocks/GetAllStocksUseCase';
 import FakeStockReadOnlyRepository from '../../infrastructure/FakeStockReadOnlyRepository';
+import FakeLargeStockData from '../../infrastructure/FakeLargeStockData';
 describe('Stock Use Cases', () => {
 	let stockReadOnlyRepository: IStockReadOnlyRepository = mock<IStockReadOnlyRepository>();
 	let stockWriteOnlyRepository: IStockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
@@ -1417,5 +1418,27 @@ describe('Stock Use Cases', () => {
 		}]));
 
 		expect(stockDto.length).toBe(4);
+	})
+
+	it('Get list of stocks with pagination', async () => {
+		// Arrange
+		let getAllStocksUseCase: IGetAllStocksUseCase;
+		let stockDto: IStockDto[];
+		let paginatedData = FakeLargeStockData.slice((1*10)-1, (2*10)-1);
+
+		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
+
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue(paginatedData)
+
+
+		// Act
+		stockDto = await getAllStocksUseCase.invoke(undefined, {
+			page: 3
+		});
+
+		// Assert
+		expect(stockDto).toStrictEqual(paginatedData);
+
+		expect(stockDto.length).toBe(10);
 	})
 })

@@ -9,4 +9,5 @@ export default interface StockOptions {
 	valueMode?: ValueMode
 	volumeMode?: VolumeMode
 	order?: IOrderOptions<keyof IStockDto>
+	page?: number
 }
