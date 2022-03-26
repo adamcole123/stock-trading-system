@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for infrastructure/FakeUserReadOnlyRepository.ts</title>
+    <title>Code coverage report for configuration/StockServiceLocator.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">infrastructure</a> FakeUserReadOnlyRepository.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">configuration</a> StockServiceLocator.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -89,57 +89,63 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { injectable } from "inversify";
-import IUserReadOnlyRepository from "../application/repositories/IUserReadOnlyRepository";
-import IUserDto from "../usecases/data_tranfer_objects/IUserDto";
-import users from './FakeUserData';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { injectable, inject } from "inversify";
+import { TYPES } from "../constants/types";
+import IStockReadOnlyRepository from '../application/repositories/IStockReadOnlyRepository';
+import IStockWriteOnlyRepository from '../application/repositories/IStockWriteOnlyRepository';
+import ICreateStockUseCase from '../usecases/Stocks/ICreateStockUseCase';
+import CreateStockUseCase from '../usecases/Stocks/CreateStockUseCase';
+import IGetAllStocksUseCase from '../usecases/Stocks/IGetAllStocksUseCase';
+import GetAllStocksUseCase from '../usecases/Stocks/GetAllStocksUseCase';
+import IGetOneStockUseCase from "../usecases/Stocks/IGetOneStockUseCase";
+import GetOneStockUseCase from '../usecases/Stocks/GetOneStockUseCase';
 &nbsp;
 @injectable()
-export default class FakeUserReadOnlyRepository implements IUserReadOnlyRepository {
+export default class StockServiceLocator {
 &nbsp;
-	constructor() {
+	constructor(@inject(TYPES.IStockReadOnlyRepository) private readRepository: IStockReadOnlyRepository, 
+	@inject(TYPES.IStockWriteOnlyRepository) private writeRepository: IStockWriteOnlyRepository){}
+&nbsp;
+	public GetCreateStockUseCase(): ICreateStockUseCase {
+		return new CreateStockUseCase(this.writeRepository);
 	}
 &nbsp;
-<span class="fstat-no" title="function not covered" >	fetchAll(</span>): Promise&lt;IUserDto[]&gt; {
-<span class="cstat-no" title="statement not covered" >		throw new Error('Method not implemented.');</span>
+	public GetGetAllStocksUseCase(): IGetAllStocksUseCase {
+		return new GetAllStocksUseCase(this.readRepository);
 	}
-	fetch(userDto: IUserDto): Promise&lt;IUserDto&gt; {
-		return new Promise(async (resolve, reject) =&gt; {
-			let foundUser = users.find(x =&gt; x.username == userDto.username);
-			
-			<span class="missing-if-branch" title="if path not taken" >I</span>if(!foundUser){
-<span class="cstat-no" title="statement not covered" >				reject('Could not find user');</span>
-			} else{	
-				resolve(foundUser);
-			}
-			
-		})
+&nbsp;
+	public GetGetOneStockUseCase(): IGetOneStockUseCase {
+		return new GetOneStockUseCase(this.readRepository);
 	}
 }</pre></td></tr></table></pre>
 

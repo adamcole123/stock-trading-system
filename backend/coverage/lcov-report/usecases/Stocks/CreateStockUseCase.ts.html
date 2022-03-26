@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for infrastructure/FakeUserReadOnlyRepository.ts</title>
+    <title>Code coverage report for usecases/Stocks/CreateStockUseCase.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../prettify.css" />
-    <link rel="stylesheet" href="../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">infrastructure</a> FakeUserReadOnlyRepository.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">usecases/Stocks</a> CreateStockUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">84.61% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>11/13</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
                 <span class="strong">83.33% </span>
-                <span class="quiet">Functions</span>
+                <span class="quiet">Statements</span>
                 <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
@@ -88,59 +88,56 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { injectable } from "inversify";
-import IUserReadOnlyRepository from "../application/repositories/IUserReadOnlyRepository";
-import IUserDto from "../usecases/data_tranfer_objects/IUserDto";
-import users from './FakeUserData';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IStockWriteOnlyRepository from '../../application/repositories/IStockWriteOnlyRepository';
+import IStockDto from '../data_tranfer_objects/IStockDto';
+import ICreateStockUseCase from './ICreateStockUseCase';
 &nbsp;
-@injectable()
-export default class FakeUserReadOnlyRepository implements IUserReadOnlyRepository {
+export default class CreateStockUseCase implements ICreateStockUseCase {
+	stockWriteOnlyRepository: IStockWriteOnlyRepository;
 &nbsp;
-	constructor() {
+	/**
+	 *
+	 */
+	constructor(_stockWriteOnlyRepository: IStockWriteOnlyRepository) {
+		this.stockWriteOnlyRepository = _stockWriteOnlyRepository
 	}
 &nbsp;
-<span class="fstat-no" title="function not covered" >	fetchAll(</span>): Promise&lt;IUserDto[]&gt; {
-<span class="cstat-no" title="statement not covered" >		throw new Error('Method not implemented.');</span>
+	async invoke(stock: IStockDto): Promise&lt;IStockDto&gt; {
+		let addedStock: IStockDto;
+		
+		try {
+			addedStock = await this.stockWriteOnlyRepository.create(stock);	
+			return addedStock;
+		} catch (error) {
+<span class="cstat-no" title="statement not covered" >			throw new Error('Could not add stock');</span>
+		}
 	}
-	fetch(userDto: IUserDto): Promise&lt;IUserDto&gt; {
-		return new Promise(async (resolve, reject) =&gt; {
-			let foundUser = users.find(x =&gt; x.username == userDto.username);
-			
-			<span class="missing-if-branch" title="if path not taken" >I</span>if(!foundUser){
-<span class="cstat-no" title="statement not covered" >				reject('Could not find user');</span>
-			} else{	
-				resolve(foundUser);
-			}
-			
-		})
-	}
+&nbsp;
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -150,14 +147,14 @@ export default class FakeUserReadOnlyRepository implements IUserReadOnlyReposito
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at Sat Mar 26 2022 16:08:03 GMT+0000 (Greenwich Mean Time)
             </div>
-        <script src="../prettify.js"></script>
+        <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../sorter.js"></script>
-        <script src="../block-navigation.js"></script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
     </body>
 </html>
     

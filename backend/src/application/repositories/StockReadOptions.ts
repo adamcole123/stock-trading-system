@@ -4,7 +4,7 @@ import IOrderOptions from "./IOrderOptions";
 import ValueMode from "./ValueMode";
 import VolumeMode from "./VolumeMode";
 
-export default interface StockOptions {
+export default interface StockReadOptions {
 	gainsMode?: GainsMode
 	valueMode?: ValueMode
 	volumeMode?: VolumeMode

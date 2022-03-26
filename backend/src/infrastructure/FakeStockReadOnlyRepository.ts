@@ -1,9 +1,11 @@
 import IStockReadOnlyRepository from '../application/repositories/IStockReadOnlyRepository';
-import StockOptions from '../application/repositories/StockOptions';
+import StockOptions from '../application/repositories/StockReadOptions';
 import IStockDto from '../usecases/data_tranfer_objects/IStockDto';
 import Stock from '../usecases/entities/Stock';
 import stocks from './FakeStockData';
+import { injectable } from 'inversify';
 
+@injectable()
 export default class FakeStockReadOnlyRepository implements IStockReadOnlyRepository{
 	stocksObj: Stock[];
 	/**
@@ -13,7 +15,9 @@ export default class FakeStockReadOnlyRepository implements IStockReadOnlyReposi
 		this.stocksObj = stocks;		
 	}
 	fetchAll(): Promise<IStockDto[]> {
-		throw new Error('Method not implemented.');
+		return new Promise((resolve, reject) => {
+			resolve(this.stocksObj);
+		})
 	}
 	fetch(stockDto?: IStockDto, options?: StockOptions): Promise<IStockDto[]> {
 		return new Promise((resolve, reject) => {

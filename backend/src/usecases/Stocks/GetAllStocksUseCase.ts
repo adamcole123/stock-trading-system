@@ -3,7 +3,7 @@ import IStockWriteOnlyRepository from '../../application/repositories/IStockWrit
 import IStockDto from '../data_tranfer_objects/IStockDto';
 import Stock from '../entities/Stock';
 import IGetAllStocksUseCase from './IGetAllStocksUseCase';
-import StockOptions from '../../application/repositories/StockOptions';
+import StockOptions from '../../application/repositories/StockReadOptions';
 export default class GetAllStocksUseCase implements IGetAllStocksUseCase{
 	stockReadOnlyRepository: IStockReadOnlyRepository;
 	/**
