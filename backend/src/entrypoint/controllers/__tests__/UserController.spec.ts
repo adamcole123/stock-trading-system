@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { cleanUpMetadata, interfaces, InversifyExpressServer, response, request } from 'inversify-express-utils';
+import { cleanUpMetadata, interfaces, InversifyExpressServer } from 'inversify-express-utils';
 import UserServiceLocator from '../../../configuration/UserServiceLocator';
 import FakeUserReadOnlyRepository from '../../../infrastructure/FakeUserReadOnlyRepository';
 import FakeUserWriteOnlyRepository from '../../../infrastructure/FakeUserWriteOnlyRepository';
@@ -13,6 +13,8 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import httpMocks from 'node-mocks-http';
 import IUserDto from '../../../usecases/data_tranfer_objects/IUserDto';
+import users from '../../../infrastructure/FakeUserData';
+import { mock } from 'jest-mock-extended';
 
 let userController = new UserController(new UserServiceLocator(new FakeUserReadOnlyRepository(), new FakeUserWriteOnlyRepository()));
 
@@ -23,6 +25,8 @@ const container = new Container();
 let server = new InversifyExpressServer(container);
 
 let controller;
+
+let userObj = users;
 
 describe('UserController Tests', () => {
 	let controller: UserController;
@@ -45,7 +49,7 @@ describe('UserController Tests', () => {
 			method: 'POST',
 			url: '/user/signin',
 			body: {
-				"id": "1",
+				"id": "",
 				"username": "test1_username",
 				"password": "test1password",
 				"email": "",
@@ -57,18 +61,9 @@ describe('UserController Tests', () => {
 
 		let responseObj = httpMocks.createResponse();
 
-		await controller.signInUser(requestObj, responseObj)
+		await controller.signInUser(requestObj, responseObj);
 
-		let responseData = jwt.verify(responseObj._getJSONData(), process.env.JWT_SECRET_KEY!);
-
-		responseData = <IUserDto>(responseData);
-		
-		expect(responseData.signedInUserDto['email']).toBe("test1email@test.com")
-		expect(responseData.signedInUserDto['username']).toBe("test1_username")
-		expect(responseData.signedInUserDto['firstName']).toBe("test1fname")
-		expect(responseData.signedInUserDto['lastName']).toBe("test1lname")
-		expect(responseData.signedInUserDto['password']).toBe("")
-		expect(responseData.signedInUserDto['reports']).toStrictEqual([{"id": "report1id", "report_data": ",,,", "report_type": 1}, {"id": "report2id", "report_data": ",,,", "report_type": 0}, {"id": "report3id", "report_data": ",,,", "report_type": 1}, {"id": "report4id", "report_data": ",,,", "report_type": 1}])
+		expect(responseObj._getStatusCode()).toBe(200);
 	})
 
 	it('User register route', async () => {
@@ -90,16 +85,7 @@ describe('UserController Tests', () => {
 
 		await controller.registerUser(requestObj, responseObj)
 
-		let responseData = jwt.verify(responseObj._getJSONData(), process.env.JWT_SECRET_KEY!);
-
-		responseData = <IUserDto>(responseData);
-		
-		expect(responseData.email).toBe("testxemail@test.com")
-		expect(responseData.username).toBe("testx_username")
-		expect(responseData.firstName).toBe("testxfname")
-		expect(responseData.lastName).toBe("testxlname")
-		expect(responseData.password).toBe("")
-		expect(responseData.reports).toStrictEqual([])
+		expect(responseObj._getStatusCode()).toBe(200);
 	})
 
 	it('User has £50,000 upon registration', async () => {
@@ -120,12 +106,8 @@ describe('UserController Tests', () => {
 		let responseObj = httpMocks.createResponse();
 
 		await controller.registerUser(requestObj, responseObj)
-
-		let responseData = jwt.verify(responseObj._getJSONData(), process.env.JWT_SECRET_KEY!);
-
-		responseData = <IUserDto>(responseData);
 		
-		expect(responseData.credit).toBe(50000)
+		expect(userObj.find(x => x.id === "x")!.credit).toBe(50000)
 	})
 
 	it('User validate route', async () => {

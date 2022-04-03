@@ -10,6 +10,27 @@ services:
       - ./backend/coverage/:/home/node/app/backend/coverage/
     restart: always
     expose:
-      - "3000"
+      - "8000"
     ports:
-      - "3000:3000"
+      - "8000:8000"
+  stock-trading-system-frontend:
+    build: ./frontend
+    container_name: stock-trading-system-frontend
+    volumes:
+      - ./frontend/src:/home/node/app/frontend/src 
+      - ./frontend/tsconfig.json:/home/node/app/frontend/tsconfig.json
+    restart: always
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes: 
+      - ~/mongo/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password

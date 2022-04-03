@@ -5,9 +5,12 @@ import { InversifyExpressServer, getRouteInfo, RouteInfo } from 'inversify-expre
 import { TYPES } from './constants/types';
 import dotenv from 'dotenv';
 import * as prettyjson from "prettyjson";
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // declare metadata by @controller annotation
 import "./entrypoint/controllers/UserController";
+import "./entrypoint/controllers/StockController";
 import UserReadOnlyRepository from './infrastructure/FakeUserReadOnlyRepository';
 import UserWriteOnlyRepository from './infrastructure/FakeUserWriteOnlyRepository';
 import StockReadOnlyRepository from './infrastructure/FakeStockReadOnlyRepository';
@@ -19,6 +22,10 @@ import IUserWriteOnlyRepository from "./application/repositories/IUserWriteOnlyR
 import IStockReadOnlyRepository from './application/repositories/IStockReadOnlyRepository';
 import IStockWriteOnlyRepository from './application/repositories/IStockWriteOnlyRepository';
 import StockServiceLocator from "./configuration/StockServiceLocator";
+import MarketSimulatorUseCase from './usecases/Stocks/MarketSimulatorUseCase';
+import SocketServer from './infrastructure/SocketServer';
+import FakeStockWriteOnlyRepository from './infrastructure/FakeStockWriteOnlyRepository';
+import GetAllStocksUseCase from './usecases/Stocks/GetAllStocksUseCase';
 
 // set up container
 const container = new Container();
@@ -41,7 +48,9 @@ server.setConfig((app: express.Application) => {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
+  app.use(cors());
   app.use(bodyParser.json());
+  app.use(cookieParser());
 });
 
 let app = server.build();

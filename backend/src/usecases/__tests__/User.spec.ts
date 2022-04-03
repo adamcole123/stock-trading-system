@@ -9,7 +9,7 @@ import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnl
 import User from "../entities/User";
 import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
 import EditUserDetailsUseCase from "../Users/EditUserDetailsUseCase";
-import FakeUserReadOnlyRepository from "../../infrastructure/FakeUserReadOnlyRepository";
+import FakeUserReadOnlyRepository from '../../infrastructure/FakeUserReadOnlyRepository';
 import FakeUserWriteOnlyRepository from '../../infrastructure/FakeUserWriteOnlyRepository';
 import IEditUserDetailsUseCase from "../Users/IEditUserDetailsUseCase";
 import IUserRegisterUseCase from "../Users/IUserRegisterUseCase";
@@ -72,6 +72,24 @@ describe('User Use Cases', () => {
 		expect(userDto.lastName).toBe('test2lname')
 
 	});
+
+	it('User has £50,000 after register', async () => {
+		//Arrange
+		let userRegisterUseCase: IUserRegisterUseCase;
+		let userDto: IUserDto;
+
+		let newUserWriteOnlyRepository = new FakeUserWriteOnlyRepository();
+		let newUserReadOnlyRepository = new FakeUserReadOnlyRepository();
+
+		userRegisterUseCase = new UserRegisterUseCase(newUserWriteOnlyRepository);
+		
+		//Act
+		userDto = await userRegisterUseCase.invoke({id: 'x', username: 'testxusername', password: 'testxpassword', email: 'testx@test.com', firstName: 'testxfname', lastName: 'testxlname', birthDate: new Date(), reports: []})
+
+		let newUser = await newUserReadOnlyRepository.fetch({id: "x"});
+		//Assert
+		expect(newUser.credit).toBe(50000)
+	})
 
 	it('Edit user details use case', async () => {
 		//Arrange
