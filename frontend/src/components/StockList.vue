@@ -9,7 +9,7 @@
           <th align="left">Value</th>
           <th align="left">Volume</th>
           <th align="left">Open</th>
-          <th align="left">Clos</th>
+          <th align="left">Close</th>
         </tr>
       </thead>
       <tbody>
@@ -19,7 +19,9 @@
           <td v-if="stock.gains! > 0" style="color: green">
             {{ stock.gains }}
           </td>
-          <td v-else style="color: red">{{ stock.gains }}</td>
+          <td v-else style="color: red">
+            {{ stock.gains }}
+          </td>
           <td>{{ stock.value }}</td>
           <td>{{ stock.volume }}</td>
           <td>{{ stock.open }}</td>
@@ -40,20 +42,14 @@ export default defineComponent({
   data() {
     return {
       stocks: [] as Stock[],
+      toggledTrades: [] as number[],
     };
   },
   created() {
     axios({
       method: "get",
-      url: "http://localhost:8000/stock/getMany",
-      headers: {},
-      data: {
-        options: {
-          page: 1,
-        }, // This is the body part
-      },
+      url: "http://localhost:8000/stock/getMany?page=4",
     }).then((response) => {
-      console.table(response);
       this.stocks = response.data;
     });
   },

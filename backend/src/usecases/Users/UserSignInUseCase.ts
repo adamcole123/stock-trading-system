@@ -22,7 +22,7 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 
 			let passwordCheck;
 			
-			if(userDto.password && foundUser!.password) {
+			if(userDto!.password && foundUser!.password) {
 				passwordCheck = this.bc.compareSync(userDto.password, foundUser!.password);
 			}
 			

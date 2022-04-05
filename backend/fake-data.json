@@ -1,0 +1,194 @@
+[
+	{
+		"symbol": "C",
+		"name": "Citigroup"
+	},
+	{
+		"symbol": "HSBC",
+		"name": "HSBC"
+	},
+	{
+		"symbol": "CS",
+		"name": "Credit Suisse"
+	},
+	{
+		"symbol": "RBS",
+		"name": "RBS"
+	},
+	{
+		"symbol": "CL",
+		"name": "Calyon"
+	},
+	{
+		"symbol": "TN",
+		"name": "Threadneedle"
+	},
+	{
+		"symbol": "AV",
+		"name": "Aviva"
+	},
+	{
+		"symbol": "MS",
+		"name": "Morgan Stanley"
+	},
+	{
+		"symbol": "L",
+		"name": "Unicredit"
+	},
+	{
+		"symbol": "CAP",
+		"name": "Caplin"
+	},
+	{
+		"symbol": "CLNGF",
+		"name": "Catlin"
+	},
+	{
+		"symbol": "RABO",
+		"name": "Rabobank"
+	},
+	{
+		"symbol": "BNP",
+		"name": "BNP"
+	},
+	{
+		"symbol": "WN",
+		"name": "Wildnet"
+	},
+	{
+		"symbol": "QBE",
+		"name": "QBE"
+	},
+	{
+		"symbol": "FT",
+		"name": "Financial Times"
+	},
+	{
+		"symbol": "NI",
+		"name": "News International"
+	},
+	{
+		"symbol": "AS",
+		"name": "Abbey Santander"
+	},
+	{
+		"symbol": "DC",
+		"name": "Dresdner/ Commerz"
+	},
+	{
+		"symbol": "JPM",
+		"name": "JP Morgan"
+	},
+	{
+		"symbol": "LL",
+		"name": "Lloyds of London"
+	},
+	{
+		"symbol": "HBOS",
+		"name": "HBOS"
+	},
+	{
+		"symbol": "N",
+		"name": "Nomura"
+	},
+	{
+		"symbol": "ING",
+		"name": "ING"
+	},
+	{
+		"symbol": "BNY",
+		"name": "Bank of New York"
+	},
+	{
+		"symbol": "SG",
+		"name": "Soc Gen"
+	},
+	{
+		"symbol": "LCH",
+		"name": "LCH"
+	},
+	{
+		"symbol": "DA",
+		"name": "Daiwa"
+	},
+	{
+		"symbol": "RCD",
+		"name": "Rothschild"
+	},
+	{
+		"symbol": "FO",
+		"name": "Fortis"
+	},
+	{
+		"symbol": "BD",
+		"name": "Brewin Dolphin"
+	},
+	{
+		"symbol": "SC",
+		"name": "Schroders"
+	},
+	{
+		"symbol": "SSB",
+		"name": "St St Bank"
+	},
+	{
+		"symbol": "BTO",
+		"name": "Bank of Tokyo"
+	},
+	{
+		"symbol": "LSE",
+		"name": "London Stock Exchange"
+	},
+	{
+		"symbol": "BOA",
+		"name": "Bank Of America"
+	},
+	{
+		"symbol": "TP",
+		"name": "Tullet Prebon"
+	},
+	{
+		"symbol": "NE",
+		"name": "New Edge"
+	},
+	{
+		"symbol": "FH",
+		"name": "Fitch"
+	},
+	{
+		"symbol": "TR",
+		"name": "Thomson Reuters"
+	},
+	{
+		"symbol": "CI",
+		"name": "Chubb Insurance"
+	},
+	{
+		"symbol": "TS",
+		"name": "Tri Systems"
+	},
+	{
+		"symbol": "WTG",
+		"name": "WTG"
+	},
+	{
+		"symbol": "EY",
+		"name": "E&Y"
+	},
+	{
+		"symbol": "AE",
+		"name": "Ace Europe"
+	},
+	{
+		"symbol": "BY",
+		"name": "Beazily"
+	},
+	{
+		"symbol": "JAVA",
+		"name": "Sun"
+	},
+	{
+		"symbol": "THS",
+		"name": "Therion Systems"
+	}
+]

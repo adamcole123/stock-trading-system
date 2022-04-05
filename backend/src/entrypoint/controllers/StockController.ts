@@ -8,6 +8,7 @@ import IGetAllStocksUseCase from "../../usecases/Stocks/IGetAllStocksUseCase";
 import IGetOneStockUseCase from "../../usecases/Stocks/IGetOneStockUseCase";
 import StockServiceLocator from "../../configuration/StockServiceLocator";
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
+import StockReadOptions from '../../application/repositories/StockReadOptions';
 
 dotenv.config();
 
@@ -46,7 +47,7 @@ export default class StockController implements interfaces.Controller {
 			return res.status(400).json({error: 'Must provide criteria or options'});
 		}
 
-		return await this.getAllStocksUseCase.invoke(req.body.criteria, req.body.options)
+		return await this.getAllStocksUseCase.invoke(req.body.criteria, { page: parseInt(<string>req.query.page) })
 			.then((stockDto: IStockDto[]) => {
 				res.status(200).json(stockDto)
 			})

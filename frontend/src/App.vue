@@ -1,19 +1,18 @@
 <template>
   <div>
-    <div class="navbar">
-      <div class="left">
-        <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/about" class="nav-link">About</router-link>
-        <router-link to="/contact" class="nav-link">Contact</router-link>
-      </div>
-      <div class="right">
-        <router-link to="/login" class="nav-link">Login</router-link>
-        <router-link to="/register" class="nav-link">Register</router-link>
-      </div>
-    </div>
+    <NavBar />
     <router-view class="content" />
   </div>
 </template>
+<script lang="ts">
+import { defineComponent } from "vue";
+import NavBar from "./components/NavBar.vue";
+
+export default defineComponent({
+  name: "App",
+  components: { NavBar },
+});
+</script>
 
 <style>
 .navbar {
@@ -37,6 +36,7 @@
   color: #333;
   margin: 0 10px;
   text-decoration: none;
+  cursor: pointer;
 }
 body {
   background-color: #f5f5f5;

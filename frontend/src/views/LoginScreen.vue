@@ -36,6 +36,11 @@ export default defineComponent({
       errorText: "",
     };
   },
+  mounted: function () {
+    if (localStorage.getItem("token")) {
+      this.$router.push("/");
+    }
+  },
   methods: {
     login() {
       axios({
@@ -47,9 +52,14 @@ export default defineComponent({
         .then((response) => {
           localStorage.setItem("token", response.data.token);
           this.$router.push("/");
+          this.$router.go(0);
         })
         .catch((error) => {
-          this.errorText = error;
+          if (error.response.status === 400) {
+            this.errorText = "Invalid username or password";
+          } else {
+            this.errorText = "Something went wrong";
+          }
         });
     },
   },

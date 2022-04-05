@@ -185,7 +185,8 @@
 <a name='L120'></a><a href='#L120'>120</a>
 <a name='L121'></a><a href='#L121'>121</a>
 <a name='L122'></a><a href='#L122'>122</a>
-<a name='L123'></a><a href='#L123'>123</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -216,7 +217,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -244,13 +244,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -272,6 +273,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -328,76 +330,77 @@ export default class UserController implements interfaces.Controller {
 	private readonly userRegisterUseCase: IUserRegisterUseCase;
 	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
 	private readonly editUserDetailsUseCase: IEditUserDetailsUseCase;
-	
-	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator){
+&nbsp;
+	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator) {
 		this.userSignInUseCase = serviceLocator.GetUserSignInUseCase();
 		this.userRegisterUseCase = serviceLocator.GetUserRegisterUseCase();
 		this.validateUserTokenUseCase = serviceLocator.GetValidateUserTokenUseCase();
 		this.editUserDetailsUseCase = serviceLocator.GetEditUserDetailsUseCase();
 	}
-	
+&nbsp;
 	@httpPost('/signin')
-	public async signInUser(@request() req: express.Request, @response() res: express.Response){
-		
-		<span class="missing-if-branch" title="if path not taken" >I</span>if(!req.body.username || !req.body.password){
-<span class="cstat-no" title="statement not covered" >			return res.status(400).json({error: 'Username or password not inputted'});</span>
+	public async signInUser(@request() req: express.Request, @response() res: express.Response) {
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (!req.body.username || !req.body.password) {
+<span class="cstat-no" title="statement not covered" >			return res.status(400).json({ error: 'Username or password not inputted' });</span>
 		}
 &nbsp;
 		let reqUser: IUserDto = req.body;
-		
+&nbsp;
 		return await this.userSignInUseCase.invoke(reqUser)
 			.then(<span class="fstat-no" title="function not covered" >(s</span>ignedInUserDto: IUserDto) =&gt; {
 				let jwtSecretKey = <span class="cstat-no" title="statement not covered" >process.env.JWT_SECRET_KEY;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >				<span class="missing-if-branch" title="if path not taken" >I</span>if(!jwtSecretKey){</span>
-<span class="cstat-no" title="statement not covered" >					return res.status(500).json({err: 'Could not sign in user'});</span>
+<span class="cstat-no" title="statement not covered" >				<span class="missing-if-branch" title="if path not taken" >I</span>if (!jwtSecretKey) {</span>
+<span class="cstat-no" title="statement not covered" >					return res.status(500).json({ err: 'Could not sign in user' });</span>
 				}
-				
+&nbsp;
 <span class="cstat-no" title="statement not covered" >				try {</span>
-					const token = <span class="cstat-no" title="statement not covered" >jwt.sign({signedInUserDto}, jwtSecretKey!, {expiresIn: "7 days"});</span>
-<span class="cstat-no" title="statement not covered" >					res.cookie("access_token", token, {</span>
+					const token = <span class="cstat-no" title="statement not covered" >jwt.sign({ signedInUserDto }, jwtSecretKey!, { expiresIn: "7 days" });</span>
+<span class="cstat-no" title="statement not covered" >					res.cookie("token", token, {</span>
 						httpOnly: true,
 						secure: process.env.NODE_ENV === "production",
 					})
-					.status(200)
-    				.json({ message: "Logged in successfully 😊 👌" });
+						.status(200)
+						.json({ message: "Logged in successfully 😊 👌" });
 				} catch (error) {
-<span class="cstat-no" title="statement not covered" >					res.status(500).json({error: error})</span>
+<span class="cstat-no" title="statement not covered" >					res.status(500).json({ error: error })</span>
 				}
-				
+&nbsp;
 			})
-			.catch((err: Error) =&gt; res.status(400).json({error: err.message}));
+			.catch((err: Error) =&gt; {
+				res.status(400).json({ error: err })
+			});
 	}
 &nbsp;
 	@httpPost('/register')
-	public async registerUser(@request() req: express.Request, @response() res: express.Response){
+	public async registerUser(@request() req: express.Request, @response() res: express.Response) {
 		let newUser: IUserDto = {
 			username: req.body.username,
 			email: req.body.email,
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
-    		password: req.body.password,
-			reports: req.body.reports
+			password: req.body.password,
 		}
 &nbsp;
 		return await this.userRegisterUseCase.invoke(newUser)
 			.then((registeredUserDto: IUserDto) =&gt; {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
-			
-				const token = jwt.sign(registeredUserDto, jwtSecretKey!, {expiresIn: "7 days"});
 &nbsp;
-				res.cookie("access_token", token, {
-					httpOnly: true,
-					secure: process.env.NODE_ENV === "production",
-				})
-				.status(200)
-				.json({ message: "Registered successfully 😊 👌" });
+				const token = jwt.sign(registeredUserDto, jwtSecretKey!, { expiresIn: "7 days" });
+&nbsp;
+				res.status(200)
+					.json({
+						message: "Registered successfully 😊 👌",
+						token: token
+					});
 			})
-			.catch(<span class="fstat-no" title="function not covered" >(e</span>rr: Error) =&gt; <span class="cstat-no" title="statement not covered" >res.status(400).json({error: err}))</span>;
+			.catch(<span class="fstat-no" title="function not covered" >(e</span>rr: Error) =&gt; {
+<span class="cstat-no" title="statement not covered" >				res.status(400).json(err)</span>
+			});
 	}
 &nbsp;
-	@httpGet('/validate')
-	public async validateUser(@request() req: express.Request, @response() res: express.Response){
+	@httpPost('/validate')
+	public async validateUser(@request() req: express.Request, @response() res: express.Response) {
 		return await this.validateUserTokenUseCase.invoke(req.body.token)
 			.then((validated: IUserDto) =&gt; {
 				res.status(200).json(validated)
@@ -406,13 +409,13 @@ export default class UserController implements interfaces.Controller {
 	}
 &nbsp;
 	@httpPost('/edit')
-	public async editUser(@request() req: express.Request, @response() res: express.Response){
+	public async editUser(@request() req: express.Request, @response() res: express.Response) {
 		let editedUser: IUserDto = {
 			username: req.body.username,
 			email: req.body.email,
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
-    		password: req.body.password,
+			password: req.body.password,
 			reports: req.body.reports,
 			id: req.body.id
 		}
@@ -423,11 +426,11 @@ export default class UserController implements interfaces.Controller {
 &nbsp;
 		return await this.editUserDetailsUseCase.invoke(userToEdit, editedUser, req.body.token)
 			.then((editedUserDto: IUserDto) =&gt; {
-				const token = jwt.sign(editedUserDto, jwtSecretKey!, {expiresIn: "7 days"});
+				const token = jwt.sign(editedUserDto, jwtSecretKey!, { expiresIn: "7 days" });
 &nbsp;
 				res.status(200).json(token)
 			})
-			.catch(<span class="fstat-no" title="function not covered" >(e</span>rr: Error) =&gt; <span class="cstat-no" title="statement not covered" >res.status(400).json({error: err.message}))</span>;
+			.catch(<span class="fstat-no" title="function not covered" >(e</span>rr: Error) =&gt; <span class="cstat-no" title="statement not covered" >res.status(400).json({ error: err.message }))</span>;
 	}
 }</pre></td></tr></table></pre>
 
@@ -436,7 +439,7 @@ export default class UserController implements interfaces.Controller {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Apr 02 2022 17:20:52 GMT+0100 (British Summer Time)
+                at Tue Apr 05 2022 12:02:04 GMT+0100 (British Summer Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

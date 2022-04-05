@@ -2,6 +2,8 @@ version: "3.7"
 
 services:
   stock-trading-system-backend:
+    depends_on: 
+      - stock-trading-system-db
     build: ./backend
     container_name: stock-trading-system-backend
     volumes:
@@ -16,6 +18,8 @@ services:
   stock-trading-system-frontend:
     build: ./frontend
     container_name: stock-trading-system-frontend
+    depends_on: 
+      - stock-trading-system-backend
     volumes:
       - ./frontend/src:/home/node/app/frontend/src 
       - ./frontend/tsconfig.json:/home/node/app/frontend/tsconfig.json
@@ -25,6 +29,7 @@ services:
     ports:
       - "8080:8080"
   mongo:
+    container_name: stock-trading-system-db
     image: mongo
     restart: always
     ports:
