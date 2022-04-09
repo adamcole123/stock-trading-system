@@ -9,7 +9,7 @@ export default interface User {
   lastName: string;
   birthDate?: Date;
   reports?: Report[];
-  id?: string;
+  id: string;
   password?: string;
   credit?: number;
   role?: Role;

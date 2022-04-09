@@ -45,6 +45,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import { mapMutations, mapState } from "vuex";
 
 export default defineComponent({
   name: "RegisterScreen",
@@ -68,9 +69,9 @@ export default defineComponent({
         headers: {},
         data: this.registerInfo,
       })
-        .then((response) => {
+        .then(async (response) => {
           console.log(response);
-          localStorage.setItem("token", response.data.token);
+          await this.updateToken(response.data.token);
           this.$router.go(0);
         })
         .catch((error) => {
@@ -81,11 +82,13 @@ export default defineComponent({
           }
         });
     },
+    ...mapMutations(["updateToken"]),
   },
   mounted: function () {
-    if (localStorage.getItem("token")) {
+    if (this.token) {
       this.$router.push("/");
     }
   },
+  computed: mapState(["token"]),
 });
 </script>

@@ -27,6 +27,8 @@ import StockWriteRepository from "./infrastructure/Stock/StockWriteRepository";
 // set up container
 const container = new Container();
 
+var allowedOrigins = ['http://localhost:8080'];
+
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
 container.bind<IUserReadOnlyRepository>(TYPES.IUserReadOnlyRepository).to(UserReadRepository);
@@ -45,7 +47,18 @@ server.setConfig((app: express.Application) => {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-  app.use(cors());
+  app.use(cors({
+    credentials: true, // --> configures the Access-Control-Allow-Credentials CORS header
+    origin: function(origin, callback){
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.indexOf(origin) === -1){
+        var msg = 'The CORS policy for this site does not ' +
+        'allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);      
+    }
+  }));
   app.use(bodyParser.json());
   app.use(cookieParser());
 });

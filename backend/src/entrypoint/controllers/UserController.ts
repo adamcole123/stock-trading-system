@@ -47,7 +47,7 @@ export default class UserController implements interfaces.Controller {
 					const token = jwt.sign({ signedInUserDto }, jwtSecretKey!, { expiresIn: "7 days" });
 					res.cookie("token", token, {
 						httpOnly: true,
-						secure: process.env.NODE_ENV === "production",
+						secure: process.env.NODE_ENV === 'production'? true: false
 					})
 						.status(200)
 						.json({ message: "Logged in successfully 😊 👌" });

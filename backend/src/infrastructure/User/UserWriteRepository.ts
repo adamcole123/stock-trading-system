@@ -48,7 +48,10 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 								newUser
 									.save()
 									.then((user: any) => resolve(user))
-									.catch((err: any) => console.log(err));
+									.catch((err: any) => {
+										console.log(err);
+										reject(err);
+									});
 							});
 						});
 					}

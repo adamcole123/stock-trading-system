@@ -24,6 +24,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import { mapMutations, mapState } from "vuex";
+import Cookie from "js-cookie";
 
 export default defineComponent({
   name: "LoginScreen",
@@ -37,31 +39,41 @@ export default defineComponent({
     };
   },
   mounted: function () {
-    if (localStorage.getItem("token")) {
+    if (this.$store.token) {
       this.$router.push("/");
     }
   },
   methods: {
     login() {
-      axios({
-        method: "post",
-        url: "http://localhost:8000/user/signin",
-        headers: {},
-        data: this.loginInfo,
-      })
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        credentials: "include",
+      };
+
+      axios
+        .post("http://localhost:8000/user/signin", this.loginInfo, {
+          withCredentials: true,
+        })
         .then((response) => {
-          localStorage.setItem("token", response.data.token);
+          console.log(response);
+          console.log(Cookie.get("token"));
+          this.updateToken(Cookie.get("token"));
           this.$router.push("/");
           this.$router.go(0);
         })
         .catch((error) => {
-          if (error.response.status === 400) {
+          if (error.status === 400) {
             this.errorText = "Invalid username or password";
           } else {
             this.errorText = "Something went wrong";
           }
         });
     },
+    ...mapMutations(["updateToken"]),
   },
+  computed: mapState(["token"]),
 });
 </script>
