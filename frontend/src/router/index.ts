@@ -51,11 +51,11 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  await store.dispatch("auth/userProfile");
   if (to.meta.requiredAuth) {
     let userProfile = store.getters["auth/getUserProfile"];
     console.log(userProfile);
     if (userProfile.id === "") {
-      await store.dispatch("auth/userProfile");
       userProfile = store.getters["auth/getUserProfile"];
       if (userProfile.id === "") {
         return next({ path: "/login" });

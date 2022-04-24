@@ -46,6 +46,7 @@ export default defineComponent({
   methods: {
     ...mapActions("auth", {
       actionLoginApi: "loginApi",
+      userProfile: "userProfile",
     }),
     async login() {
       console.log(this.loginInfo.username, this.loginInfo.password);
@@ -55,6 +56,7 @@ export default defineComponent({
       };
       await this.actionLoginApi(payload);
       if (this.getLoginApiStatus == "success") {
+        await this.userProfile();
         this.$router.push("/");
       } else {
         alert("failed");

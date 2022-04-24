@@ -4,6 +4,7 @@ import { CommitFunction } from "../CommitFunction";
 
 const state = () => ({
   loginApiStatus: "",
+  logOut: false,
   userProfile: {
     firstName: "",
     lastName: "",
@@ -20,6 +21,9 @@ const getters = {
   getUserProfile(state: State) {
     return state.userProfile;
   },
+  getLogout(state: State) {
+    return state.logOut;
+  },
 };
 
 const actions = {
@@ -27,7 +31,6 @@ const actions = {
     const response = await axios
       .post("http://localhost:8000/user/signin", payload, {
         withCredentials: true,
-				credentials: "include",
       })
       .catch((err) => {
         console.log(err);
@@ -41,18 +44,32 @@ const actions = {
   },
   async userProfile({ commit }: CommitFunction) {
     const response = await axios
-      .post("http://localhost:8000/user/validate", {
+      .post("http://localhost:8000/user/validate", undefined, {
         withCredentials: true,
-        credentials: "include",
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
 
     console.log(response);
 
     if (response && response.data) {
-      commit("setUserProfile", response.data);
+      commit("setUserProfile", response.data.signedInUserDto);
+    }
+  },
+  async userLogout({ commit }: CommitFunction) {
+    const response = await axios
+      .get("http://localhost:8000/user/signout", {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setLogout", true);
+    } else {
+      commit("setLogout", false);
     }
   },
 };
@@ -63,13 +80,16 @@ const mutations = {
   },
   setUserProfile(state: State, data: any) {
     const userProfile = {
-      id: data.id,
+      id: data._id,
       lastName: data.lastName,
       firstName: data.firstName,
       email: data.email,
       username: data.username,
     };
     state.userProfile = userProfile;
+  },
+  setLogout(state: State, payload: any) {
+    state.logOut = payload;
   },
 };
 

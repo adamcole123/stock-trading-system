@@ -16,6 +16,10 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 			if(!user){
 				reject("No user with that username exists");
 			}
+
+			let returnObj = user;
+
+			returnObj.id = returnObj._id;
 			
 			resolve(user);
 		})

@@ -8,8 +8,10 @@
       </div>
       <div class="right">
         <div v-if="getUserProfile.id !== ''">
-          <router-link to="/account" class="nav-link">Account </router-link>
-          <span class="nav-link">Sign out</span>
+          <router-link to="/account" class="nav-link"
+            >{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}
+          </router-link>
+          <span @click="logout()" class="nav-link">Sign out</span>
         </div>
         <div v-else>
           <router-link to="/login" class="nav-link">Login</router-link>
@@ -22,14 +24,40 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default defineComponent({
   name: "NavBar",
   computed: {
     ...mapGetters("auth", {
       getUserProfile: "getUserProfile",
+      getLogout: "getLogout",
     }),
+  },
+  methods: {
+    ...mapActions("auth", {
+      userLogout: "userLogout",
+    }),
+    ...mapMutations("auth", {
+      setLogout: "setLogout",
+      setUserProfile: "setUserProfile",
+    }),
+    async logout() {
+      await this.userLogout();
+      if (this.getLogout) {
+        const resetUser = {
+          _id: "",
+          lastName: "",
+          firstName: "",
+          email: "",
+          username: "",
+          phone: "",
+        };
+        this.setUserProfile(resetUser);
+        this.setLogout(false);
+        this.$router.push("/login");
+      }
+    },
   },
 });
 </script>

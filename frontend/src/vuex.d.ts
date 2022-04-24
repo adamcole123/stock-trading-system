@@ -5,6 +5,7 @@ import User from "./types/User";
 declare module "@vue/runtime-core" {
   // declare your own store states
   interface State {
+    logOut: boolean;
     loginApiStatus: "";
     userProfile: User;
   }
