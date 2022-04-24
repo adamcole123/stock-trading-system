@@ -27,6 +27,7 @@ const actions = {
     const response = await axios
       .post("http://localhost:8000/user/signin", payload, {
         withCredentials: true,
+				credentials: "include",
       })
       .catch((err) => {
         console.log(err);
@@ -40,7 +41,10 @@ const actions = {
   },
   async userProfile({ commit }: CommitFunction) {
     const response = await axios
-      .get("http://localhost:8000/user/validate", { withCredentials: true })
+      .post("http://localhost:8000/user/validate", {
+        withCredentials: true,
+        credentials: "include",
+      })
       .catch((err) => {
         console.log(err);
       });
