@@ -57,9 +57,10 @@ export default defineComponent({
       await this.actionLoginApi(payload);
       if (this.getLoginApiStatus == "success") {
         await this.userProfile();
+        alert("Signed in successfully!");
         this.$router.push("/");
       } else {
-        alert("failed");
+        this.errorText = "Authentication failed";
       }
     },
   },

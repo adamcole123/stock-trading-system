@@ -82,9 +82,10 @@ export default defineComponent({
       await this.actionRegisterApi(payload);
       if (this.getRegisterApiStatus == "success") {
         await this.userProfile();
+        alert("Account registered successfully!");
         this.$router.push("/");
       } else {
-        alert("failed");
+        this.errorText = "Could not register an account with those details";
       }
     },
   },

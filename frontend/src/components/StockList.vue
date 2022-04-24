@@ -10,6 +10,9 @@
           <th align="left">Volume</th>
           <th align="left">Open</th>
           <th align="left">Close</th>
+          <th align="left" colspan="2">
+            Quantity <input type="number" style="width: 40px" />
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +29,8 @@
           <td>{{ stock.volume }}</td>
           <td>{{ stock.open }}</td>
           <td>{{ stock.close }}</td>
+          <td><button align="left">Buy</button></td>
+          <td><button align="left">Sell</button></td>
         </tr>
       </tbody>
     </table>

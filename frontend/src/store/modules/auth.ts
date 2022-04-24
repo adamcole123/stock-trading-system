@@ -53,10 +53,12 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
+        return err.error;
       });
 
     if (response && response.data) {
       commit("setRegisterApiStatus", "success");
+      return response.data.message;
     } else {
       commit("setRegisterApiStatus", "failed");
     }
@@ -68,12 +70,13 @@ const actions = {
       })
       .catch((err) => {
         console.log(err.message);
+        return err.error;
       });
-
-    console.log(response);
 
     if (response && response.data) {
       commit("setUserProfile", response.data.userDto);
+
+      return response.data.message;
     }
   },
   async userLogout({ commit }: CommitFunction) {
