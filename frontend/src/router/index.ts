@@ -1,3 +1,4 @@
+import { store } from "@/store";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
@@ -6,6 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
+    meta: { requiredAuth: false },
   },
   {
     path: "/about",
@@ -15,32 +17,54 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    meta: { requiredAuth: false },
   },
   {
     path: "/login",
     name: "login",
     component: () => import("../views/LoginScreen.vue"),
+    meta: { requiredAuth: false },
   },
   {
     path: "/register",
     name: "register",
     component: () => import("../views/RegisterScreen.vue"),
+    meta: { requiredAuth: false },
   },
   {
     path: "/account",
     name: "account",
     component: () => import("../views/AccountView.vue"),
+    meta: { requiredAuth: true },
   },
   {
     path: "/contact",
     name: "contact",
     component: () => import("../views/ContactView.vue"),
+    meta: { requiredAuth: false },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiredAuth) {
+    let userProfile = store.getters["auth/getUserProfile"];
+    console.log(userProfile);
+    if (userProfile.id === "") {
+      await store.dispatch("auth/userProfile");
+      userProfile = store.getters["auth/getUserProfile"];
+      if (userProfile.id === "") {
+        return next({ path: "/login" });
+      } else {
+        return next();
+      }
+    }
+  }
+  return next();
 });
 
 export default router;

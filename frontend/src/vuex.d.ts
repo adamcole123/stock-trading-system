@@ -5,8 +5,8 @@ import User from "./types/User";
 declare module "@vue/runtime-core" {
   // declare your own store states
   interface State {
-    userData: User;
-    token: string;
+    loginApiStatus: "";
+    userProfile: User;
   }
 
   // provide typings for `this.$store`

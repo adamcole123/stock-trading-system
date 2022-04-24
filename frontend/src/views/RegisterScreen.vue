@@ -61,34 +61,6 @@ export default defineComponent({
       errorText: "",
     };
   },
-  methods: {
-    register() {
-      axios({
-        method: "post",
-        url: "http://localhost:8000/user/register",
-        headers: {},
-        data: this.registerInfo,
-      })
-        .then(async (response) => {
-          console.log(response);
-          await this.updateToken(response.data.token);
-          this.$router.go(0);
-        })
-        .catch((error) => {
-          if (error.response.status === 400) {
-            this.errorText = "Invalid username, password, or email address";
-          } else {
-            this.errorText = "Something went wrong";
-          }
-        });
-    },
-    ...mapMutations(["updateToken"]),
-  },
-  mounted: function () {
-    if (this.token) {
-      this.$router.push("/");
-    }
-  },
-  computed: mapState(["token"]),
+  methods: {},
 });
 </script>

@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Cookie from "js-cookie";
 
 export default defineComponent({
@@ -38,42 +38,28 @@ export default defineComponent({
       errorText: "",
     };
   },
-  mounted: function () {
-    if (this.$store.token) {
-      this.$router.push("/");
-    }
+  computed: {
+    ...mapGetters("auth", {
+      getLoginApiStatus: "getLoginApiStatus",
+    }),
   },
   methods: {
-    login() {
-      let config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-        credentials: "include",
+    ...mapActions("auth", {
+      actionLoginApi: "loginApi",
+    }),
+    async login() {
+      console.log(this.loginInfo.username, this.loginInfo.password);
+      const payload = {
+        username: this.loginInfo.username,
+        password: this.loginInfo.password,
       };
-
-      axios
-        .post("http://localhost:8000/user/signin", this.loginInfo, {
-          withCredentials: true,
-        })
-        .then((response) => {
-          console.log(response);
-          console.log(Cookie.get("token"));
-          this.updateToken(Cookie.get("token"));
-          this.$router.push("/");
-          this.$router.go(0);
-        })
-        .catch((error) => {
-          if (error.status === 400) {
-            this.errorText = "Invalid username or password";
-          } else {
-            this.errorText = "Something went wrong";
-          }
-        });
+      await this.actionLoginApi(payload);
+      if (this.getLoginApiStatus == "success") {
+        this.$router.push("/");
+      } else {
+        alert("failed");
+      }
     },
-    ...mapMutations(["updateToken"]),
   },
-  computed: mapState(["token"]),
 });
 </script>

@@ -27,7 +27,7 @@ import StockWriteRepository from "./infrastructure/Stock/StockWriteRepository";
 // set up container
 const container = new Container();
 
-var allowedOrigins = ['http://localhost:8080'];
+var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);

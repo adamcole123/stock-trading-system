@@ -7,10 +7,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import NavBar from "./components/NavBar.vue";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "App",
   components: { NavBar },
+  computed: {
+    ...mapGetters("auth", {
+      getUserProfile: "getUserProfile",
+    }),
+  },
 });
 </script>
 

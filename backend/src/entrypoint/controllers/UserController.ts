@@ -77,11 +77,12 @@ export default class UserController implements interfaces.Controller {
 
 				const token = jwt.sign(registeredUserDto, jwtSecretKey!, { expiresIn: "7 days" });
 
-				res.status(200)
-					.json({
-						message: "Registered successfully 😊 👌",
-						token: token
-					});
+				res.cookie("token", token, {
+					httpOnly: true,
+					secure: process.env.NODE_ENV === 'production'? true: false
+				})
+					.status(200)
+					.json({ message: "Registered successfully 😊 👌" });
 			})
 			.catch((err: Error) => {
 				res.status(400).json(err)
@@ -90,6 +91,7 @@ export default class UserController implements interfaces.Controller {
 
 	@httpPost('/validate')
 	public async validateUser(@request() req: express.Request, @response() res: express.Response) {
+		console.log(req);
 		return await this.validateUserTokenUseCase.invoke(req.body.token)
 			.then((validated: IUserDto) => {
 				res.status(200).json(validated)
