@@ -4,6 +4,7 @@ import { CommitFunction } from "../CommitFunction";
 
 const state = () => ({
   loginApiStatus: "",
+  registerApiStatus: "",
   logOut: false,
   userProfile: {
     firstName: "",
@@ -17,6 +18,9 @@ const state = () => ({
 const getters = {
   getLoginApiStatus(state: State) {
     return state.loginApiStatus;
+  },
+  getRegisterApiStatus(state: State) {
+    return state.registerApiStatus;
   },
   getUserProfile(state: State) {
     return state.userProfile;
@@ -42,6 +46,21 @@ const actions = {
       commit("setLoginApiStatus", "failed");
     }
   },
+  async registerApi({ commit }: CommitFunction, payload: any) {
+    const response = await axios
+      .post("http://localhost:8000/user/register", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setRegisterApiStatus", "success");
+    } else {
+      commit("setRegisterApiStatus", "failed");
+    }
+  },
   async userProfile({ commit }: CommitFunction) {
     const response = await axios
       .post("http://localhost:8000/user/validate", undefined, {
@@ -54,7 +73,7 @@ const actions = {
     console.log(response);
 
     if (response && response.data) {
-      commit("setUserProfile", response.data.signedInUserDto);
+      commit("setUserProfile", response.data.userDto);
     }
   },
   async userLogout({ commit }: CommitFunction) {
@@ -77,6 +96,9 @@ const actions = {
 const mutations = {
   setLoginApiStatus(state: State, data: any) {
     state.loginApiStatus = data;
+  },
+  setRegisterApiStatus(state: State, data: any) {
+    state.registerApiStatus = data;
   },
   setUserProfile(state: State, data: any) {
     const userProfile = {

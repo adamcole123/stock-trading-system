@@ -9,7 +9,7 @@ import bcrypt from 'bcryptjs';
 export default class UserWriteRepository implements IUserWriteOnlyRepository {
 	create(userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
-			try{
+			try {
 				User.findOne({
 					$or: [{
 						email: userDto.email
@@ -24,7 +24,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 						};
 						if (user.username === userDto.username) {
 							errors.username = "User Name already exists";
-						} else if (user.email === userDto.email){
+						} else if (user.email === userDto.email) {
 							errors.email = "Email already exists";
 						}
 						reject(errors);
@@ -40,14 +40,16 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 							email: userDto.email,
 							password: userDto.password
 						});
-			
+
 						bcrypt.genSalt(10, (err, salt) => {
 							bcrypt.hash(newUser.password, salt, (err, hash) => {
 								if (err) throw err;
 								newUser.password = hash;
 								newUser
 									.save()
-									.then((user: any) => resolve(user))
+									.then((user: any) => {
+										resolve(user);
+									})
 									.catch((err: any) => {
 										console.log(err);
 										reject(err);
@@ -56,9 +58,9 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 						});
 					}
 				})
-				.catch(err => {
-					reject({error: err});
-				});
+					.catch(err => {
+						reject({ error: err });
+					});
 			} catch (error) {
 				reject(error);
 			}

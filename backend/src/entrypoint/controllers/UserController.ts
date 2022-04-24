@@ -36,7 +36,7 @@ export default class UserController implements interfaces.Controller {
 		let reqUser: IUserDto = req.body;
 
 		return await this.userSignInUseCase.invoke(reqUser)
-			.then((signedInUserDto: IUserDto) => {
+			.then((userDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 				if (!jwtSecretKey) {
@@ -44,7 +44,7 @@ export default class UserController implements interfaces.Controller {
 				}
 
 				try {
-					const token = jwt.sign({ signedInUserDto }, jwtSecretKey!, { expiresIn: "7 days" });
+					const token = jwt.sign({ userDto }, jwtSecretKey!, { expiresIn: "7 days" });
 					res.cookie("token", token, {
 						httpOnly: true,
 						secure: process.env.NODE_ENV === 'production'
@@ -72,14 +72,14 @@ export default class UserController implements interfaces.Controller {
 		}
 
 		return await this.userRegisterUseCase.invoke(newUser)
-			.then((registeredUserDto: IUserDto) => {
+			.then((userDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
-				const token = jwt.sign(registeredUserDto, jwtSecretKey!, { expiresIn: "7 days" });
+				const token = jwt.sign({ userDto }, jwtSecretKey!, { expiresIn: "7 days" });
 
 				res.cookie("token", token, {
 					httpOnly: true,
-					secure: process.env.NODE_ENV === 'production'? true: false
+					secure: process.env.NODE_ENV === 'production'
 				})
 					.status(200)
 					.json({ message: "Registered successfully 😊 👌" });
@@ -125,6 +125,6 @@ export default class UserController implements interfaces.Controller {
 
 	@httpGet('/signout')
 	public async signOut(@request() req: express.Request, @response() res: express.Response) {
-		res.clearCookie("token").status(200).json({message: "Signed out successfully!"});
+		res.clearCookie("token").status(200).json({ message: "Signed out successfully!" });
 	}
 }

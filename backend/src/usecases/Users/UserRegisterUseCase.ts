@@ -31,24 +31,10 @@ export default class UserRegisterUseCase implements IUserRegisterUseCase{
 
 				userDto.credit = 50000;
 
-				let createdUser: IUserDto;
 				try {
-					createdUser = await this.userWriteOnlyRepository.create(userDto);
+					let createdUser = await this.userWriteOnlyRepository.create(userDto);
 					createdUser.password = "";
-					resolve({
-						id: createdUser.id,
-						username: createdUser.username,
-						email: createdUser.email,
-						password: createdUser.password,
-						firstName: createdUser.firstName,
-						lastName: createdUser.lastName,
-						birthDate: createdUser.birthDate,
-						reports: createdUser.reports,
-						credit: createdUser.credit,
-						role: createdUser.role,
-						isDeleted: createdUser.isDeleted,
-						cardDetails: createdUser.cardDetails
-					})
+					resolve(createdUser)
 				} catch (error) {
 					reject(error);
 				}

@@ -44,8 +44,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import axios from "axios";
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   name: "RegisterScreen",
@@ -61,6 +60,33 @@ export default defineComponent({
       errorText: "",
     };
   },
-  methods: {},
+  computed: {
+    ...mapGetters("auth", {
+      getRegisterApiStatus: "getRegisterApiStatus",
+    }),
+  },
+  methods: {
+    ...mapActions("auth", {
+      actionRegisterApi: "registerApi",
+      userProfile: "userProfile",
+    }),
+    async register() {
+      console.log(this.registerInfo.username, this.registerInfo.password);
+      const payload = {
+        username: this.registerInfo.username,
+        password: this.registerInfo.password,
+        firstName: this.registerInfo.firstName,
+        lastName: this.registerInfo.lastName,
+        email: this.registerInfo.email,
+      };
+      await this.actionRegisterApi(payload);
+      if (this.getRegisterApiStatus == "success") {
+        await this.userProfile();
+        this.$router.push("/");
+      } else {
+        alert("failed");
+      }
+    },
+  },
 });
 </script>
