@@ -17,7 +17,7 @@ export default class FakeStockWriteOnlyRepository implements IStockWriteOnlyRepo
 			}
 		})
 	}
-	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto | IStockDto[]> {
+	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto[]> {
 		return new Promise((resolve, reject) => {
 			if(options?.all){
 				if(options?.random){
@@ -46,7 +46,7 @@ export default class FakeStockWriteOnlyRepository implements IStockWriteOnlyRepo
 					stock.value = stockDto.value,
 					stock.volume = stockDto.volume
 
-					resolve(stock)
+					resolve([stock])
 				}
 			})
 

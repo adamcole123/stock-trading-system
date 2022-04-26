@@ -14,7 +14,7 @@ export default class FakeUserReadOnlyRepository implements IUserReadOnlyReposito
 	}
 	fetch(userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
-			let foundUser = userDto.id !== typeof(undefined) ? users.find(x => x.id == userDto.id) : users.find(x => x.username == userDto.username);
+			let foundUser = users.find(x => x.username == userDto.username);
 			
 			if(!foundUser){
 				reject('Could not find user');

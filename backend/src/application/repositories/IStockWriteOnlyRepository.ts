@@ -3,5 +3,5 @@ import StockWriteOptions from "./StockWriteOptions";
 
 export default interface IStockWriteOnlyRepository {
 	create(userDto: IStockDto): Promise<IStockDto>;
-	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto | IStockDto[]>;
+	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto[]>;
 }

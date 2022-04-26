@@ -86,7 +86,7 @@ describe('User Use Cases', () => {
 		//Act
 		userDto = await userRegisterUseCase.invoke({id: 'x', username: 'testxusername', password: 'testxpassword', email: 'testx@test.com', firstName: 'testxfname', lastName: 'testxlname', birthDate: new Date(), reports: []})
 
-		let newUser = await newUserReadOnlyRepository.fetch({id: "x"});
+		let newUser = await newUserReadOnlyRepository.fetch({username: "testxusername"});
 		//Assert
 		expect(newUser.credit).toBe(50000)
 	})

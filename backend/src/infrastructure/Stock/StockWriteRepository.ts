@@ -16,7 +16,7 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 			}
 		})
 	}
-	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto | IStockDto[]> {
+	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
 			if(options?.all){
 				if(options?.random){

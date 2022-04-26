@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for configuration/UserServiceLocator.ts</title>
+    <title>Code coverage report for infrastructure/FakeTradeWriteOnlyRepository.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">configuration</a> UserServiceLocator.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">infrastructure</a> FakeTradeWriteOnlyRepository.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">42.85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">42.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -84,81 +84,48 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { injectable, inject } from "inversify";
-import IUserReadOnlyRepository from "../application/repositories/IUserReadOnlyRepository";
-import IUserWriteOnlyRepository from "../application/repositories/IUserWriteOnlyRepository";
-import { TYPES } from "../constants/types";
-import IUserRegisterUseCase from "../usecases/Users/IUserRegisterUseCase";
-import IUserSignInUseCase from "../usecases/Users/IUserSignInUseCase";
-import UserRegisterUseCase from "../usecases/Users/UserRegisterUseCase";
-import UserSignInUseCase from "../usecases/Users/UserSignInUseCase";
-import IValidateUserTokenUseCase from '../usecases/Users/IValidateUserTokenUseCase';
-import ValidateUserTokenUseCase from "../usecases/Users/ValidateUserTokenUseCase";
-import IEditUserDetailsUseCase from '../usecases/Users/IEditUserDetailsUseCase';
-import EditUserDetailsUseCase from '../usecases/Users/EditUserDetailsUseCase';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import ITradeWriteOnlyRepository from '../application/repositories/ITradeWriteOnlyRepository';
+import ITradeDto from '../usecases/data_tranfer_objects/ITradeDto';
+import Trade from '../usecases/entities/Trade';
+import Trades from './FakeTradeData';
 &nbsp;
-@injectable()
-export default class UserServiceLocator {
-&nbsp;
-	constructor(@inject(TYPES.IUserReadOnlyRepository) private readRepository: IUserReadOnlyRepository, @inject(TYPES.IUserWriteOnlyRepository) private writeRepository: IUserWriteOnlyRepository){}
-&nbsp;
-	public GetUserRegisterUseCase(): IUserRegisterUseCase {
-		return new UserRegisterUseCase(this.writeRepository);
+export default class FakeTradeWriteOnlyRepository implements ITradeWriteOnlyRepository {
+<span class="fstat-no" title="function not covered" >	edit(</span>tradeDto: ITradeDto): Promise&lt;ITradeDto&gt; {
+<span class="cstat-no" title="statement not covered" >		throw new Error('Method not implemented.');</span>
 	}
 &nbsp;
-	public GetUserSignInUseCase(): IUserSignInUseCase {
-		return new UserSignInUseCase(this.readRepository);
+<span class="fstat-no" title="function not covered" >	create(</span>tradeDto: ITradeDto): Promise&lt;ITradeDto&gt; {
+<span class="cstat-no" title="statement not covered" >		return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >			Trades.push(new Trade(</span>
+				tradeDto.user_id,
+				tradeDto.stock_id,
+				tradeDto.stock_amount!
+			))
+<span class="cstat-no" title="statement not covered" >			resolve(tradeDto);</span>
+		})
 	}
 &nbsp;
-	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
-		return new ValidateUserTokenUseCase();
-	}
-	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
-		return new EditUserDetailsUseCase(this.writeRepository);
-	}
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

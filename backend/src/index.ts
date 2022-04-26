@@ -7,10 +7,9 @@ import dotenv from 'dotenv';
 import * as prettyjson from "prettyjson";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
-// declare metadata by @controller annotation
-import "./entrypoint/controllers/UserController";
-import "./entrypoint/controllers/StockController";
+
 import { Container } from 'inversify';
 import UserServiceLocator from './configuration/UserServiceLocator';
 import IUserReadOnlyRepository from "./application/repositories/IUserReadOnlyRepository";
@@ -18,16 +17,23 @@ import IUserWriteOnlyRepository from "./application/repositories/IUserWriteOnlyR
 import IStockReadOnlyRepository from './application/repositories/IStockReadOnlyRepository';
 import IStockWriteOnlyRepository from './application/repositories/IStockWriteOnlyRepository';
 import StockServiceLocator from "./configuration/StockServiceLocator";
-import mongoose from 'mongoose';
 import StockReadRepository from './infrastructure/Stock/StockReadRepository';
 import UserReadRepository from './infrastructure/User/UserReadRepository';
 import UserWriteRepository from './infrastructure/User/UserWriteRepository';
 import StockWriteRepository from "./infrastructure/Stock/StockWriteRepository";
+import TradeServiceLocator from './configuration/TradeServiceLocator';
+import ITradeWriteOnlyRepository from "./application/repositories/ITradeWriteOnlyRepository";
+import TradeWriteOnlyRepository from './infrastructure/Trade/TradeWriteOnlyRepository';
 
 // set up container
 const container = new Container();
 
 var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
+
+// declare metadata by @controller annotation
+import "./entrypoint/controllers/UserController";
+import "./entrypoint/controllers/StockController";
+import "./entrypoint/controllers/TradeController";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -37,6 +43,9 @@ container.bind<IUserWriteOnlyRepository>(TYPES.IUserWriteOnlyRepository).to(User
 container.bind<StockServiceLocator>(TYPES.StockServiceLocator).to(StockServiceLocator);
 container.bind<IStockReadOnlyRepository>(TYPES.IStockReadOnlyRepository).to(StockReadRepository);
 container.bind<IStockWriteOnlyRepository>(TYPES.IStockWriteOnlyRepository).to(StockWriteRepository);
+
+container.bind<TradeServiceLocator>(TYPES.TradeServiceLocator).to(TradeServiceLocator);
+container.bind<ITradeWriteOnlyRepository>(TYPES.ITradeWriteOnlyRepository).to(TradeWriteOnlyRepository);
 
 dotenv.config();
 

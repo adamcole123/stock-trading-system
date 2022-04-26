@@ -1,5 +1,7 @@
 export default interface ITradeDto {
-	stockid: string,
-	userid: string,
-	quantity: number
+	stock_id: string,
+	user_id: string,
+	stock_value?: number,
+	stock_amount?: number,
+	time_of_trade?: Date,
 }

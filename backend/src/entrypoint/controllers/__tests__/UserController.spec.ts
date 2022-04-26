@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { cleanUpMetadata, interfaces, InversifyExpressServer } from 'inversify-express-utils';
+import { cleanUpMetadata, cookies, interfaces, InversifyExpressServer } from 'inversify-express-utils';
 import UserServiceLocator from '../../../configuration/UserServiceLocator';
 import FakeUserReadOnlyRepository from '../../../infrastructure/FakeUserReadOnlyRepository';
 import FakeUserWriteOnlyRepository from '../../../infrastructure/FakeUserWriteOnlyRepository';
@@ -105,9 +105,9 @@ describe('UserController Tests', () => {
 
 		let responseObj = httpMocks.createResponse();
 
-		await controller.registerUser(requestObj, responseObj)
+		await controller.registerUser(requestObj, responseObj);
 		
-		expect(userObj.find(x => x.id === "x")!.credit).toBe(50000)
+		expect(userObj.find(x => x.id === "x")!.credit).toBe(50000);
 	})
 
 	it('User validate route', async () => {
@@ -125,7 +125,7 @@ describe('UserController Tests', () => {
 		let requestObj = httpMocks.createRequest({
 			method: 'POST',
 			url: '/user/signin',
-			body: {token}
+			cookies: {token:token}
 		});
 
 		let responseObj = httpMocks.createResponse();

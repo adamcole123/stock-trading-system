@@ -10,8 +10,8 @@ import IGetOneStockUseCase from "../usecases/Stocks/IGetOneStockUseCase";
 import GetOneStockUseCase from '../usecases/Stocks/GetOneStockUseCase';
 
 @injectable()
-export default class StockServiceLocator {
 
+export default class StockServiceLocator {
 	constructor(@inject(TYPES.IStockReadOnlyRepository) private readRepository: IStockReadOnlyRepository, 
 	@inject(TYPES.IStockWriteOnlyRepository) private writeRepository: IStockWriteOnlyRepository){}
 

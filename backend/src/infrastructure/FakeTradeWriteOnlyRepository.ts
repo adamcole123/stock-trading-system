@@ -11,9 +11,9 @@ export default class FakeTradeWriteOnlyRepository implements ITradeWriteOnlyRepo
 	create(tradeDto: ITradeDto): Promise<ITradeDto> {
 		return new Promise((resolve, reject) => {
 			Trades.push(new Trade(
-				"test1_id",
-				"teststock2id",
-				10
+				tradeDto.user_id,
+				tradeDto.stock_id,
+				tradeDto.stock_amount!
 			))
 			resolve(tradeDto);
 		})
