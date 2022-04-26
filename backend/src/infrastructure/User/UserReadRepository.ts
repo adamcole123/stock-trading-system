@@ -12,12 +12,16 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 
 	fetch(userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
-			let user = await User.findOne({username: userDto.username});
-			if(!user){
-				reject("No user with that username exists");
+			let user: IUserDto;
+			try {
+				if(userDto.id)
+					user = await <IUserDto>User.findById(userDto.id);
+				if(userDto.username)
+					user = await <IUserDto>User.findOne({username: userDto.username});
+			} catch (err) {
+				reject("No user with that username or id exists");
 			}
-			
-			resolve(user);
+			resolve(user!);
 		})
 	}
 	

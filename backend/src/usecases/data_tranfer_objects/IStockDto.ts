@@ -1,7 +1,7 @@
 export default interface IStockDto {
-	id: string,
-	symbol: string,
-	name: string,
+	id?: string,
+	symbol?: string,
+	name?: string,
 	value?: number,
 	volume?: number,
 	open?: number,

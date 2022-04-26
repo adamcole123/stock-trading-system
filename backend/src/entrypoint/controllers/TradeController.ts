@@ -30,6 +30,6 @@ export default class TradeController implements interfaces.Controller {
 			.then((tradeDto: ITradeDto) => {
 				res.status(200).json(tradeDto)
 			})
-			.catch((err: Error) => res.status(500).json({error: err.message}));
+			.catch((err: Error) => res.status(500).json({err}));
 	}
 }
