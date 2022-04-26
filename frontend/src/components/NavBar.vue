@@ -8,6 +8,7 @@
       </div>
       <div class="right">
         <div v-if="getUserProfile.id !== ''">
+          {{ getUserProfile.credit }}
           <router-link to="/account" class="nav-link"
             >{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}
           </router-link>
