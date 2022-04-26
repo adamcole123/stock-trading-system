@@ -20,7 +20,7 @@ export default class TradeController implements interfaces.Controller {
 		this.sellStocksUseCase = serviceLocator.GetSellStocksUseCase();
 	}
 	
-	@httpPost('/buystock')
+	@httpPost('/buystocks')
 	public async buyStock(@request() req: express.Request, @response() res: express.Response){
 		
 		if(!req.body.user_id && !req.body.stock_id){
@@ -36,7 +36,7 @@ export default class TradeController implements interfaces.Controller {
 			.catch((err: Error) => res.status(500).json({err}));
 	}
 
-	@httpPost('/sellstock')
+	@httpPost('/sellstocks')
 	public async sellStock(@request() req: express.Request, @response() res: express.Response){
 		
 		if(!req.body.user_id && !req.body.stock_id){
