@@ -6,6 +6,8 @@ import BuyStocksUseCase from "../usecases/Trades/BuyStocksUseCase";
 import IUserWriteOnlyRepository from "../application/repositories/IUserWriteOnlyRepository";
 import IUserReadOnlyRepository from "../application/repositories/IUserReadOnlyRepository";
 import IBuyStocksUseCase from "../usecases/Trades/IBuyStocksUseCase";
+import ISellStocksUseCase from "../usecases/Trades/ISellStocksUseCase";
+import SellStocksUseCase from "../usecases/Trades/SellStocksUseCase";
 
 @injectable()
 
@@ -17,5 +19,8 @@ export default class TradeServiceLocator {
 
 	public GetBuyStocksUseCase(): IBuyStocksUseCase {
 		return new BuyStocksUseCase(this.stockWriteRepository, this.tradeWriteRepository, this.userWriteRepository, this.userReadRepository);
+	}
+	public GetSellStocksUseCase(): ISellStocksUseCase {
+		return new SellStocksUseCase(this.stockWriteRepository, this.tradeWriteRepository, this.userWriteRepository, this.userReadRepository);
 	}
 }
