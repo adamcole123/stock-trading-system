@@ -3,7 +3,9 @@ import Role from '../../usecases/entities/Role';
 import Report from './ReportSchema';
 import CardDetails from './CardDetailsSchema';
 
-const userSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+
+const userSchema = new Schema({
 	username: {
 		type: String,
 		unique: true,

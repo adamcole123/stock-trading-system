@@ -1,4 +1,4 @@
 import mongoose from 'mongoose';
 import tradeSchema from './TradeSchema';
 
-export default mongoose.model('Trade', tradeSchema);
+export default mongoose.model('Trade', tradeSchema, 'trades');

@@ -29,7 +29,7 @@ export default class TradeWriteOnlyRepository implements ITradeWriteOnlyReposito
 						reject(err);
 					});
 			} catch (err) {
-				reject({ error: err });
+				reject(err);
 			}
 		});
 	}

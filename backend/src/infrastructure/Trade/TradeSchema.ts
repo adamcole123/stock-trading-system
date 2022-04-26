@@ -2,32 +2,29 @@ import mongoose from 'mongoose';
 
 var Schema = mongoose.Schema;
 
-const tradeSchema = new mongoose.Schema({
+const tradeSchema = new Schema({
 	user_id: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
-		unique: true,
-		required: true
+		required: true,
+		unique: false
 	},
 	stock_id: {
 		type: Schema.Types.ObjectId,
 		ref: 'Stock',
-		unique: true,
-		required: true
+		required: true,
+		unique: false
 	},
 	stock_amount: {
 		type: Number,
-		unique: true,
 		required: true
 	},
 	stock_value: {
 		type: Number,
-		unique: true,
 		required: true
 	},
 	time_of_trade: {
 		type: Date,
-		unique: true,
 		required: true,
 		default: new Date()
 	},

@@ -4,6 +4,7 @@ import User from './User';
 import UserType from '../../usecases/entities/User'
 import { injectable } from 'inversify';
 import bcrypt from 'bcryptjs';
+import UserEditOptions from '../../application/repositories/UserEditOptions';
 
 @injectable()
 export default class UserWriteRepository implements IUserWriteOnlyRepository {
@@ -67,9 +68,21 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 		})
 	}
 
-	async edit(username: String, userDto: IUserDto): Promise<IUserDto> {
-		let edittedUser = await User.findOneAndUpdate({ username: username }, userDto);
-		return edittedUser;
+	async edit(username: String, userDto: IUserDto, userEditOptions: UserEditOptions): Promise<IUserDto> {
+		return new Promise((resolve, reject) => {
+			User.findOne({ username: username })
+			.then(user => {
+				if(userEditOptions.tradeMode !== undefined)
+					user.credit = userEditOptions.tradeMode === 1 ? user.credit + userDto.credit : user.credit - Number(userDto!.credit);
+				
+				user.save();
+
+				resolve(user);
+			})
+			.catch(err => {
+				reject(err);
+			})
+		})
 	}
 
 }
