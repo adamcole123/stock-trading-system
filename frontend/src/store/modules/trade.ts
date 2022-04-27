@@ -3,8 +3,8 @@ import axios from "axios";
 import { CommitFunction } from "../CommitFunction";
 
 const state = () => ({
-  buyStockApiStatus: "",
-  sellStockApiStatus: "",
+  buyStocksApiStatus: "",
+  sellStocksApiStatus: "",
 });
 
 const getters = {

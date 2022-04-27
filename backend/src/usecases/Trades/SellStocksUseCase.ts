@@ -4,12 +4,14 @@ import ITradeDto from '../data_tranfer_objects/ITradeDto';
 import ISellStocksUseCase from './ISellStocksUseCase';
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
-import IStockDto from '../data_tranfer_objects/IStockDto';
-import IUserDto from '../data_tranfer_objects/IUserDto';
+import IStockReadOnlyRepository from '../../application/repositories/IStockReadOnlyRepository';
+import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadOnlyRepository';
 
 export default class SellStocksUseCase implements ISellStocksUseCase {
 	stockWriteOnlyRepository: IStockWriteOnlyRepository;
+	stockReadOnlyRepository: IStockReadOnlyRepository;
 	tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
+	tradeReadOnlyRepository: ITradeReadOnlyRepository;
 	userWriteOnlyRepository: IUserWriteOnlyRepository;
 	userReadOnlyRepository: IUserReadOnlyRepository;
 
@@ -17,70 +19,84 @@ export default class SellStocksUseCase implements ISellStocksUseCase {
 	 *
 	 */
 	constructor(_stockWriteOnlyRepository: IStockWriteOnlyRepository, 
+				_stockReadOnlyRepository: IStockReadOnlyRepository, 
 				_tradeWriteOnlyRepository: ITradeWriteOnlyRepository,
+				_tradeReadOnlyRepository: ITradeReadOnlyRepository,
 				_userWriteOnlyRepository: IUserWriteOnlyRepository,
 				_userReadOnlyRepository: IUserReadOnlyRepository) {
 		this.stockWriteOnlyRepository = _stockWriteOnlyRepository;
+		this.stockReadOnlyRepository = _stockReadOnlyRepository;
 		this.tradeWriteOnlyRepository = _tradeWriteOnlyRepository;
+		this.tradeReadOnlyRepository = _tradeReadOnlyRepository;
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;
 		this.userReadOnlyRepository = _userReadOnlyRepository;
 	}
 
 	async invoke(tradeDto: ITradeDto): Promise<ITradeDto> {
-		return new Promise((resolve, reject) => {
-			let stock: IStockDto[];
-			let returnObj: ITradeDto;
-	
-			this.stockWriteOnlyRepository.edit({
-				id: tradeDto.stock_id,
-				volume: Math.abs(tradeDto.stock_amount!),
-			},{
-				tradeMode: 1
-			})
-			.then(stock => {
-				let user: IUserDto;
-	
-				this.userReadOnlyRepository.fetch({
+		return new Promise(async (resolve, reject) => {
+			//First i need to check
+			// Does the user have enough credit for the trade?
+			// Does the stock have enough volume?
+			let user: any;
+			let stock: any;
+			let trades: any;
+			let tradeObj: any;
+
+			Promise.all([
+				stock = await this.stockReadOnlyRepository.fetch({id: tradeDto.stock_id}),
+				user = await this.userReadOnlyRepository.fetch({
 					id: tradeDto.user_id
+				}),
+				trades = await this.tradeReadOnlyRepository.fetch({
+					user_id: tradeDto.user_id,
+					stock_id: tradeDto.stock_id
 				})
-				.then(user => {
-					if(!user.username)
-						reject("Could not get user details");
-	
-					this.userWriteOnlyRepository.edit(user.username!, {
+			])
+
+			if(trades.length === 0) {
+				return reject('User does not own enough stock to sell');
+			}
+
+			let ownedVolume = this.calculateOwnedVolume(trades);
+			
+			if(!(ownedVolume.stock_amount! >= tradeDto.stock_amount!)){
+				return reject('User does not own enough stock to sell');
+			}
+
+			try{
+				Promise.all([
+					await this.userWriteOnlyRepository.edit(user.username!, {
 						credit: tradeDto.stock_amount! * stock[0].value!
 					}, {
-						tradeMode: 1
+						tradeMode: true
+					}),
+					await this.stockWriteOnlyRepository.edit({
+						id: tradeDto.stock_id,
+						volume: tradeDto.stock_amount!,
+					}, {
+						tradeMode: true
+					}),
+					await this.tradeWriteOnlyRepository.create(tradeObj = {
+						stock_id: tradeDto.stock_id,
+						user_id: tradeDto.user_id,
+						stock_amount: tradeDto.stock_amount,
+						stock_value: stock[0].value,
+						time_of_trade: new Date(),
+						trade_type: 'Sell'
 					})
-					.then(async user => {
-						let tradeObj = {
-							stock_id: tradeDto.stock_id,
-							user_id: tradeDto.user_id,
-							stock_amount: tradeDto.stock_amount,
-							stock_value: stock[0].value,
-							time_of_trade: new Date()
-						}
-
-						this.tradeWriteOnlyRepository.create(tradeObj)
-						.then(newTrade => {
-							resolve(newTrade);
-						})
-						.catch(err => {
-							reject("Error creating trade: " + err);
-						})
-					})
-					.catch(err => {
-						reject("Error deducting credit: " + err);
-					})
-				})
-				.catch(err => {
-					reject("Cannot find user: " + err);
-				})
-			})
-			.catch(err => {
-				reject("Error deducting volume from stock: " + err);
-			})
+				]);
+				resolve(tradeObj);
+			} catch (e) {
+				return reject(e);
+			}
 		});
 	}
-	
+
+	private calculateOwnedVolume(trades: ITradeDto[]): ITradeDto {
+		return trades.reduce((previousValue, currentValue) => {
+			return {
+				stock_amount: currentValue.trade_type === "Buy" ? previousValue.stock_amount! + currentValue.stock_amount! : previousValue.stock_amount! - currentValue.stock_amount!
+			};
+		});
+	}	
 }

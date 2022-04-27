@@ -40,11 +40,11 @@ export default class UserController implements interfaces.Controller {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 				if (!jwtSecretKey) {
-					return res.status(500).json({ err: 'Could not sign in user' });
+					return res.status(500).json('Could not sign in user');
 				}
 
 				try {
-					const token = jwt.sign({ userDto }, jwtSecretKey!, { expiresIn: "7 days" });
+					const token = jwt.sign(userDto, jwtSecretKey!, { expiresIn: "7 days" });
 					res.cookie("token", token, {
 						httpOnly: true,
 						secure: process.env.NODE_ENV === 'production'
@@ -57,7 +57,7 @@ export default class UserController implements interfaces.Controller {
 
 			})
 			.catch((err: Error) => {
-				res.status(400).json({ error: err })
+				res.status(400).json(err)
 			});
 	}
 
@@ -75,7 +75,7 @@ export default class UserController implements interfaces.Controller {
 			.then((userDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
-				const token = jwt.sign({ userDto }, jwtSecretKey!, { expiresIn: "7 days" });
+				const token = jwt.sign(userDto, jwtSecretKey!, { expiresIn: "7 days" });
 
 				res.cookie("token", token, {
 					httpOnly: true,
@@ -115,12 +115,13 @@ export default class UserController implements interfaces.Controller {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY
 
 		return await this.editUserDetailsUseCase.invoke(userToEdit, editedUser, req.body.token)
-			.then((editedUserDto: IUserDto) => {
-				const token = jwt.sign(editedUserDto, jwtSecretKey!, { expiresIn: "7 days" });
+			.then((userDto: IUserDto) => {
+
+				const token = jwt.sign(userDto, jwtSecretKey!, { expiresIn: "7 days" });
 
 				res.status(200).json(token)
 			})
-			.catch((err: Error) => res.status(400).json({ error: err.message }));
+			.catch((err: Error) => res.status(400).json(err));
 	}
 
 	@httpGet('/signout')

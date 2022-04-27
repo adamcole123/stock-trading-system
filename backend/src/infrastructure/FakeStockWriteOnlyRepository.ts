@@ -13,7 +13,7 @@ export default class FakeStockWriteOnlyRepository implements IStockWriteOnlyRepo
 				stocks.push(<Stock>stockDto)
 				resolve(stockDto);
 			} catch (error) {
-				reject(error);
+				return reject(error);
 			}
 		})
 	}
