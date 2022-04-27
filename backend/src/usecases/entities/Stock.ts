@@ -13,7 +13,7 @@ export default class Stock {
 		this.gains = this.getGains();
 	}
 
-	public getGains(): number | undefined {
-		return this.value && this.open ? this.value!-this.open! : undefined;
+	public getGains(): any {
+		return (this.value && this.open ? this.value!-this.open! : 0).toFixed(2);
 	}
 }
