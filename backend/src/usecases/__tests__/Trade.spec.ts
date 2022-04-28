@@ -18,8 +18,14 @@ import bcrypt from 'bcryptjs';
 import Report from '../entities/Report';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import FakeUserReadOnlyRepository from '../../infrastructure/FakeUserReadOnlyRepository';
+import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadOnlyRepository';
+import IGetUserTransactionHistory from '../Trades/IGetUserTransactionHistoryUseCaseUseCase';
+import GetUserTransactionHistory from '../Trades/GetUserTransactionHistoryUseCaseUseCase';
+import GetUserTransactionHistoryUseCase from '../Trades/GetUserTransactionHistoryUseCase';
+import IGetUserTransactionHistoryUseCase from '../Trades/IGetUserTransactionHistoryUseCase';
 
 let tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
+let tradeReadOnlyRepository: ITradeReadOnlyRepository;
 let stockWriteOnlyRepository: IStockWriteOnlyRepository;
 let stockReadOnlyRepository: IStockReadOnlyRepository;
 let userWriteOnlyRepository: IUserWriteOnlyRepository;
@@ -28,6 +34,7 @@ let userReadOnlyRepository: IUserReadOnlyRepository;
 describe("Trade Tests", () => {
 	beforeEach(() => {
 		tradeWriteOnlyRepository = new FakeTradeWriteOnlyRepository();
+		//tradeReadOnlyRepository = new FakeTradeReadOnlyRepository();
 		stockWriteOnlyRepository = new FakeStockWriteOnlyRepository();
 		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
 		userReadOnlyRepository = new FakeUserReadOnlyRepository();
@@ -39,6 +46,7 @@ describe("Trade Tests", () => {
 
 		stockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
 		tradeWriteOnlyRepository = mock<ITradeWriteOnlyRepository>();
+		tradeReadOnlyRepository = mock<ITradeReadOnlyRepository>();
 		userWriteOnlyRepository = mock<IUserWriteOnlyRepository>();
 		userReadOnlyRepository = mock<IUserReadOnlyRepository>();
 
@@ -158,7 +166,7 @@ describe("Trade Tests", () => {
 			password: bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))
 		})
 
-		sellStocksUseCase = new SellStocksUseCase(stockWriteOnlyRepository, tradeWriteOnlyRepository, userWriteOnlyRepository);
+		sellStocksUseCase = new SellStocksUseCase(stockWriteOnlyRepository, stockReadOnlyRepository, tradeWriteOnlyRepository, tradeReadOnlyRepository, userWriteOnlyRepository, userReadOnlyRepository);
 		
 		//Act
 		tradeDto = await sellStocksUseCase.invoke({
@@ -173,5 +181,71 @@ describe("Trade Tests", () => {
 		expect(tradeDto.stock_amount).toBe(50);
 		expect(tradeDto.time_of_trade).toBe(newDate);
 		expect(tradeDto.stock_value).toBe(956.9);
+	})
+
+	it("Get user transactions use case", async () => {
+		//Arrange
+		let getUserTransactionHistory: IGetUserTransactionHistoryUseCase;
+		let tradeDto: ITradeDto[];
+
+		// Search through trades for every trade that had user id in
+
+		tradeReadOnlyRepository = mock<ITradeReadOnlyRepository>();
+
+		let newDate = new Date();
+
+		mock(tradeReadOnlyRepository).fetch.mockResolvedValue([
+			{
+				user_id: "testid1",
+				stock_id: "teststock1id",
+				stock_amount: 50,
+				stock_value: 345.6,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testid1",
+				stock_id: "teststock12id",
+				stock_amount: 6,
+				stock_value: 87,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testid1",
+				stock_id: "teststock14id",
+				stock_amount: 4,
+				stock_value: 67,
+				time_of_trade: newDate,
+			}
+		])
+
+		getUserTransactionHistory = new GetUserTransactionHistoryUseCase(tradeReadOnlyRepository);
+		
+		//Act
+		tradeDto = await getUserTransactionHistory.invoke({
+			user_id: "testid1",
+		});
+
+		//Assert
+		expect(tradeDto).toStrictEqual(expect.arrayContaining([{
+			user_id: "testid1",
+			stock_id: "teststock1id",
+			stock_amount: 50,
+			stock_value: 345.6,
+			time_of_trade: newDate,
+		},
+		{
+			user_id: "testid1",
+			stock_id: "teststock12id",
+			stock_amount: 6,
+			stock_value: 87,
+			time_of_trade: newDate,
+		},
+		{
+			user_id: "testid1",
+			stock_id: "teststock14id",
+			stock_amount: 4,
+			stock_value: 67,
+			time_of_trade: newDate,
+		}]));
 	})
 })

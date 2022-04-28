@@ -4,4 +4,5 @@ export default interface Report {
   id: string;
   report_data: string;
   report_type: ReportType;
+  report_date: Date;
 }

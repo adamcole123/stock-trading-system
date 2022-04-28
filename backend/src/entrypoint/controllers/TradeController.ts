@@ -1,5 +1,5 @@
 import { inject } from "inversify";
-import { controller, httpPost, interfaces, request, response } from "inversify-express-utils";
+import { controller, httpGet, httpPost, interfaces, request, response } from "inversify-express-utils";
 import * as express from "express";
 import { TYPES } from "../../constants/types";
 import dotenv from 'dotenv';
@@ -9,6 +9,7 @@ import TradeServiceLocator from "../../configuration/TradeServiceLocator";
 import ISellStocksUseCase from "../../usecases/Trades/ISellStocksUseCase";
 import jwt from "jsonwebtoken";
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
+import IGetUserTransactionHistoryUseCase from "../../usecases/Trades/IGetUserTransactionHistoryUseCase";
 
 dotenv.config();
 
@@ -16,10 +17,12 @@ dotenv.config();
 export default class TradeController implements interfaces.Controller {
 	private readonly buyStocksUseCase: IBuyStocksUseCase;
 	private readonly sellStocksUseCase: ISellStocksUseCase;
+	private readonly getUserTransactionHistoryUseCase: IGetUserTransactionHistoryUseCase;
 	
 	constructor(@inject(TYPES.TradeServiceLocator) serviceLocator: TradeServiceLocator){
 		this.buyStocksUseCase = serviceLocator.GetBuyStocksUseCase();
 		this.sellStocksUseCase = serviceLocator.GetSellStocksUseCase();
+		this.getUserTransactionHistoryUseCase = serviceLocator.GetGetUserTransactionHistoryUseCase();
 	}
 	
 	@httpPost('/buystocks')
@@ -62,6 +65,24 @@ export default class TradeController implements interfaces.Controller {
 		return await this.sellStocksUseCase.invoke(reqTrade)
 			.then((tradeDto: ITradeDto) => {
 				res.status(200).json(tradeDto)
+			})
+			.catch((err: Error) => res.status(500).json(err));
+	}
+
+	@httpGet('/usertransactions')
+	public async userTransactions(@request() req: express.Request, @response() res: express.Response){
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		let cookieData = await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+			
+		if(cookieData.id !== req.query.user_id){
+			return res.status(401).json({error: 'User not authorised'});
+		}
+
+		let reqTrade: ITradeDto = req.query;
+		
+		return await this.getUserTransactionHistoryUseCase.invoke(reqTrade)
+			.then((tradeDtos: ITradeDto[]) => {
+				res.status(200).json(tradeDtos)
 			})
 			.catch((err: Error) => res.status(500).json(err));
 	}

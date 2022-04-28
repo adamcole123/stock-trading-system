@@ -9,10 +9,12 @@ declare module "@vue/runtime-core" {
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
     getStocksApiStatus: "";
+    getGetUserTransactionHistoryApiStatus: "";
     logOut: boolean;
     loginApiStatus: "";
     userProfile: User;
     stockData: [];
+    userTransactionHistory: [];
   }
 
   // provide typings for `this.$store`

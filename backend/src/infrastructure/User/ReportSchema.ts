@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import ReportType from '../../usecases/entities/ReportType';
 
 const reportSchema = new mongoose.Schema({
 	id: String,
@@ -7,7 +6,8 @@ const reportSchema = new mongoose.Schema({
 	report_type: {
 		type: String,
 		enum: ['CSV', 'XML']
-	}
+	},
+	report_date: Date
 })
 
 export default reportSchema;
