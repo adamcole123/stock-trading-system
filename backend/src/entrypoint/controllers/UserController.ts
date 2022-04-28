@@ -75,7 +75,18 @@ export default class UserController implements interfaces.Controller {
 			.then((userDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
-				const token = jwt.sign(userDto, jwtSecretKey!, { expiresIn: "7 days" });
+				const token = jwt.sign({
+					id: userDto.id,
+					firstName: userDto.firstName,
+					lastName: userDto.lastName,
+					credit: userDto.credit,
+					birthDate: userDto.birthDate,
+					email: userDto.email,
+					reports: userDto.reports,
+					role: userDto.role,
+					username: userDto.username,
+					cardDetails: userDto.cardDetails,
+				}, jwtSecretKey!, { expiresIn: "7 days" });
 
 				res.cookie("token", token, {
 					httpOnly: true,

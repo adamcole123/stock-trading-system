@@ -62,7 +62,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 											isDeleted: user.isDeleted,
 											cardDetails: user.cardDetails
 										}
-										resolve(user);
+										resolve(userDto);
 									})
 									.catch((err: any) => {
 										console.log(err);
@@ -90,7 +90,18 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 				
 				user.save();
 
-				resolve(user);
+				resolve({
+					id: user._id,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					credit: user.credit,
+					birthDate: user.birthDate,
+					email: user.email,
+					reports: user.reports,
+					role: user.role,
+					username: user.username,
+					cardDetails: user.cardDetails,
+				});
 			})
 			.catch(err => {
 				reject(err);
