@@ -3,10 +3,19 @@ import IValidateUserTokenUseCase from './IValidateUserTokenUseCase';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import IUserDto from '../data_tranfer_objects/IUserDto';
 import CardDetails from '../entities/CardDetails';
+import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 
 export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCase{
+	private userReadOnlyRepository: IUserReadOnlyRepository;
+
+	/**
+	 *
+	 */
+	constructor(_userReadOnlyRepository: IUserReadOnlyRepository) {
+		this.userReadOnlyRepository = _userReadOnlyRepository;
+	}
 	invoke(token: string): Promise<IUserDto> {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			// Tokens are generally passed in the header of the request
 			// Due to security reasons.
 
@@ -15,6 +24,8 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 			try {		
 				let verified = <IUserDto>jwt.verify(token, jwtSecretKey!);
 				if(verified){
+					verified = await this.userReadOnlyRepository.fetch({id: verified.id})
+
 					verified.password = "";
 					if(verified.cardDetails){
 						verified.cardDetails.map(card => {
@@ -26,11 +37,11 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 					resolve(verified);
 				}else{
 					// Access Denied
-					reject('Could not validate user');
+					return reject('Could not validate user');
 				}
 			} catch (error) {
 				// Access Denied
-				reject('Could not validate user');
+				return reject('Could not validate user');
 			}
 		});
 	}

@@ -1,6 +1,6 @@
 import { State } from "vue";
 import axios from "axios";
-import { CommitFunction } from "../CommitFunction";
+import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
   getStocksApiStatus: "",
@@ -17,7 +17,7 @@ const getters = {
 };
 
 const actions = {
-  async getStocksApi({ commit }: CommitFunction, payload: any) {
+  async getStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios({
       method: "get",
       url: "http://localhost:8000/stock/getMany?page=1",
