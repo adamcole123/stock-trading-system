@@ -8,6 +8,8 @@ COPY nodemon.json ./
 
 COPY jest.config.ts ./
 
+COPY .env ./
+
 RUN npm i
 
 CMD ["npm", "start"]

@@ -1,6 +1,22 @@
 version: "3.7"
 
 services:
+  stock-trading-system-db:
+    container_name: stock-trading-system-db
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes: 
+      - ./mongo/data:/data/db
+  mongo_seed:
+    image: mongo
+    links:
+      - stock-trading-system-db
+    volumes:
+      - ./mongo-seed:/mongo-seed
+    command:
+      mongo-seed/import.sh
   stock-trading-system-backend:
     depends_on: 
       - stock-trading-system-db
@@ -9,12 +25,17 @@ services:
     volumes:
       - ./backend/src:/home/node/app/backend/src 
       - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json 
+      - ./backend/.env:/home/node/app/backend/.env 
       - ./backend/coverage/:/home/node/app/backend/coverage/
     restart: always
     expose:
       - "8000"
     ports:
       - "8000:8000"
+    environment:
+      - DB_HOST=stock-trading-system-db
+      - DB_NAME=stock-trading-system-db
+      - DB_PORT=27017
   stock-trading-system-frontend:
     build: ./frontend
     container_name: stock-trading-system-frontend
@@ -28,14 +49,4 @@ services:
       - "8080"
     ports:
       - "8080:8080"
-  mongo:
-    container_name: stock-trading-system-db
-    image: mongo
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes: 
-      - ~/mongo/data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+  

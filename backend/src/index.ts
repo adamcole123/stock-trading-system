@@ -79,7 +79,13 @@ let app = server.build();
 
 const routeInfo = getRouteInfo(container);
 
-mongoose.connect('mongodb://localhost:27017/stock-trading-system-db')
+const {
+  DB_HOST,
+  DB_PORT,
+  DB_NAME,
+} = process.env;
+
+mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 .then(res => {
   console.log('Connected to database');
 })
