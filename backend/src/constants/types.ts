@@ -7,4 +7,5 @@ export const TYPES = {
 	IStockWriteOnlyRepository: Symbol.for("IStockWriteOnlyRepository"),
 	IStockReadOnlyRepository: Symbol.for("IStockReadOnlyRepository"),
 	ITradeWriteOnlyRepository: Symbol.for("ITradeWriteOnlyRepository"),
+	ITradeReadOnlyRepository: Symbol.for("ITradeReadOnlyRepository"),
 }

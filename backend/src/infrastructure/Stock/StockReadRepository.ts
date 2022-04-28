@@ -90,9 +90,22 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 				}
 			} else {
 				try {
-					returnData = await Stock.find({query})
-													.limit(10)
-													.sort(options?.order? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined);
+					if(stockDto?.id){
+						let stock = await Stock.findOne({_id: stockDto.id}).exec();
+						returnData.push(new StockType(
+							stock!._id.toString(),
+							stock!.symbol,
+							stock!.name,
+							stock!.value,
+							stock!.volume,
+							stock!.open,
+							stock!.close
+						))
+					} else {
+						returnData = await Stock.find({query})
+														.limit(10)
+														.sort(options?.order? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined);
+					}
 				} catch (e) {
 					reject(e);
 				}

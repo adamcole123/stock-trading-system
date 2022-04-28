@@ -45,10 +45,8 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 
 			await Stock.findById(stockDto.id)
 				.then(stock => {
-					if (options?.tradeMode) {
-						stock!.volume = options?.tradeMode === TradeMode.Sell ? stock!.volume! + stockDto!.volume! : stock!.volume! - stockDto!.volume!;
-					} else {
-						stock!.volume = stockDto.volume
+					if (stockDto.volume) {
+						stock!.volume = options?.tradeMode ? stock!.volume! + stockDto!.volume! : stockDto.volume;
 					}
 
 					if (stockDto.close)
@@ -66,7 +64,7 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 					if (stockDto.value)
 						stock!.value = stockDto.value;
 
-					stock?.save();
+					stock!.save();
 
 					resolve(<IStockDto[]>[stock]);
 				})

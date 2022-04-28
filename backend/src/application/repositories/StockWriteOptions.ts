@@ -5,5 +5,5 @@ export default interface StockWriteOptions {
 	all?: boolean;
 	open?: boolean;
 	close?: boolean;
-	tradeMode?: TradeMode;
+	tradeMode?: boolean;
 }

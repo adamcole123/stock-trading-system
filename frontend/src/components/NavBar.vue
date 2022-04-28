@@ -8,7 +8,7 @@
       </div>
       <div class="right">
         <div v-if="getUserProfile.id !== ''">
-          {{ getUserProfile.credit }}
+          £{{ getUserProfile.credit }}
           <router-link to="/account" class="nav-link"
             >{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}
           </router-link>
@@ -47,7 +47,7 @@ export default defineComponent({
       await this.userLogout();
       if (this.getLogout) {
         const resetUser = {
-          _id: "",
+          id: "",
           lastName: "",
           firstName: "",
           email: "",

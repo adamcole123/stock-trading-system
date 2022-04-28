@@ -7,6 +7,8 @@ import ITradeDto from '../../usecases/data_tranfer_objects/ITradeDto';
 import IBuyStocksUseCase from '../../usecases/Trades/IBuyStocksUseCase';
 import TradeServiceLocator from "../../configuration/TradeServiceLocator";
 import ISellStocksUseCase from "../../usecases/Trades/ISellStocksUseCase";
+import jwt from "jsonwebtoken";
+import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 
 dotenv.config();
 
@@ -22,6 +24,12 @@ export default class TradeController implements interfaces.Controller {
 	
 	@httpPost('/buystocks')
 	public async buyStock(@request() req: express.Request, @response() res: express.Response){
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		let cookieData = await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+			
+		if(cookieData.id !== req.body.user_id){
+			return res.status(401).json({error: 'User not authorised'});
+		}
 		
 		if(!req.body.user_id && !req.body.stock_id){
 			return res.status(400).json({error: 'No user id or stock id provided'});
@@ -33,11 +41,17 @@ export default class TradeController implements interfaces.Controller {
 			.then((tradeDto: ITradeDto) => {
 				res.status(200).json(tradeDto)
 			})
-			.catch((err: Error) => res.status(500).json({err}));
+			.catch((err: Error) => res.status(500).json(err));
 	}
 
 	@httpPost('/sellstocks')
 	public async sellStock(@request() req: express.Request, @response() res: express.Response){
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		let cookieData = await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+			
+		if(cookieData.id !== req.body.user_id){
+			return res.status(401).json({error: 'User not authorised'});
+		}
 		
 		if(!req.body.user_id && !req.body.stock_id){
 			return res.status(400).json({error: 'No user id or stock id provided'});
@@ -49,6 +63,6 @@ export default class TradeController implements interfaces.Controller {
 			.then((tradeDto: ITradeDto) => {
 				res.status(200).json(tradeDto)
 			})
-			.catch((err: Error) => res.status(500).json({err}));
+			.catch((err: Error) => res.status(500).json(err));
 	}
 }

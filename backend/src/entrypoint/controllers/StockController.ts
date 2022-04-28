@@ -37,7 +37,7 @@ export default class StockController implements interfaces.Controller {
 			.then((stockDto: IStockDto) => {
 				res.status(200).json(stockDto)
 			})
-			.catch((err: Error) => res.status(500).json({error: err.message}));
+			.catch((err: Error) => res.status(500).json(err));
 	}
 
 	@httpGet('/getMany')
@@ -51,7 +51,7 @@ export default class StockController implements interfaces.Controller {
 			.then((stockDto: IStockDto[]) => {
 				res.status(200).json(stockDto)
 			})
-			.catch((err: Error) => res.status(500).json({error: err.message}));
+			.catch((err: Error) => res.status(500).json(err));
 	}
 
 	@httpPost('/create')
@@ -65,6 +65,6 @@ export default class StockController implements interfaces.Controller {
 			.then((stockDto: IStockDto) => {
 				res.status(200).json(stockDto)
 			})
-			.catch((err: Error) => res.status(500).json({error: err.message}));
+			.catch((err: Error) => res.status(500).json(err));
 	}
 }

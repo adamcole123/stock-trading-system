@@ -74,8 +74,8 @@ const actions = {
       });
 
     if (response && response.data) {
-      commit("setUserProfile", response.data.userDto);
-
+      commit("setUserProfile", response.data);
+      console.log(response);
       return response.data.message;
     }
   },
@@ -105,11 +105,12 @@ const mutations = {
   },
   setUserProfile(state: State, data: any) {
     const userProfile = {
-      id: data._id,
+      id: data.id,
       lastName: data.lastName,
       firstName: data.firstName,
       email: data.email,
       username: data.username,
+      credit: data.credit,
     };
     state.userProfile = userProfile;
   },

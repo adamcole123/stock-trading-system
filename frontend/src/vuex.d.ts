@@ -8,9 +8,11 @@ declare module "@vue/runtime-core" {
     registerApiStatus: "";
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
+    getStocksApiStatus: "";
     logOut: boolean;
     loginApiStatus: "";
     userProfile: User;
+    stockData: [];
   }
 
   // provide typings for `this.$store`

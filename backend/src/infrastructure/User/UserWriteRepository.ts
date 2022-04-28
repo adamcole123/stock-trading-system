@@ -49,6 +49,19 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 								newUser
 									.save()
 									.then((user: any) => {
+										userDto = {
+											id: user._id,
+											username: user.username,
+											email: user.email,
+											firstName: user.firstName,
+											lastName: user.lastName,
+											birthDate: user.birthDate,
+											reports: user.reports,
+											credit: user.credit,
+											role: user.role,
+											isDeleted: user.isDeleted,
+											cardDetails: user.cardDetails
+										}
 										resolve(user);
 									})
 									.catch((err: any) => {
@@ -60,7 +73,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 					}
 				})
 					.catch(err => {
-						reject({ error: err });
+						reject(err);
 					});
 			} catch (error) {
 				reject(error);
@@ -73,7 +86,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 			User.findOne({ username: username })
 			.then(user => {
 				if(userEditOptions.tradeMode !== undefined)
-					user.credit = userEditOptions.tradeMode === 1 ? user.credit + userDto.credit : user.credit - Number(userDto!.credit);
+					user.credit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
 				
 				user.save();
 

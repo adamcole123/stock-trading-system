@@ -14,9 +14,10 @@ export default class TradeWriteOnlyRepository implements ITradeWriteOnlyReposito
 				const newTrade = new Trade({
 					stock_id: tradeDto.stock_id,
 					user_id: tradeDto.user_id,
-					stock_amount: tradeDto.stock_amount! * -1,
+					stock_amount: tradeDto.stock_amount,
 					stock_value: tradeDto.stock_value,
-					time_of_trade: tradeDto.time_of_trade
+					time_of_trade: tradeDto.time_of_trade,
+					trade_type: tradeDto.trade_type
 				});
 
 				newTrade

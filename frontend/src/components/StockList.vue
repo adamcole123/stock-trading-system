@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="stock in stocks" :key="stock.id">
+        <tr v-for="stock in getStockData" :key="stock.id">
           <td>{{ stock.symbol }}</td>
           <td>{{ stock.name }}</td>
           <td v-if="stock.gains! > 0" style="color: green">
@@ -52,7 +52,6 @@ export default defineComponent({
   name: "StockList",
   data() {
     return {
-      stocks: [] as Stock[],
       toggledTrades: [] as number[],
       tradeQuantity: 0,
     };
@@ -61,25 +60,27 @@ export default defineComponent({
     ...mapGetters("auth", {
       getUserProfile: "getUserProfile",
     }),
+    ...mapGetters("stock", {
+      getStockData: "getStockData",
+    }),
     ...mapGetters("trade", {
       getBuyStocksApiStatus: "getBuyStocksApiStatus",
       getSellStocksApiStatus: "getSellStocksApiStatus",
     }),
   },
   created() {
-    axios({
-      method: "get",
-      url: "http://localhost:8000/stock/getMany?page=1",
-    }).then((response) => {
-      this.stocks = response.data;
-    });
+    this.actionGetStocksApi();
   },
   methods: {
     ...mapActions("trade", {
       actionBuyStocksApi: "buyStocksApi",
       actionSellStocksApi: "sellStocksApi",
     }),
+    ...mapActions("stock", {
+      actionGetStocksApi: "getStocksApi",
+    }),
     async buyStocks(stock_id: string) {
+      console.log(stock_id);
       const payload = {
         stock_id: stock_id,
         user_id: this.getUserProfile.id,
@@ -91,19 +92,22 @@ export default defineComponent({
       } else {
         alert("Buy trade failed!");
       }
+      await this.actionGetStocksApi();
     },
     async sellStocks(stock_id: string) {
+      console.log(stock_id);
       const payload = {
         stock_id: stock_id,
         user_id: this.getUserProfile.id,
         stock_amount: this.tradeQuantity,
       };
       await this.actionSellStocksApi(payload);
-      if (this.getBuyStocksApiStatus == "success") {
+      if (this.getSellStocksApiStatus == "success") {
         alert("Sell trade successfully!");
       } else {
         alert("Sell trade failed!");
       }
+      await this.actionGetStocksApi();
     },
   },
 });

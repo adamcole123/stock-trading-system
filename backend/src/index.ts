@@ -34,6 +34,8 @@ var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
 import "./entrypoint/controllers/UserController";
 import "./entrypoint/controllers/StockController";
 import "./entrypoint/controllers/TradeController";
+import TradeReadOnlyRepository from "./infrastructure/Trade/TradeReadOnlyRepository";
+import ITradeReadOnlyRepository from "./application/repositories/ITradeReadOnlyRepository";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -46,6 +48,7 @@ container.bind<IStockWriteOnlyRepository>(TYPES.IStockWriteOnlyRepository).to(St
 
 container.bind<TradeServiceLocator>(TYPES.TradeServiceLocator).to(TradeServiceLocator);
 container.bind<ITradeWriteOnlyRepository>(TYPES.ITradeWriteOnlyRepository).to(TradeWriteOnlyRepository);
+container.bind<ITradeReadOnlyRepository>(TYPES.ITradeReadOnlyRepository).to(TradeReadOnlyRepository);
 
 dotenv.config();
 

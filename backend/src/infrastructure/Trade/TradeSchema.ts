@@ -33,6 +33,11 @@ const tradeSchema = new Schema({
 		enum: ['Approved', 'Declined', 'Pending'],
 		required: true,
 		default: 'Pending'
+	},
+	trade_type: {
+		type: String,
+		enum: ['Buy', 'Sell'],
+		required: true,
 	}
 }, { collection: 'trades' })
 
