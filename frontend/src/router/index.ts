@@ -38,6 +38,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiredAuth: true },
   },
   {
+    path: "/account/edit",
+    name: "editAccount",
+    component: () => import("../views/EditAccountView.vue"),
+    meta: { requiredAuth: true },
+  },
+  {
     path: "/contact",
     name: "contact",
     component: () => import("../views/ContactView.vue"),
@@ -58,6 +64,7 @@ router.beforeEach(async (to, from, next) => {
     if (userProfile.id === "") {
       userProfile = store.getters["auth/getUserProfile"];
       if (userProfile.id === "") {
+        store.dispatch("auth/userLogOut");
         return next({ path: "/login" });
       } else {
         return next();

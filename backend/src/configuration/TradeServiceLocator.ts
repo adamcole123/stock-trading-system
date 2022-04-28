@@ -10,6 +10,8 @@ import ISellStocksUseCase from "../usecases/Trades/ISellStocksUseCase";
 import SellStocksUseCase from "../usecases/Trades/SellStocksUseCase";
 import IStockReadOnlyRepository from "../application/repositories/IStockReadOnlyRepository";
 import ITradeReadOnlyRepository from "../application/repositories/ITradeReadOnlyRepository";
+import IGetUserTransactionHistoryUseCase from "../usecases/Trades/IGetUserTransactionHistoryUseCase";
+import GetUserTransactionHistory from '../usecases/Trades/GetUserTransactionHistoryUseCase';
 
 @injectable()
 
@@ -26,5 +28,8 @@ export default class TradeServiceLocator {
 	}
 	public GetSellStocksUseCase(): ISellStocksUseCase {
 		return new SellStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.tradeReadRepository, this.userWriteRepository, this.userReadRepository);
+	}
+	public GetGetUserTransactionHistoryUseCase(): IGetUserTransactionHistoryUseCase {
+		return new GetUserTransactionHistory(this.tradeReadRepository);
 	}
 }
