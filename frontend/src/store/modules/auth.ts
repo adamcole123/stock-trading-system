@@ -1,6 +1,6 @@
 import { State } from "vue";
 import axios from "axios";
-import { CommitFunction } from "../CommitFunction";
+import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
   loginApiStatus: "",
@@ -31,7 +31,7 @@ const getters = {
 };
 
 const actions = {
-  async loginApi({ commit }: CommitFunction, payload: any) {
+  async loginApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios
       .post("http://localhost:8000/user/signin", payload, {
         withCredentials: true,
@@ -46,7 +46,7 @@ const actions = {
       commit("setLoginApiStatus", "failed");
     }
   },
-  async registerApi({ commit }: CommitFunction, payload: any) {
+  async registerApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios
       .post("http://localhost:8000/user/register", payload, {
         withCredentials: true,
@@ -63,7 +63,7 @@ const actions = {
       commit("setRegisterApiStatus", "failed");
     }
   },
-  async userProfile({ commit }: CommitFunction) {
+  async userProfile({ commit, dispatch }: ContextFunction) {
     const response = await axios
       .post("http://localhost:8000/user/validate", undefined, {
         withCredentials: true,
@@ -75,11 +75,10 @@ const actions = {
 
     if (response && response.data) {
       commit("setUserProfile", response.data);
-      console.log(response);
       return response.data.message;
     }
   },
-  async userLogout({ commit }: CommitFunction) {
+  async userLogout({ commit, dispatch }: ContextFunction) {
     const response = await axios
       .get("http://localhost:8000/user/signout", {
         withCredentials: true,

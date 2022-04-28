@@ -25,7 +25,7 @@ export default class UserServiceLocator {
 	}
 
 	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
-		return new ValidateUserTokenUseCase();
+		return new ValidateUserTokenUseCase(this.readRepository);
 	}
 	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
 		return new EditUserDetailsUseCase(this.writeRepository);

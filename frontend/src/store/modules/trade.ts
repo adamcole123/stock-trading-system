@@ -1,6 +1,6 @@
 import { State } from "vue";
 import axios from "axios";
-import { CommitFunction } from "../CommitFunction";
+import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
   buyStocksApiStatus: "",
@@ -17,7 +17,7 @@ const getters = {
 };
 
 const actions = {
-  async buyStocksApi({ commit }: CommitFunction, payload: any) {
+  async buyStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios
       .post("http://localhost:8000/trade/buystocks", payload, {
         withCredentials: true,
@@ -27,13 +27,13 @@ const actions = {
       });
 
     if (response && response.data) {
-      console.log(response);
       commit("setBuyStocksApiStatus", "success");
+      dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setBuyStocksApiStatus", "failed");
     }
   },
-  async sellStocksApi({ commit }: CommitFunction, payload: any) {
+  async sellStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios
       .post("http://localhost:8000/trade/sellstocks", payload, {
         withCredentials: true,
@@ -44,6 +44,7 @@ const actions = {
 
     if (response && response.data) {
       commit("setSellStocksApiStatus", "success");
+      dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setSellStocksApiStatus", "failed");
     }

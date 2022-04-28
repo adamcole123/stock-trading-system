@@ -3,7 +3,6 @@ import IStockDto from '../data_tranfer_objects/IStockDto';
 import IGetAllStocksUseCase from '../Stocks/IGetAllStocksUseCase';
 import { mock } from "jest-mock-extended";
 import dotenv from 'dotenv';
-import io from 'socket.io';
 
 import IStockReadOnlyRepository from '../../application/repositories/IStockReadOnlyRepository';
 import IStockWriteOnlyRepository from '../../application/repositories/IStockWriteOnlyRepository';

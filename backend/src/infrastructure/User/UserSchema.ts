@@ -25,7 +25,10 @@ const userSchema = new Schema({
 		type: String,
 		required: true
 	},
-	credit: Number,
+	credit: {
+		type: Number,
+		set: function (v: Number) { return parseFloat(v.toFixed(2));}
+	},
 	role: {
 		type: String,
 		enum: ['Admin', 'Broker', 'User'],
