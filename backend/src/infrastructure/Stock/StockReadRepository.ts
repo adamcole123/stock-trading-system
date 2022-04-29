@@ -70,10 +70,14 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 					query.volume = { $gte: stockDto?.volume };
 			}
 
+			if(!options?.limit){
+				options!.limit = await Stock.count({});
+			}
+
 			let returnData: StockType[] = [];
 			if(options?.page){
 				try {
-					let returnStocks = await Stock.find({}).skip((options?.page * (options.limit! | 10)) - (options.limit! | 10)).limit(options.limit! | 10).sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
+					let returnStocks = await Stock.find({}).skip((options?.page * options.limit!) - (options.limit!)).limit(options.limit!).sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
 					returnStocks.forEach(stock => {
 						returnData.push(new StockType(
 							stock._id.toString(),
@@ -103,7 +107,23 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 						))
 					} else {
 						returnData = await Stock.find({query})
-														.limit(options?.limit! | 20)
+														.limit(options?.limit!)
+														.sort(options?.order? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined);
+					}
+					if(stockDto?.id){
+						let stock = await Stock.findOne({_id: stockDto.id}).exec();
+						returnData.push(new StockType(
+							stock!._id.toString(),
+							stock!.symbol,
+							stock!.name,
+							stock!.value,
+							stock!.volume,
+							stock!.open,
+							stock!.close
+						))
+					} else {
+						returnData = await Stock.find({query})
+														.limit(options?.limit!)
 														.sort(options?.order? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined);
 					}
 				} catch (e) {
