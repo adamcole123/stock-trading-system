@@ -41,7 +41,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 
 	fetch(stockDto?: IStockDto, options?: StockOptions): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
-			let query: StockFetchQuery | any = stockDto;
+			let query: StockFetchQuery = stockDto!;
 			
 			switch(options?.gainsMode){
 				case 0:
@@ -73,7 +73,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 			let returnData: StockType[] = [];
 			if(options?.page){
 				try {
-					let returnStocks = await Stock.find({}).skip((options?.page * 10) - 10).limit(10).sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
+					let returnStocks = await Stock.find({}).skip((options?.page * (options.limit! | 10)) - (options.limit! | 10)).limit(options.limit! | 10).sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
 					returnStocks.forEach(stock => {
 						returnData.push(new StockType(
 							stock._id.toString(),
@@ -103,7 +103,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 						))
 					} else {
 						returnData = await Stock.find({query})
-														.limit(10)
+														.limit(options?.limit! | 20)
 														.sort(options?.order? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined);
 					}
 				} catch (e) {

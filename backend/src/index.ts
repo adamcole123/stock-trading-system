@@ -93,6 +93,11 @@ mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
   console.error(err)
 })
 
+app.use((err: any, req: any, res: any, next: any) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+
 app.listen(8000, () => {
   console.log('Server listening on port 8000');
   console.log(prettyjson.render({ routes: routeInfo }));

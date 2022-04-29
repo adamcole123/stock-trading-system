@@ -5,6 +5,7 @@ import UserType from '../../usecases/entities/User'
 import { injectable } from 'inversify';
 import bcrypt from 'bcryptjs';
 import UserEditOptions from '../../application/repositories/UserEditOptions';
+import userSchema from './UserSchema';
 
 @injectable()
 export default class UserWriteRepository implements IUserWriteOnlyRepository {
@@ -85,8 +86,16 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 		return new Promise((resolve, reject) => {
 			User.findOne({ username: username })
 			.then(user => {
-				if(userEditOptions.tradeMode !== undefined)
-					user.credit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
+				let newCredit: number;
+				if(userEditOptions.tradeMode !== undefined){
+					newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
+
+					user = {...userDto};
+
+					user.credit = newCredit;
+				} else {
+					user = {...userDto};
+				}
 				
 				user.save();
 
