@@ -4,7 +4,7 @@
 
     <div v-if="getUserProfile.reports">
       <div v-for="report in getUserProfile.reports" :key="report.id">
-        <a>{{
+        <a @click="saveReport(report)" class="report-link">{{
           moment(report.report_date).format("MMMM Do YYYY, h:mm:ss a")
         }}</a>
       </div>
@@ -36,9 +36,26 @@ export default defineComponent({
     ...mapActions("auth", {
       actionUserProfile: "userProfile",
     }),
+    ...mapActions("report", {
+      actionDownloadReport: "downloadReport",
+    }),
+    saveReport(report) {
+      let payload = {
+        report_id: report.id,
+        user_id: this.getUserProfile.id,
+        report_type: report.report_type,
+      };
+      this.actionDownloadReport(payload);
+    },
   },
   created() {
     this.actionUserProfile();
   },
 });
 </script>
+<style lang="scss">
+.report-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>

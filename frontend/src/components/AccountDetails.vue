@@ -63,10 +63,12 @@ export default defineComponent({
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 .right-profile {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 10px;
 }
 </style>

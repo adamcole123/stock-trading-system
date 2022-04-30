@@ -13,8 +13,17 @@
             <option value="false">Descending</option>
           </select>
 
+          <select
+            name="report-format"
+            id="report-format"
+            v-model="report_format"
+          >
+            <option value="CSV">CSV</option>
+            <option value="XML">XML</option>
+          </select>
+
           <button
-            @click="generateReport(1)"
+            @click="generateReport()"
             class="report-modal__body__content__item__button"
           >
             Complete Stock Values
@@ -33,6 +42,7 @@ export default defineComponent({
   data: function () {
     return {
       ascending: true,
+      report_format: 0,
     };
   },
   computed: {
@@ -46,12 +56,13 @@ export default defineComponent({
       actionGenerateReport: "generateReport",
       actionHideReportModal: "hideReportModal",
     }),
-    async generateReport(reportType: number) {
+    async generateReport() {
+      console.log(this.report_format, this.ascending);
       let payload = {
-        reportType: reportType,
+        reportType: this.report_format,
         ascending: this.ascending,
       };
-      await this.actionGenerateReport(reportType);
+      await this.actionGenerateReport(payload);
       if (this.getGenerateReportApiStatus == "success") {
         alert("Report generated successfully!");
         this.$router.push("/account");

@@ -1,2 +1,5 @@
-declare module 'convert-json-to-csv';
+declare module 'convert-json-to-csv'{
+	function convertArrayOfArrays(jsonData);
+	function convertArrayOfObjects(jsonData, jsonColumnDefArray);
+};
 

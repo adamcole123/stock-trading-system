@@ -40,6 +40,7 @@
     "jstoxml": "^3.2.3",
     "module-alias": "^2.2.2",
     "module-alias-jest": "0.0.3",
+    "moment": "^2.29.3",
     "mongoose": "^6.2.9",
     "prettyjson": "^1.2.5",
     "reflect-metadata": "^0.1.13",
