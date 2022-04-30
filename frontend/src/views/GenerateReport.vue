@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters, mapActions } from "vuex";
-import ReportModal from "../components/ReportModal";
+import ReportModal from "../components/ReportModal.vue";
 
 export default defineComponent({
   name: "GenerateReport",

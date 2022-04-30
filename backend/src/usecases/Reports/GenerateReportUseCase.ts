@@ -3,10 +3,8 @@ import IGenerateReportUseCase from './IGenerateReportUseCase';
 import IStockReadOnlyRepository from '../../application/repositories/IStockReadOnlyRepository';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
-import ReportType from '../entities/ReportType';
-import { toXML } from 'jstoxml';
+import { toXML, XmlElement } from 'jstoxml';
 import jsonToCsv from 'convert-json-to-csv';
-import IStockDto from '../data_tranfer_objects/IStockDto';
 
 export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	private stockReadOnlyRepository: IStockReadOnlyRepository;
@@ -24,54 +22,59 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;
 	}
 
-	async completeStockValues(user_id: string, ascending: boolean, report_type: ReportType): Promise<IUserDto> {
-		try{
-			let stocks = await this.stockReadOnlyRepository.fetch({}, {
-				order: {
-					orderBy: 'value',
-					orderDirection: ascending? 1 : 0
-				}
-			})
-
+	completeStockValues(user_id: string, ascending: boolean, report_type: string): Promise<IUserDto> {
+		return new Promise(async (resolve, reject) => {
 			try{
-				let user = await this.userReadOnlyRepository.fetch({id: user_id})
-
-				stocks = await stocks.map(stock => {
-					return {
-						id: stock.id,
-						volume: stock.volume,
-						value: stock.value,
-						name: stock.name,
-						gains: stock.gains,
-						open: stock.open,
-						close: stock.close,
-						symbol: stock.symbol,
+				let stocks = await this.stockReadOnlyRepository.fetch({}, {
+					order: {
+						orderBy: 'value',
+						orderDirection: ascending? 1 : 0
 					}
 				})
-
-				let plainStockObjs = stocks.map(stock => {
-					return {...stock};
-				})
-
-				let columnDef = [{...Object.keys(stocks[0])}]
-
-				user.reports?.push({
-					report_date: new Date(),
-					report_data: report_type === ReportType.CSV ? jsonToCsv.convertToCsv(plainStockObjs, columnDef[0]) : toXML(plainStockObjs),
-					report_type: report_type
-				})
-
-				let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
-					reports: user.reports
-				}, {})
-
-				return userEditted;
+	
+				try{
+					let user = await this.userReadOnlyRepository.fetch({id: user_id})
+	
+					stocks = stocks.map(stock => {
+						return {
+							id: stock.id,
+							volume: stock.volume,
+							value: stock.value,
+							name: stock.name,
+							gains: stock.gains,
+							open: stock.open,
+							close: stock.close,
+							symbol: stock.symbol,
+						};
+					})
+	
+					let plainStockObjs: any = stocks.map(stock => {
+						return {...stock};
+					})
+	
+					let columnDef = [...Object.keys(stocks[0])]
+	
+					let initialValue = "<stocks>";
+					let newReport = {
+						report_date: new Date(),
+						report_data: report_type === 'CSV' ? jsonToCsv.convertArrayOfObjects(plainStockObjs, columnDef) : plainStockObjs.reduce((acc: string, obj: XmlElement | XmlElement[] | undefined) => {return acc + `<stock>${toXML(obj)}</stock>`}, initialValue) + "</stocks>",
+						report_type: report_type
+					}
+	
+					user.reports?.push(newReport);
+	
+					let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
+						reports: user.reports
+					}, {})
+	
+					resolve(userEditted);
+				} catch (error) {
+					reject("Cannot add report to user: " + error);
+				}
 			} catch (error) {
-				throw new Error("Cannot add report to user: " + error);
+				reject("Cannot get list of companies: " + error);
 			}
-		} catch (error) {
-			throw new Error("Cannot get list of companies: " + error);
-		}
+		})
 	}
 	selectedCompanyDetails(user_id: string, stock_ids: string[]): Promise<IUserDto> {
 		throw new Error('Method not implemented.');

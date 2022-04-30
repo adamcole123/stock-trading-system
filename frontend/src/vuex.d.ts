@@ -12,6 +12,7 @@ declare module "@vue/runtime-core" {
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";
+    downloadReportApiStatus: "";
     getGetUserTransactionHistoryApiStatus: "";
     logOut: boolean;
     loginApiStatus: "";

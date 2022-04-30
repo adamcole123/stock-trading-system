@@ -84,28 +84,32 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 		return new Promise((resolve, reject) => {
 			User.findOne({ username: username })
 			.then(user => {
-				let newCredit: number;
-				if(userEditOptions.tradeMode !== undefined){
-					newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
-					user.credit = newCredit;
-				} else {
-					user = Object.assign(user, userDto);
+				try{
+					let newCredit: number;
+					if(userEditOptions.tradeMode !== undefined){
+						newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
+						user.credit = newCredit;
+					} else {
+						user = Object.assign(user, userDto);
+					}
+					
+					user.save();
+	
+					resolve({
+						id: user._id,
+						firstName: user.firstName,
+						lastName: user.lastName,
+						credit: user.credit,
+						birthDate: user.birthDate,
+						email: user.email,
+						reports: user.reports,
+						role: user.role,
+						username: user.username,
+						cardDetails: user.cardDetails,
+					});
+				} catch (e) {
+					return reject("Couldn't edit user: " + e);
 				}
-				
-				user.save();
-
-				resolve({
-					id: user._id,
-					firstName: user.firstName,
-					lastName: user.lastName,
-					credit: user.credit,
-					birthDate: user.birthDate,
-					email: user.email,
-					reports: user.reports,
-					role: user.role,
-					username: user.username,
-					cardDetails: user.cardDetails,
-				});
 			})
 			.catch(err => {
 				reject(err);

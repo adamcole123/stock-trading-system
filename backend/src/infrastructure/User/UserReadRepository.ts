@@ -30,7 +30,12 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 					firstName: user.firstName,
 					lastName: user.lastName,
 					birthDate: user.birthDate,
-					reports: user.reports,
+					reports: user.reports.map((report: any) => {
+						return {id: report._id.toString(),
+						report_date: report.report_date,
+						report_data: report.report_data,
+						report_type: report.report_type}
+					}),
 					credit: user.credit,
 					role: user.role,
 					isDeleted: user.isDeleted,

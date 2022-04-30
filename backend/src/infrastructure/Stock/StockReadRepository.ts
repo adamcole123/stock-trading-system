@@ -106,9 +106,21 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 							stock!.close
 						))
 					} else {
-						returnData = await Stock.find({query})
+						let stocks = await Stock.find({query})
 														.limit(options?.limit!)
-														.sort([[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]]);
+														.sort([[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]])
+														.exec();
+						returnData = stocks.map(stock => {
+							return new StockType(
+								stock!._id.toString(),
+								stock!.symbol,
+								stock!.name,
+								stock!.value,
+								stock!.volume,
+								stock!.open,
+								stock!.close
+							)
+						})
 					}
 				} catch (e) {
 					reject(e);

@@ -5,9 +5,12 @@ const reportSchema = new mongoose.Schema({
 	report_data: String,
 	report_type: {
 		type: String,
-		enum: ['CSV', 'XML']
+		enum: ["CSV", "XML"]
 	},
-	report_date: Date
+	report_date: {
+		type: Date,
+		default: new Date(),
+	}
 })
 
 export default reportSchema;
