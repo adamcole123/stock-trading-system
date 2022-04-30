@@ -1,6 +1,7 @@
 import CardDetails from "../entities/CardDetails";
 import Report from "../entities/Report";
 import Role from "../entities/Role";
+import IReportDto from './IReportDto';
 
 export default interface IUserDto {
 	id?: string,
@@ -10,7 +11,7 @@ export default interface IUserDto {
 	firstName?: string,
 	lastName?: string,
 	birthDate?: Date,
-	reports?: Report[],
+	reports?: IReportDto[],
 	credit?: Number,
 	role?: Role,
 	isDeleted?: boolean,

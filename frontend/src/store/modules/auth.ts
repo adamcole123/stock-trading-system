@@ -12,6 +12,7 @@ const state = () => ({
     email: "",
     id: "",
     username: "",
+    reports: [],
   },
 });
 
@@ -104,12 +105,16 @@ const mutations = {
   },
   setUserProfile(state: State, data: any) {
     const userProfile = {
-      id: data.id,
-      lastName: data.lastName,
-      firstName: data.firstName,
-      email: data.email,
       username: data.username,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      birthDate: data.birthDate,
+      reports: data.reports,
+      id: data.id,
       credit: data.credit,
+      role: data.role,
+      cardDetails: data.cardDetails,
     };
     state.userProfile = userProfile;
   },

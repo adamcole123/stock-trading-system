@@ -5,5 +5,6 @@ export default interface StockFetchQuery {
 	open?: number | Object,
 	symbol?: string | Object,
 	value?: number | Object,
-	volume?: number | Object
+	volume?: number | Object,
+	gains?: number | Object
 }

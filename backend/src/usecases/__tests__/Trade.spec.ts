@@ -79,10 +79,10 @@ describe("Trade Tests", () => {
 			lastName: "test1lname", 
 			birthDate: new Date(), 
 			reports: [
-				new Report("report1id", ",,,", 1),
-				new Report("report2id", ",,,", 0),
-				new Report("report3id", ",,,", 1),
-				new Report("report4id", ",,,", 1)
+				new Report("report1id", ",,,", 1, new Date()),
+				new Report("report2id", ",,,", 0, new Date()),
+				new Report("report3id", ",,,", 1, new Date()),
+				new Report("report4id", ",,,", 1, new Date())
 			], 
 			id: "test1_id", 
 			password: bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))
@@ -95,16 +95,16 @@ describe("Trade Tests", () => {
 			lastName: "test1lname", 
 			birthDate: new Date(), 
 			reports: [
-				new Report("report1id", ",,,", 1),
-				new Report("report2id", ",,,", 0),
-				new Report("report3id", ",,,", 1),
-				new Report("report4id", ",,,", 1)
+				new Report("report1id", ",,,", 1, new Date()),
+				new Report("report2id", ",,,", 0, new Date()),
+				new Report("report3id", ",,,", 1, new Date()),
+				new Report("report4id", ",,,", 1, new Date())
 			], 
 			id: "test1_id", 
 			password: bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))
 		})
 
-		buyStocksUseCase = new BuyStocksUseCase(stockWriteOnlyRepository, tradeWriteOnlyRepository, userWriteOnlyRepository, userReadOnlyRepository);
+		buyStocksUseCase = new BuyStocksUseCase(stockWriteOnlyRepository, stockReadOnlyRepository, tradeWriteOnlyRepository, userWriteOnlyRepository, userReadOnlyRepository);
 
 		//Act
 		tradeDto = await buyStocksUseCase.invoke({

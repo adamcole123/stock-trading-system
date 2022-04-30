@@ -9,6 +9,9 @@ declare module "@vue/runtime-core" {
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
     getStocksApiStatus: "";
+    reportModalVisible: boolean;
+    reportType: number;
+    generateReportApiStatus: "";
     getGetUserTransactionHistoryApiStatus: "";
     logOut: boolean;
     loginApiStatus: "";
