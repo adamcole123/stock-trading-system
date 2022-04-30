@@ -17,5 +17,6 @@ export default defineComponent({
 <style>
 .account-details {
   width: 40%;
+  margin: 0 auto;
 }
 </style>

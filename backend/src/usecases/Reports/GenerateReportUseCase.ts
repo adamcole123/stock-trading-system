@@ -4,8 +4,9 @@ import IStockReadOnlyRepository from '../../application/repositories/IStockReadO
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
 import ReportType from '../entities/ReportType';
-import jsonToCsv from 'convert-json-to-csv';
 import { toXML } from 'jstoxml';
+import jsonToCsv from 'convert-json-to-csv';
+import IStockDto from '../data_tranfer_objects/IStockDto';
 
 export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	private stockReadOnlyRepository: IStockReadOnlyRepository;
@@ -35,6 +36,19 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 			try{
 				let user = await this.userReadOnlyRepository.fetch({id: user_id})
 
+				stocks = await stocks.map(stock => {
+					return {
+						id: stock.id,
+						volume: stock.volume,
+						value: stock.value,
+						name: stock.name,
+						gains: stock.gains,
+						open: stock.open,
+						close: stock.close,
+						symbol: stock.symbol,
+					}
+				})
+
 				let plainStockObjs = stocks.map(stock => {
 					return {...stock};
 				})
@@ -43,7 +57,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 
 				user.reports?.push({
 					report_date: new Date(),
-					report_data: report_type === ReportType.CSV ? jsonToCsv.convertArrayOfObjects(stocks, columnDef[0]) : toXML(plainStockObjs),
+					report_data: report_type === ReportType.CSV ? jsonToCsv.convertToCsv(plainStockObjs, columnDef[0]) : toXML(plainStockObjs),
 					report_type: report_type
 				})
 

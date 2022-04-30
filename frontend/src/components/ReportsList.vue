@@ -12,7 +12,7 @@
     <div v-else>
       <p>No reports</p>
     </div>
-    <a>Generate Report</a>
+    <router-link to="/generate-report">Generate Report</router-link>
   </div>
 </template>
 <script>

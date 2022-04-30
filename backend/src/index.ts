@@ -24,6 +24,9 @@ import StockWriteRepository from "./infrastructure/Stock/StockWriteRepository";
 import TradeServiceLocator from './configuration/TradeServiceLocator';
 import ITradeWriteOnlyRepository from "./application/repositories/ITradeWriteOnlyRepository";
 import TradeWriteOnlyRepository from './infrastructure/Trade/TradeWriteOnlyRepository';
+import TradeReadOnlyRepository from "./infrastructure/Trade/TradeReadOnlyRepository";
+import ITradeReadOnlyRepository from "./application/repositories/ITradeReadOnlyRepository";
+import ReportServiceLocator from "./configuration/ReportServiceLocator";
 
 // set up container
 const container = new Container();
@@ -34,8 +37,7 @@ var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
 import "./entrypoint/controllers/UserController";
 import "./entrypoint/controllers/StockController";
 import "./entrypoint/controllers/TradeController";
-import TradeReadOnlyRepository from "./infrastructure/Trade/TradeReadOnlyRepository";
-import ITradeReadOnlyRepository from "./application/repositories/ITradeReadOnlyRepository";
+import "./entrypoint/controllers/ReportController";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -49,6 +51,8 @@ container.bind<IStockWriteOnlyRepository>(TYPES.IStockWriteOnlyRepository).to(St
 container.bind<TradeServiceLocator>(TYPES.TradeServiceLocator).to(TradeServiceLocator);
 container.bind<ITradeWriteOnlyRepository>(TYPES.ITradeWriteOnlyRepository).to(TradeWriteOnlyRepository);
 container.bind<ITradeReadOnlyRepository>(TYPES.ITradeReadOnlyRepository).to(TradeReadOnlyRepository);
+
+container.bind<ReportServiceLocator>(TYPES.ReportServiceLocator).to(ReportServiceLocator);
 
 dotenv.config();
 

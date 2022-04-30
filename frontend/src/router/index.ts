@@ -49,6 +49,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/ContactView.vue"),
     meta: { requiredAuth: false },
   },
+  {
+    path: "/generate-report",
+    name: "generate-report",
+    component: () => import("../views/GenerateReport.vue"),
+    meta: { requiredAuth: true },
+  },
 ];
 
 const router = createRouter({

@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "jest --collectCoverage",
-    "start": "nodemon --legacy-watch"
+    "start": "nodemon --legacy-watch --files"
   },
   "repository": {
     "type": "git",

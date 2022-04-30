@@ -3,6 +3,7 @@ import { createStore, useStore as baseUseStore, Store } from "vuex";
 import authModule from "./modules/auth";
 import tradeModule from "./modules/trade";
 import stockModule from "./modules/stock";
+import reportModule from "./modules/report";
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
@@ -12,6 +13,7 @@ export const store = createStore<State>({
     auth: authModule,
     trade: tradeModule,
     stock: stockModule,
+    report: reportModule,
   },
 });
 
