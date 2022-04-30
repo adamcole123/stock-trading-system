@@ -7,5 +7,6 @@ export default interface ITradeDto {
 	stock_value?: number,
 	stock_amount?: number,
 	time_of_trade?: Date,
-	trade_type?: string
+	trade_type?: string,
+	trade_status?: string
 }
