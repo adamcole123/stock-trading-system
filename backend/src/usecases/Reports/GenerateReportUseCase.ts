@@ -49,10 +49,15 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 					})
 	
 					let plainStockObjs: any = stocks.map(stock => {
-						return {...stock};
+						return {...stock}
 					})
+					
+					plainStockObjs = plainStockObjs.map((stock: { [x: string]: any; }) => {
+						Object.keys(stock).forEach(key => stock[key] === undefined && delete stock[key]);
+						return {...stock};
+					});
 	
-					let columnDef = [...Object.keys(stocks[0])]
+					let columnDef = [...Object.keys(plainStockObjs[0])]
 	
 					let initialValue = "<stocks>";
 					let newReport = {
