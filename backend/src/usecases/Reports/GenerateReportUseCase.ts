@@ -5,21 +5,26 @@ import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnl
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
 import { toXML, XmlElement } from 'jstoxml';
 import jsonToCsv from 'convert-json-to-csv';
+import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadOnlyRepository';
+import ITradeDto from '../data_tranfer_objects/ITradeDto';
 
 export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	private stockReadOnlyRepository: IStockReadOnlyRepository;
 	private userReadOnlyRepository: IUserReadOnlyRepository;
 	private userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private tradeReadOnlyRepository: ITradeReadOnlyRepository;
 
 	/**
 	 *
 	 */
 	constructor(_stockReadOnlyRepository: IStockReadOnlyRepository,
 				_userReadOnlyRepository: IUserReadOnlyRepository,
-				_userWriteOnlyRepository: IUserWriteOnlyRepository) {
+				_userWriteOnlyRepository: IUserWriteOnlyRepository,
+				_tradeReadOnlyRepository: ITradeReadOnlyRepository) {
 		this.stockReadOnlyRepository = _stockReadOnlyRepository;
 		this.userReadOnlyRepository = _userReadOnlyRepository;
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;
+		this.tradeReadOnlyRepository = _tradeReadOnlyRepository;
 	}
 
 	completeStockValues(user_id: string, ascending: boolean, report_type: string): Promise<IUserDto> {
@@ -82,10 +87,133 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 		})
 	}
 	selectedCompanyDetails(user_id: string, stock_ids: string[]): Promise<IUserDto> {
-		throw new Error('Method not implemented.');
+		throw new Error('Method not implemented');
 	}
-	usersHeldShares(user_id: string): Promise<IUserDto> {
-		throw new Error('Method not implemented.');
+	usersHeldShares(user_id: string, ascending: boolean, report_type: string): Promise<IUserDto> {
+		return new Promise(async (resolve, reject) => {
+			this.tradeReadOnlyRepository.fetch({user_id: user_id})
+			.then(async trades => {
+				let numSharesPerCompany: any[] = await this.groupByCompany(trades);
+
+				this.addStockInfoToCompany(numSharesPerCompany)
+				.then(numSharesWithStocks => {
+					numSharesPerCompany = numSharesWithStocks
+
+					this.sortByCompany(numSharesPerCompany, ascending)
+					.then(async numSharesSorted => {
+						numSharesPerCompany = numSharesSorted
+
+						if(report_type === 'XML'){
+							numSharesPerCompany = numSharesPerCompany.map(company => {
+								return {
+									amount_held: company.amount_held,
+									stock_info: company.stock_info
+								};
+							})
+						}
+
+						if(report_type === 'CSV'){
+							numSharesPerCompany = numSharesPerCompany.map(company => {
+								return {
+									amount_held: company.amount_held,
+									stock_symbol: company.stock_info.symbol,
+									stock_name: company.stock_info.name
+								};
+							})
+						}
+
+						let columnDef = [...Object.keys(numSharesPerCompany[0])]
+		
+						let initialValue = "<shares>";
+						let newReport = {
+							report_date: new Date(),
+							report_data: report_type === 'CSV' ? jsonToCsv.convertArrayOfObjects(numSharesPerCompany, columnDef) : numSharesPerCompany.reduce((acc: string, obj: XmlElement | XmlElement[] | undefined) => {return acc + `<company>${toXML(obj)}</company>`}, initialValue) + "</shares>",
+							report_type: report_type
+						}
+						let user = await this.userReadOnlyRepository.fetch({id: user_id})
+			
+						user.reports?.push(newReport);
+			
+						let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
+							reports: user.reports
+						}, {})
+			
+						resolve(userEditted);
+	
+					})
+					.catch(err => {
+						reject(err);
+					})
+				})
+				.catch(err => {
+					reject(err);
+				})
+				
+			})
+			.catch(err => {
+				reject(err)
+			})
+		})
 	}
 	
+
+	private sortByCompany(numSharesPerCompany: any[], ascending: boolean): Promise<any[]> {
+		return new Promise((resolve, reject) => {
+			let sortedArray = ascending ? numSharesPerCompany.sort(this.dynamicSort("")) : numSharesPerCompany.sort(this.dynamicSort("-"));
+			resolve(sortedArray);
+		})
+	}
+
+	private addStockInfoToCompany(numSharesPerCompany: any[]): Promise<any[]> {
+		 numSharesPerCompany = numSharesPerCompany.map((company) => {
+			return this.stockReadOnlyRepository.fetch({ id: company.stock_id })
+			.then(stock => {
+				return {
+					stock_id: company.stock_id,
+					amount_held: company.amount_held,
+					stock_info: stock[0]
+				};
+			});
+		});
+	
+		return Promise.all(numSharesPerCompany).then((companiesArray) => {
+			return companiesArray;
+		});
+	}
+
+	private groupByCompany(trades: ITradeDto[]): Promise<any[]> {
+		return new Promise((resolve, reject) => {
+			let numSharesPerCompany: any[] = []
+	
+			trades.forEach(async (trade) => {
+				let companyIndexInArray = numSharesPerCompany.findIndex(company => company.stock_id === trade.stock_id?.toString());
+				if (companyIndexInArray === -1) {
+					numSharesPerCompany.push({
+						stock_id: trade.stock_id?.toString(),
+						amount_held: trade.trade_type === "Buy" ? trade.stock_amount : trade.stock_amount! * -1,
+					});
+				} else {
+					numSharesPerCompany[companyIndexInArray].amount_held += trade.trade_type === "Buy" ? trade.stock_amount : trade.stock_amount! * -1;
+				}
+			});
+	
+			resolve(numSharesPerCompany)
+		})
+	}
+
+	private dynamicSort(property: string) {
+		var sortOrder = 1;
+	
+		if(property === "-") {
+			sortOrder = -1;
+		}
+	
+		return function (a: any,b: any) {
+			if(sortOrder == -1){
+				return b['stock_info']['name'].localeCompare(a['stock_info']['name']);
+			}else{
+				return a['stock_info']['name'].localeCompare(b['stock_info']['name']);
+			}        
+		}
+	}
 }
