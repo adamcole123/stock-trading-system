@@ -97,6 +97,8 @@ const actions = {
     if (response && response.data) {
       commit("setApproveTradeApiStatus", "success");
       dispatch("pendingTrades");
+      dispatch("getUserTransactionHistoryApi");
+      dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setApproveTradeApiStatus", "failed");
     }
@@ -112,7 +114,9 @@ const actions = {
 
     if (response && response.data) {
       commit("setGetRejectTradeApiStatus", "success");
+      dispatch("getUserTransactionHistoryApi");
       dispatch("pendingTrades");
+      dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setGetRejectTradeApiStatus", "failed");
     }

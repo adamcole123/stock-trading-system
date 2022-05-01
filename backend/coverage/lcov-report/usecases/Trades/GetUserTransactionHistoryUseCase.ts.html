@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for usecases/Stocks/CreateStockUseCase.ts</title>
+    <title>Code coverage report for usecases/Trades/GetUserTransactionHistoryUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">usecases/Stocks</a> CreateStockUseCase.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">usecases/Trades</a> GetUserTransactionHistoryUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">76.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>10/13</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>9/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,54 +88,108 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IStockWriteOnlyRepository from '../../application/repositories/IStockWriteOnlyRepository';
-import IStockDto from '../data_tranfer_objects/IStockDto';
-import ICreateStockUseCase from './ICreateStockUseCase';
-&nbsp;
-export default class CreateStockUseCase implements ICreateStockUseCase {
-	stockWriteOnlyRepository: IStockWriteOnlyRepository;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import IStockReadOnlyRepository from 'src/application/repositories/IStockReadOnlyRepository';
+import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadOnlyRepository';
+import ITradeDto from '../data_tranfer_objects/ITradeDto';
+import IGetUserTransactionHistory from './IGetUserTransactionHistoryUseCase';
+export default class GetUserTransactionHistory implements IGetUserTransactionHistory {
+	private tradeReadOnlyRepository: ITradeReadOnlyRepository;
+	private stockReadOnlyRepository: IStockReadOnlyRepository;
 &nbsp;
 	/**
 	 *
 	 */
-	constructor(_stockWriteOnlyRepository: IStockWriteOnlyRepository) {
-		this.stockWriteOnlyRepository = _stockWriteOnlyRepository
+	constructor(_tradeReadOnlyRepository: ITradeReadOnlyRepository,
+				_stockReadOnlyRepository: IStockReadOnlyRepository,) {
+		this.tradeReadOnlyRepository = _tradeReadOnlyRepository;
+		this.stockReadOnlyRepository = _stockReadOnlyRepository;
 	}
 &nbsp;
-	async invoke(stock: IStockDto): Promise&lt;IStockDto&gt; {
-		let addedStock: IStockDto;
-		
-		try {
-			addedStock = await this.stockWriteOnlyRepository.create(stock);	
-			return addedStock;
-		} catch (error) {
-<span class="cstat-no" title="statement not covered" >			throw new Error('Could not add stock');</span>
-		}
+	invoke(tradeDto: ITradeDto): Promise&lt;ITradeDto[]&gt; {
+		return new Promise(async (resolve, reject) =&gt; {
+			try {
+				let transactionHistory = await this.tradeReadOnlyRepository.fetch({user_id: tradeDto.user_id});
+&nbsp;
+				transactionHistory = transactionHistory.map((trade) =&gt; {
+					return &lt;ITradeDto&gt;this.stockReadOnlyRepository.fetch({id: trade.stock_id})
+					.then(<span class="fstat-no" title="function not covered" >stock </span>=&gt; {
+<span class="cstat-no" title="statement not covered" >						return {</span>
+							...trade,
+							current_value: stock[0].value,
+							symbol: stock[0].symbol,
+							stock_name: stock[0].name
+						}
+					});
+				});
+			
+<span class="cstat-no" title="statement not covered" >				return Promise.all(transactionHistory).then(<span class="fstat-no" title="function not covered" >(t</span>ransactionHistory) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >					resolve(transactionHistory);</span>
+				});
+			} catch (error) {
+				return reject(error);
+			}
+		})
 	}
 &nbsp;
 }</pre></td></tr></table></pre>
