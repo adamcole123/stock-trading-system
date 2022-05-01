@@ -30,6 +30,6 @@ export default class TradeServiceLocator {
 		return new SellStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.tradeReadRepository, this.userWriteRepository, this.userReadRepository);
 	}
 	public GetGetUserTransactionHistoryUseCase(): IGetUserTransactionHistoryUseCase {
-		return new GetUserTransactionHistory(this.tradeReadRepository);
+		return new GetUserTransactionHistory(this.tradeReadRepository, this.stockReadRepository);
 	}
 }

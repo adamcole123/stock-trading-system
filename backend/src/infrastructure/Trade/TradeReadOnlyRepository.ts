@@ -23,6 +23,18 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 			try {
 				let foundTrades = await Trade.find(tradeDto);
 
+				foundTrades = foundTrades.map(trade => {
+					return {
+						id: trade.id,
+						stock_id: trade.stock_id,
+						user_id: trade.user_id,
+						stock_value: trade.stock_value,
+						stock_amount: trade.stock_amount,
+						time_of_trade: trade.time_of_trade,
+						trade_type: trade.trade_type,
+						trade_status: trade.trade_status
+					}
+				})
 				resolve(foundTrades);
 			} catch (e) {
 				reject(e);

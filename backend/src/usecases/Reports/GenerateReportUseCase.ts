@@ -193,7 +193,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	}
 
 	private addStockInfoToCompany(numSharesPerCompany: any[]): Promise<any[]> {
-		 numSharesPerCompany = numSharesPerCompany.map((company) => {
+		numSharesPerCompany = numSharesPerCompany.map((company) => {
 			return this.stockReadOnlyRepository.fetch({ id: company.stock_id })
 			.then(stock => {
 				return {
