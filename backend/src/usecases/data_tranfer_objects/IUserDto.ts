@@ -13,7 +13,7 @@ export default interface IUserDto {
 	birthDate?: Date,
 	reports?: IReportDto[],
 	credit?: Number,
-	role?: Role,
+	role?: string,
 	isDeleted?: boolean,
 	cardDetails?: CardDetails[]
 }

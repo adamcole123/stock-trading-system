@@ -13,7 +13,7 @@ export default class User {
 		public id?: string,
 		public password?: string,
 		public credit?: Number,
-		public role?: Role,
+		public role?: string,
 		public isDeleted?: boolean,
 		public cardDetails?: CardDetails[]
 	){

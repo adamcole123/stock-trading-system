@@ -5,8 +5,23 @@ import Trade from './Trade';
 
 @injectable()
 export default class TradeWriteOnlyRepository implements ITradeWriteOnlyRepository {
-	edit(tradeDto: ITradeDto): Promise<ITradeDto> {
-		throw new Error('Method not implemented.');
+	async edit(tradeDto: ITradeDto): Promise<ITradeDto> {
+		try {
+			let edditedTrade = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status })
+			
+			return Promise.resolve({
+				id: edditedTrade.id,
+				trade_status: edditedTrade.trade_status,
+				stock_amount: edditedTrade.stock_amount,
+				stock_id: edditedTrade.stock_id,
+				stock_value: edditedTrade.stock_value,
+				time_of_trade: edditedTrade.time_of_trade,
+				trade_type: edditedTrade.trade_type,
+				user_id: edditedTrade.user_id,
+			})
+		} catch (error) {
+			return Promise.reject('Could not edit trade: ' + error);
+		}
 	}
 	create(tradeDto: ITradeDto): Promise<ITradeDto> {
 		return new Promise(async (resolve, reject) => {

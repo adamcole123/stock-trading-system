@@ -8,11 +8,13 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 	fetchAll(): Promise<ITradeDto[]> {
 		throw new Error('Method not implemented.');
 	}
-	fetch(tradeDto: ITradeDto): Promise<ITradeDto[]> {
+	fetch(tradeDto: ITradeDto, populateStocks?: boolean): Promise<ITradeDto[]> {
 		return new Promise(async (resolve, reject) => {
 			if(tradeDto.id !== undefined){
 				try{
-					let foundTrade = await Trade.findById(tradeDto.id);
+					let foundTrade;
+					if(populateStocks) foundTrade = await Trade.findById(tradeDto.id).populate('stock_id');
+					else foundTrade = await Trade.findById(tradeDto.id);
 	
 					resolve([foundTrade]);
 				} catch (e) {
@@ -21,7 +23,9 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 			}
 
 			try {
-				let foundTrades = await Trade.find(tradeDto);
+				let foundTrades;
+				if(populateStocks) foundTrades = await Trade.find(tradeDto).populate('stock_id');
+				else foundTrades = await Trade.find(tradeDto).populate('stock_id');
 
 				foundTrades = foundTrades.map(trade => {
 					return {
