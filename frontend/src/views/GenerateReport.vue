@@ -1,11 +1,16 @@
 <template>
   <div>
     <ReportModal v-if="getReportModalVisible" />
+    <h1>Generate Reports</h1>
+    <h3>Select which report to generate:</h3>
     <button @click="actionShowReportModal({ reportType: 1 })">
       User Held Shares
     </button>
     <button @click="actionShowReportModal({ reportType: 2 })">
       Complete Stock Values
+    </button>
+    <button @click="actionShowReportModal({ reportType: 3 })">
+      Selected Company Details
     </button>
   </div>
 </template>

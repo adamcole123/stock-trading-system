@@ -3,5 +3,5 @@ import StockReadOptions from "./StockReadOptions"
 
 export default interface IStockReadOnlyRepository {
 	fetchAll(): Promise<IStockDto[]>
-	fetch(stockDto?: IStockDto, options?: StockReadOptions): Promise<IStockDto[]>
+	fetch(stockDto?: IStockDto | IStockDto[], options?: StockReadOptions): Promise<IStockDto[]>
 }

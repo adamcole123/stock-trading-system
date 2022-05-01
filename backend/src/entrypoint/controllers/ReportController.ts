@@ -61,6 +61,31 @@ export default class ReportController implements interfaces.Controller {
 			});
 	}
 
+	@httpGet('/company-details')
+	public async companyDetails(@request() req: express.Request, @response() res: express.Response){
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		let stock_ids = <string[]>req.query.stockids;
+		let ascending: boolean = req.query.ascending === "false" ? false : true;
+		let report_type: string = String(req.query.reportformat);
+		let cookieData = await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+			
+		if(!cookieData.id){
+			return res.status(401).json({error: 'User not authorised'});
+		}
+
+		if(!stock_ids){
+			return res.status(500).json('No stocks were selected for the report');
+		}
+		
+		return await this.generateReportUseCase.selectedCompanyDetails(cookieData.id!, ascending, stock_ids, report_type)
+			.then((userDto: IUserDto) => {
+				res.status(200).json(userDto)
+			})
+			.catch((err: Error) => {
+				res.status(500).json(err);
+			});
+	}
+
 	@httpGet('/download')
 	public async download(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;

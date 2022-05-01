@@ -39,6 +39,9 @@ const actions = {
       .get(
         `http://localhost:8000/report/${payload.reportType}?reportformat=${payload.reportFormat}&ascending=${payload.ascending}`,
         {
+          params: {
+            stockids: payload.selectedStocks,
+          },
           withCredentials: true,
         }
       )
