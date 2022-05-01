@@ -7,6 +7,9 @@
     <button @click="actionShowReportModal({ reportType: 2 })">
       Complete Stock Values
     </button>
+    <button @click="actionShowReportModal({ reportType: 3 })">
+      Selected Company Details
+    </button>
   </div>
 </template>
 <script lang="ts">
