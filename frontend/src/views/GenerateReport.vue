@@ -1,8 +1,10 @@
 <template>
   <div>
     <ReportModal v-if="getReportModalVisible" />
-
     <button @click="actionShowReportModal({ reportType: 1 })">
+      User Held Shares
+    </button>
+    <button @click="actionShowReportModal({ reportType: 2 })">
       Complete Stock Values
     </button>
   </div>

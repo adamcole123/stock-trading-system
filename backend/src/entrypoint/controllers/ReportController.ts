@@ -8,7 +8,6 @@ import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 import IGenerateReportUseCase from "../../usecases/Reports/IGenerateReportUseCase";
 import ReportServiceLocator from "../../configuration/ReportServiceLocator";
 import IDownloadReportUseCase from "src/usecases/Reports/IDownloadReportUseCase";
-import { open } from 'fs/promises';
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ export default class ReportController implements interfaces.Controller {
 	public async userTransactions(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
 		let ascending: boolean = req.query.ascending === "false" ? false : true;
-		let report_type: string = String(req.query.reporttype);
+		let report_type: string = String(req.query.reportformat);
 		let cookieData = await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 			
 		if(!cookieData.id){
@@ -34,6 +33,26 @@ export default class ReportController implements interfaces.Controller {
 		}
 		
 		return await this.generateReportUseCase.completeStockValues(cookieData.id!, ascending, report_type)
+			.then((userDto: IUserDto) => {
+				res.status(200).json(userDto)
+			})
+			.catch((err: Error) => {
+				res.status(500).json(err);
+			});
+	}
+
+	@httpGet('/held-shares')
+	public async userHeldShares(@request() req: express.Request, @response() res: express.Response){
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		let ascending: boolean = req.query.ascending === "false" ? false : true;
+		let report_type: string = String(req.query.reportformat);
+		let cookieData = await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+			
+		if(!cookieData.id){
+			return res.status(401).json({error: 'User not authorised'});
+		}
+		
+		return await this.generateReportUseCase.usersHeldShares(cookieData.id!, ascending, report_type)
 			.then((userDto: IUserDto) => {
 				res.status(200).json(userDto)
 			})

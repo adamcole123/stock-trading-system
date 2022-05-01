@@ -1,9 +1,9 @@
 <template>
   <div class="report-modal">
-    <div class="report-modal__body">
+    <div class="report-modal__body" v-if="getReportType === 2">
       <button @click="actionHideReportModal()">Close</button>
       <div class="report-modal__header">
-        <h1>Generate Report</h1>
+        <h1>Generate Company Values Report</h1>
       </div>
       <div class="report-modal__body__content">
         <div class="report-modal__body__content__item">
@@ -23,7 +23,38 @@
           </select>
 
           <button
-            @click="generateReport()"
+            @click="generateReport(`company-values`)"
+            class="report-modal__body__content__item__button"
+          >
+            Complete Stock Values
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="report-modal__body" v-if="getReportType === 1">
+      <button @click="actionHideReportModal()">Close</button>
+      <div class="report-modal__header">
+        <h1>Generate User Held Shares Report</h1>
+      </div>
+      <div class="report-modal__body__content">
+        <div class="report-modal__body__content__item">
+          <label for="ascending">Order value by ascending or descending?</label>
+          <select name="ascending" id="ascending" v-model="ascending">
+            <option value="true">Ascending</option>
+            <option value="false">Descending</option>
+          </select>
+
+          <select
+            name="report-format"
+            id="report-format"
+            v-model="report_format"
+          >
+            <option value="CSV">CSV</option>
+            <option value="XML">XML</option>
+          </select>
+
+          <button
+            @click="generateReport(`held-shares`)"
             class="report-modal__body__content__item__button"
           >
             Complete Stock Values
@@ -49,6 +80,7 @@ export default defineComponent({
     ...mapGetters("report", {
       getReportModalVisible: "getReportModalVisible",
       getGenerateReportApiStatus: "getGenerateReportApiStatus",
+      getReportType: "getReportType",
     }),
   },
   methods: {
@@ -56,10 +88,11 @@ export default defineComponent({
       actionGenerateReport: "generateReport",
       actionHideReportModal: "hideReportModal",
     }),
-    async generateReport() {
+    async generateReport(reportType: string) {
       console.log(this.report_format, this.ascending);
       let payload = {
-        reportType: this.report_format,
+        reportType: reportType,
+        reportFormat: this.report_format,
         ascending: this.ascending,
       };
       await this.actionGenerateReport(payload);

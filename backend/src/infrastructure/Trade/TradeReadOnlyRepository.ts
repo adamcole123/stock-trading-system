@@ -21,7 +21,7 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 			}
 
 			try {
-				let foundTrades = await Trade.find(tradeDto).populate('stock_id');
+				let foundTrades = await Trade.find(tradeDto);
 
 				resolve(foundTrades);
 			} catch (e) {
