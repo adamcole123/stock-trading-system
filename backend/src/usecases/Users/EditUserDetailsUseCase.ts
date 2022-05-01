@@ -15,7 +15,7 @@ export default class EditUserDetailsUseCase implements IEditUserDetailsUseCase {
 			try{
 				let signedInUser = <IUserDto>jwt.verify(token, process.env.JWT_SECRET_KEY!);
 
-				if(signedInUser.username != username && signedInUser.role != 2){
+				if(signedInUser.username != username && signedInUser.role != "Admin"){
 					reject("Only an administrator and the signed in user can edit their details");
 				}
 				let editedUser: IUserDto = await this.userWriteOnlyRepository.edit(username, userDto, {});

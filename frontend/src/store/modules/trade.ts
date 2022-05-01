@@ -6,6 +6,8 @@ import { store } from "..";
 const state = () => ({
   buyStocksApiStatus: "",
   sellStocksApiStatus: "",
+  pendingTrades: [],
+  getPendingTradesApiStatus: "",
 });
 
 const getters = {
@@ -20,6 +22,9 @@ const getters = {
   },
   getUserTransactionHistory(state: State) {
     return state.userTransactionHistory;
+  },
+  getPendingTrades(state: State) {
+    return state.pendingTrades;
   },
 };
 
@@ -80,6 +85,59 @@ const actions = {
       commit("setGetUserTransactionHistoryApiStatus", "failed");
     }
   },
+  async approveTrade({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .post(`http://localhost:8000/trade/approvetrade`, payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setApproveTradeApiStatus", "success");
+      dispatch("pendingTrades");
+      dispatch("getUserTransactionHistoryApi");
+      dispatch("auth/userProfile", "", { root: true });
+    } else {
+      commit("setApproveTradeApiStatus", "failed");
+    }
+  },
+  async rejectTrade({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .post(`http://localhost:8000/trade/rejecttrade`, payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setGetRejectTradeApiStatus", "success");
+      dispatch("getUserTransactionHistoryApi");
+      dispatch("pendingTrades");
+      dispatch("auth/userProfile", "", { root: true });
+    } else {
+      commit("setGetRejectTradeApiStatus", "failed");
+    }
+  },
+  async pendingTrades({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .get(`http://localhost:8000/trade/pendingtrades`, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      console.log(response);
+      commit("setPendingTrades", response.data);
+      commit("setGetPendingTradesApiStatus", "success");
+    } else {
+      commit("setGetPendingTradesApiStatus", "failed");
+    }
+  },
 };
 
 const mutations = {
@@ -94,6 +152,12 @@ const mutations = {
   },
   setUserTransactionHistory(state: State, data: any) {
     state.userTransactionHistory = data;
+  },
+  setGetPendingTradesApiStatus(state: State, data: any) {
+    state.getPendingTradesApiStatus = data;
+  },
+  setPendingTrades(state: State, data: any) {
+    state.pendingTrades = data;
   },
 };
 

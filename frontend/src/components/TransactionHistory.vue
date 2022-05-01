@@ -19,6 +19,7 @@
           <td>{{ trade.symbol }}</td>
           <td>{{ trade.stock_name }}</td>
           <td>{{ trade.stock_value }}</td>
+          <td>{{ trade.current_value }}</td>
           <td>{{ trade.stock_amount }}</td>
           <td>
             {{
@@ -27,7 +28,6 @@
               ).toFixed(2)
             }}
           </td>
-          <td>{{ trade.current_value }}</td>
           <td>{{ trade.trade_type }}</td>
           <td>{{ trade.trade_status }}</td>
           <td>
