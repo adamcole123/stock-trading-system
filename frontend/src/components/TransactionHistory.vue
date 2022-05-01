@@ -3,8 +3,10 @@
     <table>
       <thead>
         <tr>
-          <th align="left">Stock</th>
-          <th align="left">Value</th>
+          <th align="left">Stock Symbol</th>
+          <th align="left">Stock Name</th>
+          <th align="left">Purchase Value</th>
+          <th align="left">Current Value</th>
           <th align="left">Quantity</th>
           <th align="left">Total</th>
           <th align="left">Trade Type</th>
@@ -14,7 +16,8 @@
       </thead>
       <tbody>
         <tr v-for="trade in getUserTransactionHistory" :key="trade.id">
-          <td>{{ trade.stock_id.symbol }}</td>
+          <td>{{ trade.symbol }}</td>
+          <td>{{ trade.stock_name }}</td>
           <td>{{ trade.stock_value }}</td>
           <td>{{ trade.stock_amount }}</td>
           <td>
@@ -24,6 +27,7 @@
               ).toFixed(2)
             }}
           </td>
+          <td>{{ trade.current_value }}</td>
           <td>{{ trade.trade_type }}</td>
           <td>{{ trade.trade_status }}</td>
           <td>
