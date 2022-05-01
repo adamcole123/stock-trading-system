@@ -49,7 +49,7 @@
             @click="generateReport(`company-details`)"
             class="report-modal__body__content__item__button"
           >
-            Complete Stock Values
+            Generate Report
           </button>
         </div>
       </div>
@@ -80,7 +80,7 @@
             @click="generateReport(`company-values`)"
             class="report-modal__body__content__item__button"
           >
-            Complete Stock Values
+            Generate Report
           </button>
         </div>
       </div>
@@ -111,7 +111,7 @@
             @click="generateReport(`held-shares`)"
             class="report-modal__body__content__item__button"
           >
-            Complete Stock Values
+            Generate Report
           </button>
         </div>
       </div>
@@ -127,7 +127,7 @@ export default defineComponent({
   data: function () {
     return {
       ascending: true,
-      report_format: 0,
+      report_format: "CSV",
       selectedStocks: [],
     };
   },
@@ -171,7 +171,7 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .report-modal {
   position: fixed;
   top: 0;
