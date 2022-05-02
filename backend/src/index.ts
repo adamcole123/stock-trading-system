@@ -8,6 +8,7 @@ import * as prettyjson from "prettyjson";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import socket from 'socket.io';
 
 
 import { Container } from 'inversify';
@@ -89,9 +90,14 @@ const {
   DB_NAME,
 } = process.env;
 
+import Stock from './infrastructure/Stock/Stock';
+
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 .then(res => {
   console.log('Connected to database');
+
+  Stock.watch().on('change', change => console.log(change));
+
 })
 .catch(err => {
   console.error(err)

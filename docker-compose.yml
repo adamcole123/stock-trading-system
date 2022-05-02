@@ -9,6 +9,8 @@ services:
       - "27017:27017"
     volumes: 
       - ./mongo/data:/data/db
+    command: 
+      - "rs.initiate()"
   mongo_seed:
     image: mongo
     links:
@@ -24,6 +26,7 @@ services:
     container_name: stock-trading-system-backend
     volumes:
       - ./backend/src:/home/node/app/backend/src 
+      - ./backend/typings:/home/node/app/backend/typings 
       - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json 
       - ./backend/.env:/home/node/app/backend/.env 
       - ./backend/coverage/:/home/node/app/backend/coverage/
