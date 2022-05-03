@@ -9,16 +9,15 @@ services:
       - "27017:27017"
     volumes: 
       - ./mongo/data:/data/db
-    command: 
-      - "rs.initiate()"
+      - ./mongo-seed/mongo.conf:/etc/mongo.conf
+      - ./mongo-seed/MOCK_DATA.csv:/mongo-seed/MOCK_DATA.csv
+    command: sleep 5 && mongo mongodb://stock-trading-system-db:27017 --eval "rs.initiate();"
   mongo_seed:
     image: mongo
     links:
       - stock-trading-system-db
     volumes:
-      - ./mongo-seed:/mongo-seed
-    command:
-      mongo-seed/import.sh
+      - ./mongo-seed/import.sh:/docker-entrypoint-initdb.d/import.sh
   stock-trading-system-backend:
     depends_on: 
       - stock-trading-system-db

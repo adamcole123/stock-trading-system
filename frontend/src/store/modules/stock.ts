@@ -31,6 +31,26 @@ const actions = {
       commit("setGetStocksApiStatus", "failed");
     }
   },
+
+  async updateStocksData({ commit, dispatch }: ContextFunction, payload: any) {
+    const index = payload[1].findIndex((object: { id: number }) => {
+      return object.id === payload[0].id;
+    });
+
+    if (index !== -1) {
+      const newStockData = {
+        ...payload[1][index],
+        ...payload[0],
+      };
+
+      newStockData.gains = Number.parseFloat(
+        (newStockData.value - newStockData.open).toFixed(2)
+      );
+
+      payload[1][index] = newStockData;
+    }
+    commit("setStockData", payload[1]);
+  },
 };
 
 const mutations = {

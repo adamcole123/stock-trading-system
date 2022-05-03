@@ -47,6 +47,9 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import Stock from "../types/Stock";
 import { mapActions, mapGetters } from "vuex";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:8000/stockmarket");
 
 export default defineComponent({
   name: "StockList",
@@ -70,6 +73,16 @@ export default defineComponent({
   },
   created() {
     this.actionGetStocksApi();
+
+    socket.on("stocks", (data) => {
+      this.actionUpdateStocksData([
+        {
+          id: data.documentKey._id,
+          ...data.updateDescription.updatedFields,
+        },
+        this.getStockData,
+      ]);
+    });
   },
   methods: {
     ...mapActions("trade", {
@@ -78,6 +91,7 @@ export default defineComponent({
     }),
     ...mapActions("stock", {
       actionGetStocksApi: "getStocksApi",
+      actionUpdateStocksData: "updateStocksData",
     }),
     async buyStocks(stock_id: string) {
       console.log(stock_id);

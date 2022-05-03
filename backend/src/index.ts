@@ -2,13 +2,15 @@ import "reflect-metadata";
 import * as bodyParser from 'body-parser';
 import * as express from "express";
 import { InversifyExpressServer, getRouteInfo } from 'inversify-express-utils';
+import { Interfaces, InversifySocketServer, TYPE } from "inversify-socket-utils";
 import { TYPES } from './constants/types';
 import dotenv from 'dotenv';
 import * as prettyjson from "prettyjson";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import socket from 'socket.io';
+import { SocketController } from "./SocketController";
+import * as SocketIO from 'socket.io';
 
 
 import { Container } from 'inversify';
@@ -55,6 +57,9 @@ container.bind<ITradeReadOnlyRepository>(TYPES.ITradeReadOnlyRepository).to(Trad
 
 container.bind<ReportServiceLocator>(TYPES.ReportServiceLocator).to(ReportServiceLocator);
 
+// Binding for socket server
+container.bind<Interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
+
 dotenv.config();
 
 // create server
@@ -78,11 +83,15 @@ server.setConfig((app: express.Application) => {
   }));
   app.use(bodyParser.json());
   app.use(cookieParser());
+  app.use((err: any, req: any, res: any, next: any) => {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+  })
 });
 
 let app = server.build();
 
-const routeInfo = getRouteInfo(container);
+// const routeInfo = getRouteInfo(container);
 
 const {
   DB_HOST,
@@ -92,23 +101,63 @@ const {
 
 import Stock from './infrastructure/Stock/Stock';
 
+console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
+
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 .then(res => {
   console.log('Connected to database');
 
-  Stock.watch().on('change', change => console.log(change));
-
+  changeStockValues();
 })
 .catch(err => {
   console.error(err)
 })
 
-app.use((err: any, req: any, res: any, next: any) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
 
-app.listen(8000, () => {
+
+const httpServer = app.listen(8000, () => {
   console.log('Server listening on port 8000');
-  console.log(prettyjson.render({ routes: routeInfo }));
+  // console.log(prettyjson.render({ routes: routeInfo }));
 });
+
+const socketServer = new InversifySocketServer(container, new SocketIO.Server(httpServer, {
+  cors: {
+    origin: "http://localhost:8080"
+  }
+}))
+socketServer.build();
+
+function changeStockValues() {
+  setInterval(function () {
+    Stock.count().exec(function(err, count){
+      var random = Math.floor(Math.random() * count);
+    
+      Stock.findOne().skip(random).exec(
+        function (err, result) {
+    
+          if(err)
+            return console.error(err);
+  
+          if(result?.value! > 0)
+            result!.value = Number.parseFloat((result!.value! + (Math.random() > 0.5 ? Math.random() * 1 : Math.random() * -1)).toFixed(2));
+          
+          if(result?.volume! > 0)
+            result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? 1 : -1))
+  
+          
+          let now = new Date();
+          
+          if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
+            result!.open = result?.value;
+          }
+
+          if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
+            result!.close = result?.value;
+          }
+
+          result?.save()
+      });
+    
+    });
+  }, 2);
+}
