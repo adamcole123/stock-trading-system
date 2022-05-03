@@ -50,7 +50,7 @@ replication:
 
 **why?**
 
-The live stock updates implemented in this application use the MongoDB change stream functionality to watch updates to the database. This functionality requires MongoDB replica sets, which is what the above steps accomplish.
+The live stock updates implemented in this application use the MongoDB [change stream](https://www.mongodb.com/docs/manual/changeStreams/) functionality to watch updates to the database. This functionality requires MongoDB replica sets, which is what the above steps accomplish.
 
 ### Get the app running
 Follow these instructions to get the app working
