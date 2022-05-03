@@ -23,7 +23,7 @@ To run the app, execute the following commands from the `stock-trading-system` p
 ## Local Setup
 
 ### Before 'getting the app running'!
-1. Navigate to your mongod.cfg, usually in the `C:\Program Files\MongoDB\Server\5.0\bin` directory if you're using a windows machine
+1. Navigate to your `mongod.cfg`, usually in the `C:\Program Files\MongoDB\Server\5.0\bin` directory if you're using a windows machine
 2. Add the following to the document
 ```
 replication:
