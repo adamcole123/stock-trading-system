@@ -7,7 +7,7 @@ This is the implementation of my MSc second year project, a stock trading system
 - Node.js > v14.15.4
 - Docker
 - NPM
-- MongoDB > v5.0
+- MongoDB Community Server including MongoDB compass > v5.0
 
 
 ## Running the app in a docker container
