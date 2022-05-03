@@ -3,3 +3,5 @@ declare module 'convert-json-to-csv'{
 	function convertArrayOfObjects(jsonData, jsonColumnDefArray);
 };
 
+declare module '@mongoosejs/double';
+
