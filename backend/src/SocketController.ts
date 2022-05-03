@@ -9,12 +9,20 @@ import Stock from "./infrastructure/Stock/Stock";
   '/stockmarket'
 )
 export class SocketController {
+  stockUpdateBacklog: any[] = [];
+  
   @OnConnect("connection")
   connection(@ConnectedSocket() socket: any) {
     console.log("Client connected");
 
     Stock.watch().on("change", (change) => {
-      socket.emit("stocks", change);
+      this.stockUpdateBacklog.push(change);
+
+      if(this.stockUpdateBacklog.length === 25) {
+        socket.emit("stocks", this.stockUpdateBacklog);
+        this.stockUpdateBacklog = [];
+      }
+
     })
   }
 

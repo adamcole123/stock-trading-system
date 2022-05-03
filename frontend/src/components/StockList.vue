@@ -76,10 +76,12 @@ export default defineComponent({
 
     socket.on("stocks", (data) => {
       this.actionUpdateStocksData([
-        {
-          id: data.documentKey._id,
-          ...data.updateDescription.updatedFields,
-        },
+        data.map((update: any) => {
+          return {
+            id: update.documentKey._id,
+            ...update.updateDescription.updatedFields,
+          };
+        }),
         this.getStockData,
       ]);
     });

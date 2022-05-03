@@ -142,7 +142,7 @@ function changeStockValues() {
             result!.value = Number.parseFloat((result!.value! + (Math.random() > 0.5 ? Math.random() * 1 : Math.random() * -1)).toFixed(2));
           
           if(result?.volume! > 0)
-            result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? 1 : -1))
+            result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? Math.random() * 10 : Math.random() * -10))
   
           
           let now = new Date();
