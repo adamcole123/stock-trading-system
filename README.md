@@ -10,10 +10,12 @@ This is the implementation of my MSc second year project, a stock trading system
 - MongoDB > v5.0
 
 
-## Commands
-To get the app running, run the following command
+## Running the app in a docker container
+***Docker is not yet set up properly in this project, follow the local setup steps instead***
 
-***Docker is not yet set up properly in this project, follow the local setup steps***
+This app is set up to run on a docker container. Install docker then continue to the next steps for an easier setup
+
+To run the app, execute the following commands from the `stock-trading-system` parent directory
 
 	> cd stock-trading-system
 	> docker-compose up
