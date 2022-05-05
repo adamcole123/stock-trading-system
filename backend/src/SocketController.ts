@@ -15,15 +15,19 @@ export class SocketController {
   connection(@ConnectedSocket() socket: any) {
     console.log("Client connected");
 
-    Stock.watch().on("change", (change) => {
-      this.stockUpdateBacklog.push(change);
-
-      if(this.stockUpdateBacklog.length === 25) {
-        socket.emit("stocks", this.stockUpdateBacklog);
-        this.stockUpdateBacklog = [];
-      }
-
-    })
+    try {
+      Stock.watch().on("change", (change) => {
+        this.stockUpdateBacklog.push(change);
+  
+        if(this.stockUpdateBacklog.length === 25) {
+          socket.emit("stocks", this.stockUpdateBacklog);
+          this.stockUpdateBacklog = [];
+        }
+  
+      })
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   @OnDisconnect("disconnect")
