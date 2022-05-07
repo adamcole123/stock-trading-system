@@ -2,7 +2,7 @@ import "reflect-metadata";
 import * as bodyParser from 'body-parser';
 import * as express from "express";
 import { InversifyExpressServer, getRouteInfo } from 'inversify-express-utils';
-import { Interfaces, InversifySocketServer, TYPE } from "inversify-socket-utils";
+import { interfaces, InversifySocketServer, TYPE } from "inversify-socket-utils";
 import { TYPES } from './constants/types';
 import dotenv from 'dotenv';
 import * as prettyjson from "prettyjson";
@@ -58,7 +58,7 @@ container.bind<ITradeReadOnlyRepository>(TYPES.ITradeReadOnlyRepository).to(Trad
 container.bind<ReportServiceLocator>(TYPES.ReportServiceLocator).to(ReportServiceLocator);
 
 // Binding for socket server
-container.bind<Interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
+container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
 
 dotenv.config();
 
