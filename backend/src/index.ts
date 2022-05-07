@@ -85,7 +85,16 @@ server.setConfig((app: express.Application) => {
   app.use(cookieParser());
   app.use((err: any, req: any, res: any, next: any) => {
     console.error(err.stack)
-    res.status(500).send('Something broke!')
+    
+    let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
+
+    sendEmailUseCase.invoke({
+      to: ["admin@stock-trading-system.com"],
+      from: "error-logger@stock-trading-system.com",
+      subject: "An error was caused in the system",
+      bodyText: `${err} with request ${req} and response ${res}`,
+      bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
+    })
   })
 });
 
@@ -100,6 +109,8 @@ const {
 } = process.env;
 
 import Stock from './infrastructure/Stock/Stock';
+import ISendEmailUseCase from './usecases/Email/ISendEmailUseCase';
+import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
 
 console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
