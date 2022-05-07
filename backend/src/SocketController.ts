@@ -1,18 +1,18 @@
 import { injectable } from "inversify";
-import { Controller, Payload, ConnectedSocket, OnConnect, OnDisconnect, OnMessage } from "inversify-socket-utils";
+import { controller, payload, connectedSocket, onConnect, onDisconnect, onMessage } from "inversify-socket-utils";
 import { emit } from "process";
 import "reflect-metadata";
 import Stock from "./infrastructure/Stock/Stock";
 
 @injectable()
-@Controller(
+@controller(
   '/stockmarket'
 )
 export class SocketController {
   stockUpdateBacklog: any[] = [];
   
-  @OnConnect("connection")
-  connection(@ConnectedSocket() socket: any) {
+  @onConnect("connection")
+  connection(@connectedSocket() socket: any) {
     console.log("Client connected");
 
     Stock.watch().on("change", (change) => {
@@ -26,13 +26,13 @@ export class SocketController {
     })
   }
 
-  @OnDisconnect("disconnect")
+  @onDisconnect("disconnect")
   disconnect() {
     console.log("Client disconnected");
   }
 
-  @OnMessage("message")
-  message(@Payload() payload: any, @ConnectedSocket() socket: any) {
+  @onMessage("message")
+  message(@payload() payload: any, @connectedSocket() socket: any) {
     console.log("Message received");
     socket.emit("message", "Hello!");
   }

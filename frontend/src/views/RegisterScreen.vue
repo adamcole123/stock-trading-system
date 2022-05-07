@@ -22,6 +22,13 @@
         placeholder="Email"
         name="email"
       />
+      <label for="username">Date of Birth</label>
+      <input
+        type="date"
+        v-model="registerInfo.birthDate"
+        placeholder="Date of Birth"
+        name="birthDate"
+      />
       <label for="username">Username</label>
       <input
         type="text"
@@ -56,6 +63,7 @@ export default defineComponent({
         firstName: "",
         lastName: "",
         password: "",
+        birthDate: "",
       },
       errorText: "",
     };
@@ -78,6 +86,7 @@ export default defineComponent({
         firstName: this.registerInfo.firstName,
         lastName: this.registerInfo.lastName,
         email: this.registerInfo.email,
+        birthDate: this.registerInfo.birthDate,
       };
       await this.actionRegisterApi(payload);
       if (this.getRegisterApiStatus == "success") {

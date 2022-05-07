@@ -35,6 +35,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 							lastName: userDto.lastName,
 							credit: userDto.credit,
 							reports: userDto.reports,
+							birthDate: userDto.birthDate,
 							cardDetails: userDto.cardDetails,
 							role: 'User',
 							email: userDto.email,

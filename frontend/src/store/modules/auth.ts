@@ -48,6 +48,7 @@ const actions = {
     }
   },
   async registerApi({ commit, dispatch }: ContextFunction, payload: any) {
+    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/register", payload, {
         withCredentials: true,

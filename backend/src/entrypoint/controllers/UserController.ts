@@ -69,6 +69,7 @@ export default class UserController implements interfaces.Controller {
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			password: req.body.password,
+			birthDate: req.body.birthDate
 		}
 
 		return await this.userRegisterUseCase.invoke(newUser)
