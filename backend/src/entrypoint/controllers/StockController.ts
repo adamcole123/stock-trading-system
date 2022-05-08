@@ -47,7 +47,7 @@ export default class StockController implements interfaces.Controller {
 			return res.status(400).json({error: 'Must provide criteria or options'});
 		}
 
-		return await this.getAllStocksUseCase.invoke(req.body.criteria, { page: parseInt(<string>req.query.page) })
+		return await this.getAllStocksUseCase.invoke(req.body.criteria, { page: parseInt(<string>req.query.page), limit: parseInt(<string>req.query.limit) })
 			.then((stockDto: IStockDto[]) => {
 				res.status(200).json(stockDto)
 			})

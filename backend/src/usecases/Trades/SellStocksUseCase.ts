@@ -49,7 +49,8 @@ export default class SellStocksUseCase implements ISellStocksUseCase {
 				}),
 				trades = await this.tradeReadOnlyRepository.fetch({
 					user_id: tradeDto.user_id,
-					stock_id: tradeDto.stock_id
+					stock_id: tradeDto.stock_id,
+					trade_status: "Approved"
 				})
 			])
 

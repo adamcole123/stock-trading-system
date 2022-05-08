@@ -10,11 +10,14 @@ import IValidateUserTokenUseCase from '../usecases/Users/IValidateUserTokenUseCa
 import ValidateUserTokenUseCase from "../usecases/Users/ValidateUserTokenUseCase";
 import IEditUserDetailsUseCase from '../usecases/Users/IEditUserDetailsUseCase';
 import EditUserDetailsUseCase from '../usecases/Users/EditUserDetailsUseCase';
+import IAddNewCreditCardUseCase from '../usecases/Users/IAddNewCreditCardUseCase';
+import AddNewCreditCardUseCase from '../usecases/Users/AddNewCreditCardUseCase';
 
 @injectable()
 export default class UserServiceLocator {
 
-	constructor(@inject(TYPES.IUserReadOnlyRepository) private readRepository: IUserReadOnlyRepository, @inject(TYPES.IUserWriteOnlyRepository) private writeRepository: IUserWriteOnlyRepository){}
+	constructor(@inject(TYPES.IUserReadOnlyRepository) private readRepository: IUserReadOnlyRepository, 
+				@inject(TYPES.IUserWriteOnlyRepository) private writeRepository: IUserWriteOnlyRepository){}
 
 	public GetUserRegisterUseCase(): IUserRegisterUseCase {
 		return new UserRegisterUseCase(this.writeRepository);
@@ -29,5 +32,8 @@ export default class UserServiceLocator {
 	}
 	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
 		return new EditUserDetailsUseCase(this.writeRepository);
+	}
+	public GetAddNewCreditCardUseCase(): IAddNewCreditCardUseCase {
+		return new AddNewCreditCardUseCase(this.readRepository,this.writeRepository);
 	}
 }

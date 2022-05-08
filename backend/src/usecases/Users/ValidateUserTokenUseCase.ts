@@ -30,7 +30,7 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 					if(verified.cardDetails){
 						verified.cardDetails.map(card => {
 							card.cardNumber = card.cardNumber.substring(11, 15)
-							card.securityCode = ""
+							card.cvv = ""
 						});
 					}
 
