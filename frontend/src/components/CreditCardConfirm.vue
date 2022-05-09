@@ -11,10 +11,14 @@
           <h1>Select your credit card</h1>
         </div>
         <div class="credit-confirm-modal__body__content">
-          <select v-model="selectedCard" v-if="getUserProfile.length < 1">
-            <div v-for="card in getUserProfile.cardDetails" :key="card.id">
-              <option :value="card.id">{{ card.cardNumber }}</option>
-            </div>
+          <select v-model="selectedCard">
+            <option
+              :value="card.id"
+              v-for="card in getUserProfile.cardDetails"
+              :key="card.id"
+            >
+              ************{{ card.cardNumber }}
+            </option>
           </select>
           <button @click="showAddCardModal()">Add new card</button>
           <button v-if="tradeType == 'Buy'" @click="buyStocks()">
@@ -37,9 +41,12 @@ export default defineComponent({
   name: "CreditCardConfirm",
   data() {
     return {
-      selectedCard: "",
+      selectedCard: {},
       showAddCard: false,
     };
+  },
+  created: function () {
+    console.log(this.getUserProfile);
   },
   components: {
     AddNewCard,

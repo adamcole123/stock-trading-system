@@ -75,6 +75,7 @@ const actions = {
         console.log(err.message);
         return err.error;
       });
+    console.log(response.data);
 
     if (response && response.data) {
       commit("setUserProfile", response.data);
