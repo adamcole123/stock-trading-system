@@ -67,29 +67,29 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 				
 				switch(options?.gainsMode){
 					case 0:
-						query.gains = { $lte: stockDto?.gains };
+						query.gains = { $lt: stockDto?.gains };
 					case 1:
 						query.gains = stockDto?.gains;
 					case 2:
-						query.gains = { $gte: stockDto?.gains };
+						query.gains = { $gt: stockDto?.gains };
 				}
 	
 				switch(options?.valueMode){
 					case 0:
-						query.value = { $lte: stockDto?.value };
+						query.value = { $lt: stockDto?.value };
 					case 1:
 						query.value = stockDto?.value;
 					case 2:
-						query.value = { $gte: stockDto?.value };
+						query.value = { $gt: stockDto?.value };
 				}
 	
 				switch(options?.volumeMode){
 					case 0:
-						query.volume = { $lte: stockDto?.volume };
+						query.volume = { $lt: stockDto?.volume };
 					case 1:
 						query.volume = stockDto?.volume;
 					case 2:
-						query.volume = { $gte: stockDto?.volume };
+						query.volume = { $gt: stockDto?.volume };
 				}
 	
 				if(!options?.limit){
@@ -98,7 +98,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 	
 				if(options?.page){
 					try {
-						let returnStocks = await Stock.find({}).skip((options?.page * options.limit!) - (options.limit!)).limit(options.limit!).sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
+						let returnStocks = await Stock.find({...query}).skip((options?.page * options.limit!) - (options.limit!)).limit(options.limit!).sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
 						returnStocks.forEach(stock => {
 							returnData.push(new StockType(
 								stock._id.toString(),
