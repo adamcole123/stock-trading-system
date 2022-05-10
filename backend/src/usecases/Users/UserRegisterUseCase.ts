@@ -1,9 +1,10 @@
 import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
 import IUserDto from "../data_tranfer_objects/IUserDto";
 import IUserRegisterUseCase from "./IUserRegisterUseCase";
+import ISendEmailUseCase from '../Email/ISendEmailUseCase';
 
 export default class UserRegisterUseCase implements IUserRegisterUseCase{
-	userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private userWriteOnlyRepository: IUserWriteOnlyRepository;
 
 	constructor(_userWriteOnlyRepository: IUserWriteOnlyRepository){
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;
@@ -30,6 +31,8 @@ export default class UserRegisterUseCase implements IUserRegisterUseCase{
 				}
 
 				userDto.credit = 50000;
+
+				userDto.activationDate = undefined;
 
 				try {
 					let createdUser = await this.userWriteOnlyRepository.create({...userDto});

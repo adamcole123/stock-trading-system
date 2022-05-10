@@ -22,6 +22,7 @@ declare module "@vue/runtime-core" {
     userTransactionHistory: [];
     pendingTrades: [];
     newCardApiStatus: "";
+    activationApiStatus: "";
   }
 
   // provide typings for `this.$store`

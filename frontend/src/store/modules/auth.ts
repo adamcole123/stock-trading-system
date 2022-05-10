@@ -15,6 +15,7 @@ const state = () => ({
     username: "",
     reports: [],
   },
+  activationApiStatus: "",
 });
 
 const getters = {
@@ -29,6 +30,9 @@ const getters = {
   },
   getLogout(state: State) {
     return state.logOut;
+  },
+  getActivationApiStatus(state: State) {
+    return state.activationApiStatus;
   },
 };
 
@@ -112,6 +116,20 @@ const actions = {
       commit("setNewCardApiStatus", "success");
     }
   },
+  async activateAccount({ commit, dispatch }: ContextFunction, payload: any) {
+    console.log(payload);
+    const response = await axios
+      .post("http://localhost:8000/user/activate", payload)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setActivationApiStatus", "success");
+    } else {
+      commit("setActivationApiStatus", "failed");
+    }
+  },
 };
 
 const mutations = {
@@ -141,6 +159,9 @@ const mutations = {
   },
   setLogout(state: State, payload: any) {
     state.logOut = payload;
+  },
+  setActivationApiStatus(state: State, payload: any) {
+    state.activationApiStatus = payload;
   },
 };
 

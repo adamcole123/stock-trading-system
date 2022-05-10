@@ -41,6 +41,7 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 					isDeleted: user.isDeleted,
 					cardDetails: user.cardDetails,
 					password: user.password,
+					activationDate: user.activationDate
 				}
 			
 				resolve(userDto!);

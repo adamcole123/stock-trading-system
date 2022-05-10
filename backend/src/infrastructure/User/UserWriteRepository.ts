@@ -39,7 +39,8 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 							cardDetails: userDto.cardDetails,
 							role: 'User',
 							email: userDto.email,
-							password: userDto.password
+							password: userDto.password,
+							activationDate: userDto.activationDate
 						});
 
 						bcrypt.genSalt(10, (err, salt) => {
@@ -60,7 +61,8 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 											credit: user.credit,
 											role: user.role,
 											isDeleted: user.isDeleted,
-											cardDetails: user.cardDetails
+											cardDetails: user.cardDetails,
+											activationDate: user.activationDate
 										}
 										resolve(userDto);
 									})
@@ -107,6 +109,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 						role: user.role,
 						username: user.username,
 						cardDetails: user.cardDetails,
+						activationDate: user.activationDate
 					});
 				} catch (e) {
 					return reject("Couldn't edit user: " + e);
