@@ -24,26 +24,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="stock in getStockData" :key="stock.id">
-          <td>{{ stock.symbol }}</td>
-          <td>{{ stock.name }}</td>
-          <td v-if="stock.gains! > 0" style="color: green">
-            {{ stock.gains }}
-          </td>
-          <td v-else style="color: red">
-            {{ stock.gains }}
-          </td>
-          <td>{{ stock.value }}</td>
-          <td>{{ stock.volume }}</td>
-          <td>{{ stock.open }}</td>
-          <td>{{ stock.close }}</td>
-          <td v-if="getUserProfile.id !== ''">
-            <button align="left" @click="buyStocks(stock.id)">Buy</button>
-          </td>
-          <td v-if="getUserProfile.id !== ''">
-            <button align="left" @click="sellStocks(stock.id)">Sell</button>
-          </td>
-        </tr>
+        <template v-for="stock in getStockData" :key="stock.id">
+          <tr v-if="stock.volume > 0">
+            <td>{{ stock.symbol }}</td>
+            <td>{{ stock.name }}</td>
+            <td v-if="stock.gains! > 0" style="color: green">
+              {{ stock.gains }}
+            </td>
+            <td v-else style="color: red">
+              {{ stock.gains }}
+            </td>
+            <td>{{ stock.value }}</td>
+            <td>{{ stock.volume }}</td>
+            <td>{{ stock.open }}</td>
+            <td>{{ stock.close }}</td>
+            <td v-if="getUserProfile.id !== ''">
+              <button align="left" @click="buyStocks(stock.id)">Buy</button>
+            </td>
+            <td v-if="getUserProfile.id !== ''">
+              <button align="left" @click="sellStocks(stock.id)">Sell</button>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
