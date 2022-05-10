@@ -5,6 +5,7 @@ import { ContextFunction } from "../ContextFunction";
 const state = () => ({
   loginApiStatus: "",
   registerApiStatus: "",
+  newCardApiStatus: "",
   logOut: false,
   userProfile: {
     firstName: "",
@@ -95,6 +96,22 @@ const actions = {
       commit("setLogout", false);
     }
   },
+  async addNewCard({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .post("http://localhost:8000/user/credit-card", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setNewCardApiStatus", "success");
+      return response.data.message;
+    } else {
+      commit("setNewCardApiStatus", "success");
+    }
+  },
 };
 
 const mutations = {
@@ -103,6 +120,9 @@ const mutations = {
   },
   setRegisterApiStatus(state: State, data: any) {
     state.registerApiStatus = data;
+  },
+  setNewCardApiStatus(state: State, data: any) {
+    state.newCardApiStatus = data;
   },
   setUserProfile(state: State, data: any) {
     const userProfile = {

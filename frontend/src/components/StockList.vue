@@ -1,5 +1,12 @@
 <template>
   <div>
+    <CreditCardConfirm
+      v-if="showCardConfirm"
+      :tradeType="typeOfTrade"
+      :stockId="idOfStock"
+      :stockAmount="tradeQuantity"
+      @showHideCardConfirm="showCardConfirm = !showCardConfirm"
+    />
     <table class="stocklist">
       <thead>
         <tr>
@@ -44,19 +51,25 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import axios from "axios";
-import Stock from "../types/Stock";
 import { mapActions, mapGetters } from "vuex";
 import { io } from "socket.io-client";
+import CreditCardConfirm from "./CreditCardConfirm.vue";
 
 const socket = io("http://localhost:8000/stockmarket");
 
 export default defineComponent({
   name: "StockList",
+  components: {
+    CreditCardConfirm,
+  },
+  // props: ["tradeType", "stockId", "stockAmount"],
   data() {
     return {
       toggledTrades: [] as number[],
       tradeQuantity: 0,
+      showCardConfirm: false,
+      idOfStock: "",
+      typeOfTrade: "",
     };
   },
   computed: {
@@ -73,7 +86,6 @@ export default defineComponent({
   },
   created() {
     this.actionGetStocksApi();
-
     socket.on("stocks", (data) => {
       this.actionUpdateStocksData([
         data.map((update: any) => {
@@ -96,34 +108,14 @@ export default defineComponent({
       actionUpdateStocksData: "updateStocksData",
     }),
     async buyStocks(stock_id: string) {
-      console.log(stock_id);
-      const payload = {
-        stock_id: stock_id,
-        user_id: this.getUserProfile.id,
-        stock_amount: this.tradeQuantity,
-      };
-      await this.actionBuyStocksApi(payload);
-      if (this.getBuyStocksApiStatus == "success") {
-        alert("Buy trade successfully!");
-      } else {
-        alert("Buy trade failed!");
-      }
-      await this.actionGetStocksApi();
+      this.typeOfTrade = "Buy";
+      this.idOfStock = stock_id;
+      this.showCardConfirm = true;
     },
     async sellStocks(stock_id: string) {
-      console.log(stock_id);
-      const payload = {
-        stock_id: stock_id,
-        user_id: this.getUserProfile.id,
-        stock_amount: this.tradeQuantity,
-      };
-      await this.actionSellStocksApi(payload);
-      if (this.getSellStocksApiStatus == "success") {
-        alert("Sell trade successfully!");
-      } else {
-        alert("Sell trade failed!");
-      }
-      await this.actionGetStocksApi();
+      this.typeOfTrade = "Sell";
+      this.idOfStock = stock_id;
+      this.showCardConfirm = true;
     },
   },
 });

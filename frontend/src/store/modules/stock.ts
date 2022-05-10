@@ -20,7 +20,7 @@ const actions = {
   async getStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios({
       method: "get",
-      url: "http://localhost:8000/stock/getMany?page=1",
+      url: "http://localhost:8000/stock/getMany?page=1&limit=10",
     });
 
     if (response && response.data) {

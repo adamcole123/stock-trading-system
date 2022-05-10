@@ -10,6 +10,8 @@ import IUserSignInUseCase from "../../usecases/Users/IUserSignInUseCase";
 import IValidateUserTokenUseCase from "../../usecases/Users/IValidateUserTokenUseCase";
 import dotenv from 'dotenv';
 import IEditUserDetailsUseCase from '../../usecases/Users/IEditUserDetailsUseCase';
+import IAddNewCreditCardUseCase from '../../usecases/Users/IAddNewCreditCardUseCase';
+import ICreditCardDto from '../../usecases/data_tranfer_objects/ICreditCardDto';
 
 dotenv.config();
 
@@ -19,12 +21,14 @@ export default class UserController implements interfaces.Controller {
 	private readonly userRegisterUseCase: IUserRegisterUseCase;
 	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
 	private readonly editUserDetailsUseCase: IEditUserDetailsUseCase;
+	private readonly addNewCreditCardUseCase: IAddNewCreditCardUseCase;
 
 	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator) {
 		this.userSignInUseCase = serviceLocator.GetUserSignInUseCase();
 		this.userRegisterUseCase = serviceLocator.GetUserRegisterUseCase();
 		this.validateUserTokenUseCase = serviceLocator.GetValidateUserTokenUseCase();
 		this.editUserDetailsUseCase = serviceLocator.GetEditUserDetailsUseCase();
+		this.addNewCreditCardUseCase = serviceLocator.GetAddNewCreditCardUseCase();
 	}
 
 	@httpPost('/signin')
@@ -95,6 +99,39 @@ export default class UserController implements interfaces.Controller {
 				})
 					.status(200)
 					.json({ message: "Registered successfully 😊 👌" });
+			})
+			.catch((err: Error) => {
+				res.status(400).json(err)
+			});
+	}
+
+	@httpPost('/credit-card')
+	public async addNewCreditCard(@request() req: express.Request, @response() res: express.Response) {
+		let newCard: ICreditCardDto = req.body.cardDetails;
+
+		return await this.addNewCreditCardUseCase.invoke(newCard, req.body.userId)
+			.then((userDto: IUserDto) => {
+				let jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+				const token = jwt.sign({
+					id: userDto.id,
+					firstName: userDto.firstName,
+					lastName: userDto.lastName,
+					credit: userDto.credit,
+					birthDate: userDto.birthDate,
+					email: userDto.email,
+					reports: userDto.reports,
+					role: userDto.role,
+					username: userDto.username,
+					cardDetails: userDto.cardDetails,
+				}, jwtSecretKey!, { expiresIn: "7 days" });
+
+				res.cookie("token", token, {
+					httpOnly: true,
+					secure: process.env.NODE_ENV === 'production'
+				})
+					.status(200)
+					.json({ message: "New card added successfully" });
 			})
 			.catch((err: Error) => {
 				res.status(400).json(err)
