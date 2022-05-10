@@ -38,7 +38,11 @@ const userSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	cardDetails: [CardDetails]
+	cardDetails: [CardDetails],
+	activationDate: {
+		type: Date,
+		default: undefined
+	}
 }, { collection: 'users' })
 
 export default userSchema;

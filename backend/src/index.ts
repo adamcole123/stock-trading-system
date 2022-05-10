@@ -30,6 +30,9 @@ import TradeWriteOnlyRepository from './infrastructure/Trade/TradeWriteOnlyRepos
 import TradeReadOnlyRepository from "./infrastructure/Trade/TradeReadOnlyRepository";
 import ITradeReadOnlyRepository from "./application/repositories/ITradeReadOnlyRepository";
 import ReportServiceLocator from "./configuration/ReportServiceLocator";
+import ISendEmailUseCase from './usecases/Email/ISendEmailUseCase';
+import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
+import EmailServiceLocator from './configuration/EmailServiceLocator';
 
 // set up container
 const container = new Container();
@@ -56,6 +59,8 @@ container.bind<ITradeWriteOnlyRepository>(TYPES.ITradeWriteOnlyRepository).to(Tr
 container.bind<ITradeReadOnlyRepository>(TYPES.ITradeReadOnlyRepository).to(TradeReadOnlyRepository);
 
 container.bind<ReportServiceLocator>(TYPES.ReportServiceLocator).to(ReportServiceLocator);
+
+container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
 
 // Binding for socket server
 container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
@@ -109,8 +114,6 @@ const {
 } = process.env;
 
 import Stock from './infrastructure/Stock/Stock';
-import ISendEmailUseCase from './usecases/Email/ISendEmailUseCase';
-import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
 
 console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 

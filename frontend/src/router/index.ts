@@ -55,6 +55,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/GenerateReport.vue"),
     meta: { requiredAuth: true },
   },
+  {
+    path: "/activate",
+    name: "activate",
+    component: () => import("../views/ActivationView.vue"),
+  },
 ];
 
 const router = createRouter({

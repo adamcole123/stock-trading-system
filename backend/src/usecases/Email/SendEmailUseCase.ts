@@ -1,6 +1,7 @@
 import IEmailDto from "../data_tranfer_objects/IEmailDto";
 import ISendEmailUseCase from "./ISendEmailUseCase";
 import nodemailer from 'nodemailer';
+import { injectable } from "inversify";
 
 export default class SendEmailUseCase implements ISendEmailUseCase {
 	async invoke(email: IEmailDto): Promise<IEmailDto> {

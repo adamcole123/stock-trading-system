@@ -12,6 +12,9 @@ import dotenv from 'dotenv';
 import IEditUserDetailsUseCase from '../../usecases/Users/IEditUserDetailsUseCase';
 import IAddNewCreditCardUseCase from '../../usecases/Users/IAddNewCreditCardUseCase';
 import ICreditCardDto from '../../usecases/data_tranfer_objects/ICreditCardDto';
+import IActivateUserAccountUseCase from "src/usecases/Users/IActivateUserAccountUseCase";
+import EmailServiceLocator from "../../configuration/EmailServiceLocator";
+import ISendEmailUseCase from '../../usecases/Email/ISendEmailUseCase';
 
 dotenv.config();
 
@@ -22,13 +25,18 @@ export default class UserController implements interfaces.Controller {
 	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
 	private readonly editUserDetailsUseCase: IEditUserDetailsUseCase;
 	private readonly addNewCreditCardUseCase: IAddNewCreditCardUseCase;
+	private readonly activateUserAccountUseCase: IActivateUserAccountUseCase;
+	private readonly sendEmailUseCase: ISendEmailUseCase;
 
-	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator) {
+	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator,
+				@inject(TYPES.EmailServiceLocator) emailServiceLocator: EmailServiceLocator) {
 		this.userSignInUseCase = serviceLocator.GetUserSignInUseCase();
 		this.userRegisterUseCase = serviceLocator.GetUserRegisterUseCase();
 		this.validateUserTokenUseCase = serviceLocator.GetValidateUserTokenUseCase();
 		this.editUserDetailsUseCase = serviceLocator.GetEditUserDetailsUseCase();
 		this.addNewCreditCardUseCase = serviceLocator.GetAddNewCreditCardUseCase();
+		this.activateUserAccountUseCase = serviceLocator.GetActivateUserAccountUseCase();
+		this.sendEmailUseCase = emailServiceLocator.GetSendEmailUseCase();
 	}
 
 	@httpPost('/signin')
@@ -77,7 +85,7 @@ export default class UserController implements interfaces.Controller {
 		}
 
 		return await this.userRegisterUseCase.invoke(newUser)
-			.then((userDto: IUserDto) => {
+			.then(async (userDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 				const token = jwt.sign({
@@ -93,12 +101,18 @@ export default class UserController implements interfaces.Controller {
 					cardDetails: userDto.cardDetails,
 				}, jwtSecretKey!, { expiresIn: "7 days" });
 
-				res.cookie("token", token, {
-					httpOnly: true,
-					secure: process.env.NODE_ENV === 'production'
+				await this.sendEmailUseCase.invoke({
+					to: [userDto.email!],
+					from: "noreply@stocktradingsystem.com",
+					subject: "Activate your stock trading account",
+					bodyText: `Click to activate: http://localhost:8080/activate?token=${token}`,
+					bodyHtml: `Click to activate: <b>http://localhost:8080/activate?token=${token}</b>`
 				})
+				.then(email => {
+					res
 					.status(200)
-					.json({ message: "Registered successfully 😊 👌" });
+					.json({ message: "Registered successfully 😊 👌\nActivation email sent!" });
+				});
 			})
 			.catch((err: Error) => {
 				res.status(400).json(err)
@@ -176,5 +190,18 @@ export default class UserController implements interfaces.Controller {
 	@httpGet('/signout')
 	public async signOut(@request() req: express.Request, @response() res: express.Response) {
 		res.clearCookie("token").status(200).json({ message: "Signed out successfully!" });
+	}
+
+@httpPost('/activate')
+	public async activateUser(@request() req: express.Request, @response() res: express.Response) {
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		
+		let verified = <IUserDto>jwt.verify(req.body.token, jwtSecretKey!);
+
+		return await this.activateUserAccountUseCase.invoke(verified)
+			.then(async (activatedUser: IUserDto) => {
+				res.status(200).json(activatedUser);
+			})
+			.catch((err: Error) => res.status(401).send(err));
 	}
 }

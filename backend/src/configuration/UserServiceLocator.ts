@@ -12,6 +12,9 @@ import IEditUserDetailsUseCase from '../usecases/Users/IEditUserDetailsUseCase';
 import EditUserDetailsUseCase from '../usecases/Users/EditUserDetailsUseCase';
 import IAddNewCreditCardUseCase from '../usecases/Users/IAddNewCreditCardUseCase';
 import AddNewCreditCardUseCase from '../usecases/Users/AddNewCreditCardUseCase';
+import IActivateUserAccountUseCase from "../usecases/Users/IActivateUserAccountUseCase";
+import ActivateUserAccountUseCase from "../usecases/Users/ActivateUserAccountUseCase";
+import ISendEmailUseCase from '../usecases/Email/ISendEmailUseCase';
 
 @injectable()
 export default class UserServiceLocator {
@@ -30,10 +33,16 @@ export default class UserServiceLocator {
 	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
 		return new ValidateUserTokenUseCase(this.readRepository);
 	}
+
 	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
 		return new EditUserDetailsUseCase(this.writeRepository);
 	}
+
 	public GetAddNewCreditCardUseCase(): IAddNewCreditCardUseCase {
 		return new AddNewCreditCardUseCase(this.readRepository,this.writeRepository);
+	}
+	
+	public GetActivateUserAccountUseCase(): IActivateUserAccountUseCase {
+		return new ActivateUserAccountUseCase(this.writeRepository);
 	}
 }
