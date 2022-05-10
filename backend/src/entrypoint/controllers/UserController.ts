@@ -200,7 +200,16 @@ export default class UserController implements interfaces.Controller {
 
 		return await this.activateUserAccountUseCase.invoke(verified)
 			.then(async (activatedUser: IUserDto) => {
-				res.status(200).json(activatedUser);
+				await this.sendEmailUseCase.invoke({
+					to: ["admin@stocktradingsystem.com"],
+					from: "noreply@stocktradingsystem.com",
+					subject: "New user has been activated!",
+					bodyText: `User with username ${activatedUser.username} has now been activated!`,
+					bodyHtml: `User with username <b>${activatedUser.username}</b> has now been activated!`
+				})
+				.then(email => {
+					res.status(200).json(activatedUser);
+				});
 			})
 			.catch((err: Error) => res.status(401).send(err));
 	}
