@@ -72,8 +72,10 @@ export default defineComponent({
       await this.actionBuyStocksApi(payload);
       if (this.getBuyStocksApiStatus == "success") {
         alert("Buy trade successfully!");
+        this.hideCreditConfirmModal();
       } else {
         alert("Buy trade failed!");
+        this.hideCreditConfirmModal();
       }
     },
     async sellStocks() {
@@ -85,8 +87,10 @@ export default defineComponent({
       await this.actionSellStocksApi(payload);
       if (this.getSellStocksApiStatus == "success") {
         alert("Sell trade successfully!");
+        this.hideCreditConfirmModal();
       } else {
         alert("Sell trade failed!");
+        this.hideCreditConfirmModal();
       }
     },
     hideCreditConfirmModal() {
