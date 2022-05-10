@@ -111,6 +111,7 @@ export default defineComponent({
   methods: {
     ...mapActions("auth", {
       actionAddNewCard: "addNewCard",
+      actionUserProfile: "userProfile",
     }),
     hideAddNewCardModal() {
       this.$emit("showAddCardModal");
@@ -121,7 +122,8 @@ export default defineComponent({
         userId: this.getUserProfile.id,
       };
       await this.actionAddNewCard(payload);
-      this.getUserProfile;
+      await this.actionUserProfile();
+      this.hideAddNewCardModal();
     },
   },
   computed: {

@@ -45,9 +45,6 @@ export default defineComponent({
       showAddCard: false,
     };
   },
-  created: function () {
-    console.log(this.getUserProfile);
-  },
   components: {
     AddNewCard,
   },
