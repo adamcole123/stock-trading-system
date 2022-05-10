@@ -155,6 +155,8 @@ function changeStockValues() {
           if(result?.volume! > 0)
             result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? Math.random() * 10 : Math.random() * -10))
   
+          if(result?.volume! < 0)
+            return;
           
           let now = new Date();
           
