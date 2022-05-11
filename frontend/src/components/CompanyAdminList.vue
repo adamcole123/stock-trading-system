@@ -1,6 +1,7 @@
 <template>
   <div>
     <h3>Companies</h3>
+    <router-link to="/company/new">New</router-link>
     <table v-if="getStockData.length > 0">
       <thead>
         <tr>

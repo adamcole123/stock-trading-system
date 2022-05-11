@@ -68,8 +68,14 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/company",
-    name: "company",
+    name: "editCompany",
     component: () => import("../views/EditCompanyView.vue"),
+    meta: { requiredAuth: true, limitedTo: ["Admin"] },
+  },
+  {
+    path: "/company/new",
+    name: "newCompany",
+    component: () => import("../views/NewCompanyView.vue"),
     meta: { requiredAuth: true, limitedTo: ["Admin"] },
   },
 ];

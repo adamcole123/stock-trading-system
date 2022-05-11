@@ -18,6 +18,9 @@ const getters = {
   getEditCompanyApiStatus(state: State) {
     return state.editCompanyApiStatus;
   },
+  getNewCompanyApiStatus(state: State) {
+    return state.newCompanyApiStatus;
+  },
 };
 
 const actions = {
@@ -79,6 +82,22 @@ const actions = {
     }
   },
 
+  async newCompany({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .post("http://localhost:8000/stock/create", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setNewCompanyApiStatus", "success");
+    } else {
+      commit("setNewCompanyApiStatus", "failed");
+    }
+  },
+
   async updateStocksData({ commit, dispatch }: ContextFunction, payload: any) {
     payload[0].forEach((update: { id: number }) => {
       const index = payload[1].findIndex((object: { id: number }) => {
@@ -114,6 +133,9 @@ const mutations = {
   },
   setEditCompanyApiStatus(state: State, data: any) {
     state.editCompanyApiStatus = data;
+  },
+  setNewCompanyApiStatus(state: State, data: any) {
+    state.newCompanyApiStatus = data;
   },
 };
 
