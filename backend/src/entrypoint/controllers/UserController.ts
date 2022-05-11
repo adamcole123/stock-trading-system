@@ -17,6 +17,8 @@ import EmailServiceLocator from "../../configuration/EmailServiceLocator";
 import ISendEmailUseCase from '../../usecases/Email/ISendEmailUseCase';
 import IGetAllUsersUseCase from "../../usecases/Users/IGetAllUsersUseCase";
 import IGetUserDetailsUseCase from "../../usecases/Users/IGetUserDetailsUseCase";
+import IEmailDto from "../../usecases/data_tranfer_objects/IEmailDto";
+import IPasswordResetUseCase from "src/usecases/Users/IPasswordResetUseCase";
 
 dotenv.config();
 
@@ -31,6 +33,7 @@ export default class UserController implements interfaces.Controller {
 	private readonly sendEmailUseCase: ISendEmailUseCase;
 	private readonly getAllUsersUseCase: IGetAllUsersUseCase;
 	private readonly getUserDetailsUseCase: IGetUserDetailsUseCase;
+	private readonly passwordResetUseCase: IPasswordResetUseCase;
 
 	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator,
 				@inject(TYPES.EmailServiceLocator) emailServiceLocator: EmailServiceLocator) {
@@ -42,7 +45,54 @@ export default class UserController implements interfaces.Controller {
 		this.activateUserAccountUseCase = serviceLocator.GetActivateUserAccountUseCase();
 		this.getAllUsersUseCase = serviceLocator.GetGetAllUsersUseCase();
 		this.getUserDetailsUseCase = serviceLocator.GetGetUserDetailsUseCase();
+		this.passwordResetUseCase = serviceLocator.GetPasswordResetUseCase();
 		this.sendEmailUseCase = emailServiceLocator.GetSendEmailUseCase();
+	}
+
+	@httpPost('/password-reset')
+	public async passwordReset(@request() req: express.Request, @response() res: express.Response) {
+		if(req.body.key === undefined && req.cookies.token === undefined){
+			return res.status(500).json({error: 'Must enter an email address'});
+		}
+
+		if(req.body.password === undefined){
+			return res.status(500).json({error: 'Must enter a new password'});
+		}
+
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+		let verified = req.body.key ? await <IUserDto>jwt.verify(req.body.key, jwtSecretKey!) : await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+
+		return await this.passwordResetUseCase.invoke({ email: verified.email, password: await jwt.sign(req.body.password, jwtSecretKey!) })
+			.then(() => {
+				res.status(200).json('Password reset successfully');
+			})
+			.catch((err: Error) => {
+				res.status(400).json(err)
+			});
+	}
+
+	@httpPost('/password-reset-request')
+	public async passwordResetRequest(@request() req: express.Request, @response() res: express.Response) {
+		if(req.body.email === undefined){
+			return res.status(500).json({error: 'Must enter an email address'});
+		}
+
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+		return await this.sendEmailUseCase.invoke({
+			to: [req.body.email],
+			from: "noreply@stock-trading-system.com",
+			subject: "Password reset link",
+			bodyText: `http://localhost:8080/password-reset?key=${await jwt.sign({ requestTime: new Date(), email: req.body.email }, jwtSecretKey!)}`,
+			bodyHtml: `<a href='http://localhost:8080/password-reset?key=${await jwt.sign({ requestTime: new Date(), email: req.body.email }, jwtSecretKey!)}'>Click to reset password</a>`
+		})
+			.then((emailDto: IEmailDto) => {
+				res.status(200).json('Email sent successfully');
+			})
+			.catch((err: Error) => {
+				res.status(400).json(err)
+			});
 	}
 
 	@httpPost('/all')
@@ -239,7 +289,7 @@ export default class UserController implements interfaces.Controller {
 		res.clearCookie("token").status(200).json({ message: "Signed out successfully!" });
 	}
 
-@httpPost('/activate')
+	@httpPost('/activate')
 	public async activateUser(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
 		

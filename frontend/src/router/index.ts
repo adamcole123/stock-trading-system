@@ -44,6 +44,26 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiredAuth: true },
   },
   {
+    path: "/password-reset-granted",
+    name: "passwordResetGranted",
+    component: () => import("../views/PasswordResetGrantedView.vue"),
+  },
+  {
+    path: "/password-reset-denied",
+    name: "passwordResetDenied",
+    component: () => import("../views/PasswordResetDeniedView.vue"),
+  },
+  {
+    path: "/password-reset",
+    name: "passwordResetDenied",
+    component: () => import("../views/PasswordResetView.vue"),
+  },
+  {
+    path: "/password-reset-request",
+    name: "passwordResetRequest",
+    component: () => import("../views/PasswordResetRequestView.vue"),
+  },
+  {
     path: "/contact",
     name: "contact",
     component: () => import("../views/ContactView.vue"),

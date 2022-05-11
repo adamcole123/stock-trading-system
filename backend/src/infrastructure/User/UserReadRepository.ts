@@ -18,8 +18,10 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 					user = await User.findById(userDto.id);
 				if(userDto.username)
 					user = await User.findOne({username: userDto.username});
+				if(userDto.email)
+					user = await User.findOne({email: userDto.email});
 			} catch (err) {
-				reject("No user with that username or id exists");
+				reject("No user with that username, id, or email exists");
 			}
 
 			if(user){

@@ -29,5 +29,4 @@ export default class CreateStockUseCase implements ICreateStockUseCase {
 			throw new Error('Could not add stock');
 		}
 	}
-
 }
