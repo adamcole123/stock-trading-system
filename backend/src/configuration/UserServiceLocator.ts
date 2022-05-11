@@ -14,7 +14,10 @@ import IAddNewCreditCardUseCase from '../usecases/Users/IAddNewCreditCardUseCase
 import AddNewCreditCardUseCase from '../usecases/Users/AddNewCreditCardUseCase';
 import IActivateUserAccountUseCase from "../usecases/Users/IActivateUserAccountUseCase";
 import ActivateUserAccountUseCase from "../usecases/Users/ActivateUserAccountUseCase";
-import ISendEmailUseCase from '../usecases/Email/ISendEmailUseCase';
+import GetAllUsersUseCase from "../usecases/Users/GetAllUsersUseCase";
+import IGetAllUsersUseCase from "../usecases/Users/IGetAllUsersUseCase";
+import GetUserDetailsUseCase from "../usecases/Users/GetUserDetailsUseCase";
+import IGetUserDetailsUseCase from "../usecases/Users/IGetUserDetailsUseCase";
 
 @injectable()
 export default class UserServiceLocator {
@@ -44,5 +47,13 @@ export default class UserServiceLocator {
 	
 	public GetActivateUserAccountUseCase(): IActivateUserAccountUseCase {
 		return new ActivateUserAccountUseCase(this.writeRepository);
+	}
+
+	public GetGetAllUsersUseCase(): IGetAllUsersUseCase {
+		return new GetAllUsersUseCase(this.readRepository);
+	}
+
+	public GetGetUserDetailsUseCase(): IGetUserDetailsUseCase {
+		return new GetUserDetailsUseCase(this.readRepository);
 	}
 }

@@ -15,6 +15,8 @@ import ICreditCardDto from '../../usecases/data_tranfer_objects/ICreditCardDto';
 import IActivateUserAccountUseCase from "src/usecases/Users/IActivateUserAccountUseCase";
 import EmailServiceLocator from "../../configuration/EmailServiceLocator";
 import ISendEmailUseCase from '../../usecases/Email/ISendEmailUseCase';
+import IGetAllUsersUseCase from "../../usecases/Users/IGetAllUsersUseCase";
+import IGetUserDetailsUseCase from "../../usecases/Users/IGetUserDetailsUseCase";
 
 dotenv.config();
 
@@ -27,6 +29,8 @@ export default class UserController implements interfaces.Controller {
 	private readonly addNewCreditCardUseCase: IAddNewCreditCardUseCase;
 	private readonly activateUserAccountUseCase: IActivateUserAccountUseCase;
 	private readonly sendEmailUseCase: ISendEmailUseCase;
+	private readonly getAllUsersUseCase: IGetAllUsersUseCase;
+	private readonly getUserDetailsUseCase: IGetUserDetailsUseCase;
 
 	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator,
 				@inject(TYPES.EmailServiceLocator) emailServiceLocator: EmailServiceLocator) {
@@ -36,7 +40,48 @@ export default class UserController implements interfaces.Controller {
 		this.editUserDetailsUseCase = serviceLocator.GetEditUserDetailsUseCase();
 		this.addNewCreditCardUseCase = serviceLocator.GetAddNewCreditCardUseCase();
 		this.activateUserAccountUseCase = serviceLocator.GetActivateUserAccountUseCase();
+		this.getAllUsersUseCase = serviceLocator.GetGetAllUsersUseCase();
+		this.getUserDetailsUseCase = serviceLocator.GetGetUserDetailsUseCase();
 		this.sendEmailUseCase = emailServiceLocator.GetSendEmailUseCase();
+	}
+
+	@httpPost('/all')
+	public async getAllUsers(@request() req: express.Request, @response() res: express.Response) {
+		let reqUser: IUserDto = req.body;
+
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		
+		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+
+		if(verified.role !== "Admin"){
+			return res.status(401).json({error: 'User is not an admin'});
+		}
+
+		return await this.getAllUsersUseCase.invoke()
+			.then((userDtos: IUserDto[]) => {
+				res.status(200).json(userDtos);
+			})
+			.catch((err: Error) => {
+				res.status(400).json(err)
+			});
+	}
+	@httpGet('/one')
+	public async getUserDetails(@request() req: express.Request, @response() res: express.Response) {
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		
+		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+
+		if(verified.role !== "Admin" && verified.username !== req.query.username){
+			return res.status(401).json({error: 'Not authorised to retrieve this user\'s data.'});
+		}
+
+		return await this.getUserDetailsUseCase.invoke({ username: <string>req.query.username })
+			.then((userDto: IUserDto) => {
+				res.status(200).json(userDto);
+			})
+			.catch((err: Error) => {
+				res.status(400).json(err)
+			});
 	}
 
 	@httpPost('/signin')
@@ -163,26 +208,28 @@ export default class UserController implements interfaces.Controller {
 
 	@httpPost('/edit')
 	public async editUser(@request() req: express.Request, @response() res: express.Response) {
-		let editedUser: IUserDto = {
+		let edittedUser: IUserDto = {
 			username: req.body.username,
 			email: req.body.email,
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
-			password: req.body.password,
-			reports: req.body.reports,
-			id: req.body.id
+			birthDate: req.body.birthDate,
+			credit: req.body.credit,
+			role: req.body.role,
+			isDeleted: req.body.isDeleted
 		}
 
-		let userToEdit = req.body.userToEdit
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		
+		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
-		let jwtSecretKey = process.env.JWT_SECRET_KEY
+		if(verified.role !== "Admin" && verified.username !== req.body.username){
+			return res.status(401).json({error: 'Not authorised to retrieve this user\'s data.'});
+		}
 
-		return await this.editUserDetailsUseCase.invoke(userToEdit, editedUser, req.body.token)
+		return await this.editUserDetailsUseCase.invoke(edittedUser.username!, edittedUser)
 			.then((userDto: IUserDto) => {
-
-				const token = jwt.sign(userDto, jwtSecretKey!, { expiresIn: "7 days" });
-
-				res.status(200).json(token)
+				res.status(200).json(userDto)
 			})
 			.catch((err: Error) => res.status(400).json(err));
 	}

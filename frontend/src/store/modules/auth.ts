@@ -34,6 +34,9 @@ const getters = {
   getActivationApiStatus(state: State) {
     return state.activationApiStatus;
   },
+  getEditUserApiStatus(state: State) {
+    return state.editUserApiStatus;
+  },
 };
 
 const actions = {
@@ -130,6 +133,24 @@ const actions = {
       commit("setActivationApiStatus", "failed");
     }
   },
+  async editUserDetails({ commit, dispatch }: ContextFunction, payload: any) {
+    console.log(payload);
+    const response = await axios
+      .post("http://localhost:8000/user/edit", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.error;
+      });
+
+    if (response && response.data) {
+      commit("setEditUserApiStatus", "success");
+      return response.data;
+    } else {
+      commit("setEditUserApiStatus", "failed");
+    }
+  },
 };
 
 const mutations = {
@@ -162,6 +183,9 @@ const mutations = {
   },
   setActivationApiStatus(state: State, payload: any) {
     state.activationApiStatus = payload;
+  },
+  setEditUserApiStatus(state: State, payload: any) {
+    state.editUserApiStatus = payload;
   },
 };
 

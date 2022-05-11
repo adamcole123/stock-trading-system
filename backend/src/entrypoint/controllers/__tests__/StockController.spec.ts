@@ -21,8 +21,10 @@ import FakeStockWriteOnlyRepository from '../../../infrastructure/FakeStockWrite
 import IStockReadOnlyRepository from '../../../application/repositories/IStockReadOnlyRepository';
 import IStockWriteOnlyRepository from '../../../application/repositories/IStockWriteOnlyRepository';
 import IStockDto from '../../../usecases/data_tranfer_objects/IStockDto';
+import ISendEmailUseCase from '../../../usecases/Email/ISendEmailUseCase';
+import EmailServiceLocator from '../../../configuration/EmailServiceLocator';
 
-let userController = new UserController(new UserServiceLocator(new FakeUserReadOnlyRepository(), new FakeUserWriteOnlyRepository()));
+let userController = new UserController(new UserServiceLocator(new FakeUserReadOnlyRepository(), new FakeUserWriteOnlyRepository()), new EmailServiceLocator());
 
 // set up container
 const container = new Container();
@@ -37,6 +39,7 @@ describe('StockController Tests', () => {
 
 	// set up bindings
 	container.bind<StockServiceLocator>(TYPES.StockServiceLocator).to(StockServiceLocator);
+	container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
 	container.bind<IStockReadOnlyRepository>(TYPES.IStockReadOnlyRepository).to(FakeStockReadOnlyRepository);
 	container.bind<IStockWriteOnlyRepository>(TYPES.IStockWriteOnlyRepository).to(FakeStockWriteOnlyRepository);
 	container.bind<interfaces.HttpContext>(Symbol.for("HttpContext")).toConstantValue(mockedHttpContext);
