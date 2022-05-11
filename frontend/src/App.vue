@@ -60,4 +60,9 @@ body {
 .form > input {
   margin-bottom: 20px;
 }
+
+.edit-screen {
+  width: 40%;
+  margin: 0 auto;
+}
 </style>

@@ -4,6 +4,7 @@ import authModule from "./modules/auth";
 import tradeModule from "./modules/trade";
 import stockModule from "./modules/stock";
 import reportModule from "./modules/report";
+import adminModule from "./modules/admin";
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
@@ -14,6 +15,7 @@ export const store = createStore<State>({
     trade: tradeModule,
     stock: stockModule,
     report: reportModule,
+    admin: adminModule,
   },
 });
 

@@ -9,7 +9,9 @@ declare module "@vue/runtime-core" {
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
     getStocksApiStatus: "";
+    editUserApiStatus: "";
     getPendingTradesApiStatus: "";
+    getUserDetailsApiStatus: "";
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";
@@ -23,6 +25,7 @@ declare module "@vue/runtime-core" {
     pendingTrades: [];
     newCardApiStatus: "";
     activationApiStatus: "";
+    allUsers: [];
   }
 
   // provide typings for `this.$store`

@@ -60,6 +60,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "activate",
     component: () => import("../views/ActivationView.vue"),
   },
+  {
+    path: "/user",
+    name: "user",
+    component: () => import("../views/EditUserView.vue"),
+    meta: { requiredAuth: true },
+  },
 ];
 
 const router = createRouter({
