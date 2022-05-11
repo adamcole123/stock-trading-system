@@ -28,7 +28,7 @@ export default defineComponent({
 </script>
 <style>
 .account-page {
-  width: 40%;
+  width: 60%;
   margin: 0 auto;
 }
 </style>
