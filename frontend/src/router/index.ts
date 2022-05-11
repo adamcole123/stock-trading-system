@@ -64,7 +64,13 @@ const routes: Array<RouteRecordRaw> = [
     path: "/user",
     name: "user",
     component: () => import("../views/EditUserView.vue"),
-    meta: { requiredAuth: true },
+    meta: { requiredAuth: true, limitedTo: ["Admin"] },
+  },
+  {
+    path: "/company",
+    name: "company",
+    component: () => import("../views/EditCompanyView.vue"),
+    meta: { requiredAuth: true, limitedTo: ["Admin"] },
   },
 ];
 
@@ -84,6 +90,13 @@ router.beforeEach(async (to, from, next) => {
         store.dispatch("auth/userLogOut");
         return next({ path: "/login" });
       } else {
+        const limitedTo = <string[]>to.meta.limitedTo;
+        if (limitedTo) {
+          if (limitedTo.findIndex(userProfile.role) === -1) {
+            store.dispatch("auth/userLogOut");
+            return next({ path: "/login" });
+          }
+        }
         return next();
       }
     }

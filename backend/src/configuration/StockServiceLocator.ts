@@ -8,6 +8,8 @@ import IGetAllStocksUseCase from '../usecases/Stocks/IGetAllStocksUseCase';
 import GetAllStocksUseCase from '../usecases/Stocks/GetAllStocksUseCase';
 import IGetOneStockUseCase from "../usecases/Stocks/IGetOneStockUseCase";
 import GetOneStockUseCase from '../usecases/Stocks/GetOneStockUseCase';
+import IEditStockUseCase from "../usecases/Stocks/IEditStockUseCase";
+import EditStockUseCase from "../usecases/Stocks/EditStockUseCase";
 
 @injectable()
 
@@ -25,5 +27,9 @@ export default class StockServiceLocator {
 
 	public GetGetOneStockUseCase(): IGetOneStockUseCase {
 		return new GetOneStockUseCase(this.readRepository);
+	}
+
+	public GetEditStockUseCase(): IEditStockUseCase {
+		return new EditStockUseCase(this.writeRepository);
 	}
 }

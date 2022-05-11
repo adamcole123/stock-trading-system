@@ -12,6 +12,9 @@ declare module "@vue/runtime-core" {
     editUserApiStatus: "";
     getPendingTradesApiStatus: "";
     getUserDetailsApiStatus: "";
+    getAllUsersApiStatus: "";
+    getCompanyDetailsApiStatus: "";
+    editCompanyApiStatus: "";
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";

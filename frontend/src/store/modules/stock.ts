@@ -4,6 +4,7 @@ import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
   getStocksApiStatus: "",
+  editStockApiStatus: "",
   stockData: [],
 });
 
@@ -14,13 +15,23 @@ const getters = {
   getStockData(state: State) {
     return state.stockData;
   },
+  getEditCompanyApiStatus(state: State) {
+    return state.editCompanyApiStatus;
+  },
 };
 
 const actions = {
   async getStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
+    console.log(payload);
+    payload = {
+      page: payload.page,
+      limit: payload.limit,
+    };
     const response = await axios({
       method: "get",
-      url: "http://localhost:8000/stock/getMany?page=1&limit=10",
+      url: `http://localhost:8000/stock/getMany?page=${
+        payload.page ? payload.page : ""
+      }&limit=${payload.limit ? payload.limit : ""}`,
     });
 
     if (response && response.data) {
@@ -29,6 +40,42 @@ const actions = {
       commit("setGetStocksApiStatus", "success");
     } else {
       commit("setGetStocksApiStatus", "failed");
+    }
+  },
+
+  async getCompanyDetailsApi(
+    { commit, dispatch }: ContextFunction,
+    payload: any
+  ) {
+    const response = await axios({
+      method: "get",
+      url: `http://localhost:8000/stock/getOne?id=${payload.id}`,
+    });
+
+    if (response && response.data) {
+      return response.data;
+      commit("setGetCompanyDetailsApiStatus", "success");
+    } else {
+      commit("setGetCompanyDetailsApiStatus", "failed");
+    }
+  },
+
+  async editCompanyDetails(
+    { commit, dispatch }: ContextFunction,
+    payload: any
+  ) {
+    const response = await axios
+      .post("http://localhost:8000/stock/edit", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setEditCompanyApiStatus", "success");
+    } else {
+      commit("setEditCompanyApiStatus", "failed");
     }
   },
 
@@ -61,6 +108,12 @@ const mutations = {
   },
   setGetStocksApiStatus(state: State, data: any) {
     state.getStocksApiStatus = data;
+  },
+  setGetCompanyDetailsApiStatus(state: State, data: any) {
+    state.getCompanyDetailsApiStatus = data;
+  },
+  setEditCompanyApiStatus(state: State, data: any) {
+    state.editCompanyApiStatus = data;
   },
 };
 

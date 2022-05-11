@@ -87,7 +87,7 @@ export default defineComponent({
     }),
   },
   created() {
-    this.actionGetStocksApi();
+    this.actionGetStocksApi({ page: 1, limit: 10 });
     socket.on("stocks", (data) => {
       this.actionUpdateStocksData([
         data.map((update: any) => {

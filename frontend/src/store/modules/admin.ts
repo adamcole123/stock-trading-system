@@ -55,6 +55,9 @@ const mutations = {
   setGetUserDetailsApiStatus(state: State, data: any) {
     state.getUserDetailsApiStatus = data;
   },
+  setGetAllUsersApiStatus(state: State, data: any) {
+    state.getAllUsersApiStatus = data;
+  },
 };
 
 export default {
