@@ -16,6 +16,7 @@ declare module "@vue/runtime-core" {
     getCompanyDetailsApiStatus: "";
     editCompanyApiStatus: "";
     newCompanyApiStatus: "";
+    passwordResetRequestApiStatus: "";
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";

@@ -33,6 +33,9 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 			
 			if(passwordCheck){
 				foundUser!.password = '';
+
+				foundUser!.reports = [];
+				foundUser!.cardDetails = [];
 	
 				return resolve(foundUser!);
 			}

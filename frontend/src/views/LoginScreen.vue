@@ -17,8 +17,8 @@
       />
     </form>
     <button @click="login">Login</button>
+    <router-link to="/password-reset-request">Forgot Password?</router-link>
     <span v-if="errorText">{{ errorText }}</span>
-    <!-- <span v-if="localStorage.getItem('token')">Signed in!</span> -->
   </div>
 </template>
 <script lang="ts">

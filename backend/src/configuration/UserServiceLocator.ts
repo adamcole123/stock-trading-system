@@ -18,6 +18,8 @@ import GetAllUsersUseCase from "../usecases/Users/GetAllUsersUseCase";
 import IGetAllUsersUseCase from "../usecases/Users/IGetAllUsersUseCase";
 import GetUserDetailsUseCase from "../usecases/Users/GetUserDetailsUseCase";
 import IGetUserDetailsUseCase from "../usecases/Users/IGetUserDetailsUseCase";
+import IPasswordResetUseCase from "../usecases/Users/IPasswordResetUseCase";
+import PasswordResetUseCase from "../usecases/Users/PasswordResetUseCase";
 
 @injectable()
 export default class UserServiceLocator {
@@ -55,5 +57,9 @@ export default class UserServiceLocator {
 
 	public GetGetUserDetailsUseCase(): IGetUserDetailsUseCase {
 		return new GetUserDetailsUseCase(this.readRepository);
+	}
+
+	public GetPasswordResetUseCase(): IPasswordResetUseCase {
+		return new PasswordResetUseCase(this.readRepository, this.writeRepository);
 	}
 }
