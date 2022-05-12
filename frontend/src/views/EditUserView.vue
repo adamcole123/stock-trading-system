@@ -6,6 +6,12 @@
       <input v-if="key === 'id'" type="text" v-model="user[key]" disabled />
       <input v-else-if="key === 'birthDate'" type="date" v-model="user[key]" />
       <input
+        v-else-if="key === 'activationDate'"
+        type="date"
+        v-model="user[key]"
+        disabled
+      />
+      <input
         v-else-if="key === 'isDeleted'"
         type="checkbox"
         v-model="user[key]"
@@ -54,6 +60,7 @@ export default defineComponent({
       if (this.getEditUserApiStatus === "success") {
         await this.actionGetUserDetailsApi({ username: this.user.username });
         alert("User details updated successfully");
+        this.$router.push("/account");
       } else {
         alert("Could not edit user");
       }
@@ -66,6 +73,9 @@ export default defineComponent({
       .then((user) => {
         this.user = user;
         this.user.birthDate = new Date(this.user.birthDate)
+          .toISOString()
+          .split("T")[0];
+        this.user.activationDate = new Date(this.user.activationDate)
           .toISOString()
           .split("T")[0];
         this.user.isDeleted = Boolean(this.user.isDeleted);

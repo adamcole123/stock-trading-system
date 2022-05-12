@@ -8,7 +8,12 @@
           <h2>{{ getUserProfile.email }}</h2>
           <h3>{{ getUserProfile.username }}</h3>
           <h3>{{ getUserProfile.birthdate }}</h3>
-          <router-link to="/account/edit">Change Account Details</router-link
+          <router-link
+            :to="{
+              name: 'user',
+              query: { username: getUserProfile.username },
+            }"
+            >Change Account Details</router-link
           ><br />
           <router-link to="/password-reset">Change Password</router-link>
         </div>
