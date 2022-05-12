@@ -40,6 +40,7 @@ const actions = {
       });
 
     if (response && response.data) {
+      console.log(response.data);
       commit("setGetUserDetailsApiStatus", "success");
       return response.data;
     } else {

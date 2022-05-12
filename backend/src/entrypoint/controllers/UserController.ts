@@ -249,33 +249,69 @@ export default class UserController implements interfaces.Controller {
 
 	@httpPost('/validate')
 	public async validateUser(@request() req: express.Request, @response() res: express.Response) {
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+		if (!jwtSecretKey) {
+			return res.status(500).json('Could not validate user');
+		}
+
 		return await this.validateUserTokenUseCase.invoke(req.cookies.token)
 			.then((validated: IUserDto) => {
-				res.status(200).json(validated)
+				const token = jwt.sign(validated, jwtSecretKey!, { expiresIn: "7 days" });
+				res.cookie("token", token, {
+					httpOnly: true,
+					secure: process.env.NODE_ENV === 'production'
+				})
+				.status(200).json(validated)
 			})
 			.catch((err: Error) => res.status(401).send(err));
 	}
 
 	@httpPost('/edit')
 	public async editUser(@request() req: express.Request, @response() res: express.Response) {
-		let edittedUser: IUserDto = {
-			username: req.body.username,
-			email: req.body.email,
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
-			birthDate: req.body.birthDate,
-			credit: req.body.credit,
-			role: req.body.role,
-			isDeleted: req.body.isDeleted
-		}
-
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+
+		let edittedUser: IUserDto;
+
+		if(req.body.key){
+			edittedUser = await <IUserDto>jwt.verify(req.body.key, jwtSecretKey!);
+		} else {
+			edittedUser = {
+				username: req.body.username,
+				email: req.body.email,
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				birthDate: req.body.birthDate,
+				credit: req.body.credit,
+				role: req.body.role,
+				isDeleted: req.body.isDeleted
+			}
+		}
 		
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
 		if(verified.role !== "Admin" && verified.username !== req.body.username){
 			return res.status(401).json({error: 'Not authorised to retrieve this user\'s data.'});
 		}
+
+		if(verified.role !== "Admin" && verified.username === req.body.username){
+			if(!req.body.key){
+				return await this.sendEmailUseCase.invoke({
+					to: [verified.email!],
+					from: "noreply@stocktradingsystem.com",
+					subject: "Confirm details change",
+					bodyText: `Click here to confirm your account details change: http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}`,
+					bodyHtml: `Click <a href="http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}">here</a> to confirm your account details change`
+				})
+				.then((email) => {
+					res.status(200).json({message: "Email sent to confirm changes!"});
+				})
+				.catch((err) => {
+					res.status(500).json(err);
+				})
+			}
+		}
+
 
 		return await this.editUserDetailsUseCase.invoke(edittedUser.username!, edittedUser)
 			.then((userDto: IUserDto) => {
