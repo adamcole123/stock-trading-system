@@ -2,6 +2,7 @@ import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnl
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 import User from './User';
 import { injectable } from 'inversify';
+import cardDetailsSchema from './CardDetailsSchema';
 
 @injectable()
 export default class UserReadRepository implements IUserReadOnlyRepository {
@@ -41,7 +42,9 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 					credit: user.credit,
 					role: user.role,
 					isDeleted: user.isDeleted,
-					cardDetails: user.cardDetails,
+					cardDetails: user.cardDetails.map((card: any) => {
+						return {...card._doc}
+					}),
 					password: user.password,
 					activationDate: user.activationDate
 				}

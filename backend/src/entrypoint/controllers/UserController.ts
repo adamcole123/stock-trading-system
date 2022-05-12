@@ -63,7 +63,7 @@ export default class UserController implements interfaces.Controller {
 
 		let verified = req.body.key ? await <IUserDto>jwt.verify(req.body.key, jwtSecretKey!) : await <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
-		return await this.passwordResetUseCase.invoke({ email: verified.email, password: await jwt.sign(req.body.password, jwtSecretKey!) })
+		return await this.passwordResetUseCase.invoke({ email: verified.email, password: req.body.password })
 			.then(() => {
 				res.status(200).json('Password reset successfully');
 			})
