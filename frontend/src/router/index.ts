@@ -109,20 +109,21 @@ router.beforeEach(async (to, from, next) => {
   await store.dispatch("auth/userProfile");
   if (to.meta.requiredAuth) {
     let userProfile = store.getters["auth/getUserProfile"];
+    const limitedTo = <string[]>to.meta.limitedTo;
+    console.log(limitedTo);
+    if (limitedTo) {
+      if (limitedTo.findIndex((role) => role === userProfile.role) === -1) {
+        store.dispatch("auth/userLogOut");
+        return next({ path: "/login" });
+      }
+    }
     console.log(userProfile);
     if (userProfile.id === "") {
       userProfile = store.getters["auth/getUserProfile"];
       if (userProfile.id === "") {
-        store.dispatch("auth/userLogOut");
+        store.dispatch("auth/userLogout");
         return next({ path: "/login" });
       } else {
-        const limitedTo = <string[]>to.meta.limitedTo;
-        if (limitedTo) {
-          if (limitedTo.findIndex(userProfile.role) === -1) {
-            store.dispatch("auth/userLogOut");
-            return next({ path: "/login" });
-          }
-        }
         return next();
       }
     }
