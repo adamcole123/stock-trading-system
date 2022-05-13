@@ -113,7 +113,7 @@ router.beforeEach(async (to, from, next) => {
     console.log(limitedTo);
     if (limitedTo) {
       if (limitedTo.findIndex((role) => role === userProfile.role) === -1) {
-        store.dispatch("auth/userLogOut");
+        await store.dispatch("auth/userLogOut");
         return next({ path: "/login" });
       }
     }
