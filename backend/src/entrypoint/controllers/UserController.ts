@@ -75,7 +75,7 @@ export default class UserController implements interfaces.Controller {
 	@httpPost('/password-reset-request')
 	public async passwordResetRequest(@request() req: express.Request, @response() res: express.Response) {
 		if(req.body.email === undefined){
-			return res.status(500).json({error: 'Must enter an email address'});
+			return res.status(500).json('Must enter an email address');
 		}
 
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -104,7 +104,7 @@ export default class UserController implements interfaces.Controller {
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
 		if(verified.role !== "Admin"){
-			return res.status(401).json({error: 'User is not an admin'});
+			return res.status(401).json('User is not an admin');
 		}
 
 		return await this.getAllUsersUseCase.invoke()
@@ -122,7 +122,7 @@ export default class UserController implements interfaces.Controller {
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
 		if(verified.role !== "Admin" && verified.username !== req.query.username){
-			return res.status(401).json({error: 'Not authorised to retrieve this user\'s data.'});
+			return res.status(401).json('Not authorised to retrieve this user\'s data.');
 		}
 
 		return await this.getUserDetailsUseCase.invoke({ username: <string>req.query.username })
@@ -137,7 +137,7 @@ export default class UserController implements interfaces.Controller {
 	@httpPost('/signin')
 	public async signInUser(@request() req: express.Request, @response() res: express.Response) {
 		if (!req.body.username || !req.body.password) {
-			return res.status(400).json({ error: 'Username or password not inputted' });
+			return res.status(400).json('Username or password not inputted');
 		}
 
 		let reqUser: IUserDto = req.body;
@@ -159,7 +159,7 @@ export default class UserController implements interfaces.Controller {
 						.status(200)
 						.json({ message: "Logged in successfully 😊 👌" });
 				} catch (error) {
-					res.status(500).json({ error: error })
+					res.status(500).json(error)
 				}
 
 			})
@@ -206,7 +206,7 @@ export default class UserController implements interfaces.Controller {
 				.then(email => {
 					res
 					.status(200)
-					.json({ message: "Registered successfully 😊 👌\nActivation email sent!" });
+					.json("Registered successfully 😊 👌\nActivation email sent!");
 				});
 			})
 			.catch((err: Error) => {
@@ -240,7 +240,7 @@ export default class UserController implements interfaces.Controller {
 					secure: process.env.NODE_ENV === 'production'
 				})
 					.status(200)
-					.json({ message: "New card added successfully" });
+					.json("New card added successfully");
 			})
 			.catch((err: Error) => {
 				res.status(400).json(err)
@@ -291,7 +291,7 @@ export default class UserController implements interfaces.Controller {
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
 		if(verified.role !== "Admin" && verified.username !== req.body.username){
-			return res.status(401).json({error: 'Not authorised to retrieve this user\'s data.'});
+			return res.status(401).json('Not authorised to retrieve this user\'s data.');
 		}
 
 		if(verified.role !== "Admin" && verified.username === req.body.username){
@@ -304,7 +304,7 @@ export default class UserController implements interfaces.Controller {
 					bodyHtml: `Click <a href="http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}">here</a> to confirm your account details change`
 				})
 				.then((email) => {
-					res.status(200).json({message: "Email sent to confirm changes!"});
+					res.status(200).json("Email sent to confirm changes!");
 				})
 				.catch((err) => {
 					res.status(500).json(err);
@@ -322,7 +322,7 @@ export default class UserController implements interfaces.Controller {
 
 	@httpGet('/signout')
 	public async signOut(@request() req: express.Request, @response() res: express.Response) {
-		res.clearCookie("token").status(200).json({ message: "Signed out successfully!" });
+		res.clearCookie("token").status(200).json("Signed out successfully!");
 	}
 
 	@httpPost('/activate')
