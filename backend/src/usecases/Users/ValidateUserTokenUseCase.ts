@@ -26,6 +26,9 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 				if(verified){
 					verified = await this.userReadOnlyRepository.fetch({id: verified.id})
 
+					if(verified.isDeleted)
+						reject('User account is closed.');
+
 					verified.password = "";
 					if(verified.cardDetails){
 						verified.cardDetails.map(card => {

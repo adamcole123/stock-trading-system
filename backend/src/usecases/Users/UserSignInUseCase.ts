@@ -21,6 +21,9 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 				return reject(err);
 			}
 
+			if(foundUser.isDeleted)
+				return reject('User account is closed.');
+
 			if(!foundUser.activationDate){
 				return reject('Account not activated.')
 			}
