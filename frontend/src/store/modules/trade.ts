@@ -2,6 +2,7 @@ import { State } from "vue";
 import axios from "axios";
 import { ContextFunction } from "../ContextFunction";
 import { store } from "..";
+import router from "./../../router/index";
 
 const state = () => ({
   buyStocksApiStatus: "",
@@ -43,6 +44,8 @@ const actions = {
       dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setBuyStocksApiStatus", "failed");
+      dispatch("auth/userProfile", "", { root: true });
+      router.go(0);
     }
   },
   async sellStocksApi({ commit, dispatch }: ContextFunction, payload: any) {

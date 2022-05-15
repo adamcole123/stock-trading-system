@@ -8,11 +8,13 @@ import UserReadRepository from '../../infrastructure/User/UserReadRepository';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IUserDto from '../data_tranfer_objects/IUserDto';
 import IStockReadOnlyRepository from '../../application/repositories/IStockReadOnlyRepository';
+import ITradeReadOnlyRepository from 'src/application/repositories/ITradeReadOnlyRepository';
 export default class BuyStocksUseCase implements IBuyStocksUseCase {
 
 	stockWriteOnlyRepository: IStockWriteOnlyRepository;
 	stockReadOnlyRepository: IStockReadOnlyRepository;
 	tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
+	tradeReadOnlyRepository: ITradeReadOnlyRepository;
 	userWriteOnlyRepository: IUserWriteOnlyRepository;
 	userReadOnlyRepository: IUserReadOnlyRepository;
 
@@ -22,11 +24,13 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 	constructor(_stockWriteOnlyRepository: IStockWriteOnlyRepository, 
 				_stockReadOnlyRepository: IStockReadOnlyRepository, 
 				_tradeWriteOnlyRepository: ITradeWriteOnlyRepository,
+				_tradeReadOnlyRepository: ITradeReadOnlyRepository,
 				_userWriteOnlyRepository: IUserWriteOnlyRepository,
 				_userReadOnlyRepository: IUserReadOnlyRepository) {
 		this.stockWriteOnlyRepository = _stockWriteOnlyRepository;
 		this.stockReadOnlyRepository = _stockReadOnlyRepository;
 		this.tradeWriteOnlyRepository = _tradeWriteOnlyRepository;
+		this.tradeReadOnlyRepository = _tradeReadOnlyRepository;
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;
 		this.userReadOnlyRepository = _userReadOnlyRepository;
 	}
@@ -39,16 +43,40 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 			let user: any;
 			let stock: any;
 			let tradeObj: any;
+			let userTrades: ITradeDto[];
 
 			Promise.all([
 				stock = await this.stockReadOnlyRepository.fetch({id: tradeDto.stock_id}),
 				user = await this.userReadOnlyRepository.fetch({
 					id: tradeDto.user_id
-				})
+				}),
+				userTrades = await this.tradeReadOnlyRepository.fetch({ user_id: tradeDto.user_id })
 			])
+
+
 
 			if(!(user.credit >= stock[0].value * tradeDto.stock_amount!)){
 				return reject('User does not have enough credit for this trade');
+			}
+
+			if(!(user.credit >= stock[0].value * tradeDto.stock_amount!)){
+				return reject('User does not have enough credit for this trade');
+			}
+
+			let lowestValueStock: IStockDto[] = await this.stockReadOnlyRepository.fetch({}, {
+				lowestValue: true,
+			})
+
+			if(calcNumUserOwnedStock(userTrades) < 1 && lowestValueStock[0].value! > user.credit){
+				try {
+					await this.userWriteOnlyRepository.edit(user.username, {
+						isDeleted: true,
+					}, {});
+					
+					return reject('User cannot buy or sell any more stock, account closed');
+				} catch (error) {
+					return reject('User cannot buy or sell any more stock, account closure failed');
+				}
 			}
 
 			if(!(stock[0].volume >= tradeDto.stock_amount!)){
@@ -68,7 +96,7 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 					}, {
 						tradeMode: true
 					}),
-					await this.tradeWriteOnlyRepository.create(tradeObj = {
+					tradeObj = await this.tradeWriteOnlyRepository.create({
 						stock_id: tradeDto.stock_id,
 						user_id: tradeDto.user_id,
 						stock_amount: tradeDto.stock_amount,
@@ -83,4 +111,12 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 			}
 		});
 	}
+}
+
+function calcNumUserOwnedStock(userTrades: ITradeDto[]): number {
+	return userTrades.reduce((acc, currValue) => {
+		return currValue.trade_type === "Buy" && currValue.trade_status === "Approved" ? 
+				acc + currValue.stock_amount! : 
+				acc - currValue.stock_amount!; 
+	}, 0)
 }

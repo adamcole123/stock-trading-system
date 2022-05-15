@@ -30,7 +30,7 @@ export default class TradeServiceLocator {
 				@inject(TYPES.IUserReadOnlyRepository) private userReadRepository: IUserReadOnlyRepository){}
 
 	public GetBuyStocksUseCase(): IBuyStocksUseCase {
-		return new BuyStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.userWriteRepository, this.userReadRepository);
+		return new BuyStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.tradeReadRepository, this.userWriteRepository, this.userReadRepository);
 	}
 	public GetSellStocksUseCase(): ISellStocksUseCase {
 		return new SellStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.tradeReadRepository, this.userWriteRepository, this.userReadRepository);

@@ -11,4 +11,5 @@ export default interface StockReadOptions {
 	order?: IOrderOptions<keyof IStockDto>;
 	limit?: number;
 	page?: number;
+	lowestValue?: boolean;
 }
