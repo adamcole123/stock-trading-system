@@ -102,20 +102,25 @@ const actions = {
     }
   },
   async loginApi({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log("payload", payload);
+    let error;
     const response = await axios
       .post("http://localhost:8000/user/signin", payload, {
         withCredentials: true,
       })
       .catch((err) => {
-        console.log(err);
+        if (err)
+          error = err.response.data
+            ? err.response.data
+            : "Error logging in user";
       });
 
-    console.log("response", response);
     if (response && response.data) {
       commit("setLoginApiStatus", "success");
+      console.log(response);
+      return response;
     } else {
       commit("setLoginApiStatus", "failed");
+      return error;
     }
   },
   async registerApi({ commit, dispatch }: ContextFunction, payload: any) {

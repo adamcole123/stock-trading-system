@@ -54,13 +54,13 @@ export default defineComponent({
         username: this.loginInfo.username,
         password: this.loginInfo.password,
       };
-      await this.actionLoginApi(payload);
+      let response = await this.actionLoginApi(payload);
       if (this.getLoginApiStatus == "success") {
         await this.userProfile();
         alert("Signed in successfully!");
         this.$router.push("/");
       } else {
-        this.errorText = "Authentication failed";
+        this.errorText = response;
       }
     },
   },

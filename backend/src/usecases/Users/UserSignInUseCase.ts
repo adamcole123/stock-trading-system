@@ -40,7 +40,7 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 				return resolve(foundUser!);
 			}
 	
-			reject('Authentication unsuccessful');
+			reject('Password is incorrect');
 		})
 	}
 }
