@@ -84,7 +84,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/user",
     name: "user",
     component: () => import("../views/EditUserView.vue"),
-    meta: { requiredAuth: true, limitedTo: ["Admin"] },
+    meta: { requiredAuth: true },
   },
   {
     path: "/company",
@@ -106,22 +106,22 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  await store.dispatch("auth/userProfile");
   if (to.meta.requiredAuth) {
+    await store.dispatch("auth/userProfile");
     let userProfile = store.getters["auth/getUserProfile"];
     const limitedTo = <string[]>to.meta.limitedTo;
-    console.log(limitedTo);
     if (limitedTo) {
       if (limitedTo.findIndex((role) => role === userProfile.role) === -1) {
-        await store.dispatch("auth/userLogOut");
+        await store.dispatch("auth/userLogout");
+        await store.commit("auth/setUserProfile", {});
         return next({ path: "/login" });
       }
     }
-    console.log(userProfile);
     if (userProfile.id === "") {
       userProfile = store.getters["auth/getUserProfile"];
       if (userProfile.id === "") {
         store.dispatch("auth/userLogout");
+        await store.commit("auth/setUserProfile", {});
         return next({ path: "/login" });
       } else {
         return next();

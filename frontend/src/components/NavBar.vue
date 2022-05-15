@@ -7,16 +7,16 @@
         <router-link to="/contact" class="nav-link">Contact</router-link>
       </div>
       <div class="right">
-        <div v-if="getUserProfile.id !== ''">
+        <div v-if="getUserProfile.id === '' || getUserProfile.id === undefined">
+          <router-link to="/login" class="nav-link">Login</router-link>
+          <router-link to="/register" class="nav-link">Register</router-link>
+        </div>
+        <div v-else>
           £{{ getUserProfile.credit }}
           <router-link to="/account" class="nav-link"
             >{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}
           </router-link>
           <span @click="logout()" class="nav-link">Sign out</span>
-        </div>
-        <div v-else>
-          <router-link to="/login" class="nav-link">Login</router-link>
-          <router-link to="/register" class="nav-link">Register</router-link>
         </div>
       </div>
     </div>
