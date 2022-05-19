@@ -161,19 +161,38 @@ function changeStockValues() {
           if(result?.volume! < 0)
             return;
           
-          let now = new Date();
-          
-          if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
-            result!.open = result?.value;
-          }
-
-          if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
-            result!.close = result?.value;
-          }
-
           result?.save()
-      });
-    
+          });
+          
     });
+
+    let now = new Date();
+
+    if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
+      Stock.find({}).snapshot()
+      .then(docs => {
+        docs.forEach( function (doc) {
+          doc.open = doc.value;
+          doc.save();
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      
+    }
+
+    if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
+      Stock.find({}).snapshot()
+      .then(docs => {
+        docs.forEach( function (doc) {
+          doc.close = doc.value;
+          doc.save();
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   }, 2);
 }
