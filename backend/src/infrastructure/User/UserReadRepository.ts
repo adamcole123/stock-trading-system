@@ -22,7 +22,7 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 				if(userDto.email)
 					user = await User.findOne({email: userDto.email});
 			} catch (err) {
-				reject("No user with that username, id, or email exists");
+				return reject("No user with that username, id, or email exists");
 			}
 
 			if(user){
@@ -49,10 +49,10 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 					activationDate: user.activationDate
 				}
 			
-				resolve(userDto!);
+				return resolve(userDto!);
 			}
 			
-			reject("Could not find user");
+			return reject("Could not find user");
 		})
 	}
 	

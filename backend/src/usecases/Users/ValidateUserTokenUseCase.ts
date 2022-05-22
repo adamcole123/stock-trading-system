@@ -4,15 +4,21 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import IUserDto from '../data_tranfer_objects/IUserDto';
 import CardDetails from '../entities/CardDetails';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
+import IEncrypter from '../../infrastructure/IEncrypter';
+import { prototype } from 'events';
+import { stringify } from 'querystring';
 
 export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCase{
 	private userReadOnlyRepository: IUserReadOnlyRepository;
+	private encrypter: IEncrypter;
 
 	/**
 	 *
 	 */
-	constructor(_userReadOnlyRepository: IUserReadOnlyRepository) {
+	constructor(_userReadOnlyRepository: IUserReadOnlyRepository,
+				_encrypter: IEncrypter) {
 		this.userReadOnlyRepository = _userReadOnlyRepository;
+		this.encrypter = _encrypter;
 	}
 	invoke(token: string): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
@@ -31,19 +37,30 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 
 					verified.password = "";
 					if(verified.cardDetails){
-						verified.cardDetails.map(card => {
-							card.cardNumber = card.cardNumber.substring(11, 15)
-							card.cvv = ""
+						let newCardDetails = verified.cardDetails.map((card: any) => {
+							let decryptedCardDetails: CardDetails = card.cardDetails !== undefined && card.key !== undefined ? 
+																	JSON.parse(this.encrypter.decypher(card.cardDetails, card.key)) 
+																	: { cardNumber: "", cvv: "" };
+
+							decryptedCardDetails.cardNumber = decryptedCardDetails.cardNumber !== undefined ? 
+															decryptedCardDetails.cardNumber.substring(11, 15) : "";
+							
+							decryptedCardDetails.cvv = "";
+
+							return {...decryptedCardDetails};
 						});
+
+						verified.cardDetails = newCardDetails;
 					}
 
-					resolve(verified);
+					return resolve(verified);
 				}else{
 					// Access Denied
 					return reject('Could not validate user');
 				}
 			} catch (error) {
 				// Access Denied
+				console.log(error);
 				return reject('Could not validate user');
 			}
 		});

@@ -33,6 +33,9 @@ import ReportServiceLocator from "./configuration/ReportServiceLocator";
 import ISendEmailUseCase from './usecases/Email/ISendEmailUseCase';
 import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
 import EmailServiceLocator from './configuration/EmailServiceLocator';
+import IEncrypter from './infrastructure/IEncrypter';
+import Encrypter from './infrastructure/Encrypter';
+import Stock from './infrastructure/Stock/Stock';
 
 // set up container
 const container = new Container();
@@ -61,6 +64,8 @@ container.bind<ITradeReadOnlyRepository>(TYPES.ITradeReadOnlyRepository).to(Trad
 container.bind<ReportServiceLocator>(TYPES.ReportServiceLocator).to(ReportServiceLocator);
 
 container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
+
+container.bind<IEncrypter>(TYPES.IEncrypter).to(Encrypter);
 
 // Binding for socket server
 container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
@@ -113,7 +118,6 @@ const {
   DB_NAME,
 } = process.env;
 
-import Stock from './infrastructure/Stock/Stock';
 
 console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
