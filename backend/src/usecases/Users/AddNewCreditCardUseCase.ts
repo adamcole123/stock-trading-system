@@ -23,6 +23,7 @@ export default class AddNewCreditCardUseCase implements IAddNewCreditCardUseCase
 		});
 
 		let encryptedCardDetails = await this.encrypter.cypher(JSON.stringify(creditCardDto));
+		
 		user.cardDetails?.push({
 			cardDetails: encryptedCardDetails[0],
 			key: encryptedCardDetails[1]

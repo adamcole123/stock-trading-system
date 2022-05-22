@@ -15,6 +15,6 @@ export default interface IUserDto {
 	credit?: Number,
 	role?: string,
 	isDeleted?: boolean,
-	cardDetails?: CardDetails[] | any,
+	cardDetails?: (CardDetails | { cardDetails: string, key: string })[],
 	activationDate?: Date
 }

@@ -35,6 +35,7 @@ import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
 import EmailServiceLocator from './configuration/EmailServiceLocator';
 import IEncrypter from './infrastructure/IEncrypter';
 import Encrypter from './infrastructure/Encrypter';
+import Stock from './infrastructure/Stock/Stock';
 
 // set up container
 const container = new Container();
@@ -146,37 +147,37 @@ socketServer.build();
 
 function changeStockValues() {
   setInterval(function () {
-    // Stock.count().exec(function(err, count){
-    //   var random = Math.floor(Math.random() * count);
+    Stock.count().exec(function(err, count){
+      var random = Math.floor(Math.random() * count);
     
-    //   Stock.findOne().skip(random).exec(
-    //     function (err, result) {
+      Stock.findOne().skip(random).exec(
+        function (err, result) {
     
-    //       if(err)
-    //         return console.error(err);
+          if(err)
+            return console.error(err);
   
-    //       if(result?.value! > 0)
-    //         result!.value = Number.parseFloat((result!.value! + (Math.random() > 0.5 ? Math.random() * 1 : Math.random() * -1)).toFixed(2));
+          if(result?.value! > 0)
+            result!.value = Number.parseFloat((result!.value! + (Math.random() > 0.5 ? Math.random() * 1 : Math.random() * -1)).toFixed(2));
           
-    //       if(result?.volume! > 0)
-    //         result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? Math.random() * 10 : Math.random() * -10))
+          if(result?.volume! > 0)
+            result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? Math.random() * 10 : Math.random() * -10))
   
-    //       if(result?.volume! < 0)
-    //         return;
+          if(result?.volume! < 0)
+            return;
           
-    //       let now = new Date();
+          let now = new Date();
           
-    //       if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
-    //         result!.open = result?.value;
-    //       }
+          if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
+            result!.open = result?.value;
+          }
 
-    //       if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
-    //         result!.close = result?.value;
-    //       }
+          if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
+            result!.close = result?.value;
+          }
 
-    //       result?.save()
-    //   });
+          result?.save()
+      });
     
-    // });
+    });
   }, 2);
 }
