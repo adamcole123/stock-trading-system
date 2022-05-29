@@ -21,6 +21,10 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 				return reject(err);
 			}
 
+			if(foundUser.credit === 0) {
+				return reject('This account does not have any credit.');
+			}
+
 			if(foundUser.isDeleted)
 				return reject('User account is closed.');
 
