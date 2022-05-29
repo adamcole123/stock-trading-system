@@ -53,12 +53,6 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 				userTrades = await this.tradeReadOnlyRepository.fetch({ user_id: tradeDto.user_id })
 			])
 
-
-
-			if(!(user.credit >= stock[0].value * tradeDto.stock_amount!)){
-				return reject('User does not have enough credit for this trade');
-			}
-
 			if(!(user.credit >= stock[0].value * tradeDto.stock_amount!)){
 				return reject('User does not have enough credit for this trade');
 			}

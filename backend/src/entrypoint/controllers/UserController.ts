@@ -297,7 +297,7 @@ export default class UserController implements interfaces.Controller {
 		if(verified.role !== "Admin" && verified.username === req.body.username){
 			if(!req.body.key){
 				return await this.sendEmailUseCase.invoke({
-					to: [verified.email!],
+					to: [verified.email!, edittedUser.email!],
 					from: "noreply@stocktradingsystem.com",
 					subject: "Confirm details change",
 					bodyText: `Click here to confirm your account details change: http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}`,
