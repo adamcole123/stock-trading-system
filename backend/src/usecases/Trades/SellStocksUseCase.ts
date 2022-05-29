@@ -74,6 +74,7 @@ export default class SellStocksUseCase implements ISellStocksUseCase {
 					await this.stockWriteOnlyRepository.edit({
 						id: tradeDto.stock_id,
 						volume: tradeDto.stock_amount!,
+						latest_trade: new Date(),
 					}, {
 						tradeMode: true
 					}),

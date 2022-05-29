@@ -64,6 +64,9 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 					if (stockDto.value)
 						stock!.value = stockDto.value;
 
+					if (stockDto.latest_trade)
+						stock!.latest_trade = stockDto.latest_trade;
+
 					stock!.save();
 
 					resolve(<IStockDto[]>[stock]);
