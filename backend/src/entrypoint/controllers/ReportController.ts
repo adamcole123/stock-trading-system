@@ -22,7 +22,7 @@ export default class ReportController implements interfaces.Controller {
 	}
 
 	@httpGet('/company-values')
-	public async userTransactions(@request() req: express.Request, @response() res: express.Response){
+	public async companyValues(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
 		let ascending: boolean = req.query.ascending === "false" ? false : true;
 		let report_type: string = String(req.query.reportformat);

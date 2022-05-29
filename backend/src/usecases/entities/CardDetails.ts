@@ -1,7 +1,7 @@
 export default class CardDetails {
 	constructor (
 		public cardNumber: string,
-		public expiryDate: Date,
+		public expiryDate: string,
 		public cvv: string,
 		public nameOnCard: string,
 		public addressLine1: string,

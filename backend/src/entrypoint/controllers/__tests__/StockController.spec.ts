@@ -1,47 +1,30 @@
 import 'reflect-metadata';
-import { cleanUpMetadata, interfaces, InversifyExpressServer, response, request } from 'inversify-express-utils';
-import UserServiceLocator from '../../../configuration/UserServiceLocator';
-import FakeUserReadOnlyRepository from '../../../infrastructure/FakeUserReadOnlyRepository';
-import FakeUserWriteOnlyRepository from '../../../infrastructure/FakeUserWriteOnlyRepository';
-import UserController from '../UserController';
-import IUserReadOnlyRepository from '../../../application/repositories/IUserReadOnlyRepository';
-import IUserWriteOnlyRepository from '../../../application/repositories/IUserWriteOnlyRepository';
+import { cleanUpMetadata, interfaces, InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from 'inversify';
 import { TYPES } from '../../../constants/types';
 import { mockedHttpContext } from '../MockHttpContext';
 import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
 import httpMocks from 'node-mocks-http';
-import IUserDto from '../../../usecases/data_tranfer_objects/IUserDto';
 import StockController from '../StockController';
 import StockServiceLocator from '../../../configuration/StockServiceLocator';
-import Stock from '../../../usecases/entities/Stock';
-import FakeStockReadOnlyRepository from '../../../infrastructure/FakeStockReadOnlyRepository';
-import FakeStockWriteOnlyRepository from '../../../infrastructure/FakeStockWriteOnlyRepository';
 import IStockReadOnlyRepository from '../../../application/repositories/IStockReadOnlyRepository';
 import IStockWriteOnlyRepository from '../../../application/repositories/IStockWriteOnlyRepository';
-import IStockDto from '../../../usecases/data_tranfer_objects/IStockDto';
-import ISendEmailUseCase from '../../../usecases/Email/ISendEmailUseCase';
 import EmailServiceLocator from '../../../configuration/EmailServiceLocator';
-
-let userController = new UserController(new UserServiceLocator(new FakeUserReadOnlyRepository(), new FakeUserWriteOnlyRepository()), new EmailServiceLocator());
+import { mock } from 'jest-mock-extended';
 
 // set up container
 const container = new Container();
-
-
-let server = new InversifyExpressServer(container);
-
-let controller;
-
 describe('StockController Tests', () => {
 	let controller: StockController;
+
+	let stockWriteOnlyRepository: IStockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
+	let stockReadOnlyRepository: IStockReadOnlyRepository = mock<IStockReadOnlyRepository>();
 
 	// set up bindings
 	container.bind<StockServiceLocator>(TYPES.StockServiceLocator).to(StockServiceLocator);
 	container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
-	container.bind<IStockReadOnlyRepository>(TYPES.IStockReadOnlyRepository).to(FakeStockReadOnlyRepository);
-	container.bind<IStockWriteOnlyRepository>(TYPES.IStockWriteOnlyRepository).to(FakeStockWriteOnlyRepository);
+	container.bind<IStockReadOnlyRepository>(Symbol.for("IStockReadOnlyRepository")).toConstantValue(stockReadOnlyRepository);
+	container.bind<IStockWriteOnlyRepository>(Symbol.for("IStockWriteOnlyRepository")).toConstantValue(stockWriteOnlyRepository);
 	container.bind<interfaces.HttpContext>(Symbol.for("HttpContext")).toConstantValue(mockedHttpContext);
 
 	beforeAll(async () => {
@@ -52,10 +35,21 @@ describe('StockController Tests', () => {
 	});
 
 	it('Stock get one route', async () => {
+
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			id: "teststock1id",
+			symbol: "teststock1symbol",
+			name: "teststock1name",
+			value: 956.9,
+			volume: 6000,
+			open: 898.5,
+			close: 967.2
+		}])
+
 		let requestObj = httpMocks.createRequest({
 			method: 'POST',
 			url: '/stocks/getOne',
-			body: {
+			query: {
 				"id": "teststock2id",
 			}
 		});
@@ -63,8 +57,35 @@ describe('StockController Tests', () => {
 		let responseObj = httpMocks.createResponse();
 
 		await controller.getStock(requestObj, responseObj);
-		
+
 		expect(responseObj._getJSONData()).toStrictEqual(expect.objectContaining({
+			"close": 967.2,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000,
+		}));
+	})
+
+	it('Stock get all route', async () => {
+		let requestObj = httpMocks.createRequest({
+			method: 'POST',
+			url: '/stocks/getMany',
+			body: {}
+		});
+
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
 			"close": 350,
 			"gains": -150,
 			"id": "teststock2id",
@@ -73,20 +94,30 @@ describe('StockController Tests', () => {
 			"symbol": "teststock2symbol",
 			"value": 500,
 			"volume": 230000
-		}));
-	})
-
-	it('Stock get all route', async () => {
-		let requestObj = httpMocks.createRequest({
-			method: 'POST',
-			url: '/stocks/getOne',
-			body: {}
-		});
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		let responseObj = httpMocks.createResponse();
 
 		await controller.getStocks(requestObj, responseObj);
-		
+
 		expect(responseObj._getJSONData()).toStrictEqual(expect.objectContaining([{
 			"close": 967.2,
 			"gains": 58.39999999999998,
@@ -141,10 +172,20 @@ describe('StockController Tests', () => {
 			}
 		});
 
+		mock(stockWriteOnlyRepository).create.mockResolvedValue({
+			"close": 85,
+			"id": "teststockid",
+			"name": "teststockname",
+			"open": 25,
+			"symbol": "teststocksymbol",
+			"value": 52,
+			"volume": 800
+		})
+
 		let responseObj = httpMocks.createResponse();
 
 		await controller.createStock(requestObj, responseObj);
-		
+
 		expect(responseObj._getJSONData()).toStrictEqual(expect.objectContaining({
 			"close": 85,
 			"id": "teststockid",
@@ -153,6 +194,45 @@ describe('StockController Tests', () => {
 			"symbol": "teststocksymbol",
 			"value": 52,
 			"volume": 800
+		}));
+	})
+	it('Edit stock route', async () => {
+		let requestObj = httpMocks.createRequest({
+			method: 'POST',
+			url: '/stocks/edit',
+			body: {
+				"close": 85,
+				"id": "teststockid",
+				"name": "teststockname",
+				"open": 25,
+				"symbol": "teststocksymbol",
+				"value": 52,
+				"volume": 850
+			}
+		});
+
+		mock(stockWriteOnlyRepository).edit.mockResolvedValue([{
+			"close": 85,
+			"id": "teststockid",
+			"name": "teststockname",
+			"open": 25,
+			"symbol": "teststocksymbol",
+			"value": 52,
+			"volume": 850
+		}])
+
+		let responseObj = httpMocks.createResponse();
+
+		await controller.editStock(requestObj, responseObj);
+
+		expect(responseObj._getJSONData()).toStrictEqual(expect.objectContaining({
+			"close": 85,
+			"id": "teststockid",
+			"name": "teststockname",
+			"open": 25,
+			"symbol": "teststocksymbol",
+			"value": 52,
+			"volume": 850,
 		}));
 	})
 });

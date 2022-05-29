@@ -153,8 +153,6 @@ export default class TradeController implements interfaces.Controller {
 		if(user.role !== "Broker" && user.role !== "Admin"){
 			return res.status(401).json({error: 'User is not a broker or admin'});
 		}
-
-		let reqTrade: ITradeDto = req.query;
 		
 		return await this.getUserTransactionsByStatusUseCase.invoke("Pending")
 			.then((tradeDtos: ITradeDto[]) => {

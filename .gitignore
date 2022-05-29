@@ -5,3 +5,4 @@ mongo-rs0-3/data
 mongo/data
 coverage
 backend/coverage
+backend/build

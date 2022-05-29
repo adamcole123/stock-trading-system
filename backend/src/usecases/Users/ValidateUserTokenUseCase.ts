@@ -60,7 +60,6 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 				}
 			} catch (error) {
 				// Access Denied
-				console.log(error);
 				return reject('Could not validate user');
 			}
 		});
