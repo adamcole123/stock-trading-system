@@ -7,6 +7,7 @@ import router from "./../../router/index";
 const state = () => ({
   buyStocksApiStatus: "",
   sellStocksApiStatus: "",
+  stockTradesForUserApiStatus: "",
   pendingTrades: [],
   getPendingTradesApiStatus: "",
 });
@@ -62,6 +63,25 @@ const actions = {
       dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setSellStocksApiStatus", "failed");
+    }
+  },
+  async stockTradesForUserApi(
+    { commit, dispatch }: ContextFunction,
+    payload: any
+  ) {
+    const response = await axios
+      .post("http://localhost:8000/trade/stocktradesforuser", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setStockTradesForUserApiStatus", "success");
+      return response.data;
+    } else {
+      commit("setStockTradesForUserApiStatus", "failed");
     }
   },
   async getUserTransactionHistoryApi(
@@ -161,6 +181,9 @@ const mutations = {
   },
   setPendingTrades(state: State, data: any) {
     state.pendingTrades = data;
+  },
+  setStockTradesForUserApiStatus(state: State, data: any) {
+    state.stockTradesForUserApiStatus = data;
   },
 };
 

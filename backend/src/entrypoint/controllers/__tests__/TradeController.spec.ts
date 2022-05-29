@@ -510,5 +510,44 @@ describe('Report Controller Tests', () => {
 			"trade_type": "Sell",
 			"user_id": "testid",
 		}));
+	});
+
+	it('Get stock trades by user route', async () => {
+		mock(tradeReadOnlyRepository).fetch.mockResolvedValue(
+			[{
+				id: "test_id",
+				stock_id: "teststockid1",
+				user_id: "testuserid1",
+				stock_amount: 2,
+				stock_value: 242.08,
+				time_of_trade: new Date('0'),
+				trade_status: "Pending",
+				trade_type: "Buy"
+			}]
+		);
+
+		let requestObj = httpMocks.createRequest({
+			query: {
+				user_id: "testuserid1",
+			},
+			cookies: {
+				token: jwt.sign({ username: "test1username", id: "testuserid1" }, process.env.JWT_SECRET_KEY!)
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await controller.stockTradesForUser(requestObj, responseObj);
+
+		expect(responseObj._getJSONData()[0]).toStrictEqual(expect.objectContaining({
+			"id": "test_id",
+			"stock_amount": 2,
+			"stock_id": "teststockid1",
+			"stock_value": 242.08,
+			"time_of_trade": "2000-01-01T00:00:00.000Z",
+			"trade_status": "Pending",
+			"trade_type": "Buy",
+			"user_id": "testuserid1"
+		}));
 	})
 })
