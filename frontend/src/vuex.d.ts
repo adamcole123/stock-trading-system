@@ -8,6 +8,7 @@ declare module "@vue/runtime-core" {
     registerApiStatus: "";
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
+    stockTradesForUserApiStatus: "";
     getStocksApiStatus: "";
     editUserApiStatus: "";
     getPendingTradesApiStatus: "";

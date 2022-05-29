@@ -18,6 +18,8 @@ import GetUserTransactionHistoryUseCase from '../Trades/GetUserTransactionHistor
 import IGetUserTransactionHistoryUseCase from '../Trades/IGetUserTransactionHistoryUseCase';
 import IGetUserTransactionsByStatusUseCase from '../Trades/IGetUserTransactionsByStatusUseCase';
 import GetUserTransactionsByStatusUseCase from '../Trades/GetUserTransactionsByStatusUseCase';
+import IStockTradesForUserUseCase from '../Trades/IStockTradesForUserUseCase';
+import StockTradesForUserUseCase from '../Trades/StockTradesForUseUseCase';
 
 let tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
 let tradeReadOnlyRepository: ITradeReadOnlyRepository;
@@ -376,6 +378,71 @@ describe("Trade Tests", () => {
 			"stock_value": 67,
 			"time_of_trade": expect.any(Date),
 			"user_id": "testid1"
+		}]));
+	})
+
+	it("Get stocks trades by user use case", async () => {
+		//Arrange
+		let getUserTransactionsByStatusUseCase: IStockTradesForUserUseCase;
+		let tradeDto: ITradeDto[];
+
+		// Search through trades for every trade that had user id in
+
+		tradeReadOnlyRepository = mock<ITradeReadOnlyRepository>();
+
+		let newDate = new Date();
+
+		mock(tradeReadOnlyRepository).fetch.mockResolvedValue([
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				stock_amount: 50,
+				stock_value: 345.6,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				stock_amount: 6,
+				stock_value: 87,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				stock_amount: 4,
+				stock_value: 67,
+				time_of_trade: newDate,
+			}
+		])
+
+		getUserTransactionsByStatusUseCase = new StockTradesForUserUseCase(tradeReadOnlyRepository);
+
+		//Act
+		tradeDto = await getUserTransactionsByStatusUseCase.invoke({
+			user_id: "testuserid",
+			stock_id: "teststockid",
+		});
+
+		//Assert
+		expect(tradeDto).toStrictEqual(expect.objectContaining([{
+			"stock_amount": 50,
+			"stock_id": "teststockid",
+			"stock_value": 345.6,
+			"time_of_trade": expect.any(Date),
+			"user_id": "testuserid"
+		}, {
+			"stock_amount": 6,
+			"stock_id": "teststockid",
+			"stock_value": 87,
+			"time_of_trade": expect.any(Date),
+			"user_id": "testuserid"
+		}, {
+			"stock_amount": 4,
+			"stock_id": "teststockid",
+			"stock_value": 67,
+			"time_of_trade": expect.any(Date),
+			"user_id": "testuserid"
 		}]));
 	})
 })

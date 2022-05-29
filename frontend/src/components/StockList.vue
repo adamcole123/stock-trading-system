@@ -10,6 +10,7 @@
     <table class="stocklist">
       <thead>
         <tr>
+          <th v-if="getUserProfile.id !== ''"></th>
           <th></th>
           <th></th>
           <th align="left">Gains</th>
@@ -26,6 +27,21 @@
       <tbody>
         <template v-for="stock in getStockData" :key="stock.id">
           <tr v-if="stock.volume > 0">
+            <td
+              v-if="
+                getUserProfile.id !== '' &&
+                Object.keys(toggledTrades).includes(stock.id)
+              "
+              @click="viewTrades(stock.id)"
+            >
+              <button>-</button>
+            </td>
+            <td
+              v-else-if="getUserProfile.id !== ''"
+              @click="viewTrades(stock.id)"
+            >
+              <button>+</button>
+            </td>
             <td>{{ stock.symbol }}</td>
             <td>{{ stock.name }}</td>
             <td v-if="stock.gains! > 0" style="color: green">
@@ -45,6 +61,39 @@
               <button align="left" @click="sellStocks(stock.id)">Sell</button>
             </td>
           </tr>
+          <tr v-if="Object.keys(toggledTrades).includes(stock.id)">
+            <td colspan="10">
+              <table
+                class="trades-table"
+                v-if="toggledTrades[stock.id].length > 0"
+              >
+                <thead>
+                  <tr>
+                    <th>Trade Type</th>
+                    <th>Time of Trade</th>
+                    <th>Amount Traded</th>
+                    <th>Stock Value at Time of Trade</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="trade in toggledTrades[stock.id]" :key="trade.id">
+                    <td>{{ trade.trade_type }}</td>
+                    <td>{{ moment(trade.time_of_trade).toLocaleString() }}</td>
+                    <td>{{ trade.stock_amount }}</td>
+                    <td>{{ trade.stock_value }}</td>
+                    <td
+                      v-if="trade.trade_status! === 'Pending'"
+                      style="color: grey"
+                    >
+                      Pending Approval
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <b v-else>You have not made any trades for this stock</b>
+            </td>
+          </tr>
         </template>
       </tbody>
     </table>
@@ -56,6 +105,8 @@ import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 import { io } from "socket.io-client";
 import CreditCardConfirm from "./CreditCardConfirm.vue";
+import Trade from "@/types/Trade";
+import moment from "moment";
 
 const socket = io("http://localhost:8000/stockmarket");
 
@@ -67,11 +118,12 @@ export default defineComponent({
   // props: ["tradeType", "stockId", "stockAmount"],
   data() {
     return {
-      toggledTrades: [] as number[],
+      toggledTrades: {} as Record<string, Trade[]>,
       tradeQuantity: 0,
       showCardConfirm: false,
       idOfStock: "",
       typeOfTrade: "",
+      moment: moment,
     };
   },
   computed: {
@@ -109,6 +161,9 @@ export default defineComponent({
       actionGetStocksApi: "getStocksApi",
       actionUpdateStocksData: "updateStocksData",
     }),
+    ...mapActions("trade", {
+      actionGetStockTradesForUserApi: "stockTradesForUserApi",
+    }),
     async buyStocks(stock_id: string) {
       this.typeOfTrade = "Buy";
       this.idOfStock = stock_id;
@@ -119,6 +174,19 @@ export default defineComponent({
       this.idOfStock = stock_id;
       this.showCardConfirm = true;
     },
+    async viewTrades(stock_id: string) {
+      if (Object.keys(this.toggledTrades).includes(stock_id)) {
+        delete this.toggledTrades[stock_id];
+        return;
+      } else {
+        this.toggledTrades[stock_id] = [];
+      }
+
+      this.toggledTrades[stock_id] = await this.actionGetStockTradesForUserApi({
+        stock_id: stock_id,
+        user_id: this.getUserProfile.id,
+      });
+    },
   },
 });
 </script>
@@ -126,5 +194,14 @@ export default defineComponent({
 .stocklist {
   width: 100%;
   border-collapse: collapse;
+}
+.trades-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: lightgrey;
+}
+.trades-table > tbody > tr > td {
+  border: 1px solid black;
+  padding: 5px;
 }
 </style>
