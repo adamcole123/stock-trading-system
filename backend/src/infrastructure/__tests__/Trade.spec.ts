@@ -1,7 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose, { model } from 'mongoose';
 import 'reflect-metadata';
-import IStockDto from 'src/usecases/data_tranfer_objects/IStockDto';
+import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import config from '../../../test/utils/config';
 import Stock from '../Stock/Stock';
 import Trade from '../Trade/Trade';

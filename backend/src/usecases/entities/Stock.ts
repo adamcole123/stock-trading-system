@@ -8,7 +8,8 @@ export default class Stock {
 		public value?: number,
 		public volume?: number,
 		public open?: number,
-		public close?: number
+		public close?: number,
+		public latest_trade?: Date
 	){
 		this.gains = this.getGains();
 	}

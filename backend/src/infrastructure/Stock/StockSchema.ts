@@ -11,7 +11,8 @@ const stockSchema = new Schema<Stock>({
 	value: Double,
 	volume: Number,
 	open: Double,
-	close: Double
+	close: Double,
+	latest_trade: Date
 }, { collection: 'stocks' })
 
 export default stockSchema;
