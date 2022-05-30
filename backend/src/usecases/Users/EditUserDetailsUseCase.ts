@@ -13,6 +13,8 @@ export default class EditUserDetailsUseCase implements IEditUserDetailsUseCase {
 	invoke(username: string, userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
 			try{
+				delete userDto.username;
+
 				let editedUser: IUserDto = await this.userWriteOnlyRepository.edit(username, userDto, {});
 
 				resolve(editedUser);

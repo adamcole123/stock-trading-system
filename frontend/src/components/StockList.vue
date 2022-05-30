@@ -89,6 +89,26 @@
                       Pending Approval
                     </td>
                   </tr>
+                  <tr colspan="10">
+                    <b>Total Owned</b>
+                    {{
+                      toggledTrades[stock.id].reduce((acc, curr) => {
+                        if(curr.trade_status === "Pending")
+                          return acc;
+                        return curr.trade_type === "Buy"
+                          ? acc + curr.stock_amount!
+                          : acc - curr.stock_amount!;
+                      }, 0)
+                    }}
+                    <b>Total Value Owned</b>
+                    {{
+                      Number.parseFloat(toggledTrades[stock.id].reduce((acc, curr) => {
+                        if(curr.trade_status === "Pending" || curr.trade_type === "Sell")
+                          return acc;
+                        return acc + (curr.stock_amount! * stock.value!);
+                      }, 0).toString()).toFixed(2)
+                    }}
+                  </tr>
                 </tbody>
               </table>
               <b v-else>You have not made any trades for this stock</b>

@@ -277,14 +277,7 @@ export default class UserController implements interfaces.Controller {
 			edittedUser = await <IUserDto>jwt.verify(req.body.key, jwtSecretKey!);
 		} else {
 			edittedUser = {
-				username: req.body.username,
-				email: req.body.email,
-				firstName: req.body.firstName,
-				lastName: req.body.lastName,
-				birthDate: req.body.birthDate,
-				credit: req.body.credit,
-				role: req.body.role,
-				isDeleted: req.body.isDeleted
+				...req.body
 			}
 		}
 		
@@ -292,6 +285,10 @@ export default class UserController implements interfaces.Controller {
 
 		if(verified.role !== "Admin" && verified.username !== req.body.username){
 			return res.status(401).json('Not authorised to retrieve this user\'s data.');
+		}
+
+		if(edittedUser.role !== undefined && verified.role !== "Admin"){
+			return res.status(401).json('Not authorised to change user roles.');
 		}
 
 		if(verified.role !== "Admin" && verified.username === req.body.username){

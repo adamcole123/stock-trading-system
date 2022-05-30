@@ -3,7 +3,29 @@
     <h1>Edit User Details</h1>
     <div class="form-group" v-for="key in Object.keys(user)" :key="key">
       <label>{{ splitCamelCaseOriginal(key) }}</label>
-      <input v-if="key === 'id'" type="text" v-model="user[key]" disabled />
+      <input
+        v-if="key === 'id' || key === 'username'"
+        type="text"
+        v-model="user[key]"
+        disabled
+      />
+      <div v-else-if="key === 'role'">
+        <input type="text" v-model="user[key]" disabled />
+        <button
+          @click="makeUserBroker(user['username'])"
+          v-if="user['role'] === 'User' && getUserProfile.role === 'Admin'"
+        >
+          Convert to Broker
+        </button>
+        <button
+          @click="makeBrokerUser(user['username'])"
+          v-else-if="
+            user['role'] === 'Broker' && getUserProfile.role === 'Admin'
+          "
+        >
+          Convert to User
+        </button>
+      </div>
       <input v-else-if="key === 'birthDate'" type="date" v-model="user[key]" />
       <input
         v-else-if="key === 'activationDate'"
@@ -22,6 +44,7 @@
   </div>
 </template>
 <script lang="ts">
+import router from "@/router";
 import User from "@/types/User";
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
@@ -36,6 +59,10 @@ export default defineComponent({
   computed: {
     ...mapGetters("auth", {
       getEditUserApiStatus: "getEditUserApiStatus",
+      getUserProfile: "getUserProfile",
+    }),
+    ...mapGetters("admin", {
+      getMakeUserBrokerApiStatus: "getMakeUserBrokerApiStatus",
     }),
   },
   methods: {
@@ -44,6 +71,7 @@ export default defineComponent({
     }),
     ...mapActions("admin", {
       actionGetUserDetailsApi: "getUserDetailsApi",
+      actionMakeUserBrokerApi: "makeUserBrokerApi",
     }),
     splitCamelCaseOriginal(camelCaseString: string) {
       const result = camelCaseString
@@ -63,6 +91,32 @@ export default defineComponent({
         this.$router.push("/account");
       } else {
         alert("Could not edit user");
+      }
+    },
+    async makeUserBroker(username: string) {
+      await this.actionMakeUserBrokerApi({
+        username: username,
+        role: "Broker",
+      });
+
+      if (this.getMakeUserBrokerApiStatus === "success") {
+        alert("User is now a broker");
+        router.go(0);
+      } else {
+        alert("Could not convert user to broker");
+      }
+    },
+    async makeBrokerUser(username: string) {
+      await this.actionMakeUserBrokerApi({
+        username: username,
+        role: "User",
+      });
+
+      if (this.getMakeUserBrokerApiStatus === "success") {
+        alert("Broker is now a standard user");
+        router.go(0);
+      } else {
+        alert("Could not convert broker to standard user");
       }
     },
   },

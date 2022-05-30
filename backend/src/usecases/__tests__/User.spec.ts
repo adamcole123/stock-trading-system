@@ -6,21 +6,16 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
-import User from "../entities/User";
 import IUserWriteOnlyRepository from "../../application/repositories/IUserWriteOnlyRepository";
 import EditUserDetailsUseCase from "../Users/EditUserDetailsUseCase";
-import FakeUserReadOnlyRepository from '../../infrastructure/FakeUserReadOnlyRepository';
-import FakeUserWriteOnlyRepository from '../../infrastructure/FakeUserWriteOnlyRepository';
 import IEditUserDetailsUseCase from "../Users/IEditUserDetailsUseCase";
 import IUserRegisterUseCase from "../Users/IUserRegisterUseCase";
 import IUserSignInUseCase from "../Users/IUserSignInUseCase";
 import UserRegisterUseCase from "../Users/UserRegisterUseCase";
 import UserSignInUseCase from "../Users/UserSignInUseCase";
 import IUserDto from '../data_tranfer_objects/IUserDto';
-import Report from "../entities/Report";
 import ValidateUserTokenUseCase from '../Users/ValidateUserTokenUseCase';
 import { JwtPayload } from 'jsonwebtoken';
-import CardDetails from '../entities/CardDetails';
 import Encrypter from '../../infrastructure/Encrypter';
 
 
