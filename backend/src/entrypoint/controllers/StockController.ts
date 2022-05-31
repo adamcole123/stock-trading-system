@@ -10,6 +10,10 @@ import StockServiceLocator from "../../configuration/StockServiceLocator";
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import StockReadOptions from '../../application/repositories/StockReadOptions';
 import IEditStockUseCase from "../../usecases/Stocks/IEditStockUseCase";
+import IUserDto from "src/usecases/data_tranfer_objects/IUserDto";
+import jwt from 'jsonwebtoken';
+import UserServiceLocator from '../../configuration/UserServiceLocator';
+import IValidateUserTokenUseCase from '../../usecases/Users/IValidateUserTokenUseCase';
 
 dotenv.config();
 
@@ -19,12 +23,15 @@ export default class StockController implements interfaces.Controller {
 	private readonly getAllStocksUseCase: IGetAllStocksUseCase;
 	private readonly getOneStockUseCase: IGetOneStockUseCase;
 	private readonly editStockUseCase: IEditStockUseCase;
+	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
 	
-	constructor(@inject(TYPES.StockServiceLocator) serviceLocator: StockServiceLocator){
+	constructor(@inject(TYPES.StockServiceLocator) serviceLocator: StockServiceLocator,
+				@inject(TYPES.UserServiceLocator) userServiceLocator: UserServiceLocator){
 		this.createStockUseCase = serviceLocator.GetCreateStockUseCase();
 		this.getAllStocksUseCase = serviceLocator.GetGetAllStocksUseCase();
 		this.getOneStockUseCase = serviceLocator.GetGetOneStockUseCase();
 		this.editStockUseCase = serviceLocator.GetEditStockUseCase();
+		this.validateUserTokenUseCase = userServiceLocator.GetValidateUserTokenUseCase();
 	}
 	
 	@httpGet('/getOne')
@@ -58,7 +65,12 @@ export default class StockController implements interfaces.Controller {
 	}
 
 	@httpPost('/create')
-	public async createStock(@request() req: express.Request, @response() res: express.Response){
+	public async createStock(@request() req: express.Request, @response() res: express.Response){		
+		let verified = await this.validateUserTokenUseCase.invoke(req.cookies.token);
+
+		if(verified.role !== 'Admin') {
+			return res.status(401).json('Only an admin can add companies.');
+		}
 		
 		if(req.body.length < 1 && req.body.options === typeof(undefined)){
 			return res.status(400).json({error: 'Must provide criteria or options'});
