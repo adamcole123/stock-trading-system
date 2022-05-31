@@ -40,7 +40,6 @@ describe('UserController Tests', () => {
 		controller = new UserController(container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")),
 			container.get<EmailServiceLocator>(Symbol.for("EmailServiceLocator")));
 	});
-
 	it('User sign in route', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -67,7 +66,6 @@ describe('UserController Tests', () => {
 
 		expect(responseObj._getStatusCode()).toBe(200);
 	})
-
 	it('User register route', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -97,42 +95,6 @@ describe('UserController Tests', () => {
 
 		expect(responseObj._getStatusCode()).toBe(200);
 	})
-
-	// it('User has £50,000 upon registration', async () => {
-	// 	let requestObj = httpMocks.createRequest({
-	// 		method: 'POST',
-	// 		url: '/user/register',
-	// 		body: {
-	// 			"id": "x",
-	// 			"username": "testy_username",
-	// 			"password": "testy1password",
-	// 			"email": "testyemail@test.com",
-	// 			"firstName": "testyfname",
-	// 			"lastName": "testylname",
-	// 			"reports": []
-	// 		}
-	// 	});
-
-	// 	let responseObj = httpMocks.createResponse();
-
-	// 	mock(userWriteOnlyRepository).create.mockResolvedValue({
-	// 		"id": "x",
-	// 		"username": "testy_username",
-	// 		"password": "testy1password",
-	// 		"email": "testyemail@test.com",
-	// 		"firstName": "testyfname",
-	// 		"lastName": "testylname",
-	// 		"reports": [],
-	// 		"credit": 50000
-	// 	})
-
-	// 	await controller.registerUser(requestObj, responseObj);
-
-	// 	let responseBody = responseObj._getJSONData();
-
-	// 	expect(responseBody.credit).toBe(50000);
-	// })
-
 	it('User validate route', async () => {
 		let token = jwt.sign(
 			`{
@@ -198,7 +160,6 @@ describe('UserController Tests', () => {
 				"report_type": "CSV"
 			}])
 	})
-
 	it('User edit route signed in user', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -229,7 +190,6 @@ describe('UserController Tests', () => {
 
 		expect(responseData).toBe("Email sent to confirm changes!")
 	})
-
 	it('User edit route admin', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -284,7 +244,6 @@ describe('UserController Tests', () => {
 			}
 		])
 	})
-
 	it('Password reset admin', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -319,7 +278,6 @@ describe('UserController Tests', () => {
 
 		expect(responseData).toBe("Password reset successfully");
 	})
-
 	it('Password reset user', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -355,7 +313,6 @@ describe('UserController Tests', () => {
 
 		expect(responseData).toBe("Password reset successfully");
 	})
-
 	it('Password reset request', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -390,7 +347,6 @@ describe('UserController Tests', () => {
 
 		expect(responseData).toBe("Email sent successfully");
 	})
-
 	it('Get all users', async () => {
 		let requestObj = httpMocks.createRequest({
 			cookies: {
@@ -456,7 +412,6 @@ describe('UserController Tests', () => {
 			"username": "newusername2"
 		}]));
 	});
-
 	it('Get user details admin', async () => {
 		let requestObj = httpMocks.createRequest({
 			query: {
@@ -537,7 +492,6 @@ describe('UserController Tests', () => {
 			"username": "newusername"
 		}));
 	});
-
 	it('Add new credit card', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -625,7 +579,6 @@ describe('UserController Tests', () => {
 		}));
 		expect(responseData).toBe("New card added successfully");
 	})
-
 	it('Activate user', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -671,5 +624,22 @@ describe('UserController Tests', () => {
 			}],
 			"username": "newusername"
 		}));
+	})
+	it('Request account deactivation', async () => {
+		let requestObj = httpMocks.createRequest({
+			body: {
+				token: jwt.sign({ username: "testusername" }, process.env.JWT_SECRET_KEY!)
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await controller.requestAccountDeactivation(requestObj, responseObj)
+
+		let responseData = responseObj._getJSONData();
+
+		responseData = <IUserDto>(responseData);
+
+		expect(responseData).toEqual("Request sent to administrator.");
 	})
 });

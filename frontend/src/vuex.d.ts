@@ -19,6 +19,7 @@ declare module "@vue/runtime-core" {
     newCompanyApiStatus: "";
     makeUserBrokerApiStatus: "";
     passwordResetRequestApiStatus: "";
+    requestAccountDeactivationApiStatus: "";
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";
