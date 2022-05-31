@@ -15,6 +15,11 @@
             }"
             >Change Account Details</router-link
           ><br />
+          <a
+            v-if="getUserProfile.role === 'User'"
+            @click="actionRequestAccountDeactivation(getUserProfile.username)"
+            >Request Account Deactivation</a
+          ><br />
           <router-link to="/password-reset">Change Password</router-link>
         </div>
       </div>
@@ -28,7 +33,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import TransactionHistory from "./TransactionHistory.vue";
 import ReportsList from "./ReportsList.vue";
 
@@ -39,10 +44,20 @@ export default defineComponent({
       getUserProfile: "getUserProfile",
     }),
   },
+  methods: {
+    ...mapActions("auth", {
+      actionRequestAccountDeactivation: "requestAccountDeactivation",
+    }),
+  },
   components: { TransactionHistory, ReportsList },
 });
 </script>
 <style>
+a {
+  color: rgb(2, 45, 136);
+  text-decoration: underline;
+  cursor: pointer;
+}
 .container {
   display: flex;
   padding: 10px;

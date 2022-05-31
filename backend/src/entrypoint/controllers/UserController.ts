@@ -287,7 +287,12 @@ export default class UserController implements interfaces.Controller {
 			return res.status(401).json('Not authorised to retrieve this user\'s data.');
 		}
 
-		if(edittedUser.role !== undefined && verified.role !== "Admin"){
+		let userObjectKeys = Object.keys(edittedUser);
+
+		if(userObjectKeys.length === 2 && 
+			userObjectKeys.includes('username') && 
+			userObjectKeys.includes('role') && 
+			verified.role !== "Admin"){
 			return res.status(401).json('Not authorised to change user roles.');
 		}
 
@@ -342,5 +347,24 @@ export default class UserController implements interfaces.Controller {
 				});
 			})
 			.catch((err: Error) => res.status(401).send(err));
+	}
+
+	@httpPost('/requestdeactivation')
+	public async requestAccountDeactivation(@request() req: express.Request, @response() res: express.Response) {
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		
+		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+
+		return await this.sendEmailUseCase.invoke({
+					to: ["admin@stocktradingsystem.com"],
+					from: "noreply@stocktradingsystem.com",
+					subject: "A user has requested deactivation",
+					bodyText: `Visit http://localhost:8080/user?username=${verified.username} to mark account as deleted.`,
+					bodyHtml: `Visit <a href="http://localhost:8080/user?username=${verified.username}">this page</a> to mark account as deleted.`
+				})
+				.then(email => {
+					res.status(200).json("Request sent to administrator.");
+				})
+				.catch((err: Error) => res.status(401).send(err));
 	}
 }

@@ -8,6 +8,7 @@ const state = () => ({
   loginApiStatus: "",
   registerApiStatus: "",
   newCardApiStatus: "",
+  requestAccountDeactivationApiStatus: "",
   logOut: false,
   userProfile: {
     firstName: "",
@@ -41,6 +42,9 @@ const getters = {
   },
   getEditUserApiStatus(state: State) {
     return state.editUserApiStatus;
+  },
+  getRequestAccountDeactivationApiStatus(state: State) {
+    return state.requestAccountDeactivationApiStatus;
   },
 };
 
@@ -219,6 +223,28 @@ const actions = {
       commit("setEditUserApiStatus", "failed");
     }
   },
+  async requestAccountDeactivation(
+    { commit, dispatch }: ContextFunction,
+    payload: any
+  ) {
+    console.log(payload);
+    const response = await axios
+      .post("http://localhost:8000/user/requestdeactivation", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.error;
+      });
+
+    if (response && response.data) {
+      commit("setRequestAccountDeactivationApiStatus", "success");
+      alert("Request sent successfully!");
+      return response.data;
+    } else {
+      commit("setRequestAccountDeactivationApiStatus", "failed");
+    }
+  },
 };
 
 const mutations = {
@@ -257,6 +283,9 @@ const mutations = {
   },
   setPasswordResetRequestApiStatus(state: State, payload: any) {
     state.passwordResetRequestApiStatus = payload;
+  },
+  setRequestAccountDeactivationApiStatus(state: State, payload: any) {
+    state.requestAccountDeactivationApiStatus = payload;
   },
 };
 
