@@ -1,8 +1,6 @@
 # Stock Trading System
 This is the implementation of my MSc second year project, a stock trading system
 
-__TOC__
-
 # Installation
 
 ## Requirements
