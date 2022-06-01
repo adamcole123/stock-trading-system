@@ -72,6 +72,8 @@ container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).when
 
 dotenv.config();
 
+let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
+
 // create server
 let server = new InversifyExpressServer(container);
 server.setConfig((app: express.Application) => {
@@ -96,7 +98,6 @@ server.setConfig((app: express.Application) => {
   app.use((err: any, req: any, res: any, next: any) => {
     console.error(err.stack)
     
-    let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
 
     sendEmailUseCase.invoke({
       to: ["admin@stock-trading-system.com"],
@@ -106,6 +107,18 @@ server.setConfig((app: express.Application) => {
       bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
     })
   })
+});
+
+process.on('uncaughtException', err => {
+  console.error('There was an uncaught error', err);
+  sendEmailUseCase.invoke({
+    to: ["admin@stock-trading-system.com"],
+    from: "error-logger@stock-trading-system.com",
+    subject: "An error was caused in the system",
+    bodyText: `There was an uncaught error: ${err}`,
+    bodyHtml: `There was an uncaught error:<br />${err}`
+  })
+  process.exit(1); // mandatory (as per the Node.js docs)
 });
 
 let app = server.build();
