@@ -79,7 +79,6 @@ export default defineComponent({
       userProfile: "userProfile",
     }),
     async register() {
-      console.log(this.registerInfo.username, this.registerInfo.password);
       const payload = {
         username: this.registerInfo.username,
         password: this.registerInfo.password,

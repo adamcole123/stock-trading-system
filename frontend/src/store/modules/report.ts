@@ -26,7 +26,6 @@ const getters = {
 
 const actions = {
   async showReportModal({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     commit("setReportModalVisible", true);
     commit("setReportType", payload.reportType);
   },
@@ -34,7 +33,6 @@ const actions = {
     commit("setReportModalVisible", false);
   },
   async generateReport({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .get(
         `http://localhost:8000/report/${payload.reportType}?reportformat=${payload.reportFormat}&ascending=${payload.ascending}`,

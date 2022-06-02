@@ -47,7 +47,8 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 				let ids = stockDto.map(stock => stock.id);
 				let stocks = await Stock.find({ _id: { $in: ids }})
 										.limit(options?.limit!)
-										.sort([[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0 ? -1 : 1)]])
+										.sort(options.order?.orderBy !== undefined && options.order.orderDirection !== undefined ?
+											[[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]] : undefined)
 										.exec();
 
 				returnData = stocks.map(stock => {
@@ -112,7 +113,8 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 													.find({...query})
 													.skip((options?.page * options.limit!) - (options.limit!))
 													.limit(options.limit!)
-													.sort(options?.order ? [options?.order?.orderBy.toString(), options?.order?.orderDirection === 0? -1 : 1] : undefined)
+													.sort(options.order?.orderBy !== undefined && options.order.orderDirection !== undefined ?
+														[[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]] : undefined)
 						returnStocks.forEach(stock => {
 							returnData.push(new StockType(
 								stock._id.toString(),
@@ -141,9 +143,10 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 								stock!.close
 							))
 						} else {
-							let stocks = await Stock.find({query})
+							let stocks = await Stock.find(query)
 													.limit(options?.limit!)
-													.sort([[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]])
+													.sort(options.order?.orderBy !== undefined && options.order.orderDirection !== undefined ?
+														[[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]] : undefined)
 													.exec();
 							returnData = stocks.map(stock => {
 								return new StockType(

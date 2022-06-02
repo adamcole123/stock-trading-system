@@ -2044,7 +2044,7 @@ describe('Stock Use Cases', () => {
 		expect(stockDto.length).toBe(4);
 	})
 
-	it('Get list of stocks ordered in descending by gains', async () => {
+	it('Get list of stocks ordered in descending by close', async () => {
 		// Arrange
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
