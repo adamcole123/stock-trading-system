@@ -38,6 +38,13 @@ const actions = {
       options: {
         page: payload.page,
         limit: payload.limit,
+        order:
+          payload.orderBy === undefined || payload.orderDirection === undefined
+            ? undefined
+            : {
+                orderBy: payload.orderBy,
+                orderDirection: payload.orderDirection,
+              },
       },
     };
 

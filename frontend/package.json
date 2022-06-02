@@ -14,6 +14,7 @@
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
     "js-cookie": "^3.0.1",
+    "mdue": "^0.1.4",
     "moment": "^2.29.3",
     "query-string": "^7.1.1",
     "socket.io-client": "^4.5.0",

@@ -53,8 +53,13 @@ export default class StockController implements interfaces.Controller {
 	@httpPost('/getMany')
 	public async getStocks(@request() req: express.Request, @response() res: express.Response){
 		req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
-		req.body.filters.volume = req.body.filters.volume ? req.body.filters.volume : 0;
+		req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
 		req.body.options.volumeMode = req.body.filters.volume ? undefined : 2;
+
+		if(req.body.options.order !== undefined) {
+			if(req.body.options.order.orderDirection !== undefined)
+				req.body.options.order.orderDirection = Number(req.body.options.order.orderDirection); 
+		}
 		
 
 		return await this.getAllStocksUseCase.invoke(req.body.filters, req.body.options)
