@@ -338,6 +338,11 @@ export default defineComponent({
       this.filter.page = 1;
       this.filter.limit = 10;
     }
+    if (!this.$route.query.orderBy || !this.$route.query.orderDirection) {
+      this.filter.orderBy = "symbol";
+      this.filter.orderDirection = "1";
+    }
+
     this.filter = {
       ...this.filter,
       ...this.$route.query,
@@ -397,7 +402,6 @@ export default defineComponent({
       delete this.filter.volume;
       delete this.filter.open;
       delete this.filter.close;
-      delete this.filter.order;
       this.applyFilters();
     },
     previousPage() {
