@@ -11,6 +11,12 @@ import IStockReadOnlyRepository from '../../../application/repositories/IStockRe
 import IStockWriteOnlyRepository from '../../../application/repositories/IStockWriteOnlyRepository';
 import EmailServiceLocator from '../../../configuration/EmailServiceLocator';
 import { mock } from 'jest-mock-extended';
+import UserServiceLocator from '../../../configuration/UserServiceLocator';
+import IUserReadOnlyRepository from '../../../application/repositories/IUserReadOnlyRepository';
+import IUserWriteOnlyRepository from '../../../application/repositories/IUserWriteOnlyRepository';
+import Encrypter from '../../../infrastructure/Encrypter';
+import IEncrypter from '../../../infrastructure/IEncrypter';
+import jwt from 'jsonwebtoken';
 
 // set up container
 const container = new Container();
@@ -19,19 +25,27 @@ describe('StockController Tests', () => {
 
 	let stockWriteOnlyRepository: IStockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
 	let stockReadOnlyRepository: IStockReadOnlyRepository = mock<IStockReadOnlyRepository>();
+	let userReadOnlyRepository: IUserReadOnlyRepository = mock<IUserReadOnlyRepository>();
+	let userWriteOnlyRepository: IUserWriteOnlyRepository = mock<IUserWriteOnlyRepository>();
+	let encrypter: IEncrypter = new Encrypter();
 
 	// set up bindings
 	container.bind<StockServiceLocator>(TYPES.StockServiceLocator).to(StockServiceLocator);
 	container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
+	container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
 	container.bind<IStockReadOnlyRepository>(Symbol.for("IStockReadOnlyRepository")).toConstantValue(stockReadOnlyRepository);
 	container.bind<IStockWriteOnlyRepository>(Symbol.for("IStockWriteOnlyRepository")).toConstantValue(stockWriteOnlyRepository);
+	container.bind<IUserReadOnlyRepository>(Symbol.for("IUserReadOnlyRepository")).toConstantValue(userReadOnlyRepository);
+	container.bind<IUserWriteOnlyRepository>(Symbol.for("IUserWriteOnlyRepository")).toConstantValue(userWriteOnlyRepository);
+	container.bind<IEncrypter>(Symbol.for("IEncrypter")).toConstantValue(encrypter);
 	container.bind<interfaces.HttpContext>(Symbol.for("HttpContext")).toConstantValue(mockedHttpContext);
 
 	beforeAll(async () => {
 		jest.clearAllMocks();
 		cleanUpMetadata();
 		dotenv.config();
-		controller = new StockController(container.get<StockServiceLocator>(Symbol.for("StockServiceLocator")));
+		controller = new StockController(container.get<StockServiceLocator>(Symbol.for("StockServiceLocator")), 
+										 container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")));
 	});
 
 	it('Stock get one route', async () => {
@@ -169,6 +183,9 @@ describe('StockController Tests', () => {
 				"symbol": "teststocksymbol",
 				"value": 52,
 				"volume": 800
+			},
+			cookies: {
+				token: jwt.sign({ username: "testusername" }, process.env.JWT_SECRET_KEY!)
 			}
 		});
 
@@ -180,6 +197,12 @@ describe('StockController Tests', () => {
 			"symbol": "teststocksymbol",
 			"value": 52,
 			"volume": 800
+		})
+
+		mock(userReadOnlyRepository).fetch.mockResolvedValue({
+			"role": "Admin",
+			"isDeleted": false,
+			"username": "testusername"
 		})
 
 		let responseObj = httpMocks.createResponse();
@@ -196,6 +219,7 @@ describe('StockController Tests', () => {
 			"volume": 800
 		}));
 	})
+	
 	it('Edit stock route', async () => {
 		let requestObj = httpMocks.createRequest({
 			method: 'POST',

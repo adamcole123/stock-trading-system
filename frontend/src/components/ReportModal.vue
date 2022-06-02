@@ -153,7 +153,6 @@ export default defineComponent({
       actionGetStocksApi: "getStocksApi",
     }),
     async generateReport(reportType: string) {
-      console.log(this.report_format, this.ascending);
       let payload = {
         reportType: reportType,
         reportFormat: this.report_format,

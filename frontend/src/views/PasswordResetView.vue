@@ -27,9 +27,6 @@ export default defineComponent({
       actionPasswordReset: "passwordReset",
     }),
     async resetPassword() {
-      console.log(this.$route.query);
-      console.log(this.$route.params);
-
       const payload = {
         password: this.password,
         key: this.$route.query.key,

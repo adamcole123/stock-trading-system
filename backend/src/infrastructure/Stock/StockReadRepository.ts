@@ -141,7 +141,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository{
 								stock!.close
 							))
 						} else {
-							let stocks = await Stock.find({query})
+							let stocks = await Stock.find(query)
 													.limit(options?.limit!)
 													.sort([[options?.order?.orderBy.toString(), (options?.order?.orderDirection === 0? -1 : 1)]])
 													.exec();

@@ -49,7 +49,6 @@ export default defineComponent({
       userProfile: "userProfile",
     }),
     async login() {
-      console.log(this.loginInfo.username, this.loginInfo.password);
       const payload = {
         username: this.loginInfo.username,
         password: this.loginInfo.password,

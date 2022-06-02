@@ -627,7 +627,7 @@ describe('UserController Tests', () => {
 	})
 	it('Request account deactivation', async () => {
 		let requestObj = httpMocks.createRequest({
-			body: {
+			cookies: {
 				token: jwt.sign({ username: "testusername" }, process.env.JWT_SECRET_KEY!)
 			}
 		});

@@ -115,6 +115,7 @@ export default class UserController implements interfaces.Controller {
 				res.status(400).json(err)
 			});
 	}
+	
 	@httpGet('/one')
 	public async getUserDetails(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;

@@ -7,8 +7,38 @@
       :stockAmount="tradeQuantity"
       @showHideCardConfirm="showCardConfirm = !showCardConfirm"
     />
+    <div class="filter-controls">
+      <button @click="applyFilters(true)">Apply Filters</button>
+      <button @click="clearFilters">Clear Filters</button>
+    </div>
     <table class="stocklist">
       <thead>
+        <tr>
+          <th v-if="getUserProfile.id !== ''"></th>
+          <th align="left">
+            <input type="text" v-model="filter.symbol" placeholder="Symbol" />
+          </th>
+          <th align="left">
+            <input
+              type="text"
+              v-model="filter.name"
+              placeholder="Company Name"
+            />
+          </th>
+          <th></th>
+          <th align="left">
+            <input type="text" v-model="filter.value" placeholder="Value" />
+          </th>
+          <th align="left">
+            <input type="text" v-model="filter.volume" placeholder="Volume" />
+          </th>
+          <th align="left">
+            <input type="text" v-model="filter.open" placeholder="Open" />
+          </th>
+          <th align="left">
+            <input type="text" v-model="filter.close" placeholder="Close" />
+          </th>
+        </tr>
         <tr>
           <th v-if="getUserProfile.id !== ''"></th>
           <th></th>
@@ -117,6 +147,26 @@
         </template>
       </tbody>
     </table>
+    <div class="nav-controls">
+      <div>
+        {{ filter.page > 1 ? filter.page - 1 : "" }}
+        <button @click="previousPage" v-if="filter.page > 1">
+          Previous Page
+        </button>
+      </div>
+      <select v-model="filter.limit" @change="limitChanged">
+        <option>10</option>
+        <option>25</option>
+        <option>100</option>
+        <option value="">All</option>
+      </select>
+      <div>
+        <button @click="nextPage" v-if="filter.limit !== undefined">
+          Next Page
+        </button>
+        {{ filter.page + 1 }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -127,6 +177,8 @@ import { io } from "socket.io-client";
 import CreditCardConfirm from "./CreditCardConfirm.vue";
 import Trade from "@/types/Trade";
 import moment from "moment";
+import Stock from "@/types/Stock";
+import { LocationQuery } from "vue-router";
 
 const socket = io("http://localhost:8000/stockmarket");
 
@@ -144,6 +196,7 @@ export default defineComponent({
       idOfStock: "",
       typeOfTrade: "",
       moment: moment,
+      filter: {} as Stock | any,
     };
   },
   computed: {
@@ -158,8 +211,12 @@ export default defineComponent({
       getSellStocksApiStatus: "getSellStocksApiStatus",
     }),
   },
-  created() {
-    this.actionGetStocksApi({ page: 1, limit: 10 });
+  async created() {
+    if (!this.$route.query.page || !this.$route.query.limit) {
+      this.filter.page = 1;
+      this.filter.limit = 10;
+    }
+    this.applyFilters();
     socket.on("stocks", (data) => {
       this.actionUpdateStocksData([
         data.map((update: any) => {
@@ -207,6 +264,44 @@ export default defineComponent({
         user_id: this.getUserProfile.id,
       });
     },
+    clearFilters() {
+      delete this.filter.symbol;
+      delete this.filter.name;
+      delete this.filter.value;
+      delete this.filter.volume;
+      delete this.filter.open;
+      delete this.filter.close;
+      this.applyFilters();
+    },
+    previousPage() {
+      console.log("previous");
+      this.filter.page = this.filter.page - 1;
+      this.applyFilters();
+    },
+    nextPage() {
+      console.log("next");
+      this.filter.page = this.filter.page + 1;
+      this.applyFilters();
+    },
+    applyFilters(resetPage = false) {
+      if (resetPage) {
+        this.filter.page = 1;
+      }
+      this.$router.replace({
+        name: "home",
+        query: {
+          ...this.filter,
+        },
+      });
+      this.actionGetStocksApi(this.filter);
+    },
+    limitChanged() {
+      if (this.filter.limit === "") {
+        delete this.filter.limit;
+        this.filter.page = 1;
+      }
+      this.applyFilters();
+    },
   },
 });
 </script>
@@ -223,5 +318,15 @@ export default defineComponent({
 .trades-table > tbody > tr > td {
   border: 1px solid black;
   padding: 5px;
+}
+.nav-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.filter-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 </style>

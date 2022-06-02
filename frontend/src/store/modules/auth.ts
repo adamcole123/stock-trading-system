@@ -76,7 +76,6 @@ const actions = {
     //   key: key query param,
     //   password: password_string
     // }
-    console.log("payload", payload);
     const response = await axios
       .post("http://localhost:8000/user/password-reset", payload, {
         withCredentials: true,
@@ -120,7 +119,6 @@ const actions = {
 
     if (response && response.data) {
       commit("setLoginApiStatus", "success");
-      console.log(response);
       return response;
     } else {
       commit("setLoginApiStatus", "failed");
@@ -128,7 +126,6 @@ const actions = {
     }
   },
   async registerApi({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/register", payload, {
         withCredentials: true,
@@ -192,7 +189,6 @@ const actions = {
     }
   },
   async activateAccount({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/activate", payload)
       .catch((err) => {
@@ -206,7 +202,6 @@ const actions = {
     }
   },
   async editUserDetails({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/edit", payload, {
         withCredentials: true,
@@ -227,7 +222,6 @@ const actions = {
     { commit, dispatch }: ContextFunction,
     payload: any
   ) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/requestdeactivation", payload, {
         withCredentials: true,

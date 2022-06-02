@@ -50,14 +50,14 @@ export default class StockController implements interfaces.Controller {
 			.catch((err: Error) => res.status(500).json(err));
 	}
 
-	@httpGet('/getMany')
+	@httpPost('/getMany')
 	public async getStocks(@request() req: express.Request, @response() res: express.Response){
+		req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
+		req.body.filters.volume = req.body.filters.volume ? req.body.filters.volume : 0;
+		req.body.options.volumeMode = req.body.filters.volume ? undefined : 2;
 		
-		if(req.body.length < 1 && req.body.options === typeof(undefined)){
-			return res.status(400).json({error: 'Must provide criteria or options'});
-		}
 
-		return await this.getAllStocksUseCase.invoke({ volume: 0 }, { page: parseInt(<string>req.query.page), limit: parseInt(<string>req.query.limit), volumeMode: 2 })
+		return await this.getAllStocksUseCase.invoke(req.body.filters, req.body.options)
 			.then((stockDto: IStockDto[]) => {
 				res.status(200).json(stockDto)
 			})
