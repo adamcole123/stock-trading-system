@@ -16,5 +16,6 @@ export default interface IUserDto {
 	role?: string,
 	isDeleted?: boolean,
 	cardDetails?: (CardDetails | { cardDetails: string, key: string })[],
-	activationDate?: Date
+	activationDate?: Date,
+	banUntil?: Date
 }

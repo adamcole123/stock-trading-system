@@ -28,10 +28,12 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 			if(foundUser.isDeleted)
 				return reject('User account is closed.');
 
-			if(!foundUser.activationDate){
+			if(!foundUser.activationDate)
 				return reject('Account not activated.')
-			}
-
+			
+			if(foundUser.banUntil! > new Date())
+				return reject('Account is currently banned.')
+				
 			let passwordCheck;
 			
 			if(userDto!.password && foundUser!.password) {

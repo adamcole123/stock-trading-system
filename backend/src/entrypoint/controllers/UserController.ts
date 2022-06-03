@@ -115,7 +115,7 @@ export default class UserController implements interfaces.Controller {
 				res.status(400).json(err)
 			});
 	}
-	
+
 	@httpGet('/one')
 	public async getUserDetails(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -295,6 +295,10 @@ export default class UserController implements interfaces.Controller {
 			userObjectKeys.includes('role') && 
 			verified.role !== "Admin"){
 			return res.status(401).json('Not authorised to change user roles.');
+		}
+
+		if(verified.role !== 'Admin' && edittedUser.banUntil){
+			delete edittedUser.banUntil;
 		}
 
 		if(verified.role !== "Admin" && verified.username === req.body.username){
