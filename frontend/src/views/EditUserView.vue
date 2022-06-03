@@ -28,6 +28,17 @@
       </div>
       <input v-else-if="key === 'birthDate'" type="date" v-model="user[key]" />
       <input
+        v-else-if="getUserProfile.role === 'Admin' && key === 'banUntil'"
+        type="date"
+        v-model="user[key]"
+      />
+      <input
+        v-else-if="key === 'banUntil'"
+        type="date"
+        v-model="user[key]"
+        disabled
+      />
+      <input
         v-else-if="key === 'activationDate'"
         type="date"
         v-model="user[key]"
@@ -126,16 +137,31 @@ export default defineComponent({
     })
       .then((user) => {
         this.user = user;
-        this.user.birthDate = new Date(this.user.birthDate)
-          .toISOString()
-          .split("T")[0];
-        this.user.activationDate = new Date(this.user.activationDate)
-          .toISOString()
-          .split("T")[0];
-        this.user.isDeleted = Boolean(this.user.isDeleted);
+        console.log(user);
+        if (this.user.birthDate !== undefined) {
+          this.user.birthDate = new Date(this.user.birthDate)
+            .toISOString()
+            .split("T")[0];
+        }
+        if (this.user.activationDate !== undefined) {
+          this.user.activationDate = new Date(this.user.activationDate)
+            .toISOString()
+            .split("T")[0];
+        }
+        if (this.user.isDeleted !== undefined) {
+          this.user.isDeleted = Boolean(this.user.isDeleted);
+        }
+        if (this.user.banUntil === undefined) {
+          this.user.banUntil = undefined;
+        } else {
+          this.user.banUntil = new Date(this.user.banUntil)
+            .toISOString()
+            .split("T")[0];
+        }
       })
-      .catch(() => {
-        alert("Could not get user details");
+      .catch((err) => {
+        console.log(err);
+        alert("Could not get user all details");
       });
   },
 });

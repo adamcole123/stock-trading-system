@@ -15,4 +15,6 @@ export default interface User {
   role?: Role;
   isDeleted?: boolean;
   cardDetails?: CardDetails[];
+  banUntil?: Date;
+  activationDate?: Date;
 }

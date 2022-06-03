@@ -42,6 +42,10 @@ const userSchema = new Schema({
 	activationDate: {
 		type: Date,
 		default: undefined
+	},
+	banUntil: {
+		type: Date,
+		default: undefined
 	}
 }, { collection: 'users' })
 

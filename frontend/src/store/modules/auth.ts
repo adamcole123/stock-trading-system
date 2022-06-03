@@ -149,6 +149,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
+        store.dispatch("auth/userLogout");
         return err.error;
       });
 

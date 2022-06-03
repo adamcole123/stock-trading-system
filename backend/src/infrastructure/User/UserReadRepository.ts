@@ -31,7 +31,8 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 					return { ...card._doc }
 				}),
 				password: user.password,
-				activationDate: user.activationDate
+				activationDate: user.activationDate,
+				banUntil: user.banUntil
 			}
 		});
 	}
@@ -73,7 +74,8 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 						return { ...card._doc }
 					}),
 					password: user.password,
-					activationDate: user.activationDate
+					activationDate: user.activationDate,
+					banUntil: user.banUntil
 				}
 
 				return resolve(userDto!);
