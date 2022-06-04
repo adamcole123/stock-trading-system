@@ -51,6 +51,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 							open: stock.open,
 							close: stock.close,
 							symbol: stock.symbol,
+							latest_trade: stock.latest_trade,
 						};
 					})
 	

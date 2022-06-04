@@ -34,6 +34,7 @@ const actions = {
         volume: payload.volume,
         open: payload.open,
         close: payload.close,
+        gains: payload.gains,
       },
       options: {
         page: payload.page,
@@ -129,10 +130,6 @@ const actions = {
           ...payload[1][index],
           ...update,
         };
-
-        newStockData.gains = Number.parseFloat(
-          (newStockData.value - newStockData.open).toFixed(2)
-        );
 
         payload[1][index] = newStockData;
       }

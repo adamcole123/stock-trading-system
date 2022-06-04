@@ -49,4 +49,6 @@ const userSchema = new Schema({
 	}
 }, { collection: 'users' })
 
+
+
 export default userSchema;
