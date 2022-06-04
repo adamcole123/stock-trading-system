@@ -65,7 +65,29 @@
               <span v-else>-</span>
             </button>
           </th>
-          <th></th>
+          <th align="left">
+            <input type="text" v-model="filter.gains" placeholder="Gains" />
+            <button @click="orderBy('gains')">
+              <div
+                v-if="
+                  filter.orderBy !== undefined &&
+                  filter.orderDirection !== undefined
+                "
+              >
+                <div v-if="filter.orderBy && filter.orderBy === 'gains'">
+                  <arrow-down-thick
+                    v-if="filter.orderDirection === '0'"
+                  ></arrow-down-thick>
+                  <arrow-up-thick
+                    v-else-if="filter.orderDirection === '1'"
+                  ></arrow-up-thick>
+                  <span v-else>-</span>
+                </div>
+                <div v-else>-</div>
+              </div>
+              <span v-else>-</span>
+            </button>
+          </th>
           <th align="left">
             <input type="text" v-model="filter.value" placeholder="Value" />
             <button @click="orderBy('value')">
@@ -402,6 +424,7 @@ export default defineComponent({
       delete this.filter.volume;
       delete this.filter.open;
       delete this.filter.close;
+      delete this.filter.gains;
       this.applyFilters();
     },
     previousPage() {
