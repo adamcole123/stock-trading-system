@@ -6,7 +6,8 @@ import CardDetails from '../entities/CardDetails';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IEncrypter from '../../infrastructure/IEncrypter';
 import { prototype } from 'events';
-import { stringify } from 'querystring';
+import { stringify } from 'querystring'
+import moment from 'moment';
 
 export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCase{
 	private userReadOnlyRepository: IUserReadOnlyRepository;
@@ -35,6 +36,11 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 					if(verified.isDeleted)
 						reject('User account is closed.');
 
+					if(verified.banUntil !== undefined){
+						if(verified.banUntil! > new Date())
+							reject(`User account is currently banned until ${moment(verified.banUntil).locale}.`);
+					}
+
 					verified.password = "";
 					if(verified.cardDetails){
 						let newCardDetails = verified.cardDetails.map((card: any) => {
@@ -52,6 +58,16 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 
 						verified.cardDetails = newCardDetails;
 					}
+
+					verified.reports = verified.reports?.map(report => {
+						return {
+							report_date: report.report_date,
+							report_type: report.report_type,
+							id: report.id
+						}
+					})
+
+					verified.id = verified.id?.toString();
 
 					return resolve(verified);
 				}else{

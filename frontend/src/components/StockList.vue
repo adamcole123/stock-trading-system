@@ -322,7 +322,7 @@ import moment from "moment";
 import Stock from "@/types/Stock";
 import { ArrowDownThick, ArrowUpThick } from "mdue";
 
-const socket = io("http://localhost:8000/stockmarket");
+let socket = io("http://localhost:8000/stockmarket");
 
 export default defineComponent({
   name: "StockList",
@@ -356,6 +356,7 @@ export default defineComponent({
     }),
   },
   async created() {
+    socket = io("http://localhost:8000/stockmarket");
     if (!this.$route.query.page || !this.$route.query.limit) {
       this.filter.page = 1;
       this.filter.limit = 10;
@@ -479,6 +480,9 @@ export default defineComponent({
         }
       }
       this.applyFilters();
+    },
+    prepareToExit() {
+      socket.close();
     },
   },
 });
