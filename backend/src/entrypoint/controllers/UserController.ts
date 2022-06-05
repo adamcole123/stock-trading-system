@@ -49,6 +49,11 @@ export default class UserController implements interfaces.Controller {
 		this.sendEmailUseCase = emailServiceLocator.GetSendEmailUseCase();
 	}
 
+	@httpGet('/test-error')
+	public testError(@request() req: express.Request, @response() res: express.Response){
+		throw new Error('test error');
+	}
+
 	@httpPost('/password-reset')
 	public async passwordReset(@request() req: express.Request, @response() res: express.Response) {
 		if(req.body.key === undefined && req.cookies.token === undefined){
