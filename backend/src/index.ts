@@ -76,6 +76,19 @@ let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
 
 // create server
 let server = new InversifyExpressServer(container);
+server.setErrorConfig( (app: express.Application) => {
+    app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
+      console.error(err.stack)
+
+      sendEmailUseCase.invoke({
+        to: ["admin@stock-trading-system.com"],
+        from: "error-logger@stock-trading-system.com",
+        subject: "An error was caused in the system",
+        bodyText: `${err} with request ${req} and response ${res}`,
+        bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
+      })
+    });
+});
 server.setConfig((app: express.Application) => {
   // add body parser
   app.use(bodyParser.urlencoded({
@@ -95,22 +108,10 @@ server.setConfig((app: express.Application) => {
   }));
   app.use(bodyParser.json());
   app.use(cookieParser());
-  app.use((err: any, req: any, res: any, next: any) => {
-    console.error(err.stack)
-    
-
-    sendEmailUseCase.invoke({
-      to: ["admin@stock-trading-system.com"],
-      from: "error-logger@stock-trading-system.com",
-      subject: "An error was caused in the system",
-      bodyText: `${err} with request ${req} and response ${res}`,
-      bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
-    })
-  })
 });
 
-process.on('uncaughtException', err => {
-  console.error('There was an uncaught error', err);
+process.on('uncaughtExceptionMonitor', err => {
+  console.error('There was an uncaught error: ', err);
   sendEmailUseCase.invoke({
     to: ["admin@stock-trading-system.com"],
     from: "error-logger@stock-trading-system.com",
@@ -118,7 +119,6 @@ process.on('uncaughtException', err => {
     bodyText: `There was an uncaught error: ${err}`,
     bodyHtml: `There was an uncaught error:<br />${err}`
   })
-  process.exit(1); // mandatory (as per the Node.js docs)
 });
 
 let app = server.build();
@@ -137,14 +137,11 @@ console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 .then(res => {
   console.log('Connected to database');
-
   changeStockValues();
 })
 .catch(err => {
   console.error(err)
 })
-
-
 
 const httpServer = app.listen(8000, () => {
   console.log('Server listening on port 8000');
