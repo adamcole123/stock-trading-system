@@ -156,7 +156,7 @@ const socketServer = new InversifySocketServer(container, new SocketIO.Server(ht
 socketServer.build();
 
 function changeStockValues() {
-  setInterval(function () {
+  setInterval(async function () {
     Stock.count().exec(function(err, count){
       var random = Math.floor(Math.random() * count);
     
@@ -180,19 +180,25 @@ function changeStockValues() {
           if(result?.volume! < 0)
             return;
           
-          let now = new Date();
-          
-          if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
-            result!.open = result?.value;
-          }
-
-          if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
-            result!.close = result?.value;
-          }
-
           result?.save()
-      });
-    
+          });
+          
     });
+
+    let now = new Date();
+
+    if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
+      await Stock.updateMany(
+        {},
+        [ { $set: { open: "$value" } } ]
+      )
+    }
+
+    if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
+      await Stock.updateMany(
+        {},
+        [ { $set: { close: "$value" } } ]
+      )
+    }
   }, 2);
 }
