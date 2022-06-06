@@ -7,6 +7,7 @@
       :stockAmount="tradeQuantity"
       @showHideCardConfirm="showCardConfirm = !showCardConfirm"
     />
+    <FundsSummary />
     <div class="filter-controls">
       <button @click="applyFilters(true)">Apply Filters</button>
       <button @click="clearFilters">Clear Filters</button>
@@ -192,28 +193,44 @@
           <th align="left">Close</th>
           <th align="left" colspan="2" v-if="getUserProfile.id !== ''">
             Quantity
-            <input type="number" style="width: 40px" v-model="tradeQuantity" />
+            <input
+              type="number"
+              style="width: 40px"
+              min="0"
+              v-model="tradeQuantity"
+            />
           </th>
         </tr>
       </thead>
       <tbody>
         <template v-for="stock in getStockData" :key="stock.id">
           <tr v-if="stock.volume > 0">
-            <td
+            <div
               v-if="
-                getUserProfile.id !== '' &&
-                Object.keys(toggledTrades).includes(stock.id)
+                getUserTransactionHistory.findIndex(
+                  (trade: any) => trade.stock_id === stock.id
+                ) !== -1
               "
-              @click="viewTrades(stock.id)"
             >
-              <button>-</button>
-            </td>
-            <td
-              v-else-if="getUserProfile.id !== ''"
-              @click="viewTrades(stock.id)"
-            >
-              <button>+</button>
-            </td>
+              <td
+                v-if="
+                  getUserProfile.id !== '' &&
+                  Object.keys(toggledTrades).includes(stock.id)
+                "
+                @click="viewTrades(stock.id)"
+              >
+                <button>-</button>
+              </td>
+              <td
+                v-else-if="getUserProfile.id !== ''"
+                @click="viewTrades(stock.id)"
+              >
+                <button>+</button>
+              </td>
+            </div>
+            <div v-else>
+              <td></td>
+            </div>
             <td>{{ stock.symbol }}</td>
             <td>{{ stock.name }}</td>
             <td v-if="stock.gains! > 0" style="color: green">
@@ -227,10 +244,27 @@
             <td>{{ stock.open }}</td>
             <td>{{ stock.close }}</td>
             <td v-if="getUserProfile.id !== ''">
-              <button align="left" @click="buyStocks(stock.id)">Buy</button>
+              <div
+                v-if="
+                  getUserProfile.credit > stock.value * tradeQuantity &&
+                  tradeQuantity > 0
+                "
+              >
+                <button align="left" @click="buyStocks(stock.id)">Buy</button>
+              </div>
+              <div v-else>
+                <button align="left" style="visibility: hidden">Buy</button>
+              </div>
             </td>
             <td v-if="getUserProfile.id !== ''">
-              <button align="left" @click="sellStocks(stock.id)">Sell</button>
+              <div
+                v-if="canSell[stock.id] >= tradeQuantity && tradeQuantity > 0"
+              >
+                <button align="left" @click="sellStocks(stock.id)">Sell</button>
+              </div>
+              <div v-else>
+                <button align="left" style="visibility: hidden">Sell</button>
+              </div>
             </td>
           </tr>
           <tr v-if="Object.keys(toggledTrades).includes(stock.id)">
@@ -317,6 +351,7 @@ import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 import { io } from "socket.io-client";
 import CreditCardConfirm from "./CreditCardConfirm.vue";
+import FundsSummary from "./FundsSummary.vue";
 import Trade from "@/types/Trade";
 import moment from "moment";
 import Stock from "@/types/Stock";
@@ -330,6 +365,7 @@ export default defineComponent({
     CreditCardConfirm,
     ArrowDownThick,
     ArrowUpThick,
+    FundsSummary,
   },
   // props: ["tradeType", "stockId", "stockAmount"],
   data() {
@@ -341,6 +377,7 @@ export default defineComponent({
       typeOfTrade: "",
       moment: moment,
       filter: {} as Stock | any,
+      canSell: {} as Record<string, number>,
     };
   },
   computed: {
@@ -353,6 +390,7 @@ export default defineComponent({
     ...mapGetters("trade", {
       getBuyStocksApiStatus: "getBuyStocksApiStatus",
       getSellStocksApiStatus: "getSellStocksApiStatus",
+      getUserTransactionHistory: "getUserTransactionHistory",
     }),
   },
   async created() {
@@ -371,6 +409,9 @@ export default defineComponent({
       ...this.$route.query,
     };
     this.applyFilters();
+
+    await this.actionGetUserTransactionHistory();
+    this.buildCanSellList();
     socket.on("stocks", (data) => {
       this.actionUpdateStocksData([
         data.map((update: any) => {
@@ -387,6 +428,7 @@ export default defineComponent({
     ...mapActions("trade", {
       actionBuyStocksApi: "buyStocksApi",
       actionSellStocksApi: "sellStocksApi",
+      actionGetUserTransactionHistory: "getUserTransactionHistoryApi",
     }),
     ...mapActions("stock", {
       actionGetStocksApi: "getStocksApi",
@@ -483,6 +525,23 @@ export default defineComponent({
     },
     prepareToExit() {
       socket.close();
+    },
+    buildCanSellList() {
+      const transactions: Trade[] = this.getUserTransactionHistory;
+      transactions.forEach((transaction: any) => {
+        if (transaction.trade_status === "Approved") {
+          if (this.canSell[transaction.stock_id] === undefined) {
+            this.canSell[transaction.stock_id] = 0;
+          }
+          if (transaction.trade_type === "Buy") {
+            this.canSell[transaction.stock_id] =
+              this.canSell[transaction.stock_id] + transaction.stock_amount;
+          } else {
+            this.canSell[transaction.stock_id] =
+              this.canSell[transaction.stock_id] - transaction.stock_amount;
+          }
+        }
+      });
     },
   },
 });

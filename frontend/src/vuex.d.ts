@@ -14,6 +14,7 @@ declare module "@vue/runtime-core" {
     getPendingTradesApiStatus: "";
     getUserDetailsApiStatus: "";
     getAllUsersApiStatus: "";
+    getPortfolioApiStatus: "";
     getCompanyDetailsApiStatus: "";
     editCompanyApiStatus: "";
     newCompanyApiStatus: "";
@@ -34,6 +35,7 @@ declare module "@vue/runtime-core" {
     newCardApiStatus: "";
     activationApiStatus: "";
     allUsers: [];
+    portfolio: { [key: string]: number };
   }
 
   // provide typings for `this.$store`
