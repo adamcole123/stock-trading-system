@@ -1,13 +1,17 @@
 import { State } from "vue";
+import { GetterTree } from "vuex";
 import axios from "axios";
 import { ContextFunction } from "../ContextFunction";
 import router from "../../router";
 import { store } from "..";
+import Trade from "@/types/Trade";
+import Stock from "@/types/Stock";
 
 const state = () => ({
   loginApiStatus: "",
   registerApiStatus: "",
   newCardApiStatus: "",
+  requestAccountDeactivationApiStatus: "",
   logOut: false,
   userProfile: {
     firstName: "",
@@ -18,6 +22,7 @@ const state = () => ({
     reports: [],
   },
   activationApiStatus: "",
+  userTransactionHistory: [],
 });
 
 const getters = {
@@ -41,6 +46,9 @@ const getters = {
   },
   getEditUserApiStatus(state: State) {
     return state.editUserApiStatus;
+  },
+  getRequestAccountDeactivationApiStatus(state: State) {
+    return state.requestAccountDeactivationApiStatus;
   },
 };
 
@@ -72,7 +80,6 @@ const actions = {
     //   key: key query param,
     //   password: password_string
     // }
-    console.log("payload", payload);
     const response = await axios
       .post("http://localhost:8000/user/password-reset", payload, {
         withCredentials: true,
@@ -116,7 +123,6 @@ const actions = {
 
     if (response && response.data) {
       commit("setLoginApiStatus", "success");
-      console.log(response);
       return response;
     } else {
       commit("setLoginApiStatus", "failed");
@@ -124,7 +130,6 @@ const actions = {
     }
   },
   async registerApi({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/register", payload, {
         withCredentials: true,
@@ -148,6 +153,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
+        store.dispatch("auth/userLogout");
         return err.error;
       });
 
@@ -188,7 +194,6 @@ const actions = {
     }
   },
   async activateAccount({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/activate", payload)
       .catch((err) => {
@@ -202,7 +207,6 @@ const actions = {
     }
   },
   async editUserDetails({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .post("http://localhost:8000/user/edit", payload, {
         withCredentials: true,
@@ -217,6 +221,27 @@ const actions = {
       return response.data;
     } else {
       commit("setEditUserApiStatus", "failed");
+    }
+  },
+  async requestAccountDeactivation(
+    { commit, dispatch }: ContextFunction,
+    payload: any
+  ) {
+    const response = await axios
+      .post("http://localhost:8000/user/requestdeactivation", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.error;
+      });
+
+    if (response && response.data) {
+      commit("setRequestAccountDeactivationApiStatus", "success");
+      alert("Request sent successfully!");
+      return response.data;
+    } else {
+      commit("setRequestAccountDeactivationApiStatus", "failed");
     }
   },
 };
@@ -257,6 +282,9 @@ const mutations = {
   },
   setPasswordResetRequestApiStatus(state: State, payload: any) {
     state.passwordResetRequestApiStatus = payload;
+  },
+  setRequestAccountDeactivationApiStatus(state: State, payload: any) {
+    state.requestAccountDeactivationApiStatus = payload;
   },
 };
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <router-view class="content" />
+    <router-view class="content"></router-view>
   </div>
 </template>
 <script lang="ts">
@@ -11,6 +11,11 @@ import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "App",
+  data() {
+    return {
+      spinnerColor: "#456ddb",
+    };
+  },
   components: { NavBar },
   computed: {
     ...mapGetters("auth", {
@@ -64,5 +69,15 @@ body {
 .edit-screen {
   width: 40%;
   margin: 0 auto;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

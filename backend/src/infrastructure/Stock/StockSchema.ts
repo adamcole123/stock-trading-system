@@ -1,17 +1,39 @@
 import mongoose from "mongoose";
 import Stock from '../../usecases/entities/Stock';
 import Double from '@mongoosejs/double';
-
 var Schema = mongoose.Schema;
 
 const stockSchema = new Schema<Stock>({
 	id: mongoose.SchemaTypes.ObjectId,
 	symbol: String,
 	name: String,
-	value: Double,
+	value: {
+		type: Double,
+		min: 0,
+	},
 	volume: Number,
-	open: Double,
-	close: Double
+	open: {
+		type: Double,
+		default: 0.0
+	},
+	close: {
+		type: Double,
+		default: 0.0
+	},
+	latest_trade: Date,
+	gains: {
+		type: Double,
+		default: 0.0,
+	}
 }, { collection: 'stocks' })
+
+stockSchema.pre('save', function (next) {
+    this.gains = calcGains(this.get('value'), this.get('open'));
+    next();
+});
+
+function calcGains (value: number, open: number) {
+	return Number.parseFloat((value! - open!).toFixed(2))!;
+};
 
 export default stockSchema;

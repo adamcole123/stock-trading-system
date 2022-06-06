@@ -21,13 +21,19 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 				return reject(err);
 			}
 
+			if(foundUser.credit === 0) {
+				return reject('This account does not have any credit.');
+			}
+
 			if(foundUser.isDeleted)
 				return reject('User account is closed.');
 
-			if(!foundUser.activationDate){
+			if(!foundUser.activationDate)
 				return reject('Account not activated.')
-			}
-
+			
+			if(foundUser.banUntil! > new Date())
+				return reject('Account is currently banned.')
+				
 			let passwordCheck;
 			
 			if(userDto!.password && foundUser!.password) {

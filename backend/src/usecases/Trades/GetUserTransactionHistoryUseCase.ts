@@ -18,7 +18,7 @@ export default class GetUserTransactionHistory implements IGetUserTransactionHis
 	invoke(tradeDto: ITradeDto): Promise<ITradeDto[]> {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let transactionHistory = await this.tradeReadOnlyRepository.fetch({user_id: tradeDto.user_id});
+				let transactionHistory = await this.tradeReadOnlyRepository.fetch({user_id: tradeDto.user_id}, false, { orderBy: { time_of_trade:-1 }});
 
 				transactionHistory = transactionHistory.map((trade) => {
 					return <ITradeDto>this.stockReadOnlyRepository.fetch({id: trade.stock_id})

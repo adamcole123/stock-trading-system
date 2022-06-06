@@ -3,21 +3,31 @@ import IAddNewCreditCardUseCase from './IAddNewCreditCardUseCase';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IUserWriteOnlyRepository from 'src/application/repositories/IUserWriteOnlyRepository';
 import IUserDto from '../data_tranfer_objects/IUserDto';
+import IEncrypter from 'src/infrastructure/IEncrypter';
 export default class AddNewCreditCardUseCase implements IAddNewCreditCardUseCase{
-	userReadOnlyRepository: IUserReadOnlyRepository;
-	userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private userReadOnlyRepository: IUserReadOnlyRepository;
+	private userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private encrypter: IEncrypter;
 	
 	constructor(_userReadOnlyRepository: IUserReadOnlyRepository,
-				_userWriteOnlyRepository: IUserWriteOnlyRepository) {
+				_userWriteOnlyRepository: IUserWriteOnlyRepository,
+				_encrypter: IEncrypter) {
 		this.userReadOnlyRepository = _userReadOnlyRepository;
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;
+		this.encrypter = _encrypter;
 	}
 
 	async invoke(creditCardDto: ICreditCardDto, userId: string): Promise<IUserDto> {
 		let user = await this.userReadOnlyRepository.fetch({
 			id: userId
-		})
-		user.cardDetails?.push(creditCardDto);
+		});
+
+		let encryptedCardDetails = await this.encrypter.cypher(JSON.stringify(creditCardDto));
+		
+		user.cardDetails?.push({
+			cardDetails: encryptedCardDetails[0],
+			key: encryptedCardDetails[1]
+		});
 
 		let edittedUser = await this.userWriteOnlyRepository.edit(user.username!, { cardDetails: user.cardDetails }, {});
 

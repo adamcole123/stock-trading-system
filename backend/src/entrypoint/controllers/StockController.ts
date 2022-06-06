@@ -10,6 +10,10 @@ import StockServiceLocator from "../../configuration/StockServiceLocator";
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import StockReadOptions from '../../application/repositories/StockReadOptions';
 import IEditStockUseCase from "../../usecases/Stocks/IEditStockUseCase";
+import IUserDto from "src/usecases/data_tranfer_objects/IUserDto";
+import jwt from 'jsonwebtoken';
+import UserServiceLocator from '../../configuration/UserServiceLocator';
+import IValidateUserTokenUseCase from '../../usecases/Users/IValidateUserTokenUseCase';
 
 dotenv.config();
 
@@ -19,12 +23,15 @@ export default class StockController implements interfaces.Controller {
 	private readonly getAllStocksUseCase: IGetAllStocksUseCase;
 	private readonly getOneStockUseCase: IGetOneStockUseCase;
 	private readonly editStockUseCase: IEditStockUseCase;
+	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
 	
-	constructor(@inject(TYPES.StockServiceLocator) serviceLocator: StockServiceLocator){
+	constructor(@inject(TYPES.StockServiceLocator) serviceLocator: StockServiceLocator,
+				@inject(TYPES.UserServiceLocator) userServiceLocator: UserServiceLocator){
 		this.createStockUseCase = serviceLocator.GetCreateStockUseCase();
 		this.getAllStocksUseCase = serviceLocator.GetGetAllStocksUseCase();
 		this.getOneStockUseCase = serviceLocator.GetGetOneStockUseCase();
 		this.editStockUseCase = serviceLocator.GetEditStockUseCase();
+		this.validateUserTokenUseCase = userServiceLocator.GetValidateUserTokenUseCase();
 	}
 	
 	@httpGet('/getOne')
@@ -43,14 +50,19 @@ export default class StockController implements interfaces.Controller {
 			.catch((err: Error) => res.status(500).json(err));
 	}
 
-	@httpGet('/getMany')
+	@httpPost('/getMany')
 	public async getStocks(@request() req: express.Request, @response() res: express.Response){
-		
-		if(req.body.length < 1 && req.body.options === typeof(undefined)){
-			return res.status(400).json({error: 'Must provide criteria or options'});
-		}
+		req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
+		req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
+		req.body.options.volumeMode = req.body.filters.volume ? undefined : 2;
 
-		return await this.getAllStocksUseCase.invoke({ volume: 0 }, { page: parseInt(<string>req.query.page), limit: parseInt(<string>req.query.limit), volumeMode: 2 })
+		if(req.body.options.order !== undefined) {
+			if(req.body.options.order.orderDirection !== undefined)
+				req.body.options.order.orderDirection = Number(req.body.options.order.orderDirection); 
+		}
+		
+
+		return await this.getAllStocksUseCase.invoke(req.body.filters, req.body.options)
 			.then((stockDto: IStockDto[]) => {
 				res.status(200).json(stockDto)
 			})
@@ -58,7 +70,12 @@ export default class StockController implements interfaces.Controller {
 	}
 
 	@httpPost('/create')
-	public async createStock(@request() req: express.Request, @response() res: express.Response){
+	public async createStock(@request() req: express.Request, @response() res: express.Response){		
+		let verified = await this.validateUserTokenUseCase.invoke(req.cookies.token);
+
+		if(verified.role !== 'Admin') {
+			return res.status(401).json('Only an admin can add companies.');
+		}
 		
 		if(req.body.length < 1 && req.body.options === typeof(undefined)){
 			return res.status(400).json({error: 'Must provide criteria or options'});

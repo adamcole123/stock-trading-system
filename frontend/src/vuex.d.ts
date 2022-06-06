@@ -8,15 +8,19 @@ declare module "@vue/runtime-core" {
     registerApiStatus: "";
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
+    stockTradesForUserApiStatus: "";
     getStocksApiStatus: "";
     editUserApiStatus: "";
     getPendingTradesApiStatus: "";
     getUserDetailsApiStatus: "";
     getAllUsersApiStatus: "";
+    getPortfolioApiStatus: "";
     getCompanyDetailsApiStatus: "";
     editCompanyApiStatus: "";
     newCompanyApiStatus: "";
+    makeUserBrokerApiStatus: "";
     passwordResetRequestApiStatus: "";
+    requestAccountDeactivationApiStatus: "";
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";
@@ -31,6 +35,7 @@ declare module "@vue/runtime-core" {
     newCardApiStatus: "";
     activationApiStatus: "";
     allUsers: [];
+    portfolio: { [key: string]: number };
   }
 
   // provide typings for `this.$store`

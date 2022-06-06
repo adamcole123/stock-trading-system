@@ -33,6 +33,9 @@ import ReportServiceLocator from "./configuration/ReportServiceLocator";
 import ISendEmailUseCase from './usecases/Email/ISendEmailUseCase';
 import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
 import EmailServiceLocator from './configuration/EmailServiceLocator';
+import IEncrypter from './infrastructure/IEncrypter';
+import Encrypter from './infrastructure/Encrypter';
+import Stock from './infrastructure/Stock/Stock';
 
 // set up container
 const container = new Container();
@@ -62,13 +65,30 @@ container.bind<ReportServiceLocator>(TYPES.ReportServiceLocator).to(ReportServic
 
 container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
 
+container.bind<IEncrypter>(TYPES.IEncrypter).to(Encrypter);
+
 // Binding for socket server
 container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
 
 dotenv.config();
 
+let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
+
 // create server
 let server = new InversifyExpressServer(container);
+server.setErrorConfig( (app: express.Application) => {
+    app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
+      console.error(err.stack)
+
+      sendEmailUseCase.invoke({
+        to: ["admin@stock-trading-system.com"],
+        from: "error-logger@stock-trading-system.com",
+        subject: "An error was caused in the system",
+        bodyText: `${err} with request ${req} and response ${res}`,
+        bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
+      })
+    });
+});
 server.setConfig((app: express.Application) => {
   // add body parser
   app.use(bodyParser.urlencoded({
@@ -88,18 +108,16 @@ server.setConfig((app: express.Application) => {
   }));
   app.use(bodyParser.json());
   app.use(cookieParser());
-  app.use((err: any, req: any, res: any, next: any) => {
-    console.error(err.stack)
-    
-    let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
+});
 
-    sendEmailUseCase.invoke({
-      to: ["admin@stock-trading-system.com"],
-      from: "error-logger@stock-trading-system.com",
-      subject: "An error was caused in the system",
-      bodyText: `${err} with request ${req} and response ${res}`,
-      bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
-    })
+process.on('uncaughtExceptionMonitor', err => {
+  console.error('There was an uncaught error: ', err);
+  sendEmailUseCase.invoke({
+    to: ["admin@stock-trading-system.com"],
+    from: "error-logger@stock-trading-system.com",
+    subject: "An error was caused in the system",
+    bodyText: `There was an uncaught error: ${err}`,
+    bodyHtml: `There was an uncaught error:<br />${err}`
   })
 });
 
@@ -113,21 +131,17 @@ const {
   DB_NAME,
 } = process.env;
 
-import Stock from './infrastructure/Stock/Stock';
 
 console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 .then(res => {
   console.log('Connected to database');
-
   changeStockValues();
 })
 .catch(err => {
   console.error(err)
 })
-
-
 
 const httpServer = app.listen(8000, () => {
   console.log('Server listening on port 8000');
@@ -152,8 +166,13 @@ function changeStockValues() {
           if(err)
             return console.error(err);
   
-          if(result?.value! > 0)
+          if(result?.value! > 0) {
             result!.value = Number.parseFloat((result!.value! + (Math.random() > 0.5 ? Math.random() * 1 : Math.random() * -1)).toFixed(2));
+            if(result!.value < 0)
+              result!.value = 0.5;
+          } else {
+            result!.value = 0.5;
+          }
           
           if(result?.volume! > 0)
             result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? Math.random() * 10 : Math.random() * -10))

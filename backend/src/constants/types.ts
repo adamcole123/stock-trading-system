@@ -1,4 +1,3 @@
-import ISendEmailUseCase from '../usecases/Email/ISendEmailUseCase';
 export const TYPES = {
 	UserServiceLocator : Symbol.for("UserServiceLocator"),
 	StockServiceLocator : Symbol.for("StockServiceLocator"),
@@ -11,4 +10,5 @@ export const TYPES = {
 	IStockReadOnlyRepository: Symbol.for("IStockReadOnlyRepository"),
 	ITradeWriteOnlyRepository: Symbol.for("ITradeWriteOnlyRepository"),
 	ITradeReadOnlyRepository: Symbol.for("ITradeReadOnlyRepository"),
+	IEncrypter: Symbol.for("IEncrypter"),
 }

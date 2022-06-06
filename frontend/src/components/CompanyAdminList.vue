@@ -11,15 +11,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="company in getStockData" :key="company.id">
-          <td>{{ company.symbol }}</td>
-          <td>{{ company.name }}</td>
-          <td>
-            <router-link :to="{ path: 'company', query: { id: company.id } }"
-              >View</router-link
-            >
-          </td>
-        </tr>
+        <div v-if="listLoaded">
+          <tr v-for="company in getStockData" :key="company.id">
+            <td>{{ company.symbol }}</td>
+            <td>{{ company.name }}</td>
+            <td>
+              <router-link :to="{ path: 'company', query: { id: company.id } }"
+                >View</router-link
+              >
+            </td>
+          </tr>
+        </div>
+        <pulse-loader :color="spinnerColor" v-else></pulse-loader>
       </tbody>
     </table>
     <h3 v-else>No companies in system</h3>
@@ -28,9 +31,19 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default defineComponent({
   name: "CompanyAdminList",
+  data() {
+    return {
+      listLoaded: false,
+      spinnerColor: "#456ddb",
+    };
+  },
+  components: {
+    PulseLoader,
+  },
   computed: {
     ...mapGetters("stock", {
       getStockData: "getStockData",
@@ -42,7 +55,9 @@ export default defineComponent({
     }),
   },
   created() {
-    this.actionGetStocksApi({});
+    this.actionGetStocksApi({}).then(() => {
+      this.listLoaded = true;
+    });
   },
 });
 </script>

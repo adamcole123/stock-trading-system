@@ -51,6 +51,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 							open: stock.open,
 							close: stock.close,
 							symbol: stock.symbol,
+							latest_trade: stock.latest_trade,
 						};
 					})
 	
@@ -89,37 +90,56 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	}
 	selectedCompanyDetails(user_id: string, ascending: boolean, stock_ids: string[], report_type: string): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
-			let companyDetails: IStockDto[];
+			try {
+				let companyDetails: IStockDto[];
+	
+				companyDetails = await this.stockReadOnlyRepository.fetch(stock_ids.map(stock_id => { return { id: stock_id }}), { order: { orderBy: 'name', orderDirection: ascending ? 1 : 0 }})
+				
+				let plainStockKeysToRemove: string[] = [];
+	
+				let plainStockObjs: any = companyDetails.map((company: any) => {
+					Object.keys(company).forEach(key => {
+						if (company[key] === undefined) {
+						  delete company[key];
+						  plainStockKeysToRemove.push(key);
+						}
+					  });
 
-			companyDetails = await this.stockReadOnlyRepository.fetch(stock_ids.map(stock_id => { return { id: stock_id }}), { order: { orderBy: 'name', orderDirection: ascending ? 1 : 0 }})
+					return {...company}
+				});
 
-			let plainStockObjs: any = companyDetails.map(company => {
-				return {...company}
-			})
-
-			let columnDef = [...Object.keys(plainStockObjs[0])]
-		
-			let initialValue = "<stocks>";
-			let newReport = {
-				report_date: new Date(),
-				report_data: report_type === 'CSV' ? jsonToCsv.convertArrayOfObjects(plainStockObjs, columnDef) : plainStockObjs.reduce((acc: string, obj: XmlElement | XmlElement[] | undefined) => {return acc + `<stock>${toXML(obj)}</stock>`}, initialValue) + "</stocks>",
-				report_type: report_type
+				plainStockObjs.forEach((_stock: any, _index: any) => {
+					plainStockKeysToRemove.forEach(key => {
+						delete plainStockObjs[_index][key];
+					});
+				});
+	
+				let columnDef = [...Object.keys(plainStockObjs[0])]
+			
+				let initialValue = "<stocks>";
+				let newReport = {
+					report_date: new Date(),
+					report_data: report_type === 'CSV' ? jsonToCsv.convertArrayOfObjects(plainStockObjs, columnDef) : plainStockObjs.reduce((acc: string, obj: XmlElement | XmlElement[] | undefined) => {return acc + `<stock>${toXML(obj)}</stock>`}, initialValue) + "</stocks>",
+					report_type: report_type
+				}
+				let user = await this.userReadOnlyRepository.fetch({id: user_id})
+	
+				user.reports?.push(newReport);
+	
+				let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
+					reports: user.reports
+				}, {})
+	
+				resolve(userEditted);
+			} catch (error) {
+				reject(error);
 			}
-			let user = await this.userReadOnlyRepository.fetch({id: user_id})
-
-			user.reports?.push(newReport);
-
-			let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
-				reports: user.reports
-			}, {})
-
-			resolve(userEditted);
 		});
 	}
 
 	usersHeldShares(user_id: string, ascending: boolean, report_type: string): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
-			this.tradeReadOnlyRepository.fetch({user_id: user_id})
+			this.tradeReadOnlyRepository.fetch({user_id: user_id}, false)
 			.then(async trades => {
 				let numSharesPerCompany: any[] = await this.groupByCompany(trades);
 
@@ -224,6 +244,8 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 					numSharesPerCompany[companyIndexInArray].amount_held += trade.trade_type === "Buy" ? trade.stock_amount : trade.stock_amount! * -1;
 				}
 			});
+
+			numSharesPerCompany = numSharesPerCompany.filter(val => val.amount_held > 0);
 	
 			resolve(numSharesPerCompany)
 		})

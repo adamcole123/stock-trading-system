@@ -1,6 +1,4 @@
 export default class Stock {
-	readonly gains: number | undefined = this.getGains();
-	
 	constructor(
 		public id: string,
 		public symbol: string,
@@ -8,12 +6,10 @@ export default class Stock {
 		public value?: number,
 		public volume?: number,
 		public open?: number,
-		public close?: number
+		public close?: number,
+		public latest_trade?: Date,
+		public gains?: number
 	){
-		this.gains = this.getGains();
-	}
 
-	public getGains(): any {
-		return (this.value && this.open ? this.value!-this.open! : 0).toFixed(2);
 	}
 }

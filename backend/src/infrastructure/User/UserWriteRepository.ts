@@ -47,8 +47,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 							bcrypt.hash(newUser.password, salt, (err, hash) => {
 								if (err) throw err;
 								newUser.password = hash;
-								newUser
-									.save()
+								User.create(newUser)
 									.then((user: any) => {
 										userDto = {
 											id: user._id,

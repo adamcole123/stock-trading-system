@@ -55,7 +55,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/password-reset",
-    name: "passwordResetDenied",
+    name: "passwordReset",
     component: () => import("../views/PasswordResetView.vue"),
   },
   {
@@ -106,8 +106,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  await store.dispatch("auth/userProfile");
   if (to.meta.requiredAuth) {
-    await store.dispatch("auth/userProfile");
     let userProfile = store.getters["auth/getUserProfile"];
     const limitedTo = <string[]>to.meta.limitedTo;
     if (limitedTo) {

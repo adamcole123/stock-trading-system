@@ -49,6 +49,11 @@ export default class UserController implements interfaces.Controller {
 		this.sendEmailUseCase = emailServiceLocator.GetSendEmailUseCase();
 	}
 
+	@httpGet('/test-error')
+	public testError(@request() req: express.Request, @response() res: express.Response){
+		throw new Error('test error');
+	}
+
 	@httpPost('/password-reset')
 	public async passwordReset(@request() req: express.Request, @response() res: express.Response) {
 		if(req.body.key === undefined && req.cookies.token === undefined){
@@ -115,6 +120,7 @@ export default class UserController implements interfaces.Controller {
 				res.status(400).json(err)
 			});
 	}
+
 	@httpGet('/one')
 	public async getUserDetails(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -277,14 +283,7 @@ export default class UserController implements interfaces.Controller {
 			edittedUser = await <IUserDto>jwt.verify(req.body.key, jwtSecretKey!);
 		} else {
 			edittedUser = {
-				username: req.body.username,
-				email: req.body.email,
-				firstName: req.body.firstName,
-				lastName: req.body.lastName,
-				birthDate: req.body.birthDate,
-				credit: req.body.credit,
-				role: req.body.role,
-				isDeleted: req.body.isDeleted
+				...req.body
 			}
 		}
 		
@@ -294,10 +293,23 @@ export default class UserController implements interfaces.Controller {
 			return res.status(401).json('Not authorised to retrieve this user\'s data.');
 		}
 
+		let userObjectKeys = Object.keys(edittedUser);
+
+		if(userObjectKeys.length === 2 && 
+			userObjectKeys.includes('username') && 
+			userObjectKeys.includes('role') && 
+			verified.role !== "Admin"){
+			return res.status(401).json('Not authorised to change user roles.');
+		}
+
+		if(verified.role !== 'Admin' && edittedUser.banUntil){
+			delete edittedUser.banUntil;
+		}
+
 		if(verified.role !== "Admin" && verified.username === req.body.username){
 			if(!req.body.key){
 				return await this.sendEmailUseCase.invoke({
-					to: [verified.email!],
+					to: [verified.email!, edittedUser.email!],
 					from: "noreply@stocktradingsystem.com",
 					subject: "Confirm details change",
 					bodyText: `Click here to confirm your account details change: http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}`,
@@ -345,5 +357,24 @@ export default class UserController implements interfaces.Controller {
 				});
 			})
 			.catch((err: Error) => res.status(401).send(err));
+	}
+
+	@httpPost('/requestdeactivation')
+	public async requestAccountDeactivation(@request() req: express.Request, @response() res: express.Response) {
+		let jwtSecretKey = process.env.JWT_SECRET_KEY;
+		
+		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
+
+		return await this.sendEmailUseCase.invoke({
+					to: ["admin@stocktradingsystem.com"],
+					from: "noreply@stocktradingsystem.com",
+					subject: "A user has requested deactivation",
+					bodyText: `Visit http://localhost:8080/user?username=${verified.username} to mark account as deleted.`,
+					bodyHtml: `Visit <a href="http://localhost:8080/user?username=${verified.username}">this page</a> to mark account as deleted.`
+				})
+				.then(email => {
+					res.status(200).json("Request sent to administrator.");
+				})
+				.catch((err: Error) => res.status(401).send(err));
 	}
 }

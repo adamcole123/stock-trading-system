@@ -6,5 +6,6 @@ export default interface StockFetchQuery {
 	symbol?: string | Object,
 	value?: number | Object,
 	volume?: number | Object,
+	latest_trade?: number | Object,
 	gains?: number | Object
 }

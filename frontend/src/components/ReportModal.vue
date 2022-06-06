@@ -30,7 +30,9 @@
             </tbody>
           </table>
 
-          <label for="ascending">Order value by ascending or descending?</label>
+          <label for="ascending"
+            >Order company name by ascending or descending?</label
+          >
           <select name="ascending" id="ascending" v-model="ascending">
             <option value="true">Ascending</option>
             <option value="false">Descending</option>
@@ -92,7 +94,9 @@
       </div>
       <div class="report-modal__body__content">
         <div class="report-modal__body__content__item">
-          <label for="ascending">Order value by ascending or descending?</label>
+          <label for="ascending"
+            >Order company name by ascending or descending?</label
+          >
           <select name="ascending" id="ascending" v-model="ascending">
             <option value="true">Ascending</option>
             <option value="false">Descending</option>
@@ -153,7 +157,6 @@ export default defineComponent({
       actionGetStocksApi: "getStocksApi",
     }),
     async generateReport(reportType: string) {
-      console.log(this.report_format, this.ascending);
       let payload = {
         reportType: reportType,
         reportFormat: this.report_format,

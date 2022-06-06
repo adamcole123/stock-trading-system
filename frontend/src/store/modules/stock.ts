@@ -27,18 +27,39 @@ const actions = {
   async getStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
     console.log(payload);
     payload = {
-      page: payload.page,
-      limit: payload.limit,
+      filters: {
+        symbol: payload.symbol,
+        name: payload.name,
+        value: payload.value,
+        volume: payload.volume,
+        open: payload.open,
+        close: payload.close,
+        gains: payload.gains,
+      },
+      options: {
+        page: payload.page,
+        limit: payload.limit,
+        order:
+          payload.orderBy === undefined || payload.orderDirection === undefined
+            ? undefined
+            : {
+                orderBy: payload.orderBy,
+                orderDirection: payload.orderDirection,
+              },
+      },
     };
-    const response = await axios({
-      method: "get",
-      url: `http://localhost:8000/stock/getMany?page=${
-        payload.page ? payload.page : ""
-      }&limit=${payload.limit ? payload.limit : ""}`,
-    });
+
+    console.log("payload", payload);
+
+    const response = await axios
+      .post("http://localhost:8000/stock/getMany", payload, {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     if (response && response.data) {
-      console.log(response);
       commit("setStockData", response.data);
       commit("setGetStocksApiStatus", "success");
     } else {
@@ -109,10 +130,6 @@ const actions = {
           ...payload[1][index],
           ...update,
         };
-
-        newStockData.gains = Number.parseFloat(
-          (newStockData.value - newStockData.open).toFixed(2)
-        );
 
         payload[1][index] = newStockData;
       }
