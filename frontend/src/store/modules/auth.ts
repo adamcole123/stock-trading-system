@@ -1,8 +1,11 @@
 import { State } from "vue";
+import { GetterTree } from "vuex";
 import axios from "axios";
 import { ContextFunction } from "../ContextFunction";
 import router from "../../router";
 import { store } from "..";
+import Trade from "@/types/Trade";
+import Stock from "@/types/Stock";
 
 const state = () => ({
   loginApiStatus: "",
@@ -19,6 +22,7 @@ const state = () => ({
     reports: [],
   },
   activationApiStatus: "",
+  userTransactionHistory: [],
 });
 
 const getters = {

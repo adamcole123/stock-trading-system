@@ -28,6 +28,9 @@ const getters = {
   getPendingTrades(state: State) {
     return state.pendingTrades;
   },
+  getPortfolio(state: State) {
+    return state.portfolio;
+  },
 };
 
 const actions = {
@@ -84,6 +87,22 @@ const actions = {
       commit("setStockTradesForUserApiStatus", "failed");
     }
   },
+  async getPortfolio({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .get("http://localhost:8000/trade/portfolio", {
+        withCredentials: true,
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setPortfolio", response.data);
+      commit("setGetPortfolioApiStatus", "success");
+    } else {
+      commit("setGetPortfolioApiStatus", "failed");
+    }
+  },
   async getUserTransactionHistoryApi(
     { commit, dispatch }: ContextFunction,
     payload: any
@@ -101,7 +120,6 @@ const actions = {
       });
 
     if (response && response.data) {
-      console.log(response);
       commit("setUserTransactionHistory", response.data);
       commit("setGetUserTransactionHistoryApiStatus", "success");
     } else {
@@ -184,6 +202,12 @@ const mutations = {
   },
   setStockTradesForUserApiStatus(state: State, data: any) {
     state.stockTradesForUserApiStatus = data;
+  },
+  setGetPortfolioApiStatus(state: State, data: any) {
+    state.getPortfolioApiStatus = data;
+  },
+  setPortfolio(state: State, data: any) {
+    state.portfolio = data;
   },
 };
 

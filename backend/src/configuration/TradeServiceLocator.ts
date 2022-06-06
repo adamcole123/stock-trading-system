@@ -20,6 +20,8 @@ import IRejectTradeUseCase from "../usecases/Trades/IRejectTradeUseCase";
 import RejectTradeUseCase from "../usecases/Trades/RejectTradeUseCase";
 import StockTradesForUserUseCase from "../usecases/Trades/StockTradesForUseUseCase";
 import IStockTradesForUserUseCase from "../usecases/Trades/IStockTradesForUserUseCase";
+import IGetUserPortfolioUseCase from "../usecases/Trades/IGetUserPortfolioUseCase";
+import GetUserPortfolioUseCase from "../usecases/Trades/GetUserPortfolioUseCase";
 
 @injectable()
 
@@ -51,5 +53,8 @@ export default class TradeServiceLocator {
 	}
 	public GetStockTradesForUserUseCase(): IStockTradesForUserUseCase {
 		return new StockTradesForUserUseCase(this.tradeReadRepository);
+	}
+	public GetGetUserPortfolioUseCase(): IGetUserPortfolioUseCase {
+		return new GetUserPortfolioUseCase(this.stockReadRepository, this.tradeReadRepository);
 	}
 }

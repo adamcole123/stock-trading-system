@@ -16,6 +16,7 @@ import IApproveTradeUseCase from "src/usecases/Trades/IApproveTradeUseCase";
 import IGetUserTransactionsByStatusUseCase from '../../usecases/Trades/IGetUserTransactionsByStatusUseCase';
 import IRejectTradeUseCase from "../../usecases/Trades/IRejectTradeUseCase";
 import IStockTradesForUserUseCase from "../../usecases/Trades/IStockTradesForUserUseCase";
+import IGetUserPortfolioUseCase from '../../usecases/Trades/IGetUserPortfolioUseCase';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ export default class TradeController implements interfaces.Controller {
 	private readonly approveTradeUseCase: IApproveTradeUseCase;
 	private readonly rejectTradeUseCase: IRejectTradeUseCase;
 	private readonly getUserTransactionsByStatusUseCase: IGetUserTransactionsByStatusUseCase;
+	private readonly getUserPortfolioUseCase: IGetUserPortfolioUseCase;
 	private readonly stockTradesForUserUseCase: IStockTradesForUserUseCase;
 	
 	constructor(@inject(TYPES.TradeServiceLocator) serviceLocator: TradeServiceLocator,
@@ -39,6 +41,7 @@ export default class TradeController implements interfaces.Controller {
 		this.rejectTradeUseCase = serviceLocator.GetRejectTradeUseCase();
 		this.getUserTransactionsByStatusUseCase = serviceLocator.GetGetUserTransactionsByStatusUseCase();
 		this.stockTradesForUserUseCase = serviceLocator.GetStockTradesForUserUseCase();
+		this.getUserPortfolioUseCase = serviceLocator.GetGetUserPortfolioUseCase();
 		this.validateUserTokenUseCase = userServiceLocator.GetValidateUserTokenUseCase();
 	}
 	
@@ -186,5 +189,19 @@ export default class TradeController implements interfaces.Controller {
 				console.log(err);
 				res.status(500).json(err)
 			});
+	}
+
+	@httpGet('/portfolio')
+	public async portfolio(@request() req: express.Request, @response() res: express.Response){
+		let user = await this.validateUserTokenUseCase.invoke(req.cookies.token);
+
+		return await this.getUserPortfolioUseCase.invoke(user)
+		.then((portfolio: {[key: string]: number}) => {
+			res.status(200).json(portfolio)
+		})
+		.catch((err: Error) => {
+			console.log(err);
+			res.status(500).json(err)
+		});
 	}
 }
