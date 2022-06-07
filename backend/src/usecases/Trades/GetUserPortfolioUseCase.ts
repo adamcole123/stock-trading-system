@@ -19,17 +19,18 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 
 	invoke(userDto: IUserDto): Promise<{ [key: string]: number; }> {
 		return new Promise(async (resolve, reject) => {
-			try{
-				let investedValue = await this.getInvestedValue(userDto);
-				let returnValue = await this.getReturnValue(userDto);
+			try {
+				const usersTransactions = await this.tradeReadOnlyRepository.fetch({ user_id: userDto.id }, false);
+				let investedValue = await this.getInvestedValue(userDto, usersTransactions);
+				let returnValue = await this.getReturnValue(userDto, usersTransactions, investedValue);
 				let portfolioValue = this.getPortfolioValue(investedValue, returnValue);
-		
+
 				resolve({
 					portfolio: Number.parseFloat(portfolioValue.toFixed(2)),
 					invested: Number.parseFloat(investedValue.toFixed(2)),
 					return: Number.parseFloat(returnValue.toFixed(2)),
 				})
-			} catch(error){
+			} catch (error) {
 				reject(error);
 			}
 		})
@@ -39,100 +40,69 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 		return investedValue + returnValue;
 	}
 
-	private async getInvestedValue(user: IUserDto) {
-		const transactions = await this.tradeReadOnlyRepository.fetch({ user_id: user.id });
+	private async getInvestedValue(user: IUserDto, usersTransactions: ITradeDto[]) {
+		const groupByStock = this.groupBy('stock_id');
+		const groupedTransactions: {[key: string]: ITradeDto[]} = groupByStock(usersTransactions);
 
-		const buyTrades = transactions.filter(
-			(trade: ITradeDto) => trade.trade_type === "Buy"
-		);
-
-		const buyTradesValues: number = buyTrades.reduce((acc: any, cur: any) => {
-			if (cur.trade_status === "Approved" && cur.stock_value !== undefined && cur.stock_amount > 0){
-				return acc + cur.stock_value;
-			} else {
-				return acc;
-			}
-		}, 0);
-
-		const sellTrades = transactions.filter(
-			(trade: ITradeDto) => trade.trade_type === "Sell"
-		);
-
-		const sellTradesValues: number = sellTrades.reduce((acc: any, cur: any) => {
-			if (cur.trade_status === "Approved" && cur.stock_value !== undefined && cur.stock_amount > 0) {
-				return acc + cur.stock_value;
-			} else {
-				return acc;
-			}
-		}, 0);
-
-		return buyTradesValues - sellTradesValues;
-	}
-
-	private async getReturnValue(user: IUserDto) {
-		const transactions = await this.tradeReadOnlyRepository.fetch({ user_id: user.id });
-
-		const quantities: Record<string, number> = {};
-
-		const amountPaid: Record<string, number> = {};
-
-		transactions.forEach((trade: ITradeDto) => {
-			if (trade.trade_status === "Approved") {
-				if (quantities[<string>trade.stock_id] === undefined) {
-					quantities[<string>trade.stock_id] = 0;
-				}
-
-				if (amountPaid[<string>trade.stock_id] === undefined) {
-					amountPaid[<string>trade.stock_id] = 0;
-				}
-
-				if (
-					trade.trade_type === "Buy" &&
-					trade.stock_amount !== undefined &&
-					trade.stock_value !== undefined
-				) {
-					quantities[<string>trade.stock_id] =
-						quantities[<string>trade.stock_id] + trade.stock_amount;
-					amountPaid[<string>trade.stock_id] =
-						amountPaid[<string>trade.stock_id] +
-						trade.stock_amount * trade.stock_value;
-				} else {
-					if (
-						trade.stock_amount !== undefined &&
-						trade.stock_value !== undefined
-					) {
-						quantities[<string>trade.stock_id] =
-							quantities[<string>trade.stock_id] - trade.stock_amount;
-						amountPaid[<string>trade.stock_id] =
-							amountPaid[<string>trade.stock_id] -
-							trade.stock_amount * trade.stock_value;
+		let stockInvestments: { [key: string]: { quantity: number, value: number } } = {};
+		for (let key in groupedTransactions) {
+			groupedTransactions[key].forEach((trade: ITradeDto) => {
+				if(stockInvestments[trade.stock_id!] === undefined){
+					stockInvestments[trade.stock_id!] = {
+						value: 0,
+						quantity: 0,
 					}
 				}
-			}
-		});
+				if (trade.trade_type === "Buy") {
+					stockInvestments[trade.stock_id!].value += trade.stock_amount! * trade.stock_value!;
+					stockInvestments[trade.stock_id!].quantity += trade.stock_amount!;
+				}
+				if (trade.trade_type === "Sell") {
+					stockInvestments[trade.stock_id!].value = 
+						stockInvestments[trade.stock_id!].value - (stockInvestments[trade.stock_id!].value * (trade.stock_amount! / stockInvestments[trade.stock_id!].quantity));
+						stockInvestments[trade.stock_id!].quantity -= trade.stock_amount!;
+				}
+			});
+		}
 
-		const AllStockData = await this.stockReadOnlyRepository.fetchAll();
+		let totalInvested = 0;
 
-		const returnValue = transactions.reduce((_acc: number, cur: ITradeDto) => {
-			let accumulated = 0;
+		for (let key in stockInvestments) {
+			totalInvested += stockInvestments[key].value;
+		}
 
-			const stockInfo = AllStockData.filter(
-				(stock: IStockDto) => stock.id === cur.stock_id?.toString()
-			)[0];
+		return totalInvested;
+		// For each stock that has been traded
+		// For each trade involving that stock
+		//	If buy
+		//		Mutliply quanitity by value and add to total
+		//	If sell
+		//		(total - (total * (amount sold/total quantity of stock)))
+		// return sum of total investments for each stock
+	}
 
-			let stockValueOwned: number;
+	private groupBy(key: string) {
+		return function group(array: any) {
+			return array.reduce((acc: any, obj: any) => {
+				const property = obj[key];
+				acc[property] = acc[property] || [];
+				acc[property].push(obj);
+				return acc;
+			}, {})
+		}
+	}
 
-			if (stockInfo.value !== undefined) {
-				stockValueOwned = quantities[<string>cur.stock_id] * stockInfo.value;
-			} else {
-				return _acc;
-			}
+	private async getReturnValue(user: IUserDto, usersTransactions: ITradeDto[], investedValue: number) {
+		const groupByStock = this.groupBy('stock_id');
+		const groupedTransactions: {[key: string]: ITradeDto[]} = groupByStock(usersTransactions);
 
-			accumulated = _acc + (stockValueOwned - amountPaid[<string>cur.stock_id]);
+		let currentValues = 0;
 
-			return accumulated;
-		}, 0);
+		for(let key in groupedTransactions){
+			let stock = await this.stockReadOnlyRepository.fetch({ id: key });
+			currentValues += stock[0].value!;
+		}
 
-		return returnValue;
+		return currentValues - investedValue;
 	}
 }

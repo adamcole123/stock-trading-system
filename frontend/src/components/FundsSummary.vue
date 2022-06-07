@@ -3,8 +3,10 @@
     <div>Invested: £{{ portfolio.invested }}</div>
     <div>
       Return:
-      <span v-if="portfolio.return < 0">£{{ portfolio.return }}</span>
-      <span v-else>£{{ portfolio.return }}</span>
+      <span v-if="portfolio.return > 0" style="color: green"
+        >£{{ portfolio.return }}</span
+      >
+      <span v-else style="color: red">£{{ portfolio.return }}</span>
     </div>
     <div>Portfolio: £{{ portfolio.portfolio }}</div>
   </div>
@@ -19,7 +21,9 @@ export default defineComponent({
     return {};
   },
   created() {
-    this.actionGetPortfolio();
+    setInterval(() => {
+      this.actionGetPortfolio();
+    }, 1000);
   },
   computed: {
     ...mapGetters("trade", {
