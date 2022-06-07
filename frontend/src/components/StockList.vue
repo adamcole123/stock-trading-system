@@ -7,7 +7,7 @@
       :stockAmount="tradeQuantity"
       @showHideCardConfirm="showCardConfirm = !showCardConfirm"
     />
-    <FundsSummary />
+    <FundsSummary v-if="getUserProfile.id !== ''" />
     <div class="filter-controls">
       <button @click="applyFilters(true)">Apply Filters</button>
       <button @click="clearFilters">Clear Filters</button>
@@ -205,32 +205,35 @@
       <tbody>
         <template v-for="stock in getStockData" :key="stock.id">
           <tr v-if="stock.volume > 0">
-            <div
-              v-if="
-                getUserTransactionHistory.findIndex(
-                  (trade: any) => trade.stock_id === stock.id
-                ) !== -1
-              "
-            >
-              <td
+            <div v-if="getUserProfile.id !== ''">
+              <div
                 v-if="
-                  getUserProfile.id !== '' &&
-                  Object.keys(toggledTrades).includes(stock.id)
+                  getUserTransactionHistory.findIndex(
+                    (trade: any) => trade.stock_id === stock.id
+                  ) !== -1
                 "
-                @click="viewTrades(stock.id)"
               >
-                <button>-</button>
-              </td>
-              <td
-                v-else-if="getUserProfile.id !== ''"
-                @click="viewTrades(stock.id)"
-              >
-                <button>+</button>
-              </td>
+                <td
+                  v-if="
+                    getUserProfile.id !== '' &&
+                    Object.keys(toggledTrades).includes(stock.id)
+                  "
+                  @click="viewTrades(stock.id)"
+                >
+                  <button>-</button>
+                </td>
+                <td
+                  v-else-if="getUserProfile.id !== ''"
+                  @click="viewTrades(stock.id)"
+                >
+                  <button>+</button>
+                </td>
+              </div>
+              <div v-else>
+                <td></td>
+              </div>
             </div>
-            <div v-else>
-              <td></td>
-            </div>
+
             <td>{{ stock.symbol }}</td>
             <td>{{ stock.name }}</td>
             <td v-if="stock.gains! > 0" style="color: green">
@@ -410,8 +413,10 @@ export default defineComponent({
     };
     this.applyFilters();
 
-    await this.actionGetUserTransactionHistory();
-    this.buildCanSellList();
+    if (this.getUserProfile.id !== "") {
+      await this.actionGetUserTransactionHistory();
+      this.buildCanSellList();
+    }
     socket.on("stocks", (data) => {
       this.actionUpdateStocksData([
         data.map((update: any) => {
@@ -468,6 +473,7 @@ export default defineComponent({
       delete this.filter.open;
       delete this.filter.close;
       delete this.filter.gains;
+      this.filter.page = 1;
       this.applyFilters();
     },
     previousPage() {
