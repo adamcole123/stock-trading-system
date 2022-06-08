@@ -4,10 +4,16 @@
       <div class="user-profile">
         <img src="../assets/profile-pic.webp" class="profile-pic" />
         <div class="account-info">
-          <h1>{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}</h1>
-          <h2>{{ getUserProfile.email }}</h2>
-          <h3>{{ getUserProfile.username }}</h3>
-          <h3>{{ getUserProfile.birthdate }}</h3>
+          <h1>
+            {{ getUserProfile.firstName }}
+            {{ getUserProfile.lastName }}
+          </h1>
+          <h3>Username: {{ getUserProfile.username }}</h3>
+          <h3>Email Address: {{ getUserProfile.email }}</h3>
+          <h3>
+            Date of Birth:
+            {{ moment(getUserProfile.birthDate).format("DD/MM/YYYY") }}
+          </h3>
           <router-link
             :to="{
               name: 'user',
@@ -36,9 +42,15 @@ import { defineComponent } from "vue";
 import { mapGetters, mapActions } from "vuex";
 import TransactionHistory from "./TransactionHistory.vue";
 import ReportsList from "./ReportsList.vue";
+import moment from "moment";
 
 export default defineComponent({
   name: "AccountDetails",
+  data: function () {
+    return {
+      moment: moment,
+    };
+  },
   computed: {
     ...mapGetters("auth", {
       getUserProfile: "getUserProfile",
