@@ -2,10 +2,10 @@
   <div>
     <h1>Enter new password</h1>
 
-    <label>Password</label>
-    <input type="password" v-model="password" />
+    <label>Password</label><br />
+    <input type="password" v-model="password" /><br />
 
-    <label>Retype password</label>
+    <label>Retype password</label><br />
     <input type="password" v-model="retypePassword" />
 
     <button @click="resetPassword">Reset Password</button>
