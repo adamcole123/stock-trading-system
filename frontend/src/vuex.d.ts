@@ -18,6 +18,7 @@ declare module "@vue/runtime-core" {
     getCompanyDetailsApiStatus: "";
     editCompanyApiStatus: "";
     newCompanyApiStatus: "";
+    lastPageNumApiStatus: "";
     makeUserBrokerApiStatus: "";
     passwordResetRequestApiStatus: "";
     requestAccountDeactivationApiStatus: "";
@@ -36,6 +37,7 @@ declare module "@vue/runtime-core" {
     activationApiStatus: "";
     allUsers: [];
     portfolio: { [key: string]: number };
+    lastPageNum: number;
   }
 
   // provide typings for `this.$store`

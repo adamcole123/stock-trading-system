@@ -5,17 +5,22 @@
       :tradeType="typeOfTrade"
       :stockId="idOfStock"
       :stockAmount="tradeQuantity"
+      :stockPrice="tradePrice"
+      :stockName="stockName"
+      :stockSymbol="stockSymbol"
       @showHideCardConfirm="showCardConfirm = !showCardConfirm"
     />
     <FundsSummary v-if="getUserProfile.id !== ''" />
-    <div class="filter-controls">
+    <div class="filter-controls" v-if="filtersEntered()">
       <button @click="applyFilters(true)">Apply Filters</button>
       <button @click="clearFilters">Clear Filters</button>
     </div>
     <table class="stocklist">
       <thead>
         <tr>
-          <th v-if="getUserProfile.id !== ''"></th>
+          <th
+            v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+          ></th>
           <th align="left">
             <input type="text" v-model="filter.symbol" placeholder="Symbol" />
             <button @click="orderBy('symbol')">
@@ -67,7 +72,12 @@
             </button>
           </th>
           <th align="left">
-            <input type="text" v-model="filter.gains" placeholder="Gains" />
+            <input
+              type="number"
+              v-model="filter.gains"
+              placeholder="Gains"
+              step="0.01"
+            />
             <button @click="orderBy('gains')">
               <div
                 v-if="
@@ -90,7 +100,13 @@
             </button>
           </th>
           <th align="left">
-            <input type="text" v-model="filter.value" placeholder="Value" />
+            <input
+              type="number"
+              v-model="filter.value"
+              placeholder="Value"
+              step="0.01"
+              min="0"
+            />
             <button @click="orderBy('value')">
               <div
                 v-if="
@@ -113,7 +129,12 @@
             </button>
           </th>
           <th align="left">
-            <input type="text" v-model="filter.volume" placeholder="Volume" />
+            <input
+              type="number"
+              v-model="filter.volume"
+              placeholder="Volume"
+              min="0"
+            />
             <button @click="orderBy('volume')">
               <div
                 v-if="
@@ -136,7 +157,13 @@
             </button>
           </th>
           <th align="left">
-            <input type="text" v-model="filter.open" placeholder="Open" />
+            <input
+              type="number"
+              v-model="filter.open"
+              placeholder="Open"
+              step="0.01"
+              min="0"
+            />
             <button @click="orderBy('open')">
               <div
                 v-if="
@@ -159,7 +186,13 @@
             </button>
           </th>
           <th align="left">
-            <input type="text" v-model="filter.close" placeholder="Close" />
+            <input
+              type="number"
+              v-model="filter.close"
+              placeholder="Close"
+              step="0.01"
+              min="0"
+            />
             <button @click="orderBy('close')">
               <div
                 v-if="
@@ -183,7 +216,9 @@
           </th>
         </tr>
         <tr>
-          <th v-if="getUserProfile.id !== ''"></th>
+          <th
+            v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+          ></th>
           <th></th>
           <th></th>
           <th align="left">Gains</th>
@@ -191,7 +226,11 @@
           <th align="left">Volume</th>
           <th align="left">Open</th>
           <th align="left">Close</th>
-          <th align="left" colspan="2" v-if="getUserProfile.id !== ''">
+          <th
+            align="left"
+            colspan="2"
+            v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+          >
             Quantity
             <input
               type="number"
@@ -205,7 +244,13 @@
       <tbody>
         <template v-for="stock in getStockData" :key="stock.id">
           <tr v-if="stock.volume > 0">
-            <div v-if="getUserProfile.id !== ''">
+            <div
+              v-if="
+                getUserProfile.id !== '' &&
+                getUserTransactionHistory !== undefined &&
+                getUserProfile.role === 'User'
+              "
+            >
               <div
                 v-if="
                   getUserTransactionHistory.findIndex(
@@ -246,24 +291,42 @@
             <td>{{ stock.volume }}</td>
             <td>{{ stock.open }}</td>
             <td>{{ stock.close }}</td>
-            <td v-if="getUserProfile.id !== ''">
+            <td
+              v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+            >
               <div
                 v-if="
                   getUserProfile.credit > stock.value * tradeQuantity &&
                   tradeQuantity > 0
                 "
               >
-                <button align="left" @click="buyStocks(stock.id)">Buy</button>
+                <button
+                  align="left"
+                  @click="
+                    buyStocks(stock.id, stock.value, stock.symbol, stock.name)
+                  "
+                >
+                  Buy
+                </button>
               </div>
               <div v-else>
                 <button align="left" style="visibility: hidden">Buy</button>
               </div>
             </td>
-            <td v-if="getUserProfile.id !== ''">
+            <td
+              v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+            >
               <div
                 v-if="canSell[stock.id] >= tradeQuantity && tradeQuantity > 0"
               >
-                <button align="left" @click="sellStocks(stock.id)">Sell</button>
+                <button
+                  align="left"
+                  @click="
+                    sellStocks(stock.id, stock.value, stock.symbol, stock.name)
+                  "
+                >
+                  Sell
+                </button>
               </div>
               <div v-else>
                 <button align="left" style="visibility: hidden">Sell</button>
@@ -339,11 +402,10 @@
         <option>100</option>
         <option value="">All</option>
       </select>
-      <div>
-        <button @click="nextPage" v-if="filter.limit !== undefined">
-          Next Page
-        </button>
-        {{ Number(filter.page) + 1 }}
+      <div v-if="filter.page !== getLastPageNum && filter.limit !== undefined">
+        <button @click="nextPage">Next Page</button>
+        {{ Number(filter.page) + 1
+        }}{{ getLastPageNum !== undefined ? `/${getLastPageNum}` : "/?" }}
       </div>
     </div>
   </div>
@@ -374,7 +436,10 @@ export default defineComponent({
   data() {
     return {
       toggledTrades: {} as Record<string, Trade[]>,
+      stockSymbol: "",
+      stockName: "",
       tradeQuantity: 0,
+      tradePrice: 0,
       showCardConfirm: false,
       idOfStock: "",
       typeOfTrade: "",
@@ -389,6 +454,7 @@ export default defineComponent({
     }),
     ...mapGetters("stock", {
       getStockData: "getStockData",
+      getLastPageNum: "getLastPageNum",
     }),
     ...mapGetters("trade", {
       getBuyStocksApiStatus: "getBuyStocksApiStatus",
@@ -438,18 +504,35 @@ export default defineComponent({
     ...mapActions("stock", {
       actionGetStocksApi: "getStocksApi",
       actionUpdateStocksData: "updateStocksData",
+      actionLastPageNum: "lastPageNum",
     }),
     ...mapActions("trade", {
       actionGetStockTradesForUserApi: "stockTradesForUserApi",
     }),
-    async buyStocks(stock_id: string) {
+    async buyStocks(
+      stock_id: string,
+      stock_value: number,
+      stock_symbol: string,
+      stock_name: string
+    ) {
       this.typeOfTrade = "Buy";
       this.idOfStock = stock_id;
+      this.tradePrice = stock_value;
+      this.stockSymbol = stock_symbol;
+      this.stockName = stock_name;
       this.showCardConfirm = true;
     },
-    async sellStocks(stock_id: string) {
+    async sellStocks(
+      stock_id: string,
+      stock_value: number,
+      stock_symbol: string,
+      stock_name: string
+    ) {
       this.typeOfTrade = "Sell";
       this.idOfStock = stock_id;
+      this.tradePrice = stock_value;
+      this.stockSymbol = stock_symbol;
+      this.stockName = stock_name;
       this.showCardConfirm = true;
     },
     async viewTrades(stock_id: string) {
@@ -497,11 +580,12 @@ export default defineComponent({
         },
       });
       this.actionGetStocksApi(this.filter);
+      this.actionLastPageNum(this.filter);
     },
     limitChanged() {
+      this.filter.page = 1;
       if (this.filter.limit === "") {
         delete this.filter.limit;
-        this.filter.page = 1;
       }
       this.applyFilters();
     },
@@ -527,6 +611,7 @@ export default defineComponent({
           this.filter.orderDirection = "1";
         }
       }
+      this.filter.page = 1;
       this.applyFilters();
     },
     prepareToExit() {
@@ -548,6 +633,21 @@ export default defineComponent({
           }
         }
       });
+    },
+    filtersEntered() {
+      if (
+        this.filter.symbol ||
+        this.filter.name ||
+        this.filter.value ||
+        this.filter.volume ||
+        this.filter.open ||
+        this.filter.close ||
+        this.filter.gains
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 });

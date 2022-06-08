@@ -41,8 +41,6 @@ export default defineComponent({
       if (this.getNewCompanyApiStatus === "success") {
         this.$router.push("/account");
         alert("Company created successfully");
-      } else {
-        alert("Could not create company");
       }
     },
   },

@@ -1,5 +1,5 @@
 import { State } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 import { store } from "..";
 import router from "./../../router/index";
@@ -39,7 +39,8 @@ const actions = {
       .post("http://localhost:8000/trade/buystocks", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -57,7 +58,8 @@ const actions = {
       .post("http://localhost:8000/trade/sellstocks", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -76,7 +78,7 @@ const actions = {
       .post("http://localhost:8000/trade/stocktradesforuser", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.log(err);
       });
 
@@ -92,7 +94,7 @@ const actions = {
       .get("http://localhost:8000/trade/portfolio", {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.log(err);
       });
 
@@ -115,7 +117,7 @@ const actions = {
           withCredentials: true,
         }
       )
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.log(err);
       });
 
@@ -131,7 +133,8 @@ const actions = {
       .post(`http://localhost:8000/trade/approvetrade`, payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -149,7 +152,8 @@ const actions = {
       .post(`http://localhost:8000/trade/rejecttrade`, payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -167,7 +171,7 @@ const actions = {
       .get(`http://localhost:8000/trade/pendingtrades`, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.log(err);
       });
 

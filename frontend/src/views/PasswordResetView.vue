@@ -6,7 +6,7 @@
     <input type="password" v-model="password" />
 
     <label>Retype password</label>
-    <input type="password" v-model="password" />
+    <input type="password" v-model="retypePassword" />
 
     <button @click="resetPassword">Reset Password</button>
   </div>
@@ -20,6 +20,7 @@ export default defineComponent({
   data() {
     return {
       password: "",
+      retypePassword: "",
     };
   },
   methods: {
@@ -27,6 +28,10 @@ export default defineComponent({
       actionPasswordReset: "passwordReset",
     }),
     async resetPassword() {
+      if (this.password !== this.retypePassword) {
+        alert("Passwords do not match");
+        return;
+      }
       const payload = {
         password: this.password,
         key: this.$route.query.key,

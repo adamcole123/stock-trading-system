@@ -10,8 +10,8 @@
           <table class="stocklist">
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Symbol</th>
+                <th>Name</th>
                 <th></th>
               </tr>
             </thead>
@@ -146,7 +146,7 @@ export default defineComponent({
     }),
   },
   created() {
-    this.actionGetStocksApi();
+    this.actionGetStocksApi({ orderBy: "symbol", orderDirection: "1" });
   },
   methods: {
     ...mapActions("report", {

@@ -1,6 +1,6 @@
 import { State } from "vue";
 import { GetterTree } from "vuex";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 import router from "../../router";
 import { store } from "..";
@@ -84,7 +84,8 @@ const actions = {
       .post("http://localhost:8000/user/password-reset", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -99,7 +100,6 @@ const actions = {
       }
     } else {
       commit("setPasswordResetApiStatus", "failed");
-      alert("Password reset failed");
       const userProfile = store.getters["auth/getUserProfile"];
       if (userProfile.id) {
         router.push("/account");

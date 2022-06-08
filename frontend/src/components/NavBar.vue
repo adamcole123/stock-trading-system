@@ -2,7 +2,11 @@
   <div>
     <div class="navbar">
       <div class="left">
-        <router-link to="/" class="nav-link">Home</router-link>
+        <router-link
+          :to="{ path: '/', query: { page: 1, limit: 10 } }"
+          class="nav-link"
+          >Home</router-link
+        >
         <router-link to="/about" class="nav-link">About</router-link>
         <router-link to="/contact" class="nav-link">Contact</router-link>
       </div>

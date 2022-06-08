@@ -1,5 +1,5 @@
 import { State } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
@@ -43,7 +43,8 @@ const actions = {
           withCredentials: true,
         }
       )
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 

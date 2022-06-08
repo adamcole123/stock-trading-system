@@ -1,5 +1,5 @@
 import { State } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
@@ -20,6 +20,9 @@ const getters = {
   },
   getNewCompanyApiStatus(state: State) {
     return state.newCompanyApiStatus;
+  },
+  getLastPageNum(state: State) {
+    return state.lastPageNum;
   },
 };
 
@@ -74,6 +77,8 @@ const actions = {
     const response = await axios({
       method: "get",
       url: `http://localhost:8000/stock/getOne?id=${payload.id}`,
+    }).catch((err: AxiosError) => {
+      alert(err.response?.data);
     });
 
     if (response && response.data) {
@@ -92,7 +97,8 @@ const actions = {
       .post("http://localhost:8000/stock/edit", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -108,7 +114,8 @@ const actions = {
       .post("http://localhost:8000/stock/create", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -116,6 +123,23 @@ const actions = {
       commit("setNewCompanyApiStatus", "success");
     } else {
       commit("setNewCompanyApiStatus", "failed");
+    }
+  },
+
+  async lastPageNum({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .get(`http://localhost:8000/stock/lastpagenum?limit=${payload.limit}`, {
+        withCredentials: true,
+      })
+      .catch((err: AxiosError) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setLastPageNum", response.data);
+      commit("setLastPageNumApiStatus", "success");
+    } else {
+      commit("setLastPageNumApiStatus", "failed");
     }
   },
 
@@ -153,6 +177,12 @@ const mutations = {
   },
   setNewCompanyApiStatus(state: State, data: any) {
     state.newCompanyApiStatus = data;
+  },
+  setLastPageNumApiStatus(state: State, data: any) {
+    state.lastPageNumApiStatus = data;
+  },
+  setLastPageNum(state: State, data: any) {
+    state.lastPageNum = data;
   },
 };
 
