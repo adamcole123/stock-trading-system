@@ -6,83 +6,130 @@
         <div class="new-card-modal__header">
           <h1>Enter card details</h1>
         </div>
-        <div class="new-card-modal__body__content">
-          <div class="new-card-modal__body__content__form">
-            <div class="new-card-modal__body__content__form__item">
-              <label>Card number</label>
-              <input
-                type="text"
-                placeholder="Enter card number"
-                v-model="cardDetails.cardNumber"
-              />
+        <form @submit.prevent="addNewCard()">
+          <div class="new-card-modal__body__content">
+            <div class="new-card-modal__body__content__form">
+              <div class="new-card-modal__body__content__form__item">
+                <label>Card number</label>
+                <input
+                  type="text"
+                  placeholder="Enter card number"
+                  v-model="cardDetails.cardNumber"
+                  maxlength="16"
+                  minlength="16"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>Expiry date</label>
+                <input
+                  type="text"
+                  placeholder="Enter expiry date"
+                  v-model="cardDetails.expiryDate"
+                  pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$"
+                  oninvalid="this.setCustomValidity('This must be in the format MM/YY')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>CVV</label>
+                <input
+                  type="number"
+                  placeholder="Enter CVV"
+                  v-model="cardDetails.cvv"
+                  max="999"
+                  min="000"
+                  pattern="[0-9]{3}"
+                  oninvalid="this.setCustomValidity('This must only contain 3 numbers')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>Name on card</label>
+                <input
+                  type="text"
+                  placeholder="Enter name on card"
+                  v-model="cardDetails.nameOnCard"
+                  pattern="([a-zA-Z]|\s|\.)+"
+                  oninvalid="this.setCustomValidity('This must only contain letters or spaces')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>Address Line 1</label>
+                <input
+                  type="text"
+                  placeholder="Enter address"
+                  v-model="cardDetails.addressLine1"
+                  pattern="([0-9a-zA-Z]|\s|\.)+"
+                  oninvalid="this.setCustomValidity('This must only contain letters, spaced, or numbers')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>City</label>
+                <input
+                  type="text"
+                  placeholder="Enter city"
+                  v-model="cardDetails.city"
+                  pattern="([a-zA-Z]|\s|\.)+"
+                  oninvalid="this.setCustomValidity('This must only contain letters or spaces')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>County</label>
+                <input
+                  type="text"
+                  placeholder="Enter state"
+                  v-model="cardDetails.county"
+                  pattern="([a-zA-Z]|\s|\.)+"
+                  oninvalid="this.setCustomValidity('This must only contain letters or spaces')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>Postcode</label>
+                <input
+                  type="text"
+                  placeholder="Enter zip code"
+                  v-model="cardDetails.postcode"
+                  pattern="[A-Za-z0-9]{5,6}"
+                  oninvalid="this.setCustomValidity('This must be in postcode format e.g. IG48HG')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <div class="new-card-modal__body__content__form__item">
+                <label>Country</label>
+                <input
+                  type="text"
+                  placeholder="Enter country"
+                  v-model="cardDetails.country"
+                  pattern="([a-zA-Z]|\s|\.)+"
+                  oninvalid="this.setCustomValidity('This must only contain letters or spaces')"
+                  onchange="try{setCustomValidity('')}catch(e){}"
+                  oninput="setCustomValidity(' ')"
+                  required
+                />
+              </div>
+              <input type="submit" value="Confirm" />
             </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>Expiry date</label>
-              <input
-                type="text"
-                placeholder="Enter expiry date"
-                v-model="cardDetails.expiryDate"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>CVV</label>
-              <input
-                type="text"
-                placeholder="Enter CVV"
-                v-model="cardDetails.cvv"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>Name on card</label>
-              <input
-                type="text"
-                placeholder="Enter name on card"
-                v-model="cardDetails.nameOnCard"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>Address Line 1</label>
-              <input
-                type="text"
-                placeholder="Enter address"
-                v-model="cardDetails.addressLine1"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>City</label>
-              <input
-                type="text"
-                placeholder="Enter city"
-                v-model="cardDetails.city"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>County</label>
-              <input
-                type="text"
-                placeholder="Enter state"
-                v-model="cardDetails.county"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>Postcode</label>
-              <input
-                type="text"
-                placeholder="Enter zip code"
-                v-model="cardDetails.postcode"
-              />
-            </div>
-            <div class="new-card-modal__body__content__form__item">
-              <label>Country</label>
-              <input
-                type="text"
-                placeholder="Enter country"
-                v-model="cardDetails.country"
-              />
-            </div>
-            <button @click="addNewCard()">Confirm</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

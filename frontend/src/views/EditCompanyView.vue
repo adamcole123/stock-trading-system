@@ -3,7 +3,12 @@
     <h1>Edit Company Details</h1>
     <div class="form-group" v-for="key in Object.keys(company)" :key="key">
       <label>{{ splitCamelCaseOriginal(key) }}</label>
-      <input v-model="company[key]" />
+      <input
+        v-if="key === 'id' || key === 'gains' || key === 'latest_trade'"
+        v-model="company[key]"
+        disabled
+      />
+      <input v-model="company[key]" v-else />
     </div>
     <button class="btn btn-primary" @click="updateCompany">Save</button>
   </div>
@@ -46,21 +51,15 @@ export default defineComponent({
       if (this.getEditCompanyApiStatus === "success") {
         await this.actionGetCompanyDetailsApi({ id: this.company.id });
         alert("Company details updated successfully");
-      } else {
-        alert("Could not edit company");
       }
     },
   },
   created() {
     this.actionGetCompanyDetailsApi({
       id: this.$route.query.id,
-    })
-      .then((company) => {
-        this.company = company;
-      })
-      .catch(() => {
-        alert("Could not get company details");
-      });
+    }).then((company) => {
+      this.company = company;
+    });
   },
 });
 </script>

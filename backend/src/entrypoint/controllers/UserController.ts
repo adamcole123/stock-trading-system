@@ -306,6 +306,10 @@ export default class UserController implements interfaces.Controller {
 			delete edittedUser.banUntil;
 		}
 
+		if(edittedUser.credit !== undefined) {
+			delete edittedUser.credit;
+		}
+
 		if(verified.role !== "Admin" && verified.username === req.body.username){
 			if(!req.body.key){
 				return await this.sendEmailUseCase.invoke({

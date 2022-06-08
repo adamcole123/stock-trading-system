@@ -1,12 +1,13 @@
 <template>
   <div>
-    <form class="form">
+    <form class="form" @submit.prevent="register">
       <label for="firstName">First Name</label>
       <input
         type="text"
         v-model="registerInfo.firstName"
         placeholder="First Name"
         name="firstName"
+        required
       />
       <label for="lastName">Last Name</label>
       <input
@@ -14,6 +15,7 @@
         v-model="registerInfo.lastName"
         placeholder="Last Name"
         name="lastName"
+        required
       />
       <label for="email">Email</label>
       <input
@@ -21,6 +23,7 @@
         v-model="registerInfo.email"
         placeholder="Email"
         name="email"
+        required
       />
       <label for="username">Date of Birth</label>
       <input
@@ -28,6 +31,7 @@
         v-model="registerInfo.birthDate"
         placeholder="Date of Birth"
         name="birthDate"
+        required
       />
       <label for="username">Username</label>
       <input
@@ -35,6 +39,7 @@
         v-model="registerInfo.username"
         placeholder="Username"
         name="username"
+        required
       />
       <label for="password">Password</label>
       <input
@@ -42,14 +47,16 @@
         v-model="registerInfo.password"
         placeholder="Password"
         name="password"
+        required
       />
+      <input type="submit" value="Register" />
     </form>
-    <button @click="register">Register</button>
     <span v-if="errorText">{{ errorText }}</span>
   </div>
 </template>
 
 <script lang="ts">
+import moment from "moment";
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 
@@ -79,6 +86,12 @@ export default defineComponent({
       userProfile: "userProfile",
     }),
     async register() {
+      let ageOfUser = this.getAge(this.registerInfo.birthDate);
+
+      if (ageOfUser < 18) {
+        this.errorText = "You must be 18 years or older to register";
+        return;
+      }
       const payload = {
         username: this.registerInfo.username,
         password: this.registerInfo.password,
@@ -87,6 +100,7 @@ export default defineComponent({
         email: this.registerInfo.email,
         birthDate: this.registerInfo.birthDate,
       };
+
       await this.actionRegisterApi(payload);
       if (this.getRegisterApiStatus == "success") {
         await this.userProfile();
@@ -95,6 +109,16 @@ export default defineComponent({
       } else {
         this.errorText = "Could not register an account with those details";
       }
+    },
+    getAge(DOB: string) {
+      var today = new Date();
+      var birthDate = new Date(DOB);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
     },
   },
 });

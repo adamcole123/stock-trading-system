@@ -1,5 +1,5 @@
 import { State } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 import { store } from "..";
 
@@ -38,7 +38,8 @@ const actions = {
       .get(`http://localhost:8000/user/one?username=${payload.username}`, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -55,9 +56,9 @@ const actions = {
       .post("http://localhost:8000/user/edit", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
-        return err.error;
       });
 
     if (response && response.data) {

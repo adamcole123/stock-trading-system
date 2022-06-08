@@ -1,12 +1,13 @@
 <template>
   <div>
-    <form class="form">
+    <form class="form" @submit.prevent="login">
       <label for="username">Username</label>
       <input
         type="text"
         v-model="loginInfo.username"
         placeholder="Username"
         name="username"
+        required
       />
       <label for="password">Password</label>
       <input
@@ -14,9 +15,10 @@
         v-model="loginInfo.password"
         placeholder="Password"
         name="password"
+        required
       />
+      <input type="submit" value="Login" />
     </form>
-    <button @click="login">Login</button>
     <router-link to="/password-reset-request">Forgot Password?</router-link>
     <span v-if="errorText">{{ errorText }}</span>
   </div>

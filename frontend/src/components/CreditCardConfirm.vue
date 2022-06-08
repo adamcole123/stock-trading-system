@@ -21,6 +21,12 @@
             </option>
           </select>
           <button @click="showAddCardModal()">Add new card</button>
+          <span>Stock Name: {{ stockName }}</span>
+          <span>Stock Symbol: {{ stockSymbol }}</span>
+          <span>Trade Type: {{ tradeType }}</span>
+          <span>Quantity: {{ stockAmount }}</span>
+          <span>Price: {{ stockPrice }}</span>
+          <span>Total: {{ stockPrice * stockAmount }}</span>
           <button v-if="tradeType == 'Buy'" @click="buyStocks()">
             Confirm
           </button>
@@ -48,7 +54,14 @@ export default defineComponent({
   components: {
     AddNewCard,
   },
-  props: ["tradeType", "stockId", "stockAmount"],
+  props: [
+    "tradeType",
+    "stockId",
+    "stockAmount",
+    "stockPrice",
+    "stockName",
+    "stockSymbol",
+  ],
   computed: {
     ...mapGetters("auth", {
       getUserProfile: "getUserProfile",
@@ -71,12 +84,12 @@ export default defineComponent({
       };
       await this.actionBuyStocksApi(payload);
       if (this.getBuyStocksApiStatus == "success") {
-        alert("Buy trade successfully!");
+        alert("Buy trade successful!");
         this.hideCreditConfirmModal();
       } else {
-        alert("Buy trade failed!");
         this.hideCreditConfirmModal();
       }
+      this.$router.go(0);
     },
     async sellStocks() {
       const payload = {
@@ -86,12 +99,12 @@ export default defineComponent({
       };
       await this.actionSellStocksApi(payload);
       if (this.getSellStocksApiStatus == "success") {
-        alert("Sell trade successfully!");
+        alert("Sold trade successful!");
         this.hideCreditConfirmModal();
       } else {
-        alert("Sell trade failed!");
         this.hideCreditConfirmModal();
       }
+      this.$router.go(0);
     },
     hideCreditConfirmModal() {
       this.$emit("showHideCardConfirm");

@@ -14,6 +14,7 @@ import IUserDto from "src/usecases/data_tranfer_objects/IUserDto";
 import jwt from 'jsonwebtoken';
 import UserServiceLocator from '../../configuration/UserServiceLocator';
 import IValidateUserTokenUseCase from '../../usecases/Users/IValidateUserTokenUseCase';
+import IGetLastPageNumUseCase from "../../usecases/Stocks/IGetLastPageNumUseCase";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ export default class StockController implements interfaces.Controller {
 	private readonly getAllStocksUseCase: IGetAllStocksUseCase;
 	private readonly getOneStockUseCase: IGetOneStockUseCase;
 	private readonly editStockUseCase: IEditStockUseCase;
+	private readonly getLastPageNumUseCase: IGetLastPageNumUseCase;
 	private readonly validateUserTokenUseCase: IValidateUserTokenUseCase;
 	
 	constructor(@inject(TYPES.StockServiceLocator) serviceLocator: StockServiceLocator,
@@ -31,6 +33,7 @@ export default class StockController implements interfaces.Controller {
 		this.getAllStocksUseCase = serviceLocator.GetGetAllStocksUseCase();
 		this.getOneStockUseCase = serviceLocator.GetGetOneStockUseCase();
 		this.editStockUseCase = serviceLocator.GetEditStockUseCase();
+		this.getLastPageNumUseCase = serviceLocator.GetGetLastPageNumUseCase();
 		this.validateUserTokenUseCase = userServiceLocator.GetValidateUserTokenUseCase();
 	}
 	
@@ -46,6 +49,16 @@ export default class StockController implements interfaces.Controller {
 		return await this.getOneStockUseCase.invoke(reqStock)
 			.then((stockDto: IStockDto) => {
 				res.status(200).json(stockDto)
+			})
+			.catch((err: Error) => res.status(500).json(err));
+	
+	}
+
+	@httpGet('/lastpagenum')
+	public async lastPageNum(@request() req: express.Request, @response() res: express.Response){		
+		return await this.getLastPageNumUseCase.invoke(Number(req.query.limit))
+			.then((lastPage: number) => {
+				res.status(200).json(lastPage)
 			})
 			.catch((err: Error) => res.status(500).json(err));
 	}
