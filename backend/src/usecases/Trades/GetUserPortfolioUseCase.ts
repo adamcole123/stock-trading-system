@@ -53,14 +53,16 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 						quantity: 0,
 					}
 				}
-				if (trade.trade_type === "Buy") {
-					stockInvestments[trade.stock_id!].value += trade.stock_amount! * trade.stock_value!;
-					stockInvestments[trade.stock_id!].quantity += trade.stock_amount!;
-				}
-				if (trade.trade_type === "Sell") {
-					stockInvestments[trade.stock_id!].value = 
-						stockInvestments[trade.stock_id!].value - (stockInvestments[trade.stock_id!].value * (trade.stock_amount! / stockInvestments[trade.stock_id!].quantity));
-						stockInvestments[trade.stock_id!].quantity -= trade.stock_amount!;
+				if(trade.trade_status === "Approved") {
+					if (trade.trade_type === "Buy") {
+						stockInvestments[trade.stock_id!].value += trade.stock_amount! * trade.stock_value!;
+						stockInvestments[trade.stock_id!].quantity += trade.stock_amount!;
+					}
+					if (trade.trade_type === "Sell") {
+						stockInvestments[trade.stock_id!].value = 
+							stockInvestments[trade.stock_id!].value - (stockInvestments[trade.stock_id!].value * (trade.stock_amount! / stockInvestments[trade.stock_id!].quantity));
+							stockInvestments[trade.stock_id!].quantity -= trade.stock_amount!;
+					}
 				}
 			});
 		}
@@ -72,13 +74,6 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 		}
 
 		return totalInvested;
-		// For each stock that has been traded
-		// For each trade involving that stock
-		//	If buy
-		//		Mutliply quanitity by value and add to total
-		//	If sell
-		//		(total - (total * (amount sold/total quantity of stock)))
-		// return sum of total investments for each stock
 	}
 
 	private groupBy(key: string) {
