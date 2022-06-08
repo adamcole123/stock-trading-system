@@ -18,41 +18,11 @@ import jwt from 'jsonwebtoken';
 import TradeController from '../TradeController';
 import UserController from '../UserController';
 import StockController from '../StockController';
-import ISendEmailUseCase from '../../../usecases/Email/ISendEmailUseCase';
-import DownloadReportUseCase from '../../../usecases/Reports/DownloadReportUseCase';
-import IDownloadReportUseCase from '../../../usecases/Reports/IDownloadReportUseCase';
-import IGenerateReportUseCase from '../../../usecases/Reports/IGenerateReportUseCase';
-import ICreateStockUseCase from '../../../usecases/Stocks/ICreateStockUseCase';
-import IEditStockUseCase from '../../../usecases/Stocks/IEditStockUseCase';
-import IGetLastPageNumUseCase from '../../../usecases/Stocks/IGetLastPageNumUseCase';
-import IGetOneStockUseCase from '../../../usecases/Stocks/IGetOneStockUseCase';
-import IApproveTradeUseCase from '../../../usecases/Trades/IApproveTradeUseCase';
-import IBuyStocksUseCase from '../../../usecases/Trades/IBuyStocksUseCase';
-import IGetUserPortfolioUseCase from '../../../usecases/Trades/IGetUserPortfolioUseCase';
-import IGetUserTransactionsByStatusUseCase from '../../../usecases/Trades/IGetUserTransactionsByStatusUseCase';
-import IGetUserTransactionHistoryUseCase from '../../../usecases/Trades/IGetUserTransactionHistoryUseCase';
-import IRejectTradeUseCase from '../../../usecases/Trades/IRejectTradeUseCase';
-import ISellStocksUseCase from '../../../usecases/Trades/ISellStocksUseCase';
-import IStockTradesForUserUseCase from '../../../usecases/Trades/IStockTradesForUserUseCase';
-import IActivateUserAccountUseCase from '../../../usecases/Users/IActivateUserAccountUseCase';
-import IAddNewCreditCardUseCase from '../../../usecases/Users/IAddNewCreditCardUseCase';
-import IEditUserDetailsUseCase from '../../../usecases/Users/IEditUserDetailsUseCase';
-import IGetAllUsersUseCase from '../../../usecases/Users/IGetAllUsersUseCase';
-import IPasswordResetUseCase from '../../../usecases/Users/IPasswordResetUseCase';
-import IUserRegisterUseCase from '../../../usecases/Users/IUserRegisterUseCase';
-import IUserSignInUseCase from '../../../usecases/Users/IUserSignInUseCase';
-import IValidateUserTokenUseCase from '../../../usecases/Users/IValidateUserTokenUseCase';
-import IGetAllStocksUseCase from '../../../usecases/Stocks/IGetAllStocksUseCase';
-import GetUserTransactionsByStatusUseCase from '../../../usecases/Trades/GetUserTransactionsByStatusUseCase';
-import { report } from 'process';
-import Trade from '../../../usecases/entities/Trade';
-import StockServiceLocator from '../../../configuration/StockServiceLocator';
-import UserServiceLocator from '../../../configuration/UserServiceLocator';
-import TradeServiceLocator from '../../../configuration/TradeServiceLocator';
-import EmailServiceLocator from '../../../configuration/EmailServiceLocator';
 import IEncrypter from '../../../infrastructure/IEncrypter';
 import Encrypter from '../../../infrastructure/Encrypter';
 import TestServiceLocator from './TestServiceLocator';
+import StockServiceLocator from '../../../../src/configuration/StockServiceLocator';
+import UserServiceLocator from '../../../../src/configuration/UserServiceLocator';
 
 const container = new Container();
 
@@ -91,7 +61,7 @@ describe('Controller error tests', () => {
 		cleanUpMetadata();
 		dotenv.config();
 		reportController = new ReportController(container.get<ReportServiceLocator>(Symbol.for("ReportServiceLocator")));
-		// stockController = new StockController(container.get<StockServiceLocator>(Symbol.for("StockServiceLocator")), container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")));
+		stockController = new StockController(container.get<StockServiceLocator>(Symbol.for("StockServiceLocator")), container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")));
 		// userController = new UserController(container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")), container.get<EmailServiceLocator>(Symbol.for("EmailServiceLocator")));
 		// tradeController = new TradeController(container.get<TradeServiceLocator>(Symbol.for("TradeServiceLocator")), container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")));
 	});
@@ -221,6 +191,65 @@ describe('Controller error tests', () => {
 		let responseObj = httpMocks.createResponse();
 
 		await reportController.download(requestObj, responseObj);
+		expect(responseObj.statusCode).toEqual(500);
+	})
+	it('Get one stock no id', async () => {
+		let requestObj = httpMocks.createRequest({
+			cookies: {
+				token: jwt.sign({ id: 'test' }, process.env.JWT_SECRET_KEY!),
+			},
+			query: {
+				symbol: 'test'
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await stockController.getStock(requestObj, responseObj);
+		expect(responseObj.statusCode).toEqual(500);
+	})
+	it('Get one stock no symbol', async () => {
+		let requestObj = httpMocks.createRequest({
+			cookies: {
+				token: jwt.sign({ id: 'test' }, process.env.JWT_SECRET_KEY!),
+			},
+			query: {
+				id: 'test'
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await stockController.getStock(requestObj, responseObj);
+		expect(responseObj.statusCode).toEqual(500);
+	})
+	it('Get one stock no symbol or id', async () => {
+		let requestObj = httpMocks.createRequest({
+			cookies: {
+				token: jwt.sign({ id: 'test' }, process.env.JWT_SECRET_KEY!),
+			},
+			query: {}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await stockController.getStock(requestObj, responseObj);
+		expect(responseObj.statusCode).toEqual(400);
+	})
+	it('Get one stock use case throws error', async () => {
+		let requestObj = httpMocks.createRequest({
+			cookies: {
+				token: jwt.sign({ id: 'test' }, process.env.JWT_SECRET_KEY!),
+			},
+			query: {
+				id: 'test',
+				symbol: 'test'
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await stockController.getStock(requestObj, responseObj);
 		expect(responseObj.statusCode).toEqual(500);
 	})
 })
