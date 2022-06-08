@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <tr v-for="trade in getPendingTrades" :key="trade.id">
-        <td>{{ trade.time_of_trade }}</td>
+        <td>{{ moment(trade.time_of_trade).format("DD-MM-YYYY hh:mm:ss") }}</td>
         <td>{{ trade.user_id }}</td>
         <td>{{ trade.stock_amount }}</td>
         <td>{{ trade.stock_id.value }}</td>
@@ -33,9 +33,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
+import moment from "moment";
 
 export default defineComponent({
   name: "ApproveRejectTrades",
+  data() {
+    return {
+      moment: moment,
+    };
+  },
   methods: {
     ...mapActions("trade", {
       actionApproveTradeApi: "approveTrade",

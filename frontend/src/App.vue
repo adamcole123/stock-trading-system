@@ -1,13 +1,24 @@
 <template>
   <div>
     <NavBar />
-    <router-view class="content"></router-view>
+    <Transition>
+      <Suspense>
+        <div>
+          <router-view class="content" v-if="$route.path !== '/'"></router-view>
+          <router-view class="home" v-else></router-view>
+        </div>
+        <template #fallback>
+          <PulseLoader></PulseLoader>
+        </template>
+      </Suspense>
+    </Transition>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import NavBar from "./components/NavBar.vue";
 import { mapGetters } from "vuex";
+import PulseLoader from "../node_modules/vue-spinner/src/PulseLoader.vue";
 
 export default defineComponent({
   name: "App",
@@ -16,7 +27,7 @@ export default defineComponent({
       spinnerColor: "#456ddb",
     };
   },
-  components: { NavBar },
+  components: { NavBar, PulseLoader },
   computed: {
     ...mapGetters("auth", {
       getUserProfile: "getUserProfile",
@@ -27,10 +38,12 @@ export default defineComponent({
 
 <style>
 .navbar {
+  --bg: #172a3a;
   display: flex;
   justify-content: space-between;
   padding: 20px 20px;
-  background-color: #456ddb;
+  color: #e6ffff;
+  background-color: var(--bg);
 }
 .left,
 .right {
@@ -44,18 +57,31 @@ export default defineComponent({
   margin-right: 20px;
 }
 .nav-link {
-  color: #333;
+  color: #e6ffff;
   margin: 0 10px;
   text-decoration: none;
   cursor: pointer;
 }
 body {
-  background-color: #f5f5f5;
+  background-color: #e6ffff;
   margin: 0;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  accent-color: #172a3a;
 }
 .content {
+  width: 60%;
+  margin: 0 auto;
   padding: 20px;
+}
+.home {
+  width: 80%;
+  margin: 0 auto;
+}
+.content,
+.home {
+  --bgmain: #e6ffff;
+  background-color: var(--bgmain);
+  color: color-contrast(var(--bgmain), vs white, black);
 }
 .form {
   display: flex;
