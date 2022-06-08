@@ -196,4 +196,31 @@ describe('Controller error tests', () => {
 		await reportController.companyDetails(requestObj, responseObj);
 		expect(responseObj.statusCode).toEqual(500);
 	})
+	it('Download report use case wrong user trying to download report', async () => {
+		let requestObj = httpMocks.createRequest({
+			cookies: {
+				token: jwt.sign({ id: 'test' }, process.env.JWT_SECRET_KEY!),
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await reportController.download(requestObj, responseObj);
+		expect(responseObj.statusCode).toEqual(401);
+	})
+	it('Download report use case throws error', async () => {
+		let requestObj = httpMocks.createRequest({
+			cookies: {
+				token: jwt.sign({ id: 'test' }, process.env.JWT_SECRET_KEY!),
+			},
+			query: {
+				user_id: 'test'
+			}
+		});
+
+		let responseObj = httpMocks.createResponse();
+
+		await reportController.download(requestObj, responseObj);
+		expect(responseObj.statusCode).toEqual(500);
+	})
 })
