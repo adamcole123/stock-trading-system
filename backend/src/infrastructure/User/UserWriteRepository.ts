@@ -89,7 +89,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 				try{
 					let newCredit: number;
 					if(userEditOptions.tradeMode !== undefined){
-						newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
+						newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : userDto!.credit;
 						user.credit = newCredit;
 					} else {
 						user = Object.assign(user, userDto);

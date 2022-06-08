@@ -7,7 +7,6 @@ import User from '../User/User';
 import UserReadRepository from '../User/UserReadRepository';
 import UserWriteRepository from '../User/UserWriteRepository';
 
-jest.useRealTimers();
 
 describe('User Repositories', () => {
 
@@ -15,9 +14,9 @@ describe('User Repositories', () => {
 	let userWriteRepository = new UserWriteRepository();
 
 	beforeAll(async () => {
-		if (config.Memory) { // Config to decided if an mongodb-memory-server instance should be used
-			// it's needed in global space, because we don't want to create a new instance every test-suite
+		if (config.Memory) { 
 			const instance = await MongoMemoryServer.create();
+			
 			const uri = instance.getUri();
 			(global as any).__MONGOINSTANCE = instance;
 			process.env.MONGO_URI = `${uri}`;
@@ -128,6 +127,38 @@ describe('User Repositories', () => {
 			username: "testusername"
 		}));
 	})
+
+	it('fetch by email', async () => {
+		let user = await userReadRepository.fetch({
+			email: "testemail@test.com"
+		});
+
+		expect(user).toEqual(expect.objectContaining({
+			cardDetails: expect.arrayContaining([
+				expect.objectContaining({
+					cardDetails: "hashedCardDetails",
+					key: "key"
+				})
+			]),
+			credit: 43289,
+			email: "testemail@test.com",
+			firstName: "testfirstname",
+			isDeleted: false,
+			lastName: "testlastname",
+			password: "testpassword",
+			reports: expect.arrayContaining([
+				expect.objectContaining({
+					report_data: ",,,",
+					report_type: "CSV"
+				}),
+				expect.objectContaining({
+					report_data: ",,,",
+					report_type: "XML"
+				})]),
+			role: "User",
+			username: "testusername"
+		}));
+	})
 	it('edit', async () => {
 		let user = await userWriteRepository.edit("testusername", {
 			credit: 30000
@@ -135,56 +166,65 @@ describe('User Repositories', () => {
 
 		expect(user.credit).toEqual(30000);
 	})
-	// it('create', async () => {
-	// 	let user = await userWriteRepository.create({
-	// 		username: "testusername2",
-	// 		email: "testemail2@test.com",
-	// 		firstName: "testfirstname",
-	// 		lastName: "testlastname",
-	// 		birthDate: new Date(),
-	// 		reports: [
-	// 			{
-	// 				report_data: ",,,",
-	// 				report_date: new Date(),
-	// 				report_type: "CSV"
-	// 			},
-	// 			{
-	// 				report_data: ",,,",
-	// 				report_date: new Date(),
-	// 				report_type: "XML"
-	// 			},
-	// 		],
-	// 		password: "testpassword",
-	// 		credit: 30000,
-	// 		role: "Admin",
-	// 		isDeleted: false,
-	// 		cardDetails: [
-	// 			{
-	// 				cardDetails: "hashedCardDetails",
-	// 				key: "key"
-	// 			}
-	// 		],
-	// 		activationDate: new Date()
-	// 	});
+	it('edit with tradeMode', async () => {
+		let user = await userWriteRepository.edit("testusername", {
+			credit: 30000
+		}, {
+			tradeMode: true
+		});
 
-	// 	expect(user.activationDate).toStrictEqual(expect.any(Date));
-	// 	expect(user.birthDate).toStrictEqual(expect.any(Date));
-	// 	expect(user.cardDetails![0]).toStrictEqual(expect.objectContaining({
-	// 		cardDetails: "hashedCardDetails",
-	// 		key: "key"
-	// 	}));
-	// 	expect(user.credit).toBe(30000);
-	// 	expect(user.email).toBe("testemail2@test.com");
-	// 	expect(user.firstName).toBe("testfirstname");
-	// 	expect(user.lastName).toBe("testlastname");
-	// 	expect(user.isDeleted).toBe(false);
-	// 	expect(user.reports![0]).toStrictEqual(expect.objectContaining({
-	// 		report_data: ",,,",
-	// 		report_type: "CSV"
-	// 	}));
-	// 	expect(user.reports![1]).toStrictEqual(expect.objectContaining({
-	// 		report_data: ",,,",
-	// 		report_type: "XML"
-	// 	}));
-	// })
+		expect(user.credit).toEqual(73289);
+	})
+	it('create', async () => {
+		let user = await userWriteRepository.create({
+			username: "testusername2",
+			email: "testemail2@test.com",
+			firstName: "testfirstname",
+			lastName: "testlastname",
+			birthDate: new Date(),
+			reports: [
+				{
+					report_data: ",,,",
+					report_date: new Date(),
+					report_type: "CSV"
+				},
+				{
+					report_data: ",,,",
+					report_date: new Date(),
+					report_type: "XML"
+				},
+			],
+			password: "testpassword",
+			credit: 30000,
+			role: "Admin",
+			isDeleted: false,
+			cardDetails: [
+				{
+					cardDetails: "hashedCardDetails",
+					key: "key"
+				}
+			],
+			activationDate: new Date()
+		});
+
+		expect(user.activationDate).toStrictEqual(expect.any(Date));
+		expect(user.birthDate).toStrictEqual(expect.any(Date));
+		expect(user.cardDetails![0]).toStrictEqual(expect.objectContaining({
+			cardDetails: "hashedCardDetails",
+			key: "key"
+		}));
+		expect(user.credit).toBe(30000);
+		expect(user.email).toBe("testemail2@test.com");
+		expect(user.firstName).toBe("testfirstname");
+		expect(user.lastName).toBe("testlastname");
+		expect(user.isDeleted).toBe(false);
+		expect(user.reports![0]).toStrictEqual(expect.objectContaining({
+			report_data: ",,,",
+			report_type: "CSV"
+		}));
+		expect(user.reports![1]).toStrictEqual(expect.objectContaining({
+			report_data: ",,,",
+			report_type: "XML"
+		}));
+	})
 })

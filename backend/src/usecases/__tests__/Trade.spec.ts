@@ -20,6 +20,8 @@ import IGetUserTransactionsByStatusUseCase from '../Trades/IGetUserTransactionsB
 import GetUserTransactionsByStatusUseCase from '../Trades/GetUserTransactionsByStatusUseCase';
 import IStockTradesForUserUseCase from '../Trades/IStockTradesForUserUseCase';
 import StockTradesForUserUseCase from '../Trades/StockTradesForUseUseCase';
+import GetUserPortfolioUseCase from '../Trades/GetUserPortfolioUseCase';
+import IGetUserPortfolioUseCase from '../Trades/IGetUserPortfolioUseCase';
 
 let tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
 let tradeReadOnlyRepository: ITradeReadOnlyRepository;
@@ -444,5 +446,89 @@ describe("Trade Tests", () => {
 			"time_of_trade": expect.any(Date),
 			"user_id": "testuserid"
 		}]));
+	})
+
+	it("Get user portfolio use case", async () => {
+		//Arrange
+		let getUserTransactionsByStatusUseCase: IGetUserPortfolioUseCase;
+		let tradeDto: { [key: string]: number };
+
+		// Search through trades for every trade that had user id in
+
+		tradeReadOnlyRepository = mock<ITradeReadOnlyRepository>();
+		stockReadOnlyRepository = mock<IStockReadOnlyRepository>();
+
+		let newDate = new Date();
+
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([
+			{
+				id: "teststockid",
+				name: "Test",
+				symbol: "TST",
+				value: 50,
+			}
+		])
+
+		mock(tradeReadOnlyRepository).fetch.mockResolvedValue([
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				trade_status: "Approved",
+				trade_type: "Buy",
+				stock_amount: 50,
+				stock_value: 345.6,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				trade_status: "Approved",
+				trade_type: "Sell",
+				stock_amount: 6,
+				stock_value: 87,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				trade_status: "Approved",
+				trade_type: "Buy",
+				stock_amount: 4,
+				stock_value: 67,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				trade_status: "Pending",
+				trade_type: "Buy",
+				stock_amount: 4,
+				stock_value: 67,
+				time_of_trade: newDate,
+			},
+			{
+				user_id: "testuserid",
+				stock_id: "teststockid",
+				trade_status: "Rejected",
+				trade_type: "Buy",
+				stock_amount: 4,
+				stock_value: 67,
+				time_of_trade: newDate,
+			}
+		])
+
+		getUserTransactionsByStatusUseCase = new GetUserPortfolioUseCase(stockReadOnlyRepository, tradeReadOnlyRepository);
+
+		//Act
+		tradeDto = await getUserTransactionsByStatusUseCase.invoke({
+			id: "test"
+		});
+
+		//Assert
+		expect(tradeDto).toStrictEqual(expect.objectContaining({
+			"invested": 15474.4,
+			"portfolio": 50,
+			"return": -15424.4,
+		}));
 	})
 })

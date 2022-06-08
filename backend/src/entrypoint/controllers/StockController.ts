@@ -67,7 +67,10 @@ export default class StockController implements interfaces.Controller {
 	public async getStocks(@request() req: express.Request, @response() res: express.Response){
 		req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
 		req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
-		req.body.options.volumeMode = req.body.filters.volume ? undefined : 2;
+		if(req.body.filters.volume !== undefined){
+			req.body.options = {};
+			req.body.options['volumeMode'] = req.body.filters.volume !== 0 ? undefined : 2;
+		}
 
 		if(req.body.options.order !== undefined) {
 			if(req.body.options.order.orderDirection !== undefined)

@@ -15,6 +15,7 @@ jest.useRealTimers();
 describe('Trade Repositories', () => {
 	let tradeReadRepository = new TradeReadOnlyRepository();
 	let tradeWriteRepository = new TradeWriteOnlyRepository();
+	let tradeToTest: any;
 
 	beforeAll(async () => {
 		if (config.Memory) { // Config to decided if an mongodb-memory-server instance should be used
@@ -110,7 +111,7 @@ describe('Trade Repositories', () => {
 			activationDate: new Date()
 		})
 
-		await Trade.create({
+		tradeToTest = await Trade.create({
 			user_id: user._id.toString(),
 			stock_id: stock._id.toString(),
 			stock_amount: 50,
@@ -131,10 +132,33 @@ describe('Trade Repositories', () => {
 		expect(trade.stock_value).toEqual(345.6);
 	});
 
-	it('fetch populateStocks true', async () => {
+	it('fetch populateStocks true without ID', async () => {
 		let stock = await Stock.findOne({ value: 500 })
 		let trades = await tradeReadRepository.fetch({
 			stock_id: stock?._id.toString()
+		}, true);
+
+		let trade = trades[0];
+		let populatedStock = <IStockDto>trade.stock_id;
+
+		expect(populatedStock.close).toStrictEqual(expect.objectContaining({
+			value: 500
+		})); 
+		expect(populatedStock.name).toEqual("test1name"); 
+		expect(populatedStock.open).toStrictEqual(expect.objectContaining({
+			value: 500
+		})); 
+		expect(populatedStock.symbol).toEqual("test1symbol"); 
+		expect(populatedStock.value).toStrictEqual(expect.objectContaining({
+			value: 500
+		})); 
+		expect(populatedStock.volume).toEqual(500);
+	});
+
+	it('fetch populateStocks true with ID', async () => {
+		let stock = await Stock.findOne({ value: 500 })
+		let trades = await tradeReadRepository.fetch({
+			id: tradeToTest.id.toString(),
 		}, true);
 
 		let trade = trades[0];

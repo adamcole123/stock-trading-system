@@ -141,22 +141,18 @@ describe('UserController Tests', () => {
 		expect(responseData.reports).toStrictEqual([
 			{
 				"id": "report1id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			},
 			{
 				"id": "report2id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			},
 			{
 				"id": "report3id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			},
 			{
 				"id": "report4id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			}])
 	})
