@@ -161,7 +161,7 @@ export default class UserController implements interfaces.Controller {
 					res.cookie("token", token, {
 						httpOnly: true,
 						secure: process.env.NODE_ENV === 'production',
-						expires: new Date(360000 + Date.now()),
+						expires: new Date(604800000 + Date.now()),
 					})
 						.status(200)
 						.json({ message: "Logged in successfully 😊 👌" });
@@ -267,7 +267,7 @@ export default class UserController implements interfaces.Controller {
 				res.cookie("token", token, {
 					httpOnly: true,
 					secure: process.env.NODE_ENV === 'production',
-					expires: new Date(360000 + Date.now()),
+					expires: new Date(604800000 + Date.now()),
 				})
 				.status(200).json(validated)
 			})

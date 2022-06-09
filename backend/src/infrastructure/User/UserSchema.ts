@@ -18,7 +18,10 @@ const userSchema = new Schema({
 	},
 	firstName: String,
 	lastName: String,
-	birthDate: Date,
+	birthDate: {
+		type: Date,
+		default: undefined
+	},
 	reports: [Report],
 	id: mongoose.SchemaTypes.ObjectId,
 	password: {
