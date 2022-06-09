@@ -18,14 +18,12 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 					}]
 				}).then(user => {
 					if (user) {
-						let errors = {
-							username: '',
-							email: ''
-						};
+						let errors = ""
 						if (user.username === userDto.username) {
-							errors.username = "User Name already exists";
-						} else if (user.email === userDto.email) {
-							errors.email = "Email already exists";
+							errors = `${errors}User Name already exists. `;
+						}
+						if (user.email === userDto.email) {
+							errors = `${errors}Email already exists. `;
 						}
 						reject(errors);
 					} else {

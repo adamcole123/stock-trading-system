@@ -130,13 +130,13 @@ export default defineComponent({
         birthDate: this.registerInfo.birthDate,
       };
 
-      await this.actionRegisterApi(payload);
+      let response = await this.actionRegisterApi(payload);
       if (this.getRegisterApiStatus == "success") {
         await this.userProfile();
         alert("Account registered successfully!");
         this.$router.push("/");
       } else {
-        this.errorText = "Could not register an account with those details";
+        this.errorText = response.response.data;
       }
     },
     getAge(DOB: string) {

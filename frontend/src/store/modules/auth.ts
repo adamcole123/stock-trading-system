@@ -130,20 +130,22 @@ const actions = {
     }
   },
   async registerApi({ commit, dispatch }: ContextFunction, payload: any) {
+    let error = "";
     const response = await axios
       .post("http://localhost:8000/user/register", payload, {
         withCredentials: true,
       })
       .catch((err) => {
         console.log(err);
-        return err.error;
+        error = err;
       });
 
     if (response && response.data) {
       commit("setRegisterApiStatus", "success");
-      return response.data.message;
+      return response.data;
     } else {
       commit("setRegisterApiStatus", "failed");
+      return error;
     }
   },
   async userProfile({ commit, dispatch }: ContextFunction) {
