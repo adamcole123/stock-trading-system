@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="left">
         <router-link
-          :to="{ path: '/', query: { page: 1, limit: 10 } }"
+          :to="{ path: '/', query: { page: 1, limit: 20 } }"
           class="nav-link"
           >Home</router-link
         >
