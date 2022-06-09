@@ -12,6 +12,8 @@ import GetOneStockUseCase from '../Stocks/GetOneStockUseCase';
 import IGetOneStockUseCase from '../Stocks/IGetOneStockUseCase';
 import ICreateStockUseCase from '../Stocks/ICreateStockUseCase';
 import CreateStockUseCase from '../Stocks/CreateStockUseCase';
+import GetLastPageNumUseCase from '../Stocks/GetLastPageNumUseCase';
+import IGetLastPageNumUseCase from '../Stocks/IGetLastPageNumUseCase';
 
 describe('Stock Use Cases', () => {
 	let stockReadOnlyRepository: IStockReadOnlyRepository = mock<IStockReadOnlyRepository>();
@@ -35,8 +37,9 @@ describe('Stock Use Cases', () => {
 		// Assert
 		expect(stockDto).toStrictEqual(expect.objectContaining([{
 			"close": 43242,
-			"gains": "-3890081.00",
+			"gains": undefined,
 			"id": "teststock1id",
+			"latest_trade": undefined,
 			"name": "teststock1name",
 			"open": 4324324,
 			"symbol": "teststock1symbol",
@@ -44,8 +47,9 @@ describe('Stock Use Cases', () => {
 			"volume": 44324324
 		}, {
 			"close": 43242,
-			"gains": "-3890081.00",
+			"gains": undefined,
 			"id": "teststock2id",
+			"latest_trade": undefined,
 			"name": "teststock2name",
 			"open": 4324324,
 			"symbol": "teststock2symbol",
@@ -53,8 +57,9 @@ describe('Stock Use Cases', () => {
 			"volume": 44324324
 		}, {
 			"close": 43242,
-			"gains": "-3890081.00",
+			"gains": undefined,
 			"id": "teststock3id",
+			"latest_trade": undefined,
 			"name": "teststock3name",
 			"open": 4324324,
 			"symbol": "teststock3symbol",
@@ -2440,5 +2445,102 @@ describe('Stock Use Cases', () => {
 			open: 41.2,
 			close: 39.6
 		});
+	})
+
+	it('Create stock use case no values', async () => {
+		// Arrange
+		let createStockUseCase: ICreateStockUseCase;
+		let stockDto: IStockDto;
+		const stockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
+
+		mock(stockWriteOnlyRepository).create.mockResolvedValue({
+			id: 'testaddedstockid',
+			symbol: 'testaddedstocksymbol',
+			name: 'testaddedstockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		});
+
+		createStockUseCase = new CreateStockUseCase(stockWriteOnlyRepository);
+
+		// Act
+		stockDto = await createStockUseCase.invoke({
+			symbol: 'testaddedstocksymbol',
+			name: 'testaddedstockname',
+		});
+
+		// Assert
+		expect(stockDto).toStrictEqual({
+			id: 'testaddedstockid',
+			symbol: 'testaddedstocksymbol',
+			name: 'testaddedstockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		});
+	})
+
+	it('Get last page num use case', async () => {
+		// Arrange
+		let getLastPageNumUseCase: IGetLastPageNumUseCase;
+		let lastPageNum: number;
+		const stockReadOnlyRepository = mock<IStockReadOnlyRepository>();
+
+		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		}]);
+
+		getLastPageNumUseCase = new GetLastPageNumUseCase(stockReadOnlyRepository);
+
+		// Act
+		lastPageNum = await getLastPageNumUseCase.invoke(2);
+
+		// Assert
+		expect(lastPageNum).toEqual(3);
 	})
 });

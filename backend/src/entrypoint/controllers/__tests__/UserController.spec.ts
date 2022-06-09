@@ -65,7 +65,7 @@ describe('UserController Tests', () => {
 		await controller.signInUser(requestObj, responseObj);
 
 		expect(responseObj._getStatusCode()).toBe(200);
-	})
+	});
 	it('User register route', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -94,7 +94,7 @@ describe('UserController Tests', () => {
 		await controller.registerUser(requestObj, responseObj)
 
 		expect(responseObj._getStatusCode()).toBe(200);
-	})
+	});
 	it('User validate route', async () => {
 		let token = jwt.sign(
 			`{
@@ -141,25 +141,21 @@ describe('UserController Tests', () => {
 		expect(responseData.reports).toStrictEqual([
 			{
 				"id": "report1id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			},
 			{
 				"id": "report2id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			},
 			{
 				"id": "report3id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			},
 			{
 				"id": "report4id",
-				"report_data": ",,,",
 				"report_type": "CSV"
 			}])
-	})
+	});
 	it('User edit route signed in user', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -189,7 +185,7 @@ describe('UserController Tests', () => {
 		responseData = <IUserDto>(responseData);
 
 		expect(responseData).toBe("Email sent to confirm changes!")
-	})
+	});
 	it('User edit route admin', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -243,7 +239,7 @@ describe('UserController Tests', () => {
 				"report_type": "CSV",
 			}
 		])
-	})
+	});
 	it('Password reset admin', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -277,7 +273,7 @@ describe('UserController Tests', () => {
 		responseData = <IUserDto>(responseData);
 
 		expect(responseData).toBe("Password reset successfully");
-	})
+	});
 	it('Password reset user', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -312,7 +308,7 @@ describe('UserController Tests', () => {
 		responseData = <IUserDto>(responseData);
 
 		expect(responseData).toBe("Password reset successfully");
-	})
+	});
 	it('Password reset request', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -346,7 +342,7 @@ describe('UserController Tests', () => {
 		responseData = <IUserDto>(responseData);
 
 		expect(responseData).toBe("Email sent successfully");
-	})
+	});
 	it('Get all users', async () => {
 		let requestObj = httpMocks.createRequest({
 			cookies: {
@@ -578,7 +574,7 @@ describe('UserController Tests', () => {
 			]
 		}));
 		expect(responseData).toBe("New card added successfully");
-	})
+	});
 	it('Activate user', async () => {
 		let requestObj = httpMocks.createRequest({
 			body: {
@@ -624,7 +620,7 @@ describe('UserController Tests', () => {
 			}],
 			"username": "newusername"
 		}));
-	})
+	});
 	it('Request account deactivation', async () => {
 		let requestObj = httpMocks.createRequest({
 			cookies: {
@@ -641,5 +637,5 @@ describe('UserController Tests', () => {
 		responseData = <IUserDto>(responseData);
 
 		expect(responseData).toEqual("Request sent to administrator.");
-	})
+	});
 });

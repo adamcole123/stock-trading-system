@@ -65,13 +65,20 @@ export default class StockController implements interfaces.Controller {
 
 	@httpPost('/getMany')
 	public async getStocks(@request() req: express.Request, @response() res: express.Response){
-		req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
-		req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
-		req.body.options.volumeMode = req.body.filters.volume ? undefined : 2;
+		if(req.body.filters !== undefined){
+			req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
+			req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
+			if(req.body.filters.volume !== undefined){
+				req.body.options = {};
+				req.body.options['volumeMode'] = req.body.filters.volume !== 0 ? undefined : 2;
+			}
+		}
 
-		if(req.body.options.order !== undefined) {
-			if(req.body.options.order.orderDirection !== undefined)
-				req.body.options.order.orderDirection = Number(req.body.options.order.orderDirection); 
+		if(req.body.options !== undefined){
+			if(req.body.options.order !== undefined) {
+				if(req.body.options.order.orderDirection !== undefined)
+					req.body.options.order.orderDirection = Number(req.body.options.order.orderDirection); 
+			}
 		}
 		
 
@@ -90,7 +97,7 @@ export default class StockController implements interfaces.Controller {
 			return res.status(401).json('Only an admin can add companies.');
 		}
 		
-		if(req.body.length < 1 && req.body.options === typeof(undefined)){
+		if(Object.keys(req.body).length < 1 && req.body.options === undefined){
 			return res.status(400).json({error: 'Must provide criteria or options'});
 		}
 
@@ -104,7 +111,7 @@ export default class StockController implements interfaces.Controller {
 	@httpPost('/edit')
 	public async editStock(@request() req: express.Request, @response() res: express.Response){
 		
-		if(req.body.length < 1){
+		if(Object.keys(req.body).length < 1){
 			return res.status(400).json({error: 'Must provide data to edit stock.'});
 		}
 

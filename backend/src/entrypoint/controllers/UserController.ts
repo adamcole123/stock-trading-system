@@ -73,7 +73,7 @@ export default class UserController implements interfaces.Controller {
 				res.status(200).json('Password reset successfully');
 			})
 			.catch((err: Error) => {
-				res.status(400).json(err)
+				res.status(500).json(err)
 			});
 	}
 
@@ -117,7 +117,7 @@ export default class UserController implements interfaces.Controller {
 				res.status(200).json(userDtos);
 			})
 			.catch((err: Error) => {
-				res.status(400).json(err)
+				res.status(500).json(err)
 			});
 	}
 
@@ -136,7 +136,7 @@ export default class UserController implements interfaces.Controller {
 				res.status(200).json(userDto);
 			})
 			.catch((err: Error) => {
-				res.status(400).json(err)
+				res.status(500).json(err)
 			});
 	}
 
@@ -170,7 +170,7 @@ export default class UserController implements interfaces.Controller {
 
 			})
 			.catch((err: Error) => {
-				res.status(400).json(err)
+				res.status(500).json(err)
 			});
 	}
 
@@ -216,7 +216,7 @@ export default class UserController implements interfaces.Controller {
 				});
 			})
 			.catch((err: Error) => {
-				res.status(400).json(err)
+				res.status(500).json(err)
 			});
 	}
 
@@ -249,7 +249,7 @@ export default class UserController implements interfaces.Controller {
 					.json("New card added successfully");
 			})
 			.catch((err: Error) => {
-				res.status(400).json(err)
+				res.status(500).json(err)
 			});
 	}
 

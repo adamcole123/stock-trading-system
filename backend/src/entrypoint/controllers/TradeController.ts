@@ -54,8 +54,8 @@ export default class TradeController implements interfaces.Controller {
 			return res.status(401).json({error: 'User not authorised'});
 		}
 		
-		if(!req.body.user_id && !req.body.stock_id){
-			return res.status(400).json({error: 'No user id or stock id provided'});
+		if(req.body.stock_id === undefined){
+			return res.status(400).json({error: 'No stock id provided'});
 		}
 
 		let reqTrade: ITradeDto = req.body;
@@ -76,8 +76,8 @@ export default class TradeController implements interfaces.Controller {
 			return res.status(401).json({error: 'User not authorised'});
 		}
 		
-		if(!req.body.user_id && !req.body.stock_id){
-			return res.status(400).json({error: 'No user id or stock id provided'});
+		if(req.body.stock_id === undefined){
+			return res.status(400).json({error: 'No stock id provided'});
 		}
 
 		let reqTrade: ITradeDto = req.body;

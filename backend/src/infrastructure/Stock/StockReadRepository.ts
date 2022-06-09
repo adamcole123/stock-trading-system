@@ -98,28 +98,37 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 				switch (options?.gainsMode) {
 					case 0:
 						query.gains = { $lt: stockDto?.gains };
+						break;
 					case 1:
 						query.gains = stockDto?.gains;
+						break;
 					case 2:
 						query.gains = { $gt: stockDto?.gains };
+						break;
 				}
 
 				switch (options?.valueMode) {
 					case 0:
 						query.value = { $lt: stockDto?.value };
+						break;
 					case 1:
 						query.value = stockDto?.value;
+						break;
 					case 2:
 						query.value = { $gt: stockDto?.value };
+						break;
 				}
 
 				switch (options?.volumeMode) {
 					case 0:
 						query.volume = { $lt: stockDto?.volume };
+						break;
 					case 1:
 						query.volume = stockDto?.volume;
+						break;
 					case 2:
 						query.volume = { $gt: stockDto?.volume };
+						break;
 				}
 
 				if (!options?.limit) {
