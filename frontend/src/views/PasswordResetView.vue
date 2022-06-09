@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="breadcrumb" v-if="getUserProfile.id !== ''">
+      <router-link to="/account">Back to account</router-link>
+    </div>
     <h1>Enter new password</h1>
 
     <label>Password</label><br />
@@ -13,7 +16,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   name: "PasswordResetView",
@@ -22,6 +25,11 @@ export default defineComponent({
       password: "",
       retypePassword: "",
     };
+  },
+  computed: {
+    ...mapGetters("auth", {
+      getUserProfile: "getUserProfile",
+    }),
   },
   methods: {
     ...mapActions("auth", {

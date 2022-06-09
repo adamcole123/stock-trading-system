@@ -1,5 +1,8 @@
 <template>
   <div class="edit-screen">
+    <div class="breadcrumb">
+      <router-link to="/account">Back to account</router-link>
+    </div>
     <h1>Edit Company Details</h1>
     <div class="form-group" v-for="key in Object.keys(company)" :key="key">
       <label>{{ splitCamelCaseOriginal(key) }}</label>

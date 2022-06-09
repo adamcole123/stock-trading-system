@@ -1,5 +1,8 @@
 <template>
   <div class="edit-screen">
+    <div class="breadcrumb">
+      <router-link to="/account">Back to account</router-link>
+    </div>
     <h1>Edit User Details</h1>
     <form @submit.prevent="updateUser">
       <div class="form-group" v-for="key in Object.keys(user)" :key="key">
