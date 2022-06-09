@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import { mock } from "jest-mock-extended";
+import { mock, objectContainsValue } from "jest-mock-extended";
 import IStockReadOnlyRepository from "src/application/repositories/IStockReadOnlyRepository";
 import IStockWriteOnlyRepository from "src/application/repositories/IStockWriteOnlyRepository";
 import ITradeReadOnlyRepository from "src/application/repositories/ITradeReadOnlyRepository";
@@ -33,6 +33,10 @@ import IActivateUserAccountUseCase from '../../../usecases/Users/IActivateUserAc
 import IGetAllUsersUseCase from '../../../usecases/Users/IGetAllUsersUseCase';
 import IGetUserDetailsUseCase from '../../../usecases/Users/IGetUserDetailsUseCase';
 import IPasswordResetUseCase from '../../../usecases/Users/IPasswordResetUseCase';
+import ValidateUserTokenUseCase from '../../../usecases/Users/ValidateUserTokenUseCase';
+import bcrypt from 'bcryptjs';
+import Encrypter from '../../../infrastructure/Encrypter';
+import ISendEmailUseCase from '../../../usecases/Email/ISendEmailUseCase';
 
 @injectable()
 export default class TestServiceLocator {
@@ -140,9 +144,57 @@ export default class TestServiceLocator {
 	}
 
 	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
-		let validateUserTokenUseCase: IValidateUserTokenUseCase = mock<IValidateUserTokenUseCase>();
-		mock(validateUserTokenUseCase).invoke.mockRejectedValue(new Error('Could not validate user token'));
-		return validateUserTokenUseCase;
+		let userReadOnlyRepository: IUserReadOnlyRepository = mock<IUserReadOnlyRepository>();
+		mock(userReadOnlyRepository).fetch.calledWith(objectContainsValue('testadmin')).mockResolvedValue({
+			username: "test1username",
+			email: "test1email",
+			firstName: "test1firstname",
+			lastName: "test1lastname",
+			birthDate: new Date('0'),
+			reports: [],
+			id: "testadmin",
+			password: 'testpassword',
+			credit: 50000,
+			role: "Admin",
+			isDeleted: false,
+			cardDetails: [],
+			activationDate: new Date('0'),
+			banUntil: new Date('0')
+		});
+		mock(userReadOnlyRepository).fetch.calledWith(objectContainsValue('testbroker')).mockResolvedValue({
+			username: "test1username",
+			email: "test1email",
+			firstName: "test1firstname",
+			lastName: "test1lastname",
+			birthDate: new Date('0'),
+			reports: [],
+			id: "testbroker",
+			password: 'testpassword',
+			credit: 50000,
+			role: "Broker",
+			isDeleted: false,
+			cardDetails: [],
+			activationDate: new Date('0'),
+			banUntil: new Date('0')
+		});
+		mock(userReadOnlyRepository).fetch.calledWith(objectContainsValue('testuser')).mockResolvedValue({
+			username: "test1username",
+			email: "test1email",
+			firstName: "test1firstname",
+			lastName: "test1lastname",
+			birthDate: new Date('0'),
+			reports: [],
+			id: "testuser",
+			password: 'testpassword',
+			credit: 50000,
+			role: "User",
+			isDeleted: false,
+			cardDetails: [],
+			activationDate: new Date('0'),
+			banUntil: new Date('0')
+		});
+		mock(userReadOnlyRepository).fetch.calledWith(objectContainsValue('testerror')).mockRejectedValue(new Error('Could not get user'));
+		return new ValidateUserTokenUseCase(userReadOnlyRepository, new Encrypter());
 	}
 
 	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
@@ -179,5 +231,17 @@ export default class TestServiceLocator {
 		let passwordResetUseCase: IPasswordResetUseCase = mock<IPasswordResetUseCase>();
 		mock(passwordResetUseCase).invoke.mockRejectedValue(new Error('Could not reset password'));
 		return passwordResetUseCase;
+	}
+
+	public GetSendEmailUseCase(): ISendEmailUseCase {
+		let sendEmailUseCase: ISendEmailUseCase = mock<ISendEmailUseCase>();
+		mock(sendEmailUseCase).invoke.mockResolvedValue({
+			to: ['test'],
+			from: 'test',
+			subject: 'Test',
+			bodyHtml: 'Test',
+			bodyText: 'Test'
+		});
+		return sendEmailUseCase;
 	}
 }
