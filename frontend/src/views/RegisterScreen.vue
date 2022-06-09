@@ -19,19 +19,26 @@
       />
       <label for="email">Email</label>
       <input
-        type="text"
+        type="email"
         v-model="registerInfo.email"
         placeholder="Email"
         name="email"
         required
       />
-      <label for="username">Date of Birth</label>
+      <label for="confirmEmail">Confirm Email</label>
+      <input
+        type="email"
+        v-model="confirmEmail"
+        placeholder="Confirm Email"
+        name="confirmEmail"
+        required
+      />
+      <label for="birthDate">Date of Birth</label>
       <input
         type="date"
         v-model="registerInfo.birthDate"
         placeholder="Date of Birth"
         name="birthDate"
-        required
       />
       <label for="username">Username</label>
       <input
@@ -47,6 +54,14 @@
         v-model="registerInfo.password"
         placeholder="Password"
         name="password"
+        required
+      />
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        v-model="confirmPassword"
+        placeholder="Confirm Password"
+        name="confirmPassword"
         required
       />
       <input type="submit" value="Register" />
@@ -72,6 +87,8 @@ export default defineComponent({
         password: "",
         birthDate: "",
       },
+      confirmEmail: "",
+      confirmPassword: "",
       errorText: "",
     };
   },
@@ -90,6 +107,14 @@ export default defineComponent({
 
       if (ageOfUser < 18) {
         this.errorText = "You must be 18 years or older to register";
+        return;
+      }
+      if (this.confirmEmail !== this.registerInfo.email) {
+        this.errorText = "Emails do not match";
+        return;
+      }
+      if (this.confirmPassword !== this.registerInfo.password) {
+        this.errorText = "Passwords do not match";
         return;
       }
       const payload = {
