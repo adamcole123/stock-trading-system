@@ -19,19 +19,26 @@
       />
       <label for="email">Email</label>
       <input
-        type="text"
+        type="email"
         v-model="registerInfo.email"
         placeholder="Email"
         name="email"
         required
       />
-      <label for="username">Date of Birth</label>
+      <label for="confirmEmail">Confirm Email</label>
+      <input
+        type="email"
+        v-model="confirmEmail"
+        placeholder="Confirm Email"
+        name="confirmEmail"
+        required
+      />
+      <label for="birthDate">Date of Birth</label>
       <input
         type="date"
         v-model="registerInfo.birthDate"
         placeholder="Date of Birth"
         name="birthDate"
-        required
       />
       <label for="username">Username</label>
       <input
@@ -45,8 +52,20 @@
       <input
         type="password"
         v-model="registerInfo.password"
+        pattern="[a-zA-Z0-9]{1,16}"
+        oninvalid="this.setCustomValidity('Password must be between 1 and 16 characters long and only contain letters and numbers')"
+        onchange="try{setCustomValidity('')}catch(e){}"
+        oninput="setCustomValidity(' ')"
         placeholder="Password"
         name="password"
+        required
+      />
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        v-model="confirmPassword"
+        placeholder="Confirm Password"
+        name="confirmPassword"
         required
       />
       <input type="submit" value="Register" />
@@ -72,6 +91,8 @@ export default defineComponent({
         password: "",
         birthDate: "",
       },
+      confirmEmail: "",
+      confirmPassword: "",
       errorText: "",
     };
   },
@@ -92,6 +113,14 @@ export default defineComponent({
         this.errorText = "You must be 18 years or older to register";
         return;
       }
+      if (this.confirmEmail !== this.registerInfo.email) {
+        this.errorText = "Emails do not match";
+        return;
+      }
+      if (this.confirmPassword !== this.registerInfo.password) {
+        this.errorText = "Passwords do not match";
+        return;
+      }
       const payload = {
         username: this.registerInfo.username,
         password: this.registerInfo.password,
@@ -101,13 +130,13 @@ export default defineComponent({
         birthDate: this.registerInfo.birthDate,
       };
 
-      await this.actionRegisterApi(payload);
+      let response = await this.actionRegisterApi(payload);
       if (this.getRegisterApiStatus == "success") {
         await this.userProfile();
         alert("Account registered successfully!");
         this.$router.push("/");
       } else {
-        this.errorText = "Could not register an account with those details";
+        this.errorText = response.response.data;
       }
     },
     getAge(DOB: string) {

@@ -10,7 +10,7 @@
           </h1>
           <h3>Username: {{ getUserProfile.username }}</h3>
           <h3>Email Address: {{ getUserProfile.email }}</h3>
-          <h3>
+          <h3 v-if="getUserProfile.birthDate">
             Date of Birth:
             {{ moment(getUserProfile.birthDate).format("DD/MM/YYYY") }}
           </h3>
