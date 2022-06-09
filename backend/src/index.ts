@@ -36,6 +36,7 @@ import EmailServiceLocator from './configuration/EmailServiceLocator';
 import IEncrypter from './infrastructure/IEncrypter';
 import Encrypter from './infrastructure/Encrypter';
 import Stock from './infrastructure/Stock/Stock';
+import moment from "moment";
 
 // set up container
 const container = new Container();
@@ -84,8 +85,8 @@ server.setErrorConfig( (app: express.Application) => {
         to: ["admin@stock-trading-system.com"],
         from: "error-logger@stock-trading-system.com",
         subject: "An error was caused in the system",
-        bodyText: `${err} with request ${req} and response ${res}`,
-        bodyHtml: `${err}<br />with request ${req}<br />and response ${res}`
+        bodyText: `Error occured at ${ moment(new Date()).format("DD/MM/YYYY hh:mm:ss") } with stack trace \n${err.stack}`,
+        bodyHtml: `Error occured at ${ moment(new Date()).format("DD/MM/YYYY hh:mm:ss") } with stack trace<br /> <pre>${err.stack}</pre>`
       })
     });
 });
