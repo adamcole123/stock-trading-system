@@ -52,6 +52,10 @@
       <input
         type="password"
         v-model="registerInfo.password"
+        pattern="[a-zA-Z0-9]{1,16}"
+        oninvalid="this.setCustomValidity('Password must be between 1 and 16 characters long and only contain letters and numbers')"
+        onchange="try{setCustomValidity('')}catch(e){}"
+        oninput="setCustomValidity(' ')"
         placeholder="Password"
         name="password"
         required
