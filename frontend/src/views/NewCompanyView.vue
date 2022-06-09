@@ -1,5 +1,8 @@
 <template>
   <div class="new-company-screen">
+    <div class="breadcrumb">
+      <router-link to="/account">Back to account</router-link>
+    </div>
     <h1>New Company Details</h1>
     <div class="form-group">
       <label>Company Name</label>
@@ -7,7 +10,10 @@
     </div>
     <div class="form-group">
       <label>Company Symbol</label>
-      <input v-model="company.symbol" />
+      <input
+        v-model="company.symbol"
+        onkeyup="this.value = this.value.toUpperCase();"
+      />
     </div>
     <button class="btn btn-primary" @click="createCompany">Save</button>
   </div>

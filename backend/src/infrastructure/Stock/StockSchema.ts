@@ -29,6 +29,7 @@ const stockSchema = new Schema<Stock>({
 
 stockSchema.pre('save', function (next) {
     this.gains = calcGains(this.get('value'), this.get('open'));
+	this.symbol = this.symbol.toUpperCase();
     next();
 });
 
