@@ -160,14 +160,14 @@ export default class UserController implements interfaces.Controller {
 					const token = jwt.sign(userDto, jwtSecretKey!, { expiresIn: "7 days" });
 					res.cookie("token", token, {
 						httpOnly: true,
-						secure: process.env.NODE_ENV === 'production'
+						secure: process.env.NODE_ENV === 'production',
+						expires: new Date(360000 + Date.now()),
 					})
 						.status(200)
 						.json({ message: "Logged in successfully 😊 👌" });
 				} catch (error) {
 					res.status(500).json(error)
 				}
-
 			})
 			.catch((err: Error) => {
 				res.status(500).json(err)
@@ -266,7 +266,8 @@ export default class UserController implements interfaces.Controller {
 				const token = jwt.sign(validated, jwtSecretKey!, { expiresIn: "7 days" });
 				res.cookie("token", token, {
 					httpOnly: true,
-					secure: process.env.NODE_ENV === 'production'
+					secure: process.env.NODE_ENV === 'production',
+					expires: new Date(360000 + Date.now()),
 				})
 				.status(200).json(validated)
 			})
