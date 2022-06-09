@@ -106,4 +106,9 @@ body {
 .v-leave-to {
   opacity: 0;
 }
+.breadcrumb {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 </style>

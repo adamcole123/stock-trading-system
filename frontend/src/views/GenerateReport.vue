@@ -1,6 +1,9 @@
 <template>
   <div>
     <ReportModal v-if="getReportModalVisible" />
+    <div class="breadcrumb">
+      <router-link to="/account">Back to account</router-link>
+    </div>
     <h1>Generate Reports</h1>
     <h3>Select which report to generate:</h3>
     <button @click="actionShowReportModal({ reportType: 1 })">
