@@ -69,7 +69,6 @@ export default class StockController implements interfaces.Controller {
 			req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
 			req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
 			if(req.body.filters.volume !== undefined){
-				req.body.options = {};
 				req.body.options['volumeMode'] = req.body.filters.volume !== 0 ? undefined : 2;
 			}
 		}
