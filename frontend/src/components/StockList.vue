@@ -226,6 +226,7 @@
           <th align="left">Volume</th>
           <th align="left">Open</th>
           <th align="left">Close</th>
+          <th align="left">Last Trade</th>
           <th
             align="left"
             colspan="2"
@@ -243,7 +244,7 @@
       </thead>
       <tbody>
         <template v-for="stock in getStockData" :key="stock.id">
-          <tr v-if="stock.volume > 0">
+          <tr v-if="stock.volume > 0" class="stockrow">
             <div
               v-if="
                 getUserProfile.id !== '' &&
@@ -291,6 +292,9 @@
             <td>{{ stock.volume }}</td>
             <td>{{ stock.open }}</td>
             <td>{{ stock.close }}</td>
+            <td>
+              {{ moment(stock.latest_trade).format("DD/MM/YYYY hh:mm:ss") }}
+            </td>
             <td
               v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
             >
@@ -675,5 +679,8 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+.stockrow:hover {
+  background-color: lightgrey;
 }
 </style>
