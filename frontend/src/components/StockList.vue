@@ -401,8 +401,7 @@
         </button>
       </div>
       <select v-model="filter.limit" @change="limitChanged">
-        <option>10</option>
-        <option>25</option>
+        <option>20</option>
         <option>100</option>
         <option value="">All</option>
       </select>
@@ -470,7 +469,7 @@ export default defineComponent({
     socket = io("http://localhost:8000/stockmarket");
     if (!this.$route.query.page || !this.$route.query.limit) {
       this.filter.page = 1;
-      this.filter.limit = 10;
+      this.filter.limit = 20;
     }
     if (!this.$route.query.orderBy || !this.$route.query.orderDirection) {
       this.filter.orderBy = "symbol";
