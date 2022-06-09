@@ -44,6 +44,10 @@
       <input
         type="text"
         v-model="registerInfo.username"
+        pattern="[a-zA-Z0-9]{3,16}"
+        oninvalid="this.setCustomValidity('Username must be between 3 and 16 characters')"
+        onchange="try{setCustomValidity('')}catch(e){}"
+        oninput="setCustomValidity(' ')"
         placeholder="Username"
         name="username"
         required
@@ -133,7 +137,7 @@ export default defineComponent({
       let response = await this.actionRegisterApi(payload);
       if (this.getRegisterApiStatus == "success") {
         await this.userProfile();
-        alert("Account registered successfully!");
+        alert(`Registration email send to ${this.registerInfo.email}!`);
         this.$router.push("/");
       } else {
         this.errorText = response.response.data;
