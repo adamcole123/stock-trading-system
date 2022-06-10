@@ -65,13 +65,41 @@ export default class StockController implements interfaces.Controller {
 
 	@httpPost('/getMany')
 	public async getStocks(@request() req: express.Request, @response() res: express.Response){
+		// if(req.body.filters !== undefined){
+		// 	req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
+		// 	req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
+		// 	if(req.body.filters.volume !== undefined){
+		// 		req.body.options['volumeMode'] = req.body.filters.volume !== 0 ? undefined : 2;
+		// 	}
+		// }
+
 		if(req.body.filters !== undefined){
-			req.body.filters.volume = req.body.filters.volume < 0 ? 0 : req.body.filters.volume;
-			req.body.filters.volume = req.body.filters.volume !== undefined ? req.body.filters.volume : 0;
-			if(req.body.filters.volume !== undefined){
-				req.body.options['volumeMode'] = req.body.filters.volume !== 0 ? undefined : 2;
+			if(req.body.filters.volume === undefined){
+				req.body.filters.volume = 0;
+				req.body.options.volumeMode = 2;
+			} else {
+				req.body.filters.volume = Number(req.body.filters.volume);
+				if(req.body.options.volumeMode !== undefined){
+					req.body.options.volumeMode = Number(req.body.options.volumeMode);
+				}
 			}
-		}
+			if(req.body.filters.value === undefined){
+				delete req.body.options.valueMode;
+			} else {
+				req.body.filters.value = Number(req.body.filters.value);
+				if(req.body.options.valueMode !== undefined){
+					req.body.options.valueMode = Number(req.body.options.valueMode);
+				}
+			}
+			if(req.body.filters.gains === undefined){
+				delete req.body.options.gainsMode;
+			} else {
+				req.body.filters.gains = Number(req.body.filters.gains);
+				if(req.body.options.gainsMode !== undefined){
+					req.body.options.gainsMode = Number(req.body.options.gainsMode);
+				}
+			}
+		} 
 
 		if(req.body.options !== undefined){
 			if(req.body.options.order !== undefined) {
