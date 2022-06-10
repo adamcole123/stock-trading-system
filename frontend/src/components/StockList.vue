@@ -10,7 +10,9 @@
       :stockSymbol="stockSymbol"
       @showHideCardConfirm="showCardConfirm = !showCardConfirm"
     />
-    <FundsSummary v-if="getUserProfile.id !== ''" />
+    <FundsSummary
+      v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+    />
     <div class="filter-controls" v-if="filtersEntered()">
       <button @click="applyFilters(true)">Apply Filters</button>
       <button @click="clearFilters">Clear Filters</button>
