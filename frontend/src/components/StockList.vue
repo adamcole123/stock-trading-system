@@ -295,7 +295,11 @@
             <td>{{ stock.open }}</td>
             <td>{{ stock.close }}</td>
             <td>
-              {{ moment(stock.latest_trade).format("DD/MM/YYYY hh:mm:ss") }}
+              {{
+                stock.latest_trade !== null
+                  ? moment(stock.latest_trade).format("DD/MM/YYYY hh:mm:ss")
+                  : "-"
+              }}
             </td>
             <td
               v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
