@@ -14,7 +14,6 @@
       v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
     />
     <div class="filter-controls" v-if="filtersEntered()">
-      <button @click="applyFilters(true)">Apply Filters</button>
       <button @click="clearFilters">Clear Filters</button>
     </div>
     <table class="stocklist">
@@ -24,7 +23,12 @@
             v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
           ></th>
           <th align="left">
-            <input type="text" v-model="filter.symbol" placeholder="Symbol" />
+            <input
+              type="text"
+              v-model="filter.symbol"
+              placeholder="Symbol"
+              @keyup="applyFilters(true)"
+            />
             <button @click="orderBy('symbol')">
               <div
                 v-if="
@@ -51,6 +55,7 @@
               type="text"
               v-model="filter.name"
               placeholder="Company Name"
+              @keyup="applyFilters(true)"
             />
             <button @click="orderBy('name')">
               <div
@@ -74,11 +79,23 @@
             </button>
           </th>
           <th align="left">
+            <button
+              @click="greaterLessThan('gains')"
+              v-if="filter.gains !== '' && filter.gains !== undefined"
+            >
+              <div v-if="filter.gainsMode !== undefined">
+                <span v-if="filter.gainsMode === 0">&lt;</span>
+                <span v-else-if="filter.gainsMode === 2">&gt;</span>
+                <span v-else>=</span>
+              </div>
+              <span v-else>-</span>
+            </button>
             <input
               type="number"
               v-model="filter.gains"
               placeholder="Gains"
               step="0.01"
+              @keyup="applyFilters(true)"
             />
             <button @click="orderBy('gains')">
               <div
@@ -102,12 +119,24 @@
             </button>
           </th>
           <th align="left">
+            <button
+              @click="greaterLessThan('value')"
+              v-if="filter.value !== '' && filter.value !== undefined"
+            >
+              <div v-if="filter.valueMode !== undefined">
+                <span v-if="filter.valueMode === 0">&lt;</span>
+                <span v-else-if="filter.valueMode === 2">&gt;</span>
+                <span v-else>=</span>
+              </div>
+              <span v-else>-</span>
+            </button>
             <input
               type="number"
               v-model="filter.value"
               placeholder="Value"
               step="0.01"
               min="0"
+              @keyup="applyFilters(true)"
             />
             <button @click="orderBy('value')">
               <div
@@ -131,11 +160,23 @@
             </button>
           </th>
           <th align="left">
+            <button
+              @click="greaterLessThan('volume')"
+              v-if="filter.volume !== '' && filter.volume !== undefined"
+            >
+              <div v-if="filter.volumeMode !== undefined">
+                <span v-if="filter.volumeMode === 0">&lt;</span>
+                <span v-else-if="filter.volumeMode === 2">&gt;</span>
+                <span v-else>=</span>
+              </div>
+              <span v-else>-</span>
+            </button>
             <input
               type="number"
               v-model="filter.volume"
               placeholder="Volume"
               min="0"
+              @keyup="applyFilters(true)"
             />
             <button @click="orderBy('volume')">
               <div
@@ -165,6 +206,7 @@
               placeholder="Open"
               step="0.01"
               min="0"
+              @keyup="applyFilters(true)"
             />
             <button @click="orderBy('open')">
               <div
@@ -194,6 +236,7 @@
               placeholder="Close"
               step="0.01"
               min="0"
+              @keyup="applyFilters(true)"
             />
             <button @click="orderBy('close')">
               <div
@@ -481,7 +524,6 @@ export default defineComponent({
       this.filter.orderBy = "symbol";
       this.filter.orderDirection = "1";
     }
-
     this.filter = {
       ...this.filter,
       ...this.$route.query,
@@ -579,9 +621,24 @@ export default defineComponent({
       this.applyFilters();
     },
     applyFilters(resetPage = false) {
+      Object.keys(this.filter).forEach((key) => {
+        if (this.filter[key] === "" || this.filter[key] === undefined) {
+          if (key === "volume") {
+            this.filter.volumeMode = "";
+          }
+          if (key === "gains") {
+            this.filter.gainsMode = "";
+          }
+          if (key === "value") {
+            this.filter.valueMode = "";
+          }
+          delete this.filter[key];
+        }
+      });
       if (resetPage) {
         this.filter.page = 1;
       }
+      console.log(this.filter);
       this.$router.replace({
         name: "home",
         query: {
@@ -657,6 +714,55 @@ export default defineComponent({
       } else {
         return false;
       }
+    },
+    greaterLessThan(field: string) {
+      if (this.filter.value === "") {
+        delete this.filter.value;
+        delete this.filter.valueMode;
+      }
+      if (this.filter.gains === "") {
+        delete this.filter.gains;
+        delete this.filter.gainsMode;
+      }
+      if (this.filter.volume === "") {
+        delete this.filter.volume;
+        delete this.filter.volumeMode;
+      }
+      if (field === "value") {
+        if (this.filter.valueMode === 0) {
+          this.filter.valueMode = 1;
+        } else if (this.filter.valueMode === 1) {
+          this.filter.valueMode = 2;
+        } else if (this.filter.valueMode === 2) {
+          this.filter.valueMode = 0;
+        } else {
+          this.filter.valueMode = 0;
+        }
+      }
+      if (field === "volume") {
+        if (this.filter.volumeMode === 0) {
+          this.filter.volumeMode = 1;
+        } else if (this.filter.volumeMode === 1) {
+          this.filter.volumeMode = 2;
+        } else if (this.filter.volumeMode === 2) {
+          this.filter.volumeMode = 0;
+        } else {
+          this.filter.volumeMode = 0;
+        }
+      }
+      if (field === "gains") {
+        if (this.filter.gainsMode === 0) {
+          this.filter.gainsMode = 1;
+        } else if (this.filter.gainsMode === 1) {
+          this.filter.gainsMode = 2;
+        } else if (this.filter.gainsMode === 2) {
+          this.filter.gainsMode = 0;
+        } else {
+          this.filter.gainsMode = 0;
+        }
+      }
+      this.filter.page = 1;
+      this.applyFilters();
     },
   },
 });

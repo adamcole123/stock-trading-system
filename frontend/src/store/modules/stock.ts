@@ -42,6 +42,10 @@ const actions = {
       options: {
         page: payload.page,
         limit: payload.limit,
+        gainsMode: payload.gains !== undefined ? payload.gainsMode : undefined,
+        volumeMode:
+          payload.volume !== undefined ? payload.volumeMode : undefined,
+        valueMode: payload.value !== undefined ? payload.valueMode : undefined,
         order:
           payload.orderBy === undefined || payload.orderDirection === undefined
             ? undefined
