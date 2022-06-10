@@ -180,9 +180,11 @@ function changeStockValues() {
   
           if(result?.volume! < 0)
             return;
+
+          result!.latest_trade = new Date();
           
           result?.save()
-          });
+        });
           
     });
 

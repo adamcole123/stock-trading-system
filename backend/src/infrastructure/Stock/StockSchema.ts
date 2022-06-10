@@ -20,7 +20,10 @@ const stockSchema = new Schema<Stock>({
 		type: Double,
 		default: 0.0
 	},
-	latest_trade: Date,
+	latest_trade: {
+		type: Date,
+		default: null
+	},
 	gains: {
 		type: Double,
 		default: 0.0,
