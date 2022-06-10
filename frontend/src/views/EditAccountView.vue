@@ -1,8 +1,10 @@
 <template>
-  <h1>
-    {{ editStatus }}
-  </h1>
-  <router-link to="/account">OK</router-link>
+  <div>
+    <h1>
+      {{ editStatus }}
+    </h1>
+    <router-link to="/account">OK</router-link>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
