@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table v-if="getUserTransactionHistory.length > 0">
       <thead>
         <tr>
           <th align="left">Stock Symbol</th>
@@ -36,6 +36,7 @@
         </tr>
       </tbody>
     </table>
+    <b v-else>You have not produced any transactions.</b>
   </div>
 </template>
 <script lang="ts">
