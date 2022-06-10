@@ -11,6 +11,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { SocketController } from "./SocketController";
 import * as SocketIO from 'socket.io';
+import fs from 'fs';
 
 
 import { Container } from 'inversify';
@@ -48,6 +49,10 @@ import "./entrypoint/controllers/UserController";
 import "./entrypoint/controllers/StockController";
 import "./entrypoint/controllers/TradeController";
 import "./entrypoint/controllers/ReportController";
+import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
+import User from "./infrastructure/User/User";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -77,18 +82,18 @@ let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
 
 // create server
 let server = new InversifyExpressServer(container);
-server.setErrorConfig( (app: express.Application) => {
-    app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
-      console.error(err.stack)
+server.setErrorConfig((app: express.Application) => {
+  app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
+    console.error(err.stack)
 
-      sendEmailUseCase.invoke({
-        to: ["admin@stock-trading-system.com"],
-        from: "error-logger@stock-trading-system.com",
-        subject: "An error was caused in the system",
-        bodyText: `Error occured at ${ moment(new Date()).format("DD/MM/YYYY hh:mm:ss") } with stack trace \n${err.stack}`,
-        bodyHtml: `Error occured at ${ moment(new Date()).format("DD/MM/YYYY hh:mm:ss") } with stack trace<br /> <pre>${err.stack}</pre>`
-      })
-    });
+    sendEmailUseCase.invoke({
+      to: ["admin@stock-trading-system.com"],
+      from: "error-logger@stock-trading-system.com",
+      subject: "An error was caused in the system",
+      bodyText: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace \n${err.stack}`,
+      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace<br /> <pre>${err.stack}</pre>`
+    })
+  });
 });
 server.setConfig((app: express.Application) => {
   // add body parser
@@ -97,14 +102,14 @@ server.setConfig((app: express.Application) => {
   }));
   app.use(cors({
     credentials: true, // --> configures the Access-Control-Allow-Credentials CORS header
-    origin: function(origin, callback){
-      if(!origin) return callback(null, true);
-      if(allowedOrigins.indexOf(origin) === -1){
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
         var msg = 'The CORS policy for this site does not ' +
-        'allow access from the specified Origin.';
+          'allow access from the specified Origin.';
         return callback(new Error(msg), false);
       }
-      return callback(null, true);      
+      return callback(null, true);
     }
   }));
   app.use(bodyParser.json());
@@ -136,13 +141,14 @@ const {
 console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
-.then(res => {
-  console.log('Connected to database');
-  changeStockValues();
-})
-.catch(err => {
-  console.error(err)
-})
+  .then(async res => {
+    console.log('Connected to database');
+    await initDb();
+    changeStockValues();
+  })
+  .catch(err => {
+    console.error(err)
+  })
 
 const httpServer = app.listen(8000, () => {
   console.log('Server listening on port 8000');
@@ -156,52 +162,94 @@ const socketServer = new InversifySocketServer(container, new SocketIO.Server(ht
 }))
 socketServer.build();
 
-function changeStockValues() {
+async function changeStockValues() {
+  if (await Stock.count() < 1) {
+    console.log('Cannot start market simulator');
+    return;
+  }
   setInterval(async function () {
-    Stock.count().exec(function(err, count){
+    Stock.count().exec(function (err, count) {
       var random = Math.floor(Math.random() * count);
-    
+
       Stock.findOne().skip(random).exec(
         function (err, result) {
-    
-          if(err)
+
+          if (err)
             return console.error(err);
-  
-          if(result?.value! > 0) {
+
+          if (result?.value! > 0) {
             result!.value = Number.parseFloat((result!.value! + (Math.random() > 0.5 ? Math.random() * 1 : Math.random() * -1)).toFixed(2));
-            if(result!.value < 0)
+            if (result!.value < 0)
               result!.value = 0.5;
           } else {
             result!.value = 0.5;
           }
-          
-          if(result?.volume! > 0)
+
+          if (result?.volume! > 0)
             result!.volume = Math.round(result!.volume! + (Math.random() > 0.5 ? Math.random() * 10 : Math.random() * -10))
-  
-          if(result?.volume! < 0)
+
+          if (result?.volume! < 0)
             return;
 
           result!.latest_trade = new Date();
-          
+
           result?.save()
         });
-          
+
     });
 
     let now = new Date();
 
-    if(now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0){
+    if (now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0) {
       await Stock.updateMany(
         {},
-        [ { $set: { open: "$value" } } ]
+        [{ $set: { open: "$value" } }]
       )
     }
 
-    if(now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0){
+    if (now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0) {
       await Stock.updateMany(
         {},
-        [ { $set: { close: "$value" } } ]
+        [{ $set: { close: "$value" } }]
       )
     }
   }, 2);
+}
+
+async function initDb(): Promise<boolean> {
+  return new Promise(async (resolve, reject) => {
+    if (await Stock.count() < 10) {
+      console.warn('Generating stock data');
+      fs.readFile('./stockdata.json', 'utf-8', (err, data) => {
+        let createStockUseCase = new CreateStockUseCase(new StockWriteRepository());
+        let stockData: { [key: string]: { name: string, symbol: string }[] } = JSON.parse(data);
+        stockData.stocks.forEach(stock => {
+          createStockUseCase.invoke(stock);
+        });
+      });
+    } else {
+      console.warn('Skipping stock data generation');
+    }
+    if (!(await User.exists({
+      email: "admin@stocktradingsystem.com"
+    }))){
+      console.warn('Generating admin account');
+      await User.create({
+        "username": "admin",
+        "email": "admin@stocktradingsystem.com",
+        "firstName": "Admin",
+        "lastName": "Account",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "User",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+    } else {
+      console.warn('Skipping generating admin account');
+    }
+    resolve(true);
+  });
 }

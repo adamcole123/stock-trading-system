@@ -16,10 +16,8 @@ export default class CreateStockUseCase implements ICreateStockUseCase {
 		let addedStock: IStockDto;
 
 		if(stock.volume === undefined && stock.value === undefined){
-			stock.volume = Math.round(Math.random() * 100000);
-			stock.value = Number.parseFloat((Math.random() * 1000).toFixed(2));
-			stock.open = Number.parseFloat((Math.random() * 1000).toFixed(2));
-			stock.close = Number.parseFloat((Math.random() * 1000).toFixed(2));
+			stock.volume = Math.round(this.randomIntFromInterval(2000000, 1000000000));
+			stock.value = Number.parseFloat((this.randomIntFromInterval(5, 550)).toFixed(2));
 		}
 		
 		try {
@@ -28,5 +26,9 @@ export default class CreateStockUseCase implements ICreateStockUseCase {
 		} catch (error) {
 			throw new Error('Could not add stock');
 		}
+	}
+
+	private randomIntFromInterval(min: number, max: number) { // min and max included 
+		return Math.floor(Math.random() * (max - min + 1) + min)
 	}
 }
