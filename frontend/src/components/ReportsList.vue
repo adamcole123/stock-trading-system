@@ -4,9 +4,10 @@
 
     <div v-if="getUserProfile.reports">
       <div v-for="report in getUserProfile.reports" :key="report.id">
-        <a @click="saveReport(report)" class="report-link">{{
-          moment(report.report_date).format("MMMM Do YYYY, h:mm:ss a")
-        }}</a>
+        <a @click="saveReport(report)" class="report-link"
+          >{{ moment(report.report_date).format("MMMM Do YYYY, h:mm:ss a") }}
+          <b>{{ report.report_type }}</b></a
+        >
       </div>
     </div>
     <div v-else>
