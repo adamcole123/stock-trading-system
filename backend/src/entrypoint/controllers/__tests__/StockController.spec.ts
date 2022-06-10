@@ -87,14 +87,10 @@ describe('StockController Tests', () => {
 		let requestObj = httpMocks.createRequest({
 			method: 'POST',
 			url: '/stocks/getMany',
-			body: {
-				filters: {
-					
-				}
-			}
+			body: {}
 		});
 
-		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([{
 			"close": 967.2,
 			"gains": 58.39999999999998,
 			"id": "teststock1id",
