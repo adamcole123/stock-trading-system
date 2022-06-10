@@ -143,15 +143,15 @@ describe('Trade Repositories', () => {
 
 		expect(populatedStock.close).toStrictEqual(expect.objectContaining({
 			value: 500
-		})); 
-		expect(populatedStock.name).toEqual("test1name"); 
+		}));
+		expect(populatedStock.name).toEqual("test1name");
 		expect(populatedStock.open).toStrictEqual(expect.objectContaining({
 			value: 500
-		})); 
-		expect(populatedStock.symbol).toEqual("test1symbol"); 
+		}));
+		expect(populatedStock.symbol).toEqual("TEST1SYMBOL");
 		expect(populatedStock.value).toStrictEqual(expect.objectContaining({
 			value: 500
-		})); 
+		}));
 		expect(populatedStock.volume).toEqual(500);
 	});
 
@@ -166,15 +166,15 @@ describe('Trade Repositories', () => {
 
 		expect(populatedStock.close).toStrictEqual(expect.objectContaining({
 			value: 500
-		})); 
-		expect(populatedStock.name).toEqual("test1name"); 
+		}));
+		expect(populatedStock.name).toEqual("test1name");
 		expect(populatedStock.open).toStrictEqual(expect.objectContaining({
 			value: 500
-		})); 
-		expect(populatedStock.symbol).toEqual("test1symbol"); 
+		}));
+		expect(populatedStock.symbol).toEqual("TEST1SYMBOL");
 		expect(populatedStock.value).toStrictEqual(expect.objectContaining({
 			value: 500
-		})); 
+		}));
 		expect(populatedStock.volume).toEqual(500);
 	});
 

@@ -138,23 +138,12 @@ describe('UserController Tests', () => {
 		expect(responseData.firstName).toBe("testxfname")
 		expect(responseData.lastName).toBe("testxlname")
 		expect(responseData.password).toBe("")
-		expect(responseData.reports).toStrictEqual([
-			{
-				"id": "report1id",
-				"report_type": "CSV"
-			},
-			{
-				"id": "report2id",
-				"report_type": "CSV"
-			},
-			{
-				"id": "report3id",
-				"report_type": "CSV"
-			},
-			{
-				"id": "report4id",
-				"report_type": "CSV"
-			}])
+		expect(responseData.reports).toStrictEqual(expect.objectContaining([
+			{ "id": "report1id", "report_type": "CSV" },
+			{ "id": "report2id", "report_type": "CSV" },
+			{ "id": "report3id", "report_type": "CSV" },
+			{ "id": "report4id", "report_type": "CSV" }
+		]))
 	});
 	it('User edit route signed in user', async () => {
 		let requestObj = httpMocks.createRequest({

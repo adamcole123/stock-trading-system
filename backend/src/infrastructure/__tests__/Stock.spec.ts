@@ -57,7 +57,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -78,7 +78,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -100,7 +100,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -122,7 +122,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -144,7 +144,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -166,7 +166,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -188,7 +188,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -210,7 +210,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -232,7 +232,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -254,7 +254,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
@@ -276,7 +276,7 @@ describe('Stock Repositories', () => {
 		expect(stock.open).toStrictEqual(expect.objectContaining({
 			value: 490
 		}));
-		expect(stock.symbol).toEqual("test1symbol");
+		expect(stock.symbol).toEqual("TEST1SYMBOL");
 		expect(stock.value).toStrictEqual(expect.objectContaining({
 			value: 500
 		}));
