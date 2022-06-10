@@ -59,9 +59,13 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 						stockInvestments[trade.stock_id!].quantity += trade.stock_amount!;
 					}
 					if (trade.trade_type === "Sell") {
+						if(stockInvestments[trade.stock_id!].value <= 0
+							&& stockInvestments[trade.stock_id!].quantity <= 0){
+							return;
+						}
 						stockInvestments[trade.stock_id!].value = 
 							stockInvestments[trade.stock_id!].value - (stockInvestments[trade.stock_id!].value * (trade.stock_amount! / stockInvestments[trade.stock_id!].quantity));
-							stockInvestments[trade.stock_id!].quantity -= trade.stock_amount!;
+						stockInvestments[trade.stock_id!].quantity -= trade.stock_amount!;
 					}
 				}
 			});
