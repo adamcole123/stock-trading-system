@@ -287,7 +287,7 @@
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="getStockData.length > 0">
         <template v-for="stock in getStockData" :key="stock.id">
           <tr v-if="stock.volume > 0" class="stockrow">
             <div
@@ -441,20 +441,37 @@
           </tr>
         </template>
       </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="10">
+            <b>No stocks to display</b>
+          </td>
+        </tr>
+      </tbody>
     </table>
     <div class="nav-controls">
-      <div>
+      <div v-if="getStockData.length > 0">
         {{ filter.page > 1 ? filter.page - 1 : "" }}
         <button @click="previousPage" v-if="filter.page > 1">
           Previous Page
         </button>
       </div>
-      <select v-model="filter.limit" @change="limitChanged">
+      <select
+        v-model="filter.limit"
+        @change="limitChanged"
+        v-if="getStockData.length > 0"
+      >
         <option>20</option>
         <option>100</option>
         <option value="">All</option>
       </select>
-      <div v-if="filter.page !== getLastPageNum && filter.limit !== undefined">
+      <div
+        v-if="
+          filter.page !== getLastPageNum &&
+          filter.limit !== undefined &&
+          getStockData.length > 0
+        "
+      >
         <button @click="nextPage">Next Page</button>
         {{ Number(filter.page) + 1
         }}{{ getLastPageNum !== undefined ? `/${getLastPageNum}` : "/?" }}
