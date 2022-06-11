@@ -9,6 +9,7 @@
         <th>Total</th>
         <th>Stock Symbol</th>
         <th>Company Name</th>
+        <th>Trade Type</th>
         <th></th>
       </tr>
     </thead>
@@ -21,6 +22,7 @@
         <td>{{ trade.stock_value * trade.stock_amount }}</td>
         <td>{{ trade.stock_id.symbol }}</td>
         <td>{{ trade.stock_id.name }}</td>
+        <td>{{ trade.trade_type }}</td>
         <td>
           <button @click="approveTrade({ id: trade.id })">Approve</button>
           <button @click="rejectTrade({ id: trade.id })">Reject</button>

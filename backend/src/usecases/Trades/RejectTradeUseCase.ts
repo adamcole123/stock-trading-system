@@ -11,12 +11,12 @@ import IUserWriteOnlyRepository from 'src/application/repositories/IUserWriteOnl
 
 export default class RejectTradeUseCase implements IRejectTradeUseCase {
 
-	tradeReadOnlyRepository: ITradeReadOnlyRepository;
-	stockReadOnlyRepository: IStockReadOnlyRepository;
-	userReadOnlyRepository: IUserReadOnlyRepository;
-	tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
-	stockWriteOnlyRepository: IStockWriteOnlyRepository;
-	userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private tradeReadOnlyRepository: ITradeReadOnlyRepository;
+	private stockReadOnlyRepository: IStockReadOnlyRepository;
+	private userReadOnlyRepository: IUserReadOnlyRepository;
+	private tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
+	private stockWriteOnlyRepository: IStockWriteOnlyRepository;
+	private userWriteOnlyRepository: IUserWriteOnlyRepository;
 	/**
 	 *
 	 */

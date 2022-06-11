@@ -3,7 +3,5 @@ import IStockReadOnlyRepository from '../../application/repositories/IStockReadO
 import StockOptions from '../../application/repositories/StockReadOptions';
 
 export default interface IGetAllStocksUseCase {
-	stockReadOnlyRepository: IStockReadOnlyRepository;
-
 	invoke(criteria?: IStockDto, options?: StockOptions): Promise<IStockDto[]>;
 }

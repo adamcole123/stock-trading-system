@@ -93,7 +93,8 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 
 	private async getReturnValue(user: IUserDto, usersTransactions: ITradeDto[], investedValue: number) {
 		const groupByStock = this.groupBy('stock_id');
-		const groupedTransactions: {[key: string]: ITradeDto[]} = groupByStock(usersTransactions);
+		let filteredUserTransactions = usersTransactions.filter(trade => !(trade.trade_status === "Rejected" || trade.trade_status === "Pending"));
+		const groupedTransactions: {[key: string]: ITradeDto[]} = groupByStock(filteredUserTransactions);
 
 		let currentValues = 0;
 
