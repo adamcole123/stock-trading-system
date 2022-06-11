@@ -55,7 +55,7 @@
           </button>
         </div>
         <input
-          v-else-if="key === 'birthDate'"
+          v-else-if="key === 'birthDate' || user['birthDate'] === null"
           type="date"
           v-model="user[key]"
         />
@@ -190,11 +190,6 @@ export default defineComponent({
       .then((user) => {
         this.user = user;
         console.log(user);
-        if (this.user.birthDate !== undefined) {
-          this.user.birthDate = new Date(this.user.birthDate)
-            .toISOString()
-            .split("T")[0];
-        }
         if (this.user.activationDate !== undefined) {
           this.user.activationDate = new Date(this.user.activationDate)
             .toISOString()
@@ -207,6 +202,13 @@ export default defineComponent({
           this.user.banUntil = undefined;
         } else {
           this.user.banUntil = new Date(this.user.banUntil)
+            .toISOString()
+            .split("T")[0];
+        }
+        if (this.user.birthDate === undefined) {
+          this.user.birthDate = undefined;
+        } else {
+          this.user.birthDate = new Date(this.user.birthDate)
             .toISOString()
             .split("T")[0];
         }

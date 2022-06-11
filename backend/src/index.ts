@@ -84,14 +84,16 @@ let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
 let server = new InversifyExpressServer(container);
 server.setErrorConfig((app: express.Application) => {
   app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
-    console.error(err.stack)
+    console.error('Name', err.name)
+    console.error('Message', err.message)
+    console.error('Stack', err.stack)
 
     sendEmailUseCase.invoke({
       to: ["admin@stock-trading-system.com"],
       from: "error-logger@stock-trading-system.com",
       subject: "An error was caused in the system",
       bodyText: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace \n${err.stack}`,
-      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace<br /> <pre>${err.stack}</pre>`
+      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with details:<br />Name: <pre>${err.name}</pre><br />Message: <pre>${err.message}</pre><br />Stack trace: <pre>${err.stack}</pre>`
     })
   });
 });
@@ -242,7 +244,7 @@ async function initDb(): Promise<boolean> {
         "reports": [],
         "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
         "credit": 50000,
-        "role": "User",
+        "role": "Admin",
         "isDeleted": false,
         "cardDetails": [],
         "activationDate": new Date(),

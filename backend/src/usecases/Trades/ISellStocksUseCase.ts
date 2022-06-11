@@ -3,8 +3,5 @@ import IStockWriteOnlyRepository from '../../application/repositories/IStockWrit
 import ITradeWriteOnlyRepository from '../../application/repositories/ITradeWriteOnlyRepository';
 
 export default interface ISellStocksUseCase {
-	stockWriteOnlyRepository: IStockWriteOnlyRepository;
-	tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
-
 	invoke(tradeDto: ITradeDto): Promise<ITradeDto>;
 }

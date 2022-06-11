@@ -3,7 +3,7 @@ import IStockDto from '../data_tranfer_objects/IStockDto';
 import ICreateStockUseCase from './ICreateStockUseCase';
 
 export default class CreateStockUseCase implements ICreateStockUseCase {
-	stockWriteOnlyRepository: IStockWriteOnlyRepository;
+	private stockWriteOnlyRepository: IStockWriteOnlyRepository;
 
 	/**
 	 *

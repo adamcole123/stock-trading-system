@@ -141,7 +141,11 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 		return new Promise(async (resolve, reject) => {
 			this.tradeReadOnlyRepository.fetch({user_id: user_id}, false)
 			.then(async trades => {
-				let numSharesPerCompany: any[] = await this.groupByCompany(trades);
+				if(trades.length < 1){
+					reject('User has no trades');
+				}
+				let filteredUserTransactions = trades.filter(trade => !(trade.trade_status === "Rejected" || trade.trade_status === "Pending"));
+				let numSharesPerCompany: any[] = await this.groupByCompany(filteredUserTransactions);
 
 				this.addStockInfoToCompany(numSharesPerCompany)
 				.then(numSharesWithStocks => {

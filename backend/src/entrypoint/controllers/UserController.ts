@@ -206,8 +206,8 @@ export default class UserController implements interfaces.Controller {
 					to: [userDto.email!],
 					from: "noreply@stocktradingsystem.com",
 					subject: "Activate your stock trading account",
-					bodyText: `Click to activate: http://localhost:8080/activate?token=${token}`,
-					bodyHtml: `Click to activate: <b>http://localhost:8080/activate?token=${token}</b>`
+					bodyText: `Go here to activate: http://localhost:8080/activate?token=${token}`,
+					bodyHtml: `Click <a href='http://localhost:8080/activate?token=${token}'>here</a> to activate`
 				})
 				.then(email => {
 					res

@@ -5,7 +5,7 @@ import Stock from '../entities/Stock';
 import IGetAllStocksUseCase from './IGetAllStocksUseCase';
 import StockOptions from '../../application/repositories/StockReadOptions';
 export default class GetAllStocksUseCase implements IGetAllStocksUseCase{
-	stockReadOnlyRepository: IStockReadOnlyRepository;
+	private stockReadOnlyRepository: IStockReadOnlyRepository;
 	/**
 	 *
 	 */

@@ -8,12 +8,12 @@ import IStockReadOnlyRepository from '../../application/repositories/IStockReadO
 import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadOnlyRepository';
 
 export default class SellStocksUseCase implements ISellStocksUseCase {
-	stockWriteOnlyRepository: IStockWriteOnlyRepository;
-	stockReadOnlyRepository: IStockReadOnlyRepository;
-	tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
-	tradeReadOnlyRepository: ITradeReadOnlyRepository;
-	userWriteOnlyRepository: IUserWriteOnlyRepository;
-	userReadOnlyRepository: IUserReadOnlyRepository;
+	private stockWriteOnlyRepository: IStockWriteOnlyRepository;
+	private stockReadOnlyRepository: IStockReadOnlyRepository;
+	private tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
+	private tradeReadOnlyRepository: ITradeReadOnlyRepository;
+	private userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private userReadOnlyRepository: IUserReadOnlyRepository;
 
 	/**
 	 *

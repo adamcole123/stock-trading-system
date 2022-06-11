@@ -1,15 +1,17 @@
 <template>
   <div>
-    <h1 v-if="getActivationApiStatus === 'success'">
-      Thank you for activating your account!
-    </h1>
-    <router-link to="/login">Click here to sign in</router-link>
+    <div v-if="getActivationApiStatus === 'success'">
+      <h1>Thank you for activating your account!</h1>
+      <router-link to="/login">Click here to sign in</router-link>
+    </div>
+    <PulseLoader :color="loaderColor" v-else></PulseLoader>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default defineComponent({
   name: "ActivationView",
@@ -20,7 +22,11 @@ export default defineComponent({
         email: "",
         firstName: "",
       },
+      loaderColor: "#172a3a",
     };
+  },
+  components: {
+    PulseLoader,
   },
   created: async function () {
     let payload = {

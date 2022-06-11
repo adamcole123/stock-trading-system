@@ -22,242 +22,256 @@
           <th
             v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
           ></th>
-          <th align="left">
-            <input
-              type="text"
-              v-model="filter.symbol"
-              placeholder="Symbol"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('symbol')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
-              >
-                <div v-if="filter.orderBy && filter.orderBy === 'symbol'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+          <th align="left" class="filterheader">
+            <div>
+              <input
+                type="text"
+                v-model="filter.symbol"
+                placeholder="Symbol"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('symbol')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'symbol'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
-          <th align="left">
-            <input
-              type="text"
-              v-model="filter.name"
-              placeholder="Company Name"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('name')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
-              >
-                <div v-if="filter.orderBy && filter.orderBy === 'name'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+          <th align="left" class="filterheader">
+            <div>
+              <input
+                type="text"
+                v-model="filter.name"
+                placeholder="Company Name"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('name')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'name'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
-          <th align="left">
-            <button
-              @click="greaterLessThan('gains')"
-              v-if="filter.gains !== '' && filter.gains !== undefined"
-            >
-              <div v-if="filter.gainsMode !== undefined">
-                <span v-if="filter.gainsMode === 0">&lt;</span>
-                <span v-else-if="filter.gainsMode === 2">&gt;</span>
-                <span v-else>=</span>
-              </div>
-              <span v-else>-</span>
-            </button>
-            <input
-              type="number"
-              v-model="filter.gains"
-              placeholder="Gains"
-              step="0.01"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('gains')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
+          <th align="left" class="filterheader">
+            <div>
+              <button
+                @click="greaterLessThan('gains')"
+                v-if="filter.gains !== '' && filter.gains !== undefined"
               >
-                <div v-if="filter.orderBy && filter.orderBy === 'gains'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+                <div v-if="filter.gainsMode !== undefined">
+                  <span v-if="filter.gainsMode === 0">&lt;</span>
+                  <span v-else-if="filter.gainsMode === 2">&gt;</span>
+                  <span v-else>=</span>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+              <input
+                type="number"
+                v-model="filter.gains"
+                placeholder="Gains"
+                step="0.01"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('gains')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'gains'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
+                </div>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
-          <th align="left">
-            <button
-              @click="greaterLessThan('value')"
-              v-if="filter.value !== '' && filter.value !== undefined"
-            >
-              <div v-if="filter.valueMode !== undefined">
-                <span v-if="filter.valueMode === 0">&lt;</span>
-                <span v-else-if="filter.valueMode === 2">&gt;</span>
-                <span v-else>=</span>
-              </div>
-              <span v-else>-</span>
-            </button>
-            <input
-              type="number"
-              v-model="filter.value"
-              placeholder="Value"
-              step="0.01"
-              min="0"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('value')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
+          <th align="left" class="filterheader">
+            <div>
+              <button
+                @click="greaterLessThan('value')"
+                v-if="filter.value !== '' && filter.value !== undefined"
               >
-                <div v-if="filter.orderBy && filter.orderBy === 'value'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+                <div v-if="filter.valueMode !== undefined">
+                  <span v-if="filter.valueMode === 0">&lt;</span>
+                  <span v-else-if="filter.valueMode === 2">&gt;</span>
+                  <span v-else>=</span>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+              <input
+                type="number"
+                v-model="filter.value"
+                placeholder="Value"
+                step="0.01"
+                min="0"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('value')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'value'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
+                </div>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
-          <th align="left">
-            <button
-              @click="greaterLessThan('volume')"
-              v-if="filter.volume !== '' && filter.volume !== undefined"
-            >
-              <div v-if="filter.volumeMode !== undefined">
-                <span v-if="filter.volumeMode === 0">&lt;</span>
-                <span v-else-if="filter.volumeMode === 2">&gt;</span>
-                <span v-else>=</span>
-              </div>
-              <span v-else>-</span>
-            </button>
-            <input
-              type="number"
-              v-model="filter.volume"
-              placeholder="Volume"
-              min="0"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('volume')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
+          <th align="left" class="filterheader">
+            <div>
+              <button
+                @click="greaterLessThan('volume')"
+                v-if="filter.volume !== '' && filter.volume !== undefined"
               >
-                <div v-if="filter.orderBy && filter.orderBy === 'volume'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+                <div v-if="filter.volumeMode !== undefined">
+                  <span v-if="filter.volumeMode === 0">&lt;</span>
+                  <span v-else-if="filter.volumeMode === 2">&gt;</span>
+                  <span v-else>=</span>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+              <input
+                type="number"
+                v-model="filter.volume"
+                placeholder="Volume"
+                min="0"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('volume')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'volume'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
+                </div>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
-          <th align="left">
-            <input
-              type="number"
-              v-model="filter.open"
-              placeholder="Open"
-              step="0.01"
-              min="0"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('open')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
-              >
-                <div v-if="filter.orderBy && filter.orderBy === 'open'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+          <th align="left" class="filterheader">
+            <div>
+              <input
+                type="number"
+                v-model="filter.open"
+                placeholder="Open"
+                step="0.01"
+                min="0"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('open')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'open'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
-          <th align="left">
-            <input
-              type="number"
-              v-model="filter.close"
-              placeholder="Close"
-              step="0.01"
-              min="0"
-              @keyup="applyFilters(true)"
-            />
-            <button @click="orderBy('close')">
-              <div
-                v-if="
-                  filter.orderBy !== undefined &&
-                  filter.orderDirection !== undefined
-                "
-              >
-                <div v-if="filter.orderBy && filter.orderBy === 'close'">
-                  <arrow-down-thick
-                    v-if="filter.orderDirection === '0'"
-                  ></arrow-down-thick>
-                  <arrow-up-thick
-                    v-else-if="filter.orderDirection === '1'"
-                  ></arrow-up-thick>
-                  <span v-else>-</span>
+          <th align="left" class="filterheader">
+            <div>
+              <input
+                type="number"
+                v-model="filter.close"
+                placeholder="Close"
+                step="0.01"
+                min="0"
+                @keyup="applyFilters(true)"
+              />
+              <button @click="orderBy('close')">
+                <div
+                  v-if="
+                    filter.orderBy !== undefined &&
+                    filter.orderDirection !== undefined
+                  "
+                >
+                  <div v-if="filter.orderBy && filter.orderBy === 'close'">
+                    <arrow-down-thick
+                      v-if="filter.orderDirection === '0'"
+                    ></arrow-down-thick>
+                    <arrow-up-thick
+                      v-else-if="filter.orderDirection === '1'"
+                    ></arrow-up-thick>
+                    <span v-else>-</span>
+                  </div>
+                  <div v-else>-</div>
                 </div>
-                <div v-else>-</div>
-              </div>
-              <span v-else>-</span>
-            </button>
+                <span v-else>-</span>
+              </button>
+            </div>
           </th>
         </tr>
         <tr>
@@ -413,6 +427,12 @@
                     >
                       Pending Approval
                     </td>
+                    <td
+                      v-else-if="trade.trade_status! === 'Rejected'"
+                      style="color: red"
+                    >
+                      Trade Rejected
+                    </td>
                   </tr>
                   <tr colspan="10">
                     <b>Total Owned</b>
@@ -428,7 +448,8 @@
                     <b>Total Value Owned</b>
                     {{
                       Number.parseFloat(toggledTrades[stock.id].reduce((acc, curr) => {
-                        if(curr.trade_status === "Pending" || curr.trade_type === "Sell")
+                        if((curr.trade_status === "Pending" || curr.trade_type === "Sell") || 
+                          (curr.trade_status === "Rejected" || curr.trade_status === "Pending"))
                           return acc;
                         return acc + (curr.stock_amount! * stock.value!);
                       }, 0).toString()).toFixed(2)
@@ -733,15 +754,15 @@ export default defineComponent({
       }
     },
     greaterLessThan(field: string) {
-      if (this.filter.value === "") {
+      if (this.filter.value === "" && this.filter.value === undefined) {
         delete this.filter.value;
         delete this.filter.valueMode;
       }
-      if (this.filter.gains === "") {
+      if (this.filter.gains === "" && this.filter.gains === undefined) {
         delete this.filter.gains;
         delete this.filter.gainsMode;
       }
-      if (this.filter.volume === "") {
+      if (this.filter.volume === "" && this.filter.volume === undefined) {
         delete this.filter.volume;
         delete this.filter.volumeMode;
       }
@@ -810,5 +831,13 @@ export default defineComponent({
 }
 .stockrow:hover {
   background-color: lightgrey;
+}
+.filterheader > div {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.filterheader > div > input {
+  width: 50%;
 }
 </style>

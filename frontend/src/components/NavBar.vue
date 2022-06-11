@@ -14,7 +14,9 @@
           <router-link to="/register" class="nav-link">Register</router-link>
         </div>
         <div v-else>
-          Credit: £{{ getUserProfile.credit }}
+          <span v-if="getUserProfile.role === 'User'"
+            >Credit: £{{ getUserProfile.credit }}</span
+          >
           <router-link to="/account" class="nav-link"
             >{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}
           </router-link>

@@ -3,7 +3,7 @@ import IStockDto from "../data_tranfer_objects/IStockDto";
 import IGetOneStockUseCase from "./IGetOneStockUseCase";
 
 export default class GetOneStockUseCase implements IGetOneStockUseCase {
-	stockReadOnlyRepository: IStockReadOnlyRepository;
+	private stockReadOnlyRepository: IStockReadOnlyRepository;
 
 	/**
 	 *
