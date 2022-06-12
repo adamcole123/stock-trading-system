@@ -13,6 +13,7 @@
     "bootstrap-vue-3": "^0.1.9",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
+    "googleapis": "^101.0.0",
     "js-cookie": "^3.0.1",
     "mdue": "^0.1.4",
     "moment": "^2.29.3",
