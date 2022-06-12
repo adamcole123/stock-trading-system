@@ -7,7 +7,7 @@ This is the implementation of my MSc second year project, a stock trading system
 - Node.js > v14.15.4
 - Docker
 - NPM
-- MongoDB > v5.0
+- MongoDB Community Server including MongoDB compass > v5.0
 
 
 ## Running the app in a docker container
@@ -23,7 +23,7 @@ To run the app, execute the following commands from the `stock-trading-system` p
 ## Local Setup
 
 ### Before 'getting the app running'!
-1. Navigate to your mongod.cfg, usually in the `C:\Program Files\MongoDB\Server\5.0\bin` directory if you're using a windows machine
+1. Navigate to your `mongod.cfg`, usually in the `C:\Program Files\MongoDB\Server\5.0\bin` directory if you're using a windows machine
 2. Add the following to the document
 ```
 replication:
@@ -50,7 +50,7 @@ replication:
 
 **why?**
 
-The live stock updates implemented in this application use the MongoDB change stream functionality to watch updates to the database. This functionality requires MongoDB replica sets, which is what the above steps accomplish.
+The live stock updates implemented in this application use the MongoDB [change stream](https://www.mongodb.com/docs/manual/changeStreams/) functionality to watch updates to the database. This functionality requires MongoDB replica sets, which is what the above steps accomplish.
 
 ### Get the app running
 Follow these instructions to get the app working

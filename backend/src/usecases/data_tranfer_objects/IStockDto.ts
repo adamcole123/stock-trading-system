@@ -6,5 +6,6 @@ export default interface IStockDto {
 	volume?: number,
 	open?: number,
 	close?: number,
-	readonly gains?: number
+	gains?: number,
+	latest_trade?: Date
 }

@@ -19,29 +19,29 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 	}
 	edit(stockDto: IStockDto, options?: StockWriteOptions): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
-			if (options?.all) {
-				if (options?.random) {
-					Stock.updateMany({}, {
-						value!: (value: number) => { return value! * (Math.random() + Math.random()) },
-					});
+			// if (options?.all) {
+			// 	if (options?.random) {
+			// 		Stock.updateMany({}, {
+			// 			value!: (value: number) => { return value! * (Math.random() + Math.random()) },
+			// 		});
 
-					if (options?.open) {
-						let allStocks = await Stock.find({});
-						allStocks.forEach(stock => {
-							Stock.updateOne({ id: stock.id }, { open: stock.value })
-						})
-					}
+			// 		if (options?.open) {
+			// 			let allStocks = await Stock.find({});
+			// 			allStocks.forEach(stock => {
+			// 				Stock.updateOne({ id: stock.id }, { open: stock.value })
+			// 			})
+			// 		}
 
-					if (options?.close) {
-						let allStocks = await Stock.find({});
-						allStocks.forEach(stock => {
-							Stock.updateOne({ id: stock.id }, { close: stock.value })
-						})
-					}
-				}
+			// 		if (options?.close) {
+			// 			let allStocks = await Stock.find({});
+			// 			allStocks.forEach(stock => {
+			// 				Stock.updateOne({ id: stock.id }, { close: stock.value })
+			// 			})
+			// 		}
+			// 	}
 
-				resolve(await Stock.find({}));
-			}
+			// 	resolve(await Stock.find({}));
+			// }
 
 			await Stock.findById(stockDto.id)
 				.then(stock => {
@@ -63,6 +63,9 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 
 					if (stockDto.value)
 						stock!.value = stockDto.value;
+
+					if (stockDto.latest_trade)
+						stock!.latest_trade = stockDto.latest_trade;
 
 					stock!.save();
 

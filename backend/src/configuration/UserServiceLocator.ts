@@ -10,11 +10,24 @@ import IValidateUserTokenUseCase from '../usecases/Users/IValidateUserTokenUseCa
 import ValidateUserTokenUseCase from "../usecases/Users/ValidateUserTokenUseCase";
 import IEditUserDetailsUseCase from '../usecases/Users/IEditUserDetailsUseCase';
 import EditUserDetailsUseCase from '../usecases/Users/EditUserDetailsUseCase';
+import IAddNewCreditCardUseCase from '../usecases/Users/IAddNewCreditCardUseCase';
+import AddNewCreditCardUseCase from '../usecases/Users/AddNewCreditCardUseCase';
+import IActivateUserAccountUseCase from "../usecases/Users/IActivateUserAccountUseCase";
+import ActivateUserAccountUseCase from "../usecases/Users/ActivateUserAccountUseCase";
+import GetAllUsersUseCase from "../usecases/Users/GetAllUsersUseCase";
+import IGetAllUsersUseCase from "../usecases/Users/IGetAllUsersUseCase";
+import GetUserDetailsUseCase from "../usecases/Users/GetUserDetailsUseCase";
+import IGetUserDetailsUseCase from "../usecases/Users/IGetUserDetailsUseCase";
+import IPasswordResetUseCase from "../usecases/Users/IPasswordResetUseCase";
+import PasswordResetUseCase from "../usecases/Users/PasswordResetUseCase";
+import IEncrypter from '../infrastructure/IEncrypter';
 
 @injectable()
 export default class UserServiceLocator {
 
-	constructor(@inject(TYPES.IUserReadOnlyRepository) private readRepository: IUserReadOnlyRepository, @inject(TYPES.IUserWriteOnlyRepository) private writeRepository: IUserWriteOnlyRepository){}
+	constructor(@inject(TYPES.IUserReadOnlyRepository) private readRepository: IUserReadOnlyRepository, 
+				@inject(TYPES.IUserWriteOnlyRepository) private writeRepository: IUserWriteOnlyRepository,
+				@inject(TYPES.IEncrypter) private encrypter: IEncrypter){}
 
 	public GetUserRegisterUseCase(): IUserRegisterUseCase {
 		return new UserRegisterUseCase(this.writeRepository);
@@ -25,9 +38,30 @@ export default class UserServiceLocator {
 	}
 
 	public GetValidateUserTokenUseCase(): IValidateUserTokenUseCase {
-		return new ValidateUserTokenUseCase(this.readRepository);
+		return new ValidateUserTokenUseCase(this.readRepository, this.encrypter);
 	}
+
 	public GetEditUserDetailsUseCase(): IEditUserDetailsUseCase {
 		return new EditUserDetailsUseCase(this.writeRepository);
+	}
+
+	public GetAddNewCreditCardUseCase(): IAddNewCreditCardUseCase {
+		return new AddNewCreditCardUseCase(this.readRepository, this.writeRepository, this.encrypter);
+	}
+	
+	public GetActivateUserAccountUseCase(): IActivateUserAccountUseCase {
+		return new ActivateUserAccountUseCase(this.writeRepository);
+	}
+
+	public GetGetAllUsersUseCase(): IGetAllUsersUseCase {
+		return new GetAllUsersUseCase(this.readRepository);
+	}
+
+	public GetGetUserDetailsUseCase(): IGetUserDetailsUseCase {
+		return new GetUserDetailsUseCase(this.readRepository);
+	}
+
+	public GetPasswordResetUseCase(): IPasswordResetUseCase {
+		return new PasswordResetUseCase(this.readRepository, this.writeRepository);
 	}
 }

@@ -18,7 +18,10 @@ const userSchema = new Schema({
 	},
 	firstName: String,
 	lastName: String,
-	birthDate: Date,
+	birthDate: {
+		type: Date,
+		default: undefined
+	},
 	reports: [Report],
 	id: mongoose.SchemaTypes.ObjectId,
 	password: {
@@ -38,7 +41,17 @@ const userSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	cardDetails: [CardDetails]
+	cardDetails: [CardDetails],
+	activationDate: {
+		type: Date,
+		default: undefined
+	},
+	banUntil: {
+		type: Date,
+		default: undefined
+	}
 }, { collection: 'users' })
+
+
 
 export default userSchema;

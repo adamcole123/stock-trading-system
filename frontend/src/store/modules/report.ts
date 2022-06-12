@@ -1,5 +1,5 @@
 import { State } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 
 const state = () => ({
@@ -26,7 +26,6 @@ const getters = {
 
 const actions = {
   async showReportModal({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     commit("setReportModalVisible", true);
     commit("setReportType", payload.reportType);
   },
@@ -34,7 +33,6 @@ const actions = {
     commit("setReportModalVisible", false);
   },
   async generateReport({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     const response = await axios
       .get(
         `http://localhost:8000/report/${payload.reportType}?reportformat=${payload.reportFormat}&ascending=${payload.ascending}`,
@@ -45,7 +43,8 @@ const actions = {
           withCredentials: true,
         }
       )
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 

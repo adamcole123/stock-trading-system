@@ -8,8 +8,20 @@ declare module "@vue/runtime-core" {
     registerApiStatus: "";
     buyStocksApiStatus: "";
     sellStocksApiStatus: "";
+    stockTradesForUserApiStatus: "";
     getStocksApiStatus: "";
+    editUserApiStatus: "";
     getPendingTradesApiStatus: "";
+    getUserDetailsApiStatus: "";
+    getAllUsersApiStatus: "";
+    getPortfolioApiStatus: "";
+    getCompanyDetailsApiStatus: "";
+    editCompanyApiStatus: "";
+    newCompanyApiStatus: "";
+    lastPageNumApiStatus: "";
+    makeUserBrokerApiStatus: "";
+    passwordResetRequestApiStatus: "";
+    requestAccountDeactivationApiStatus: "";
     reportModalVisible: boolean;
     reportType: number;
     generateReportApiStatus: "";
@@ -21,6 +33,11 @@ declare module "@vue/runtime-core" {
     stockData: [];
     userTransactionHistory: [];
     pendingTrades: [];
+    newCardApiStatus: "";
+    activationApiStatus: "";
+    allUsers: [];
+    portfolio: { [key: string]: number };
+    lastPageNum: number;
   }
 
   // provide typings for `this.$store`

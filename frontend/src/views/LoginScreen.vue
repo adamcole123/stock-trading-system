@@ -1,12 +1,13 @@
 <template>
   <div>
-    <form class="form">
+    <form class="form" @submit.prevent="login">
       <label for="username">Username</label>
       <input
         type="text"
         v-model="loginInfo.username"
         placeholder="Username"
         name="username"
+        required
       />
       <label for="password">Password</label>
       <input
@@ -14,11 +15,12 @@
         v-model="loginInfo.password"
         placeholder="Password"
         name="password"
+        required
       />
+      <input type="submit" value="Login" />
     </form>
-    <button @click="login">Login</button>
+    <router-link to="/password-reset-request">Forgot Password?</router-link>
     <span v-if="errorText">{{ errorText }}</span>
-    <!-- <span v-if="localStorage.getItem('token')">Signed in!</span> -->
   </div>
 </template>
 <script lang="ts">
@@ -49,18 +51,17 @@ export default defineComponent({
       userProfile: "userProfile",
     }),
     async login() {
-      console.log(this.loginInfo.username, this.loginInfo.password);
       const payload = {
         username: this.loginInfo.username,
         password: this.loginInfo.password,
       };
-      await this.actionLoginApi(payload);
+      let response = await this.actionLoginApi(payload);
       if (this.getLoginApiStatus == "success") {
         await this.userProfile();
         alert("Signed in successfully!");
         this.$router.push("/");
       } else {
-        this.errorText = "Authentication failed";
+        this.errorText = response;
       }
     },
   },

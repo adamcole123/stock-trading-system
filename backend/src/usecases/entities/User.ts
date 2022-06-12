@@ -15,7 +15,9 @@ export default class User {
 		public credit?: Number,
 		public role?: string,
 		public isDeleted?: boolean,
-		public cardDetails?: CardDetails[]
+		public cardDetails?: CardDetails[],
+		public activationDate?: Date,
+		public banUntil?:Date
 	){
 
 	}

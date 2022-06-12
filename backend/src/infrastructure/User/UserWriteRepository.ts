@@ -18,14 +18,12 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 					}]
 				}).then(user => {
 					if (user) {
-						let errors = {
-							username: '',
-							email: ''
-						};
+						let errors = ""
 						if (user.username === userDto.username) {
-							errors.username = "User Name already exists";
-						} else if (user.email === userDto.email) {
-							errors.email = "Email already exists";
+							errors = `${errors}User Name already exists. `;
+						}
+						if (user.email === userDto.email) {
+							errors = `${errors}Email already exists. `;
 						}
 						reject(errors);
 					} else {
@@ -35,18 +33,19 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 							lastName: userDto.lastName,
 							credit: userDto.credit,
 							reports: userDto.reports,
+							birthDate: userDto.birthDate,
 							cardDetails: userDto.cardDetails,
 							role: 'User',
 							email: userDto.email,
-							password: userDto.password
+							password: userDto.password,
+							activationDate: userDto.activationDate
 						});
 
 						bcrypt.genSalt(10, (err, salt) => {
 							bcrypt.hash(newUser.password, salt, (err, hash) => {
 								if (err) throw err;
 								newUser.password = hash;
-								newUser
-									.save()
+								User.create(newUser)
 									.then((user: any) => {
 										userDto = {
 											id: user._id,
@@ -59,7 +58,8 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 											credit: user.credit,
 											role: user.role,
 											isDeleted: user.isDeleted,
-											cardDetails: user.cardDetails
+											cardDetails: user.cardDetails,
+											activationDate: user.activationDate
 										}
 										resolve(userDto);
 									})
@@ -87,7 +87,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 				try{
 					let newCredit: number;
 					if(userEditOptions.tradeMode !== undefined){
-						newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : user.credit = userDto!.credit;
+						newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : userDto!.credit;
 						user.credit = newCredit;
 					} else {
 						user = Object.assign(user, userDto);
@@ -106,6 +106,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 						role: user.role,
 						username: user.username,
 						cardDetails: user.cardDetails,
+						activationDate: user.activationDate
 					});
 				} catch (e) {
 					return reject("Couldn't edit user: " + e);

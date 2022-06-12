@@ -8,12 +8,12 @@ import IStockReadOnlyRepository from '../../application/repositories/IStockReadO
 import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadOnlyRepository';
 
 export default class SellStocksUseCase implements ISellStocksUseCase {
-	stockWriteOnlyRepository: IStockWriteOnlyRepository;
-	stockReadOnlyRepository: IStockReadOnlyRepository;
-	tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
-	tradeReadOnlyRepository: ITradeReadOnlyRepository;
-	userWriteOnlyRepository: IUserWriteOnlyRepository;
-	userReadOnlyRepository: IUserReadOnlyRepository;
+	private stockWriteOnlyRepository: IStockWriteOnlyRepository;
+	private stockReadOnlyRepository: IStockReadOnlyRepository;
+	private tradeWriteOnlyRepository: ITradeWriteOnlyRepository;
+	private tradeReadOnlyRepository: ITradeReadOnlyRepository;
+	private userWriteOnlyRepository: IUserWriteOnlyRepository;
+	private userReadOnlyRepository: IUserReadOnlyRepository;
 
 	/**
 	 *
@@ -49,7 +49,8 @@ export default class SellStocksUseCase implements ISellStocksUseCase {
 				}),
 				trades = await this.tradeReadOnlyRepository.fetch({
 					user_id: tradeDto.user_id,
-					stock_id: tradeDto.stock_id
+					stock_id: tradeDto.stock_id,
+					trade_status: "Approved"
 				})
 			])
 
@@ -73,6 +74,7 @@ export default class SellStocksUseCase implements ISellStocksUseCase {
 					await this.stockWriteOnlyRepository.edit({
 						id: tradeDto.stock_id,
 						volume: tradeDto.stock_amount!,
+						latest_trade: new Date(),
 					}, {
 						tradeMode: true
 					}),

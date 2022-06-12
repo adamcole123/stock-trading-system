@@ -1,5 +1,8 @@
 node_modules
-mongo/data
 mongo-rs0-1/data
 mongo-rs0-2/data
 mongo-rs0-3/data
+mongo/data
+coverage
+backend/coverage
+backend/build

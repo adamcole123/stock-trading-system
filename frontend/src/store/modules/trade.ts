@@ -1,11 +1,13 @@
 import { State } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ContextFunction } from "../ContextFunction";
 import { store } from "..";
+import router from "./../../router/index";
 
 const state = () => ({
   buyStocksApiStatus: "",
   sellStocksApiStatus: "",
+  stockTradesForUserApiStatus: "",
   pendingTrades: [],
   getPendingTradesApiStatus: "",
 });
@@ -26,6 +28,9 @@ const getters = {
   getPendingTrades(state: State) {
     return state.pendingTrades;
   },
+  getPortfolio(state: State) {
+    return state.portfolio;
+  },
 };
 
 const actions = {
@@ -34,7 +39,8 @@ const actions = {
       .post("http://localhost:8000/trade/buystocks", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -43,6 +49,8 @@ const actions = {
       dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setBuyStocksApiStatus", "failed");
+      dispatch("auth/userProfile", "", { root: true });
+      router.go(0);
     }
   },
   async sellStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
@@ -50,7 +58,8 @@ const actions = {
       .post("http://localhost:8000/trade/sellstocks", payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -59,6 +68,41 @@ const actions = {
       dispatch("auth/userProfile", "", { root: true });
     } else {
       commit("setSellStocksApiStatus", "failed");
+    }
+  },
+  async stockTradesForUserApi(
+    { commit, dispatch }: ContextFunction,
+    payload: any
+  ) {
+    const response = await axios
+      .post("http://localhost:8000/trade/stocktradesforuser", payload, {
+        withCredentials: true,
+      })
+      .catch((err: AxiosError) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setStockTradesForUserApiStatus", "success");
+      return response.data;
+    } else {
+      commit("setStockTradesForUserApiStatus", "failed");
+    }
+  },
+  async getPortfolio({ commit, dispatch }: ContextFunction, payload: any) {
+    const response = await axios
+      .get("http://localhost:8000/trade/portfolio", {
+        withCredentials: true,
+      })
+      .catch((err: AxiosError) => {
+        console.log(err);
+      });
+
+    if (response && response.data) {
+      commit("setPortfolio", response.data);
+      commit("setGetPortfolioApiStatus", "success");
+    } else {
+      commit("setGetPortfolioApiStatus", "failed");
     }
   },
   async getUserTransactionHistoryApi(
@@ -73,12 +117,11 @@ const actions = {
           withCredentials: true,
         }
       )
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.log(err);
       });
 
     if (response && response.data) {
-      console.log(response);
       commit("setUserTransactionHistory", response.data);
       commit("setGetUserTransactionHistoryApiStatus", "success");
     } else {
@@ -90,7 +133,8 @@ const actions = {
       .post(`http://localhost:8000/trade/approvetrade`, payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -108,7 +152,8 @@ const actions = {
       .post(`http://localhost:8000/trade/rejecttrade`, payload, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        alert(err.response?.data);
         console.log(err);
       });
 
@@ -126,7 +171,7 @@ const actions = {
       .get(`http://localhost:8000/trade/pendingtrades`, {
         withCredentials: true,
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         console.log(err);
       });
 
@@ -158,6 +203,15 @@ const mutations = {
   },
   setPendingTrades(state: State, data: any) {
     state.pendingTrades = data;
+  },
+  setStockTradesForUserApiStatus(state: State, data: any) {
+    state.stockTradesForUserApiStatus = data;
+  },
+  setGetPortfolioApiStatus(state: State, data: any) {
+    state.getPortfolioApiStatus = data;
+  },
+  setPortfolio(state: State, data: any) {
+    state.portfolio = data;
   },
 };
 

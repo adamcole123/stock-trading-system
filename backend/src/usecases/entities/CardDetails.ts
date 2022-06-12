@@ -1,9 +1,14 @@
 export default class CardDetails {
 	constructor (
-		public id: string,
 		public cardNumber: string,
-		public expirationDate: string,
-		public securityCode?: string
+		public expiryDate: string,
+		public cvv: string,
+		public nameOnCard: string,
+		public addressLine1: string,
+		public city: string,
+		public county: string,
+		public postcode: string,
+		public country: string,
 	) {
 
 	}

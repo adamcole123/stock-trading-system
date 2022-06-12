@@ -3,10 +3,12 @@ export const TYPES = {
 	StockServiceLocator : Symbol.for("StockServiceLocator"),
 	TradeServiceLocator : Symbol.for("TradeServiceLocator"),
 	ReportServiceLocator : Symbol.for("ReportServiceLocator"),
+	EmailServiceLocator : Symbol.for("EmailServiceLocator"),
 	IUserWriteOnlyRepository: Symbol.for("IUserWriteOnlyRepository"),
 	IUserReadOnlyRepository: Symbol.for("IUserReadOnlyRepository"),
 	IStockWriteOnlyRepository: Symbol.for("IStockWriteOnlyRepository"),
 	IStockReadOnlyRepository: Symbol.for("IStockReadOnlyRepository"),
 	ITradeWriteOnlyRepository: Symbol.for("ITradeWriteOnlyRepository"),
 	ITradeReadOnlyRepository: Symbol.for("ITradeReadOnlyRepository"),
+	IEncrypter: Symbol.for("IEncrypter"),
 }

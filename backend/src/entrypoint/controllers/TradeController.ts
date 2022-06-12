@@ -10,11 +10,13 @@ import ISellStocksUseCase from "../../usecases/Trades/ISellStocksUseCase";
 import jwt from "jsonwebtoken";
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 import IGetUserTransactionHistoryUseCase from "../../usecases/Trades/IGetUserTransactionHistoryUseCase";
-import UserServiceLocator from "src/configuration/UserServiceLocator";
+import UserServiceLocator from "../../../src/configuration/UserServiceLocator";
 import IValidateUserTokenUseCase from "src/usecases/Users/IValidateUserTokenUseCase";
 import IApproveTradeUseCase from "src/usecases/Trades/IApproveTradeUseCase";
 import IGetUserTransactionsByStatusUseCase from '../../usecases/Trades/IGetUserTransactionsByStatusUseCase';
-import IRejectTradeUseCase from "src/usecases/Trades/IRejectTradeUseCase";
+import IRejectTradeUseCase from "../../usecases/Trades/IRejectTradeUseCase";
+import IStockTradesForUserUseCase from "../../usecases/Trades/IStockTradesForUserUseCase";
+import IGetUserPortfolioUseCase from '../../usecases/Trades/IGetUserPortfolioUseCase';
 
 dotenv.config();
 
@@ -27,6 +29,8 @@ export default class TradeController implements interfaces.Controller {
 	private readonly approveTradeUseCase: IApproveTradeUseCase;
 	private readonly rejectTradeUseCase: IRejectTradeUseCase;
 	private readonly getUserTransactionsByStatusUseCase: IGetUserTransactionsByStatusUseCase;
+	private readonly getUserPortfolioUseCase: IGetUserPortfolioUseCase;
+	private readonly stockTradesForUserUseCase: IStockTradesForUserUseCase;
 	
 	constructor(@inject(TYPES.TradeServiceLocator) serviceLocator: TradeServiceLocator,
 				@inject(TYPES.UserServiceLocator) userServiceLocator: UserServiceLocator){
@@ -35,7 +39,9 @@ export default class TradeController implements interfaces.Controller {
 		this.getUserTransactionHistoryUseCase = serviceLocator.GetGetUserTransactionHistoryUseCase();
 		this.approveTradeUseCase = serviceLocator.GetApproveTradeUseCase();
 		this.rejectTradeUseCase = serviceLocator.GetRejectTradeUseCase();
-		this.getUserTransactionsByStatusUseCase = serviceLocator.GetGetUserTransactionsByStatusCase();
+		this.getUserTransactionsByStatusUseCase = serviceLocator.GetGetUserTransactionsByStatusUseCase();
+		this.stockTradesForUserUseCase = serviceLocator.GetStockTradesForUserUseCase();
+		this.getUserPortfolioUseCase = serviceLocator.GetGetUserPortfolioUseCase();
 		this.validateUserTokenUseCase = userServiceLocator.GetValidateUserTokenUseCase();
 	}
 	
@@ -48,8 +54,8 @@ export default class TradeController implements interfaces.Controller {
 			return res.status(401).json({error: 'User not authorised'});
 		}
 		
-		if(!req.body.user_id && !req.body.stock_id){
-			return res.status(400).json({error: 'No user id or stock id provided'});
+		if(req.body.stock_id === undefined){
+			return res.status(400).json({error: 'No stock id provided'});
 		}
 
 		let reqTrade: ITradeDto = req.body;
@@ -70,8 +76,8 @@ export default class TradeController implements interfaces.Controller {
 			return res.status(401).json({error: 'User not authorised'});
 		}
 		
-		if(!req.body.user_id && !req.body.stock_id){
-			return res.status(400).json({error: 'No user id or stock id provided'});
+		if(req.body.stock_id === undefined){
+			return res.status(400).json({error: 'No stock id provided'});
 		}
 
 		let reqTrade: ITradeDto = req.body;
@@ -153,8 +159,6 @@ export default class TradeController implements interfaces.Controller {
 		if(user.role !== "Broker" && user.role !== "Admin"){
 			return res.status(401).json({error: 'User is not a broker or admin'});
 		}
-
-		let reqTrade: ITradeDto = req.query;
 		
 		return await this.getUserTransactionsByStatusUseCase.invoke("Pending")
 			.then((tradeDtos: ITradeDto[]) => {
@@ -164,5 +168,40 @@ export default class TradeController implements interfaces.Controller {
 				console.log(err);
 				res.status(500).json(err)
 			});
+	}
+
+	@httpPost('/stocktradesforuser')
+	public async stockTradesForUser(@request() req: express.Request, @response() res: express.Response){
+		let user = await <IUserDto>this.validateUserTokenUseCase.invoke(req.cookies.token);
+
+		if(user.id?.toString() !== req.body.user_id){
+			return res.status(401).json({error: 'User is not authorised to see these trades'});
+		}
+		
+		return await this.stockTradesForUserUseCase.invoke({
+			stock_id: req.body.stock_id,
+			user_id: req.body.user_id
+		})
+			.then((tradeDtos: ITradeDto[]) => {
+				res.status(200).json(tradeDtos)
+			})
+			.catch((err: Error) => {
+				console.log(err);
+				res.status(500).json(err)
+			});
+	}
+
+	@httpGet('/portfolio')
+	public async portfolio(@request() req: express.Request, @response() res: express.Response){
+		let user = await this.validateUserTokenUseCase.invoke(req.cookies.token);
+
+		return await this.getUserPortfolioUseCase.invoke(user)
+		.then((portfolio: {[key: string]: number}) => {
+			res.status(200).json(portfolio)
+		})
+		.catch((err: Error) => {
+			console.log(err);
+			res.status(500).json(err)
+		});
 	}
 }

@@ -10,14 +10,11 @@ export default class EditUserDetailsUseCase implements IEditUserDetailsUseCase {
 		this.userWriteOnlyRepository = _userWriteOnlyRepository;		
 	}
 
-	invoke(username: string, userDto: IUserDto, token: string): Promise<IUserDto> {
+	invoke(username: string, userDto: IUserDto): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
 			try{
-				let signedInUser = <IUserDto>jwt.verify(token, process.env.JWT_SECRET_KEY!);
+				delete userDto.username;
 
-				if(signedInUser.username != username && signedInUser.role != "Admin"){
-					reject("Only an administrator and the signed in user can edit their details");
-				}
 				let editedUser: IUserDto = await this.userWriteOnlyRepository.edit(username, userDto, {});
 
 				resolve(editedUser);

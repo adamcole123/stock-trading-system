@@ -2,21 +2,25 @@
   <div>
     <div class="navbar">
       <div class="left">
-        <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/about" class="nav-link">About</router-link>
-        <router-link to="/contact" class="nav-link">Contact</router-link>
+        <router-link
+          :to="{ path: '/', query: { page: 1, limit: 20 } }"
+          class="nav-link"
+          >Home</router-link
+        >
       </div>
       <div class="right">
-        <div v-if="getUserProfile.id !== ''">
-          £{{ getUserProfile.credit }}
+        <div v-if="getUserProfile.id === '' || getUserProfile.id === undefined">
+          <router-link to="/login" class="nav-link">Login</router-link>
+          <router-link to="/register" class="nav-link">Register</router-link>
+        </div>
+        <div v-else>
+          <span v-if="getUserProfile.role === 'User'"
+            >Credit: £{{ getUserProfile.credit }}</span
+          >
           <router-link to="/account" class="nav-link"
             >{{ getUserProfile.firstName }} {{ getUserProfile.lastName }}
           </router-link>
           <span @click="logout()" class="nav-link">Sign out</span>
-        </div>
-        <div v-else>
-          <router-link to="/login" class="nav-link">Login</router-link>
-          <router-link to="/register" class="nav-link">Register</router-link>
         </div>
       </div>
     </div>

@@ -9,18 +9,20 @@
         <th>Total</th>
         <th>Stock Symbol</th>
         <th>Company Name</th>
+        <th>Trade Type</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="trade in getPendingTrades" :key="trade.id">
-        <td>{{ trade.time_of_trade }}</td>
+        <td>{{ moment(trade.time_of_trade).format("DD-MM-YYYY hh:mm:ss") }}</td>
         <td>{{ trade.user_id }}</td>
         <td>{{ trade.stock_amount }}</td>
         <td>{{ trade.stock_id.value }}</td>
         <td>{{ trade.stock_value * trade.stock_amount }}</td>
         <td>{{ trade.stock_id.symbol }}</td>
         <td>{{ trade.stock_id.name }}</td>
+        <td>{{ trade.trade_type }}</td>
         <td>
           <button @click="approveTrade({ id: trade.id })">Approve</button>
           <button @click="rejectTrade({ id: trade.id })">Reject</button>
@@ -33,9 +35,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
+import moment from "moment";
 
 export default defineComponent({
   name: "ApproveRejectTrades",
+  data() {
+    return {
+      moment: moment,
+    };
+  },
   methods: {
     ...mapActions("trade", {
       actionApproveTradeApi: "approveTrade",

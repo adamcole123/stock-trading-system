@@ -44,6 +44,26 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiredAuth: true },
   },
   {
+    path: "/password-reset-granted",
+    name: "passwordResetGranted",
+    component: () => import("../views/PasswordResetGrantedView.vue"),
+  },
+  {
+    path: "/password-reset-denied",
+    name: "passwordResetDenied",
+    component: () => import("../views/PasswordResetDeniedView.vue"),
+  },
+  {
+    path: "/password-reset",
+    name: "passwordReset",
+    component: () => import("../views/PasswordResetView.vue"),
+  },
+  {
+    path: "/password-reset-request",
+    name: "passwordResetRequest",
+    component: () => import("../views/PasswordResetRequestView.vue"),
+  },
+  {
     path: "/contact",
     name: "contact",
     component: () => import("../views/ContactView.vue"),
@@ -54,6 +74,29 @@ const routes: Array<RouteRecordRaw> = [
     name: "generate-report",
     component: () => import("../views/GenerateReport.vue"),
     meta: { requiredAuth: true },
+  },
+  {
+    path: "/activate",
+    name: "activate",
+    component: () => import("../views/ActivationView.vue"),
+  },
+  {
+    path: "/user",
+    name: "user",
+    component: () => import("../views/EditUserView.vue"),
+    meta: { requiredAuth: true },
+  },
+  {
+    path: "/company",
+    name: "editCompany",
+    component: () => import("../views/EditCompanyView.vue"),
+    meta: { requiredAuth: true, limitedTo: ["Admin"] },
+  },
+  {
+    path: "/company/new",
+    name: "newCompany",
+    component: () => import("../views/NewCompanyView.vue"),
+    meta: { requiredAuth: true, limitedTo: ["Admin"] },
   },
 ];
 
@@ -66,11 +109,19 @@ router.beforeEach(async (to, from, next) => {
   await store.dispatch("auth/userProfile");
   if (to.meta.requiredAuth) {
     let userProfile = store.getters["auth/getUserProfile"];
-    console.log(userProfile);
+    const limitedTo = <string[]>to.meta.limitedTo;
+    if (limitedTo) {
+      if (limitedTo.findIndex((role) => role === userProfile.role) === -1) {
+        await store.dispatch("auth/userLogout");
+        await store.commit("auth/setUserProfile", {});
+        return next({ path: "/login" });
+      }
+    }
     if (userProfile.id === "") {
       userProfile = store.getters["auth/getUserProfile"];
       if (userProfile.id === "") {
-        store.dispatch("auth/userLogOut");
+        store.dispatch("auth/userLogout");
+        await store.commit("auth/setUserProfile", {});
         return next({ path: "/login" });
       } else {
         return next();

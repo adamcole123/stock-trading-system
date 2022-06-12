@@ -12,12 +12,16 @@ import IStockReadOnlyRepository from "../application/repositories/IStockReadOnly
 import ITradeReadOnlyRepository from "../application/repositories/ITradeReadOnlyRepository";
 import IGetUserTransactionHistoryUseCase from "../usecases/Trades/IGetUserTransactionHistoryUseCase";
 import GetUserTransactionHistory from '../usecases/Trades/GetUserTransactionHistoryUseCase';
-import IApproveTradeUseCase from "src/usecases/Trades/IApproveTradeUseCase";
+import IApproveTradeUseCase from "../usecases/Trades/IApproveTradeUseCase";
 import ApproveTradeUseCase from '../usecases/Trades/ApproveTradeUseCase';
 import GetUserTransactionsByStatusUseCase from '../usecases/Trades/GetUserTransactionsByStatusUseCase';
 import IGetUserTransactionsByStatusUseCase from '../usecases/Trades/IGetUserTransactionsByStatusUseCase';
 import IRejectTradeUseCase from "../usecases/Trades/IRejectTradeUseCase";
 import RejectTradeUseCase from "../usecases/Trades/RejectTradeUseCase";
+import StockTradesForUserUseCase from "../usecases/Trades/StockTradesForUseUseCase";
+import IStockTradesForUserUseCase from "../usecases/Trades/IStockTradesForUserUseCase";
+import IGetUserPortfolioUseCase from "../usecases/Trades/IGetUserPortfolioUseCase";
+import GetUserPortfolioUseCase from "../usecases/Trades/GetUserPortfolioUseCase";
 
 @injectable()
 
@@ -30,7 +34,7 @@ export default class TradeServiceLocator {
 				@inject(TYPES.IUserReadOnlyRepository) private userReadRepository: IUserReadOnlyRepository){}
 
 	public GetBuyStocksUseCase(): IBuyStocksUseCase {
-		return new BuyStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.userWriteRepository, this.userReadRepository);
+		return new BuyStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.tradeReadRepository, this.userWriteRepository, this.userReadRepository);
 	}
 	public GetSellStocksUseCase(): ISellStocksUseCase {
 		return new SellStocksUseCase(this.stockWriteRepository, this.stockReadRepository, this.tradeWriteRepository, this.tradeReadRepository, this.userWriteRepository, this.userReadRepository);
@@ -44,7 +48,13 @@ export default class TradeServiceLocator {
 	public GetRejectTradeUseCase(): IRejectTradeUseCase {
 		return new RejectTradeUseCase(this.tradeReadRepository, this.stockReadRepository, this.userReadRepository, this.tradeWriteRepository, this.stockWriteRepository, this.userWriteRepository);
 	}
-	public GetGetUserTransactionsByStatusCase(): IGetUserTransactionsByStatusUseCase {
+	public GetGetUserTransactionsByStatusUseCase(): IGetUserTransactionsByStatusUseCase {
 		return new GetUserTransactionsByStatusUseCase(this.tradeReadRepository);
+	}
+	public GetStockTradesForUserUseCase(): IStockTradesForUserUseCase {
+		return new StockTradesForUserUseCase(this.tradeReadRepository);
+	}
+	public GetGetUserPortfolioUseCase(): IGetUserPortfolioUseCase {
+		return new GetUserPortfolioUseCase(this.stockReadRepository, this.tradeReadRepository);
 	}
 }

@@ -8,32 +8,26 @@ import IStockReadOnlyRepository from '../../application/repositories/IStockReadO
 import IStockWriteOnlyRepository from '../../application/repositories/IStockWriteOnlyRepository';
 import Stock from '../entities/Stock';
 import GetAllStocksUseCase from '../Stocks/GetAllStocksUseCase';
-import FakeStockReadOnlyRepository from '../../infrastructure/FakeStockReadOnlyRepository';
-import FakeLargeStockData from '../../infrastructure/FakeLargeStockData';
 import GetOneStockUseCase from '../Stocks/GetOneStockUseCase';
 import IGetOneStockUseCase from '../Stocks/IGetOneStockUseCase';
 import ICreateStockUseCase from '../Stocks/ICreateStockUseCase';
 import CreateStockUseCase from '../Stocks/CreateStockUseCase';
-import MarketSimulatorUseCase from '../Stocks/MarketSimulatorUseCase';
-import ISocketServer from '../../infrastructure/ISocketServer';
-import SocketServer from '../../infrastructure/SocketServer';
-import { EventEmitter } from 'stream';
-import FakeStockWriteOnlyRepository from '../../infrastructure/FakeStockWriteOnlyRepository';
+import GetLastPageNumUseCase from '../Stocks/GetLastPageNumUseCase';
+import IGetLastPageNumUseCase from '../Stocks/IGetLastPageNumUseCase';
 
 describe('Stock Use Cases', () => {
 	let stockReadOnlyRepository: IStockReadOnlyRepository = mock<IStockReadOnlyRepository>();
-	let stockWriteOnlyRepository: IStockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
 
 	dotenv.config();
 
 	beforeAll(async () => {
-		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([new Stock("teststock1id", "teststock1symbol", "teststock1name", 434243, 44324324, 4324324, 43242), new Stock("teststock2id", "teststock2symbol", "teststock2name", 434243, 44324324, 4324324, 43242), new Stock("teststock3id", "teststock3symbol", "teststock3name", 434243, 44324324, 4324324, 43242)]);
+		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([new Stock("teststock1id", "teststock1symbol", "teststock1name", 434243, 44324324, 4324324, 43242),
+		new Stock("teststock2id", "teststock2symbol", "teststock2name", 434243, 44324324, 4324324, 43242), new Stock("teststock3id", "teststock3symbol", "teststock3name", 434243, 44324324, 4324324, 43242)]);
 	});
 	it('Get list of stocks', async () => {
 		// Arrange
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
-
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -43,8 +37,9 @@ describe('Stock Use Cases', () => {
 		// Assert
 		expect(stockDto).toStrictEqual(expect.objectContaining([{
 			"close": 43242,
-			"gains": -3890081,
+			"gains": undefined,
 			"id": "teststock1id",
+			"latest_trade": undefined,
 			"name": "teststock1name",
 			"open": 4324324,
 			"symbol": "teststock1symbol",
@@ -52,8 +47,9 @@ describe('Stock Use Cases', () => {
 			"volume": 44324324
 		}, {
 			"close": 43242,
-			"gains": -3890081,
+			"gains": undefined,
 			"id": "teststock2id",
+			"latest_trade": undefined,
 			"name": "teststock2name",
 			"open": 4324324,
 			"symbol": "teststock2symbol",
@@ -61,8 +57,9 @@ describe('Stock Use Cases', () => {
 			"volume": 44324324
 		}, {
 			"close": 43242,
-			"gains": -3890081,
+			"gains": undefined,
 			"id": "teststock3id",
+			"latest_trade": undefined,
 			"name": "teststock3name",
 			"open": 4324324,
 			"symbol": "teststock3symbol",
@@ -75,8 +72,16 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.40,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -90,7 +95,7 @@ describe('Stock Use Cases', () => {
 		// Assert
 		expect(stockDto).toStrictEqual(expect.objectContaining([{
 			"close": 967.2,
-			"gains": 58.39999999999998,
+			"gains": 58.4,
 			"id": "teststock1id",
 			"name": "teststock1name",
 			"open": 898.5,
@@ -106,8 +111,16 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150.00,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}]);
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -137,8 +150,43 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.40,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150.00,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.40,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.50,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -155,7 +203,7 @@ describe('Stock Use Cases', () => {
 		// Assert
 		expect(stockDto).toStrictEqual(expect.objectContaining([{
 			"close": 967.2,
-			"gains": 58.39999999999998,
+			"gains": 58.4,
 			"id": "teststock1id",
 			"name": "teststock1name",
 			"open": 898.5,
@@ -173,7 +221,7 @@ describe('Stock Use Cases', () => {
 			"volume": 230000
 		}, {
 			"close": 967.2,
-			"gains": 58.39999999999998,
+			"gains": 58.4,
 			"id": "teststock3id",
 			"name": "teststock3name",
 			"open": 898.5,
@@ -198,8 +246,16 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}]);
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -232,8 +288,25 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -275,8 +348,25 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -318,8 +408,25 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -361,8 +468,16 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -395,8 +510,16 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -429,8 +552,34 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -480,15 +629,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'value', 
+				orderBy: 'value',
 				orderDirection: 1
 			}
 		});
@@ -540,15 +724,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'value', 
+				orderBy: 'value',
 				orderDirection: 0
 			}
 		});
@@ -600,15 +819,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'volume', 
+				orderBy: 'volume',
 				orderDirection: 1
 			}
 		});
@@ -660,15 +914,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'volume', 
+				orderBy: 'volume',
 				orderDirection: 0
 			}
 		});
@@ -720,15 +1009,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'symbol', 
+				orderBy: 'symbol',
 				orderDirection: 1
 			}
 		});
@@ -780,15 +1104,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'symbol', 
+				orderBy: 'symbol',
 				orderDirection: 0
 			}
 		});
@@ -840,15 +1199,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'open', 
+				orderBy: 'open',
 				orderDirection: 1
 			}
 		});
@@ -900,15 +1294,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'open', 
+				orderBy: 'open',
 				orderDirection: 0
 			}
 		});
@@ -960,15 +1389,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'name', 
+				orderBy: 'name',
 				orderDirection: 1
 			}
 		});
@@ -1020,15 +1484,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'name', 
+				orderBy: 'name',
 				orderDirection: 0
 			}
 		});
@@ -1080,15 +1579,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'id', 
+				orderBy: 'id',
 				orderDirection: 1
 			}
 		});
@@ -1140,15 +1674,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
-
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'id', 
+				orderBy: 'id',
 				orderDirection: 0
 			}
 		});
@@ -1200,14 +1769,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'gains', 
+				orderBy: 'gains',
 				orderDirection: 1
 			}
 		});
@@ -1259,14 +1864,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'gains', 
+				orderBy: 'gains',
 				orderDirection: 0
 			}
 		});
@@ -1318,14 +1959,50 @@ describe('Stock Use Cases', () => {
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'close', 
+				orderBy: 'close',
 				orderDirection: 1
 			}
 		});
@@ -1372,19 +2049,55 @@ describe('Stock Use Cases', () => {
 		expect(stockDto.length).toBe(4);
 	})
 
-	it('Get list of stocks ordered in descending by gains', async () => {
+	it('Get list of stocks ordered in descending by close', async () => {
 		// Arrange
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
 
-		stockReadOnlyRepository = new FakeStockReadOnlyRepository();
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock1id",
+			"name": "teststock1name",
+			"open": 898.5,
+			"symbol": "teststock1symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": 58.39999999999998,
+			"id": "teststock3id",
+			"name": "teststock3name",
+			"open": 898.5,
+			"symbol": "teststock3symbol",
+			"value": 956.9,
+			"volume": 6000
+		}, {
+			"close": 967.2,
+			"gains": -398.5,
+			"id": "teststock4id",
+			"name": "teststock4name",
+			"open": 898.5,
+			"symbol": "teststock4symbol",
+			"value": 500,
+			"volume": 100
+		}, {
+			"close": 350,
+			"gains": -150,
+			"id": "teststock2id",
+			"name": "teststock2name",
+			"open": 650,
+			"symbol": "teststock2symbol",
+			"value": 500,
+			"volume": 230000
+		}])
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
 		// Act
 		stockDto = await getAllStocksUseCase.invoke(undefined, {
 			order: {
-				orderBy: 'close', 
+				orderBy: 'close',
 				orderDirection: 0
 			}
 		});
@@ -1435,10 +2148,110 @@ describe('Stock Use Cases', () => {
 		// Arrange
 		let getAllStocksUseCase: IGetAllStocksUseCase;
 		let stockDto: IStockDto[];
-		let paginatedData = FakeLargeStockData.slice((1*10)-1, (2*10)-1);
 		const stockReadOnlyRepository = mock<IStockReadOnlyRepository>();
-		
-		mock(stockReadOnlyRepository).fetch.mockResolvedValue(paginatedData);
+
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test1id",
+				"name": "test1name",
+				"open": 500,
+				"symbol": "test1symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test2id",
+				"name": "test2name",
+				"open": 500,
+				"symbol": "test2symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test3id",
+				"name": "test3name",
+				"open": 500,
+				"symbol": "test3symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test4id",
+				"name": "test4name",
+				"open": 500,
+				"symbol": "test4symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test5id",
+				"name": "test5name",
+				"open": 500,
+				"symbol": "test5symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test6id",
+				"name": "test6name",
+				"open": 500,
+				"symbol": "test6symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test7id",
+				"name": "test7name",
+				"open": 500,
+				"symbol": "test7symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test8id",
+				"name": "test8name",
+				"open": 500,
+				"symbol": "test8symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test9id",
+				"name": "test9name",
+				"open": 500,
+				"symbol": "test9symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test10id",
+				"name": "test10name",
+				"open": 500,
+				"symbol": "test10symbol",
+				"value": 500,
+				"volume": 500,
+			}
+		]);
 
 		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
 
@@ -1448,7 +2261,108 @@ describe('Stock Use Cases', () => {
 		});
 
 		// Assert
-		expect(stockDto).toStrictEqual(paginatedData);
+		expect(stockDto).toStrictEqual([
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test1id",
+				"name": "test1name",
+				"open": 500,
+				"symbol": "test1symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test2id",
+				"name": "test2name",
+				"open": 500,
+				"symbol": "test2symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test3id",
+				"name": "test3name",
+				"open": 500,
+				"symbol": "test3symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test4id",
+				"name": "test4name",
+				"open": 500,
+				"symbol": "test4symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test5id",
+				"name": "test5name",
+				"open": 500,
+				"symbol": "test5symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test6id",
+				"name": "test6name",
+				"open": 500,
+				"symbol": "test6symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test7id",
+				"name": "test7name",
+				"open": 500,
+				"symbol": "test7symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test8id",
+				"name": "test8name",
+				"open": 500,
+				"symbol": "test8symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test9id",
+				"name": "test9name",
+				"open": 500,
+				"symbol": "test9symbol",
+				"value": 500,
+				"volume": 500,
+			},
+			{
+				"close": 500,
+				"gains": 500,
+				"id": "test10id",
+				"name": "test10name",
+				"open": 500,
+				"symbol": "test10symbol",
+				"value": 500,
+				"volume": 500,
+			}
+		]);
 
 		expect(stockDto.length).toBe(10);
 	})
@@ -1457,12 +2371,18 @@ describe('Stock Use Cases', () => {
 		// Arrange
 		let getOneStockUseCase: IGetOneStockUseCase;
 		let stockDto: IStockDto;
-		let mockStock = <IStockDto>FakeLargeStockData.find(stock => {stock.id === 'teststock1id'});
-		let mockResult: IStockDto[] = [];
-		mockResult.push(mockStock);
 		const stockReadOnlyRepository = mock<IStockReadOnlyRepository>();
-		
-		mock(stockReadOnlyRepository).fetch.mockResolvedValue(mockResult);
+
+		mock(stockReadOnlyRepository).fetch.mockResolvedValue([{
+			id: "test1id",
+			symbol: "test1symbol",
+			name: "test1name",
+			value: 500,
+			volume: 500,
+			open: 500,
+			close: 500,
+			gains: 500
+		}]);
 
 		getOneStockUseCase = new GetOneStockUseCase(stockReadOnlyRepository);
 
@@ -1474,7 +2394,16 @@ describe('Stock Use Cases', () => {
 		});
 
 		// Assert
-		expect(stockDto).toStrictEqual(mockStock);
+		expect(stockDto).toStrictEqual(expect.objectContaining({
+			"close": 500,
+			"gains": 500,
+			"id": "test1id",
+			"name": "test1name",
+			"open": 500,
+			"symbol": "test1symbol",
+			"value": 500,
+			"volume": 500,
+		}));
 	})
 
 	it('Create stock use case', async () => {
@@ -1482,7 +2411,7 @@ describe('Stock Use Cases', () => {
 		let createStockUseCase: ICreateStockUseCase;
 		let stockDto: IStockDto;
 		const stockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
-		
+
 		mock(stockWriteOnlyRepository).create.mockResolvedValue({
 			id: 'testaddedstockid',
 			symbol: 'testaddedstocksymbol',
@@ -1518,14 +2447,12 @@ describe('Stock Use Cases', () => {
 		});
 	})
 
-	it('Market simulator', () => {
+	it('Create stock use case no values', async () => {
 		// Arrange
-		let marketSimulatorUseCase: MarketSimulatorUseCase;
-		let getAllStocksUseCase: GetAllStocksUseCase
+		let createStockUseCase: ICreateStockUseCase;
 		let stockDto: IStockDto;
-		let socketServer: ISocketServer;
 		const stockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
-		
+
 		mock(stockWriteOnlyRepository).create.mockResolvedValue({
 			id: 'testaddedstockid',
 			symbol: 'testaddedstocksymbol',
@@ -1535,31 +2462,85 @@ describe('Stock Use Cases', () => {
 			open: 41.2,
 			close: 39.6
 		});
-		
-		socketServer = new SocketServer();
-		getAllStocksUseCase = new GetAllStocksUseCase(stockReadOnlyRepository);
-		
-		marketSimulatorUseCase = new MarketSimulatorUseCase(socketServer, stockWriteOnlyRepository, getAllStocksUseCase);
+
+		createStockUseCase = new CreateStockUseCase(stockWriteOnlyRepository);
 
 		// Act
-		//runMarketSimulator();
-		
+		stockDto = await createStockUseCase.invoke({
+			symbol: 'testaddedstocksymbol',
+			name: 'testaddedstockname',
+		});
+
 		// Assert
-		let responseOne: IStockDto[];
-		socketServer.server.once('stockData', (response)=>{
-			responseOne = response;
-		})
+		expect(stockDto).toStrictEqual({
+			id: 'testaddedstockid',
+			symbol: 'testaddedstocksymbol',
+			name: 'testaddedstockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		});
+	})
 
-		socketServer.server.once('stockData', (response)=>{
-			expect(responseOne === response).toBeFalsy();
-		})
-		
-	});
-})
+	it('Get last page num use case', async () => {
+		// Arrange
+		let getLastPageNumUseCase: IGetLastPageNumUseCase;
+		let lastPageNum: number;
+		const stockReadOnlyRepository = mock<IStockReadOnlyRepository>();
 
-async function runMarketSimulator () {
-	let stockWriteOnlyRepository = new FakeStockWriteOnlyRepository()
-	let stockReadOnlyRepository = new FakeStockReadOnlyRepository()
-	let marketSimulatorUseCase = new MarketSimulatorUseCase(new SocketServer, stockWriteOnlyRepository, new GetAllStocksUseCase(stockReadOnlyRepository));
-	await marketSimulatorUseCase.invoke();
-}
+		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		},
+		{
+			id: 'teststockid',
+			symbol: 'teststocksymbol',
+			name: 'teststockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		}]);
+
+		getLastPageNumUseCase = new GetLastPageNumUseCase(stockReadOnlyRepository);
+
+		// Act
+		lastPageNum = await getLastPageNumUseCase.invoke(2);
+
+		// Assert
+		expect(lastPageNum).toEqual(3);
+	})
+});
