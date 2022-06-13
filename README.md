@@ -11,15 +11,11 @@ This is the implementation of my MSc second year project, a stock trading system
 
 
 ## Running the app in a docker container
-***Docker is not yet set up properly in this project, follow the local setup steps instead***
+This app is set up to run on a docker container. First install docker and then run `docker-compose up --detach` from the project root directory
 
-This app is set up to run on a docker container. Install docker then continue to the next steps for an easier setup
+From here you can navigate to `localhost:8888` to take a look at the database
 
-To run the app, execute the following commands from the `stock-trading-system` parent directory
-
-	> cd stock-trading-system
-	> docker-compose up
-
+If you wish to install the application manaully without docker then follow 'Local Setup'
 ## Local Setup
 
 ### Before 'getting the app running'!

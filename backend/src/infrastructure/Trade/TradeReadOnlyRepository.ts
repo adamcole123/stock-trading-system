@@ -3,6 +3,7 @@ import ITradeReadOnlyRepository from '../../application/repositories/ITradeReadO
 import ITradeDto from '../../usecases/data_tranfer_objects/ITradeDto';
 import Trade from './Trade';
 import TradeReadOptions from './TradeReadOptions';
+import { SortOrder } from 'mongoose';
 
 @injectable()
 export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository {
@@ -26,7 +27,7 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 			try {
 				let foundTrades;
 				if(populateStocks) foundTrades = await Trade.find(tradeDto).populate('stock_id');
-				else foundTrades = await Trade.find(tradeDto).sort(options?.orderBy);
+				else foundTrades = await Trade.find(tradeDto).sort(options?.orderBy as { [key: string]: SortOrder | { $meta: "textScore"; }; });
 
 				foundTrades = foundTrades.map(trade => {
 					return {

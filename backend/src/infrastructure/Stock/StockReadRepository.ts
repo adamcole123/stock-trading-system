@@ -6,6 +6,7 @@ import Stock from './Stock';
 import { resolve } from 'dns';
 import StockFetchQuery from './StockFetchQuery';
 import StockType from './../../usecases/entities/Stock';
+import { SortOrder } from 'mongoose';
 
 @injectable()
 export default class StockReadRepository implements IStockReadOnlyRepository {
@@ -45,7 +46,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 		return new Promise(async (resolve, reject) => {
 			let returnData: StockType[] = [];
 
-			let sort: {[key: string]: number} = {};
+			let sort: { [key: string]: SortOrder | { $meta: "textScore"; }; } = {};
 
 			if(options.order !== undefined && 
 				options.order.orderBy !== undefined && 

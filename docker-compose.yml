@@ -1,32 +1,68 @@
 version: "3.7"
 
 services:
-  stock-trading-system-db:
-    container_name: stock-trading-system-db
-    image: mongo
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes: 
-      - ./mongo/data:/data/db
-      - ./mongo-seed/mongo.conf:/etc/mongo.conf
-      - ./mongo-seed/MOCK_DATA.csv:/mongo-seed/MOCK_DATA.csv
-    command: sleep 5 && mongo mongodb://stock-trading-system-db:27017 --eval "rs.initiate();"
-  mongo_seed:
-    image: mongo
-    links:
-      - stock-trading-system-db
+  mongo1:
+    hostname: mongo1
+    container_name: localmongo1
+    image: mongo:4.4-bionic
     volumes:
-      - ./mongo-seed/import.sh:/docker-entrypoint-initdb.d/import.sh
+      - ./data/mongo1:/data/db1
+    expose:
+      - 27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo2:
+    hostname: mongo2
+    container_name: localmongo2
+    image: mongo:4.4-bionic
+    volumes:
+      - ./data/mongo2:/data/db2
+    expose:
+      - 27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongo3:
+    hostname: mongo3
+    container_name: localmongo3
+    image: mongo:4.4-bionic
+    volumes:
+      - ./data/mongo3:/data/db3
+    expose:
+      - 27017
+    restart: always
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+  mongosetup:
+    image: mongo:4.4-bionic
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    volumes:
+      - .:/scripts
+    restart: "no"
+    entrypoint: [ "bash", "/scripts/mongo_setup.sh"]
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+        - ME_CONFIG_MONGODB_SERVER=mongo1
+        - ME_CONFIG_MONGODB_PORT=27017
+        - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+        - ME_CONFIG_MONGODB_AUTH_DATABASE=stock-trading-system-db-docker
+    depends_on:
+        - mongo1
+    ports:
+      - "8888:8081"
   stock-trading-system-backend:
     depends_on: 
-      - stock-trading-system-db
+      - mongo1
     build: ./backend
     container_name: stock-trading-system-backend
     volumes:
-      - ./backend/src:/home/node/app/backend/src 
-      - ./backend/typings:/home/node/app/backend/typings 
-      - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json 
+      - ./backend/src:/home/node/app/backend/src
+      - ./backend/typings:/home/node/app/backend/typings
+      - ./backend/tsconfig.json:/home/node/app/backend/tsconfig.json
+      - ./backend/stockdata.json:/home/node/app/backend/stockdata.json
       - ./backend/.env:/home/node/app/backend/.env 
       - ./backend/coverage/:/home/node/app/backend/coverage/
     restart: always
@@ -35,9 +71,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DB_HOST=stock-trading-system-db
-      - DB_NAME=stock-trading-system-db
+      - DB_HOST=mongo1
       - DB_PORT=27017
+      - DB_NAME=stock-trading-system-db-docker
   stock-trading-system-frontend:
     build: ./frontend
     container_name: stock-trading-system-frontend
@@ -46,9 +82,9 @@ services:
     volumes:
       - ./frontend/src:/home/node/app/frontend/src 
       - ./frontend/tsconfig.json:/home/node/app/frontend/tsconfig.json
+      - ./frontend/.prettierrc:/home/node/app/frontend/.prettierrc
     restart: always
     expose:
       - "8080"
     ports:
       - "8080:8080"
-  
