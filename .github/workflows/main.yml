@@ -27,7 +27,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Change directory
-        run: cd backend
+        run: |
+          pwd
+          cd backend
 
       # Runs a set of commands using the runners shell
       - name: Install Dependencies
