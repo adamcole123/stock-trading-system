@@ -13,7 +13,9 @@ This is the implementation of my MSc second year project, a stock trading system
 ## Running the app in a docker container
 This app is set up to run on a docker container. First install docker and then run `docker-compose up --detach` from the project root directory
 
-From here you can navigate to `localhost:8888` to take a look at the database
+URLs:
+- `localhost:8080`: application frontend
+- `localhost:8888`: database UI
 
 If you wish to install the application manaully without docker then follow 'Local Setup'
 ## Local Setup
