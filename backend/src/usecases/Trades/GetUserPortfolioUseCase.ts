@@ -100,7 +100,16 @@ export default class GetUserPortfolioUseCase implements IGetUserPortfolioUseCase
 
 		for(let key in groupedTransactions){
 			let stock = await this.stockReadOnlyRepository.fetch({ id: key });
-			currentValues += stock[0].value!;
+			currentValues += stock[0].value! * groupedTransactions[key].reduce((acc, cur) => {
+				if(cur.stock_amount !== undefined){
+					if(cur.trade_type === "Buy"){
+						return acc + cur.stock_amount;
+					} else {
+						return acc - cur.stock_amount;
+					}
+				}
+				return acc;
+			}, 0);
 		}
 
 		return currentValues - investedValue;

@@ -10,6 +10,6 @@ COPY jest.config.ts ./
 
 COPY .env ./
 
-RUN npm i
+RUN npm i --legacy-peer-deps
 
 CMD ["npm", "start"]

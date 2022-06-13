@@ -53,6 +53,7 @@ import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
 import User from "./infrastructure/User/User";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { rootCertificates } from "tls";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -140,8 +141,7 @@ const {
 } = process.env;
 
 
-console.log(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`);
-
+console.log(`Attempting to connect to mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
   .then(async res => {
     console.log('Connected to database');
@@ -149,7 +149,7 @@ mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
     changeStockValues();
   })
   .catch(err => {
-    console.error(err)
+    console.error(err);
   })
 
 const httpServer = app.listen(8000, () => {
