@@ -176,7 +176,6 @@ const actions = {
       });
 
     if (response && response.data) {
-      console.log(response);
       commit("setPendingTrades", response.data);
       commit("setGetPendingTradesApiStatus", "success");
     } else {

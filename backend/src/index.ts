@@ -42,7 +42,16 @@ import moment from "moment";
 // set up container
 const container = new Container();
 
-var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
+var allowedOrigins = [
+  'http://localhost:8080', 
+  'http://localhost:8081',
+  'http://127.0.0.1:8080',
+  'http://127.0.0.1:8081',
+  'http://127.0.0.1',
+  'http://127.0.0.1:80',
+  'http://localhost',
+  'http://localhost:80'
+];
 
 // declare metadata by @controller annotation
 import "./entrypoint/controllers/UserController";
@@ -54,6 +63,7 @@ import User from "./infrastructure/User/User";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { rootCertificates } from "tls";
+import SendRealEmailUseCase from "./usecases/Email/SendRealEmailUseCase";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -79,7 +89,7 @@ container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).when
 
 dotenv.config();
 
-let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
+let sendRealEmailUseCase: ISendEmailUseCase = new SendRealEmailUseCase();
 
 // create server
 let server = new InversifyExpressServer(container);
@@ -89,7 +99,7 @@ server.setErrorConfig((app: express.Application) => {
     console.error('Message', err.message)
     console.error('Stack', err.stack)
 
-    sendEmailUseCase.invoke({
+    sendRealEmailUseCase.invoke({
       to: ["admin@stock-trading-system.com"],
       from: "error-logger@stock-trading-system.com",
       subject: "An error was caused in the system",
@@ -121,7 +131,7 @@ server.setConfig((app: express.Application) => {
 
 process.on('uncaughtExceptionMonitor', err => {
   console.error('There was an uncaught error: ', err);
-  sendEmailUseCase.invoke({
+  sendRealEmailUseCase.invoke({
     to: ["admin@stock-trading-system.com"],
     from: "error-logger@stock-trading-system.com",
     subject: "An error was caused in the system",
@@ -159,7 +169,7 @@ const httpServer = app.listen(8000, () => {
 
 const socketServer = new InversifySocketServer(container, new SocketIO.Server(httpServer, {
   cors: {
-    origin: "http://localhost:8080"
+    origin: "*"
   }
 }))
 socketServer.build();
@@ -245,6 +255,32 @@ async function initDb(): Promise<boolean> {
         "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
         "credit": 50000,
         "role": "Admin",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+      await User.create({
+        "username": "user",
+        "email": "user@stocktradingsystem.com",
+        "firstName": "User",
+        "lastName": "Account",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "User",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+      await User.create({
+        "username": "broker",
+        "email": "broker@stocktradingsystem.com",
+        "firstName": "Broker",
+        "lastName": "Account",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "Broker",
         "isDeleted": false,
         "cardDetails": [],
         "activationDate": new Date(),

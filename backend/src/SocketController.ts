@@ -19,7 +19,7 @@ export class SocketController {
       Stock.watch().on("change", (change) => {
         this.stockUpdateBacklog.push(change);
   
-        if(this.stockUpdateBacklog.length === 25) {
+        if(this.stockUpdateBacklog.length === 1000) {
           socket.emit("stocks", this.stockUpdateBacklog);
           this.stockUpdateBacklog = [];
         }

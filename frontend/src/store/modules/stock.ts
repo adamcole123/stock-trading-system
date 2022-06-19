@@ -28,7 +28,6 @@ const getters = {
 
 const actions = {
   async getStocksApi({ commit, dispatch }: ContextFunction, payload: any) {
-    console.log(payload);
     payload = {
       filters: {
         symbol: payload.symbol,
@@ -55,8 +54,6 @@ const actions = {
               },
       },
     };
-
-    console.log("payload", payload);
 
     const response = await axios
       .post("http://localhost:8000/stock/getMany", payload, {
