@@ -3,5 +3,7 @@ declare module 'convert-json-to-csv'{
 	function convertArrayOfObjects(jsonData, jsonColumnDefArray);
 };
 
+declare module 'swagger-express-ts';
+
 declare module '@mongoosejs/double';
 

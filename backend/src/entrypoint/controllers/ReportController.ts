@@ -8,9 +8,16 @@ import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 import IGenerateReportUseCase from "../../usecases/Reports/IGenerateReportUseCase";
 import ReportServiceLocator from "../../configuration/ReportServiceLocator";
 import IDownloadReportUseCase from "src/usecases/Reports/IDownloadReportUseCase";
+import { ApiPath } from "swagger-express-ts";
+import { ApiOperationGet } from "swagger-express-ts";
+import { SwaggerDefinitionConstant } from "swagger-express-ts";
 
 dotenv.config();
 
+@ApiPath({
+    name: 'Reports',
+    path: '/report',
+})
 @controller('/report')
 export default class ReportController implements interfaces.Controller {
 	private readonly generateReportUseCase: IGenerateReportUseCase;
@@ -21,6 +28,23 @@ export default class ReportController implements interfaces.Controller {
 		this.downloadReportUseCase = serviceLocator.GetDownloadReportUseCase();
 	}
 
+	@ApiOperationGet({
+        description: 'Generate company values report',
+        parameters: {
+            path: {
+                id: {
+                    required: true,
+                    type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+                },
+            },
+        },
+        responses: {
+            200: {
+                model: 'User',
+            },
+            400: {},
+        },
+    })
 	@httpGet('/company-values')
 	public async companyValues(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
