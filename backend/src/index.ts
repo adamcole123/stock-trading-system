@@ -15,6 +15,8 @@ import * as swagger from "swagger-express-ts";
 import { SwaggerDefinitionConstant } from "swagger-express-ts";
 import * as SocketIO from 'socket.io';
 import fs from 'fs';
+import moment from "moment";
+import modelDefinitions from './ModelDefinitions';
 
 import UserServiceLocator from './configuration/UserServiceLocator';
 import IUserReadOnlyRepository from "./application/repositories/IUserReadOnlyRepository";
@@ -38,7 +40,6 @@ import EmailServiceLocator from './configuration/EmailServiceLocator';
 import IEncrypter from './infrastructure/IEncrypter';
 import Encrypter from './infrastructure/Encrypter';
 import Stock from './infrastructure/Stock/Stock';
-import moment from "moment";
 
 // set up container
 const container = new Container();
@@ -64,6 +65,7 @@ import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
 import User from "./infrastructure/User/User";
 import bcrypt from 'bcryptjs';
 import SendRealEmailUseCase from "./usecases/Email/SendRealEmailUseCase";
+import morgan from "morgan";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -123,7 +125,7 @@ server.setConfig((app: express.Application) => {
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
         var msg = 'The CORS policy for this site does not ' +
-        'allow access from the specified Origin.';
+          'allow access from the specified Origin.';
         return callback(new Error(msg), false);
       }
       return callback(null, true);
@@ -138,15 +140,17 @@ server.setConfig((app: express.Application) => {
           url: 'My url',
         },
         info: {
-          title: 'My api',
+          title: 'API documentation for the stock trading system',
           version: '1.0',
         },
         responses: {
           500: {},
         },
+        models: modelDefinitions
       },
     })
   );
+  app.use(morgan("tiny"));
 });
 
 process.on('uncaughtExceptionMonitor', err => {

@@ -17,9 +17,16 @@ import IGetUserTransactionsByStatusUseCase from '../../usecases/Trades/IGetUserT
 import IRejectTradeUseCase from "../../usecases/Trades/IRejectTradeUseCase";
 import IStockTradesForUserUseCase from "../../usecases/Trades/IStockTradesForUserUseCase";
 import IGetUserPortfolioUseCase from '../../usecases/Trades/IGetUserPortfolioUseCase';
+import { ApiPath } from "swagger-express-ts";
+import { ApiOperationGet, SwaggerDefinitionConstant } from "swagger-express-ts";
+import { ApiOperationPost } from "swagger-express-ts";
 
 dotenv.config();
 
+@ApiPath({
+	name: 'Trades',
+	path: '/trade',
+})
 @controller('/trade')
 export default class TradeController implements interfaces.Controller {
 	private readonly buyStocksUseCase: IBuyStocksUseCase;
@@ -45,6 +52,23 @@ export default class TradeController implements interfaces.Controller {
 		this.validateUserTokenUseCase = userServiceLocator.GetValidateUserTokenUseCase();
 	}
 	
+	@ApiOperationPost({
+		description: 'Create a new trade that is of trade_type "Buy"',
+		path: '/buystocks',
+		parameters: {
+			body: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { description: "Success", model: "Trade" },
+			400: { description: "No stock id provided" },
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpPost('/buystocks')
 	public async buyStock(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -67,6 +91,23 @@ export default class TradeController implements interfaces.Controller {
 			.catch((err: Error) => res.status(500).json(err));
 	}
 
+	@ApiOperationPost({
+		description: 'Create a new trade that is of trade_type "Sell"',
+		path: '/sellstocks',
+		parameters: {
+			body: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { description: "Success", model: "Trade" },
+			400: { description: "No stock id provided" },
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpPost('/sellstocks')
 	public async sellStock(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -89,6 +130,26 @@ export default class TradeController implements interfaces.Controller {
 			.catch((err: Error) => res.status(500).json(err));
 	}
 
+	@ApiOperationGet({
+		description: 'Get transactions of the signed in user',
+		path: '/usertransactions',
+		parameters: {
+			query: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { 
+				description: "Success", 
+				type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
+				model: "Trade" 
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpGet('/usertransactions')
 	public async userTransactions(@request() req: express.Request, @response() res: express.Response){
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -110,6 +171,25 @@ export default class TradeController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Convert a trade status from Pending to Approved when signed in as a Broker',
+		path: '/approvetrade',
+		parameters: {
+			query: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { 
+				description: "Success", 
+				model: "Trade" 
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpPost('/approvetrade')
 	public async approveTrade(@request() req: express.Request, @response() res: express.Response){
 
@@ -131,6 +211,25 @@ export default class TradeController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Convert a trade status from Pending to Rejected when signed in as a Broker',
+		path: '/rejecttrade',
+		parameters: {
+			query: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { 
+				description: "Success", 
+				model: "Trade" 
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpPost('/rejecttrade')
 	public async rejectTrade(@request() req: express.Request, @response() res: express.Response){
 
@@ -152,6 +251,26 @@ export default class TradeController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationGet({
+		description: 'Get an array of all pending trades in the system',
+		path: '/pendingtrades',
+		parameters: {
+			query: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { 
+				description: "Success", 
+				type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
+				model: "Trade" 
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpGet('/pendingtrades')
 	public async pendingTrades(@request() req: express.Request, @response() res: express.Response){
 		let user = await this.validateUserTokenUseCase.invoke(req.cookies.token);
@@ -170,6 +289,26 @@ export default class TradeController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Get a list of trades that share the same user and the same stock',
+		path: '/stocktradesforuser',
+		parameters: {
+			body: {
+				model: "Trade"
+			},
+		},
+		responses: {
+			200: { 
+				description: "Success", 
+				type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
+				model: "Trade" 
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpPost('/stocktradesforuser')
 	public async stockTradesForUser(@request() req: express.Request, @response() res: express.Response){
 		let user = await <IUserDto>this.validateUserTokenUseCase.invoke(req.cookies.token);
@@ -191,6 +330,24 @@ export default class TradeController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationGet({
+		description: 'Get a users invested, portfolio, and return values of their account',
+		path: '/portfolio',
+		parameters: {
+			query: {
+				model: "User"
+			},
+		},
+		responses: {
+			200: { 
+				description: "Success"
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "Internal server error"
+			},
+		},
+	})
 	@httpGet('/portfolio')
 	public async portfolio(@request() req: express.Request, @response() res: express.Response){
 		let user = await this.validateUserTokenUseCase.invoke(req.cookies.token);

@@ -19,9 +19,15 @@ import IGetAllUsersUseCase from "../../usecases/Users/IGetAllUsersUseCase";
 import IGetUserDetailsUseCase from "../../usecases/Users/IGetUserDetailsUseCase";
 import IEmailDto from "../../usecases/data_tranfer_objects/IEmailDto";
 import IPasswordResetUseCase from "src/usecases/Users/IPasswordResetUseCase";
+import { ApiPath, ApiOperationPost, SwaggerDefinitionConstant } from "swagger-express-ts";
+import { ApiOperationGet } from "swagger-express-ts";
 
 dotenv.config();
 
+@ApiPath({
+	name: 'Users',
+	path: '/user',
+})
 @controller('/user')
 export default class UserController implements interfaces.Controller {
 	private readonly userSignInUseCase: IUserSignInUseCase;
@@ -36,7 +42,7 @@ export default class UserController implements interfaces.Controller {
 	private readonly passwordResetUseCase: IPasswordResetUseCase;
 
 	constructor(@inject(TYPES.UserServiceLocator) serviceLocator: UserServiceLocator,
-				@inject(TYPES.EmailServiceLocator) emailServiceLocator: EmailServiceLocator) {
+		@inject(TYPES.EmailServiceLocator) emailServiceLocator: EmailServiceLocator) {
 		this.userSignInUseCase = serviceLocator.GetUserSignInUseCase();
 		this.userRegisterUseCase = serviceLocator.GetUserRegisterUseCase();
 		this.validateUserTokenUseCase = serviceLocator.GetValidateUserTokenUseCase();
@@ -49,19 +55,52 @@ export default class UserController implements interfaces.Controller {
 		this.sendEmailUseCase = emailServiceLocator.GetSendEmailUseCase();
 	}
 
+	@ApiOperationGet({
+		description: 'This is used to test how the server responds when an endpoint throws an unexpected error',
+		path: '/test-error',
+		responses: {}
+	})
 	@httpGet('/test-error')
-	public testError(@request() req: express.Request, @response() res: express.Response){
+	public testError(@request() req: express.Request, @response() res: express.Response) {
 		throw new Error('test error');
 	}
 
+	@ApiOperationPost({
+		description: 'Reset user password',
+		path: '/password-reset',
+		parameters: {
+			body: {
+				properties: {
+					key: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					password: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			},
+		},
+		responses: {
+			200: {
+				description: "Success",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "'Must enter a new password' or 'Must enter an email address'"
+			}
+		},
+	})
 	@httpPost('/password-reset')
 	public async passwordReset(@request() req: express.Request, @response() res: express.Response) {
-		if(req.body.key === undefined && req.cookies.token === undefined){
-			return res.status(500).json({error: 'Must enter an email address'});
+		if (req.body.key === undefined && req.cookies.token === undefined) {
+			return res.status(500).json({ error: 'Must enter an email address' });
 		}
 
-		if(req.body.password === undefined){
-			return res.status(500).json({error: 'Must enter a new password'});
+		if (req.body.password === undefined) {
+			return res.status(500).json({ error: 'Must enter a new password' });
 		}
 
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -77,9 +116,37 @@ export default class UserController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Request a password reset for the user',
+		path: '/password-reset-request',
+		parameters: {
+			body: {
+				properties: {
+					key: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					password: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			},
+		},
+		responses: {
+			200: {
+				description: "Success",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			401: { description: "User not authorised" },
+			500: {
+				description: "'Must enter a new password' or 'Must enter an email address'"
+			}
+		},
+	})
 	@httpPost('/password-reset-request')
 	public async passwordResetRequest(@request() req: express.Request, @response() res: express.Response) {
-		if(req.body.email === undefined){
+		if (req.body.email === undefined) {
 			return res.status(500).json('Must enter an email address');
 		}
 
@@ -100,15 +167,26 @@ export default class UserController implements interfaces.Controller {
 			});
 	}
 
-	@httpPost('/all')
+	@ApiOperationGet({
+		description: 'Get a list of all users, only available to users with the Admin role',
+		path: '/all',
+		responses: {
+			200: {
+				description: "Success",
+				type: SwaggerDefinitionConstant.Parameter.Type.ARRAY,
+				model: 'User'
+			},
+			401: { description: "User is not an admin" },
+			500: {}
+		},
+	})
+	@httpGet('/all')
 	public async getAllUsers(@request() req: express.Request, @response() res: express.Response) {
-		let reqUser: IUserDto = req.body;
-
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
-		
+
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
-		if(verified.role !== "Admin"){
+		if (verified.role !== "Admin") {
 			return res.status(401).json('User is not an admin');
 		}
 
@@ -121,13 +199,39 @@ export default class UserController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationGet({
+		description: 'Get the details of one user',
+		path: '/one',
+		parameters: {
+			query: {
+				properties: {
+					key: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					password: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			},
+		},
+		responses: {
+			200: {
+				description: "Success",
+				model: 'User'
+			},
+			401: { description: "Not authorised to retrieve this users data." },
+			500: {}
+		}
+	})
 	@httpGet('/one')
 	public async getUserDetails(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
-		
+
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
-		if(verified.role !== "Admin" && verified.username !== req.query.username){
+		if (verified.role !== "Admin" && verified.username !== req.query.username) {
 			return res.status(401).json('Not authorised to retrieve this user\'s data.');
 		}
 
@@ -140,6 +244,34 @@ export default class UserController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Provide username and password, receive a cookie of user\'s encrypted data',
+		path: '/signin',
+		parameters: {
+			body: {
+				properties: {
+					username: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					password: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			},
+		},
+		responses: {
+			200: {
+				description: "Logged in successfully 😊 👌",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			400: { description: "Username or password not inputted" },
+			500: {
+				description: "Could not sign in user"
+			}
+		},
+	})
 	@httpPost('/signin')
 	public async signInUser(@request() req: express.Request, @response() res: express.Response) {
 		if (!req.body.username || !req.body.password) {
@@ -174,6 +306,47 @@ export default class UserController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Provide username, email, firstName, lastName, password, and birthDate which will be saved as an unactivated user. An activation email is subsequently sent',
+		path: '/register',
+		parameters: {
+			body: {
+				properties: {
+					username: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					email: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					firstName: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					lastName: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					password: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					birthDate: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			},
+		},
+		responses: {
+			200: {
+				description: "Registered successfully 😊 👌\nActivation email sent!",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			500: {}
+		},
+	})
 	@httpPost('/register')
 	public async registerUser(@request() req: express.Request, @response() res: express.Response) {
 		let newUser: IUserDto = {
@@ -209,17 +382,33 @@ export default class UserController implements interfaces.Controller {
 					bodyText: `Go here to activate: http://localhost:8080/activate?token=${token}`,
 					bodyHtml: `Click <a href='http://localhost:8080/activate?token=${token}'>here</a> to activate`
 				})
-				.then(email => {
-					res
-					.status(200)
-					.json("Registered successfully 😊 👌\nActivation email sent!");
-				});
+					.then(email => {
+						res
+							.status(200)
+							.json("Registered successfully 😊 👌\nActivation email sent!");
+					});
 			})
 			.catch((err: Error) => {
 				res.status(500).json(err)
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Add new credit card to user profile',
+		path: '/credit-card',
+		parameters: {
+			body: {
+				model: 'CreditCard'
+			},
+		},
+		responses: {
+			200: {
+				description: "New card added successfully",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			500: {}
+		},
+	})
 	@httpPost('/credit-card')
 	public async addNewCreditCard(@request() req: express.Request, @response() res: express.Response) {
 		let newCard: ICreditCardDto = req.body.cardDetails;
@@ -253,6 +442,21 @@ export default class UserController implements interfaces.Controller {
 			});
 	}
 
+	@ApiOperationPost({
+		description: 'Validate the user\'s token cookie',
+		path: '/validate',
+		parameters: {},
+		responses: {
+			200: {
+				description: "Success",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			500: {
+				description: "Could not validate user",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			}
+		},
+	})
 	@httpPost('/validate')
 	public async validateUser(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -269,50 +473,67 @@ export default class UserController implements interfaces.Controller {
 					secure: process.env.NODE_ENV === 'production',
 					expires: new Date(604800000 + Date.now()),
 				})
-				.status(200).json(validated)
+					.status(200).json(validated)
 			})
 			.catch((err: Error) => res.status(401).send(err));
 	}
 
+	@ApiOperationPost({
+		description: 'Edit user details',
+		path: '/edit',
+		parameters: {
+			body: {
+				model: 'User'
+			},
+		},
+		responses: {
+			200: {
+				description: "Success",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			401: { description: "Not authorised to change this user\'s data." },
+			500: {}
+		},
+	})
 	@httpPost('/edit')
 	public async editUser(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 		let edittedUser: IUserDto;
 
-		if(req.body.key){
+		if (req.body.key) {
 			edittedUser = await <IUserDto>jwt.verify(req.body.key, jwtSecretKey!);
 		} else {
 			edittedUser = {
 				...req.body
 			}
 		}
-		
+
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
-		if(verified.role !== "Admin" && verified.username !== req.body.username){
+		if (verified.role !== "Admin" && verified.username !== req.body.username) {
 			return res.status(401).json('Not authorised to retrieve this user\'s data.');
 		}
 
 		let userObjectKeys = Object.keys(edittedUser);
 
-		if(userObjectKeys.length === 2 && 
-			userObjectKeys.includes('username') && 
-			userObjectKeys.includes('role') && 
-			verified.role !== "Admin"){
+		if (userObjectKeys.length === 2 &&
+			userObjectKeys.includes('username') &&
+			userObjectKeys.includes('role') &&
+			verified.role !== "Admin") {
 			return res.status(401).json('Not authorised to change user roles.');
 		}
 
-		if(verified.role !== 'Admin' && edittedUser.banUntil){
+		if (verified.role !== 'Admin' && edittedUser.banUntil) {
 			delete edittedUser.banUntil;
 		}
 
-		if(edittedUser.credit !== undefined) {
+		if (edittedUser.credit !== undefined) {
 			delete edittedUser.credit;
 		}
 
-		if(verified.role !== "Admin" && verified.username === req.body.username){
-			if(!req.body.key){
+		if (verified.role !== "Admin" && verified.username === req.body.username) {
+			if (!req.body.key) {
 				return await this.sendEmailUseCase.invoke({
 					to: [verified.email!, edittedUser.email!],
 					from: "noreply@stocktradingsystem.com",
@@ -320,12 +541,12 @@ export default class UserController implements interfaces.Controller {
 					bodyText: `Click here to confirm your account details change: http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}`,
 					bodyHtml: `Click <a href="http://localhost:8080/account/edit?key=${await jwt.sign(edittedUser, jwtSecretKey!)}">here</a> to confirm your account details change`
 				})
-				.then((email) => {
-					res.status(200).json("Email sent to confirm changes!");
-				})
-				.catch((err) => {
-					res.status(500).json(err);
-				})
+					.then((email) => {
+						res.status(200).json("Email sent to confirm changes!");
+					})
+					.catch((err) => {
+						res.status(500).json(err);
+					})
 			}
 		}
 
@@ -337,15 +558,46 @@ export default class UserController implements interfaces.Controller {
 			.catch((err: Error) => res.status(400).json(err));
 	}
 
+	@ApiOperationGet({
+		description: 'Sign out currently signed in user by removing their cookie',
+		path: '/signin',
+		responses: {
+			200: {
+				description: "Signed out successfully!",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			}
+		},
+	})
 	@httpGet('/signout')
 	public async signOut(@request() req: express.Request, @response() res: express.Response) {
 		res.clearCookie("token").status(200).json("Signed out successfully!");
 	}
 
+	@ApiOperationPost({
+		description: 'Activate user account by passing in token with user\'s username',
+		path: '/activate',
+		parameters: {
+			body: {
+				properties: {
+					token: {
+						required: true,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			}
+		},
+		responses: {
+			200: {
+				description: "Send email to admin user notifying them of the user activating their account.",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			500: {}
+		},
+	})
 	@httpPost('/activate')
 	public async activateUser(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
-		
+
 		let verified = <IUserDto>jwt.verify(req.body.token, jwtSecretKey!);
 
 		return await this.activateUserAccountUseCase.invoke(verified)
@@ -357,29 +609,54 @@ export default class UserController implements interfaces.Controller {
 					bodyText: `User with username ${activatedUser.username} has now been activated!`,
 					bodyHtml: `User with username <b>${activatedUser.username}</b> has now been activated!`
 				})
-				.then(email => {
-					res.status(200).json(activatedUser);
-				});
+					.then(email => {
+						res.status(200).json(activatedUser);
+					});
 			})
-			.catch((err: Error) => res.status(401).send(err));
+			.catch((err: Error) => res.status(500).send(err));
 	}
 
+	@ApiOperationPost({
+		description: 'Send email to an admin to request deactivation',
+		path: '/requestdeactivation',
+		parameters: {
+			body: {
+				properties: {
+					username: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					},
+					password: {
+						required: false,
+						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+					}
+				}
+			},
+		},
+		responses: {
+			200: {
+				description: "Request sent to administrator.",
+				type: SwaggerDefinitionConstant.Parameter.Type.STRING
+			},
+			500: {}
+		},
+	})
 	@httpPost('/requestdeactivation')
 	public async requestAccountDeactivation(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
-		
+
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
 
 		return await this.sendEmailUseCase.invoke({
-					to: ["admin@stocktradingsystem.com"],
-					from: "noreply@stocktradingsystem.com",
-					subject: "A user has requested deactivation",
-					bodyText: `Visit http://localhost:8080/user?username=${verified.username} to mark account as deleted.`,
-					bodyHtml: `Visit <a href="http://localhost:8080/user?username=${verified.username}">this page</a> to mark account as deleted.`
-				})
-				.then(email => {
-					res.status(200).json("Request sent to administrator.");
-				})
-				.catch((err: Error) => res.status(401).send(err));
+			to: ["admin@stocktradingsystem.com"],
+			from: "noreply@stocktradingsystem.com",
+			subject: "A user has requested deactivation",
+			bodyText: `Visit http://localhost:8080/user?username=${verified.username} to mark account as deleted.`,
+			bodyHtml: `Visit <a href="http://localhost:8080/user?username=${verified.username}">this page</a> to mark account as deleted.`
+		})
+			.then(email => {
+				res.status(200).json("Request sent to administrator.");
+			})
+			.catch((err: Error) => res.status(500).send(err));
 	}
 }

@@ -19,7 +19,7 @@ const getters = {
 const actions = {
   async getAllUsersApi({ commit, dispatch }: ContextFunction, payload: any) {
     const response = await axios
-      .post("http://localhost:8000/user/all", payload, {
+      .get("http://localhost:8000/user/all", {
         withCredentials: true,
       })
       .catch((err) => {
