@@ -1,0 +1,13 @@
+config:
+  payload:
+    path: "users.csv"
+    fields:
+      - "username"
+      - "password"
+scenarios:
+  - flow:
+      - post:
+          url: "/auth"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"

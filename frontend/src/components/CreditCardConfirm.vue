@@ -14,26 +14,36 @@
           class="credit-confirm-modal__body__content"
           @submit.prevent="tradeType === 'Buy' ? buyStocks() : sellStocks()"
         >
-          <select v-model="selectedCard" required>
+          <select
+            v-model="selectedCard"
+            title="You must select a credit card"
+            required
+            v-if="getUserProfile.cardDetails.length > 0"
+          >
             <option
               :value="card.id"
               v-for="card in getUserProfile.cardDetails"
               :key="card.id"
-              oninvalid="this.setCustomValidity('You must select a card')"
-              onchange="try{setCustomValidity('')}catch(e){}"
-              oninput="setCustomValidity(' ')"
             >
               ************{{ card.cardNumber }}
             </option>
           </select>
-          <button @click="showAddCardModal()">Add new card</button>
+          <b v-else>Please add a new card</b>
+          <button type="button" @click="showAddCardModal()">
+            Add new card
+          </button>
           <span>Stock Name: {{ stockName }}</span>
           <span>Stock Symbol: {{ stockSymbol }}</span>
           <span>Trade Type: {{ tradeType }}</span>
           <span>Quantity: {{ stockAmount }}</span>
           <span>Price: {{ stockPrice }}</span>
           <span>Total: {{ stockPrice * stockAmount }}</span>
-          <input type="submit" value="Confirm" />
+          <input
+            type="submit"
+            value="Confirm"
+            v-if="getUserProfile.cardDetails.length > 0"
+          />
+          <input type="submit" style="display: none" />
         </form>
       </div>
     </div>

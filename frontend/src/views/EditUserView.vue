@@ -189,7 +189,6 @@ export default defineComponent({
     })
       .then((user) => {
         this.user = user;
-        console.log(user);
         if (this.user.activationDate !== undefined) {
           this.user.activationDate = new Date(this.user.activationDate)
             .toISOString()

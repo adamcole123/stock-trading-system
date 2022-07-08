@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as express from "express";
 import { InversifyExpressServer, getRouteInfo } from 'inversify-express-utils';
 import { interfaces, InversifySocketServer, TYPE } from "inversify-socket-utils";
+import { Container } from 'inversify';
 import { TYPES } from './constants/types';
 import dotenv from 'dotenv';
 import * as prettyjson from "prettyjson";
@@ -10,11 +11,13 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import { SocketController } from "./SocketController";
+import * as swagger from "swagger-express-ts";
+import { SwaggerDefinitionConstant } from "swagger-express-ts";
 import * as SocketIO from 'socket.io';
 import fs from 'fs';
+import moment from "moment";
+import modelDefinitions from './ModelDefinitions';
 
-
-import { Container } from 'inversify';
 import UserServiceLocator from './configuration/UserServiceLocator';
 import IUserReadOnlyRepository from "./application/repositories/IUserReadOnlyRepository";
 import IUserWriteOnlyRepository from "./application/repositories/IUserWriteOnlyRepository";
@@ -37,23 +40,32 @@ import EmailServiceLocator from './configuration/EmailServiceLocator';
 import IEncrypter from './infrastructure/IEncrypter';
 import Encrypter from './infrastructure/Encrypter';
 import Stock from './infrastructure/Stock/Stock';
-import moment from "moment";
 
 // set up container
 const container = new Container();
 
-var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
+var allowedOrigins = [
+  'http://localhost:8080',
+  'http://localhost:8081',
+  'http://127.0.0.1:8080',
+  'http://127.0.0.1:8081',
+  'http://127.0.0.1',
+  'http://127.0.0.1:80',
+  'http://localhost',
+  'http://localhost:80'
+];
 
 // declare metadata by @controller annotation
 import "./entrypoint/controllers/UserController";
 import "./entrypoint/controllers/StockController";
 import "./entrypoint/controllers/TradeController";
 import "./entrypoint/controllers/ReportController";
+
 import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
 import User from "./infrastructure/User/User";
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { rootCertificates } from "tls";
+import SendRealEmailUseCase from "./usecases/Email/SendRealEmailUseCase";
+import morgan from "morgan";
 
 // set up bindings
 container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
@@ -74,22 +86,21 @@ container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLo
 
 container.bind<IEncrypter>(TYPES.IEncrypter).to(Encrypter);
 
-// Binding for socket server
-container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
+let server = new InversifyExpressServer(container);
+
 
 dotenv.config();
 
-let sendEmailUseCase: ISendEmailUseCase = new SendEmailUseCase();
+let sendRealEmailUseCase: ISendEmailUseCase = new SendRealEmailUseCase();
 
 // create server
-let server = new InversifyExpressServer(container);
 server.setErrorConfig((app: express.Application) => {
   app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
     console.error('Name', err.name)
     console.error('Message', err.message)
     console.error('Stack', err.stack)
 
-    sendEmailUseCase.invoke({
+    sendRealEmailUseCase.invoke({
       to: ["admin@stock-trading-system.com"],
       from: "error-logger@stock-trading-system.com",
       subject: "An error was caused in the system",
@@ -99,6 +110,11 @@ server.setErrorConfig((app: express.Application) => {
   });
 });
 server.setConfig((app: express.Application) => {
+  app.use('/api-docs/swagger', express.static('swagger'));
+  app.use(
+    '/api-docs/swagger/assets',
+    express.static('node_modules/swagger-ui-dist')
+  );
   // add body parser
   app.use(bodyParser.urlencoded({
     extended: true
@@ -117,11 +133,29 @@ server.setConfig((app: express.Application) => {
   }));
   app.use(bodyParser.json());
   app.use(cookieParser());
+  app.use(
+    swagger.express({
+      definition: {
+        externalDocs: {
+          url: 'My url',
+        },
+        info: {
+          title: 'API documentation for the stock trading system',
+          version: '1.0',
+        },
+        responses: {
+          500: {},
+        },
+        models: modelDefinitions
+      },
+    })
+  );
+  app.use(morgan("tiny"));
 });
 
 process.on('uncaughtExceptionMonitor', err => {
   console.error('There was an uncaught error: ', err);
-  sendEmailUseCase.invoke({
+  sendRealEmailUseCase.invoke({
     to: ["admin@stock-trading-system.com"],
     from: "error-logger@stock-trading-system.com",
     subject: "An error was caused in the system",
@@ -130,16 +164,18 @@ process.on('uncaughtExceptionMonitor', err => {
   })
 });
 
-let app = server.build();
-
-// const routeInfo = getRouteInfo(container);
-
 const {
   DB_HOST,
   DB_PORT,
   DB_NAME,
 } = process.env;
 
+let app = server.build();
+
+const routeInfo = getRouteInfo(container);
+
+// Binding for socket server
+container.bind<interfaces.Controller>(TYPE.Controller).to(SocketController).whenTargetNamed('SocketController');
 
 console.log(`Attempting to connect to mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
@@ -154,12 +190,11 @@ mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 
 const httpServer = app.listen(8000, () => {
   console.log('Server listening on port 8000');
-  // console.log(prettyjson.render({ routes: routeInfo }));
 });
 
 const socketServer = new InversifySocketServer(container, new SocketIO.Server(httpServer, {
   cors: {
-    origin: "http://localhost:8080"
+    origin: "*"
   }
 }))
 socketServer.build();
@@ -234,7 +269,7 @@ async function initDb(): Promise<boolean> {
     }
     if (!(await User.exists({
       email: "admin@stocktradingsystem.com"
-    }))){
+    }))) {
       console.warn('Generating admin account');
       await User.create({
         "username": "admin",
@@ -245,6 +280,32 @@ async function initDb(): Promise<boolean> {
         "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
         "credit": 50000,
         "role": "Admin",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+      await User.create({
+        "username": "user",
+        "email": "user@stocktradingsystem.com",
+        "firstName": "User",
+        "lastName": "Account",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "User",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+      await User.create({
+        "username": "broker",
+        "email": "broker@stocktradingsystem.com",
+        "firstName": "Broker",
+        "lastName": "Account",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "Broker",
         "isDeleted": false,
         "cardDetails": [],
         "activationDate": new Date(),

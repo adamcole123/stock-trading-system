@@ -272,7 +272,7 @@ describe('Report tests', () => {
 				stock_amount: 43634,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			},
 			{
@@ -282,7 +282,7 @@ describe('Report tests', () => {
 				stock_amount: 64536,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Rejected",
 				trade_type: "Buy"
 			},
 			{
@@ -292,7 +292,7 @@ describe('Report tests', () => {
 				stock_amount: 16456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{			
@@ -312,7 +312,7 @@ describe('Report tests', () => {
 				stock_amount: 456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{
@@ -322,7 +322,7 @@ describe('Report tests', () => {
 				stock_amount: 5555,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			}
 		])
@@ -398,7 +398,7 @@ describe('Report tests', () => {
 				stock_amount: 43634,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			},
 			{
@@ -408,7 +408,7 @@ describe('Report tests', () => {
 				stock_amount: 64536,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Rejected",
 				trade_type: "Buy"
 			},
 			{
@@ -418,7 +418,7 @@ describe('Report tests', () => {
 				stock_amount: 16456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{			
@@ -438,7 +438,7 @@ describe('Report tests', () => {
 				stock_amount: 456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{
@@ -448,7 +448,7 @@ describe('Report tests', () => {
 				stock_amount: 5555,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			}
 		])
@@ -524,7 +524,7 @@ describe('Report tests', () => {
 				stock_amount: 43634,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			},
 			{
@@ -534,7 +534,7 @@ describe('Report tests', () => {
 				stock_amount: 64536,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Rejected",
 				trade_type: "Buy"
 			},
 			{
@@ -544,7 +544,7 @@ describe('Report tests', () => {
 				stock_amount: 16456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{			
@@ -564,7 +564,7 @@ describe('Report tests', () => {
 				stock_amount: 456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{
@@ -574,7 +574,7 @@ describe('Report tests', () => {
 				stock_amount: 5555,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			}
 		])
@@ -650,7 +650,7 @@ describe('Report tests', () => {
 				stock_amount: 43634,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			},
 			{
@@ -660,7 +660,7 @@ describe('Report tests', () => {
 				stock_amount: 64536,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Rejected",
 				trade_type: "Buy"
 			},
 			{
@@ -670,7 +670,7 @@ describe('Report tests', () => {
 				stock_amount: 16456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{			
@@ -690,7 +690,7 @@ describe('Report tests', () => {
 				stock_amount: 456,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Buy"
 			},
 			{
@@ -700,7 +700,7 @@ describe('Report tests', () => {
 				stock_amount: 5555,
 				stock_value: 167.12,
 				time_of_trade: new Date(),
-				trade_status: "Pending",
+				trade_status: "Approved",
 				trade_type: "Sell"
 			}
 		])

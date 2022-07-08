@@ -43,15 +43,11 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	
 					stocks = stocks.map(stock => {
 						return {
-							id: stock.id,
+							symbol: stock.symbol,
+							name: stock.name,
 							volume: stock.volume,
 							value: stock.value,
-							name: stock.name,
 							gains: stock.gains,
-							open: stock.open,
-							close: stock.close,
-							symbol: stock.symbol,
-							latest_trade: stock.latest_trade,
 						};
 					})
 	
@@ -94,6 +90,16 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 				let companyDetails: IStockDto[];
 	
 				companyDetails = await this.stockReadOnlyRepository.fetch(stock_ids.map(stock_id => { return { id: stock_id }}), { order: { orderBy: 'name', orderDirection: ascending ? 1 : 0 }})
+
+				companyDetails = companyDetails.map(stock => {
+					return {
+						symbol: stock.symbol,
+						name: stock.name,
+						volume: stock.volume,
+						value: stock.value,
+						gains: stock.gains,
+					};
+				})
 				
 				let plainStockKeysToRemove: string[] = [];
 	
@@ -141,10 +147,22 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 		return new Promise(async (resolve, reject) => {
 			this.tradeReadOnlyRepository.fetch({user_id: user_id}, false)
 			.then(async trades => {
-				if(trades.length < 1){
-					reject('User has no trades');
-				}
 				let filteredUserTransactions = trades.filter(trade => !(trade.trade_status === "Rejected" || trade.trade_status === "Pending"));
+				if(filteredUserTransactions.length < 1) {
+					let user = await this.userReadOnlyRepository.fetch({id: user_id})
+			
+					user.reports?.push({
+						report_date: new Date(),
+						report_data:"",
+						report_type: report_type
+					});
+		
+					let returnUser = await this.userWriteOnlyRepository.edit(user.username!, {
+						reports: user.reports
+					}, {})
+					
+					return resolve(returnUser);
+				}
 				let numSharesPerCompany: any[] = await this.groupByCompany(filteredUserTransactions);
 
 				this.addStockInfoToCompany(numSharesPerCompany)

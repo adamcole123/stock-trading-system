@@ -6,7 +6,7 @@ services:
     container_name: localmongo1
     image: mongo:4.4-bionic
     volumes:
-      - ./data/mongo1:/data/db1
+      - ./data/mongo1:/var/lib/mongodb
     expose:
       - 27017
     restart: always
@@ -16,7 +16,7 @@ services:
     container_name: localmongo2
     image: mongo:4.4-bionic
     volumes:
-      - ./data/mongo2:/data/db2
+      - ./data/mongo2:/var/lib/mongodb
     expose:
       - 27017
     restart: always
@@ -26,7 +26,7 @@ services:
     container_name: localmongo3
     image: mongo:4.4-bionic
     volumes:
-      - ./data/mongo3:/data/db3
+      - ./data/mongo3:/var/lib/mongodb
     expose:
       - 27017
     restart: always
@@ -41,18 +41,18 @@ services:
       - .:/scripts
     restart: "no"
     entrypoint: [ "bash", "/scripts/mongo_setup.sh"]
-  mongo-express:
-    image: mongo-express
-    restart: always
-    environment:
-        - ME_CONFIG_MONGODB_SERVER=mongo1
-        - ME_CONFIG_MONGODB_PORT=27017
-        - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-        - ME_CONFIG_MONGODB_AUTH_DATABASE=stock-trading-system-db-docker
-    depends_on:
-        - mongo1
+  adminmongo:
+    image: "mrvautin/adminmongo"
+    depends_on: 
+      - mongo1
     ports:
-      - "8888:8081"
+      - "1234:1234"
+    environment:
+      - HOST=0.0.0.0
+      - CONN_NAME=Docker
+      - DB_HOST=mongo1
+      - DB_PORT=27017
+      - DB_NAME=stock-trading-system-db-docker
   stock-trading-system-backend:
     depends_on: 
       - mongo1
@@ -73,7 +73,7 @@ services:
     environment:
       - DB_HOST=mongo1
       - DB_PORT=27017
-      - DB_NAME=stock-trading-system-db-docker
+      - CONN_NAME=stock-trading-system-db-docker
   stock-trading-system-frontend:
     build: ./frontend
     container_name: stock-trading-system-frontend
@@ -83,8 +83,9 @@ services:
       - ./frontend/src:/home/node/app/frontend/src 
       - ./frontend/tsconfig.json:/home/node/app/frontend/tsconfig.json
       - ./frontend/.prettierrc:/home/node/app/frontend/.prettierrc
+      - ./nginx.conf:/usr/share/nginx/html/nginx.conf
     restart: always
     expose:
-      - "8080"
+      - "80"
     ports:
-      - "8080:8080"
+      - "8080:80"

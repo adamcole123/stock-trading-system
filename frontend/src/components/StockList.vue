@@ -277,15 +277,16 @@
         <tr>
           <th
             v-if="getUserProfile.id !== '' && getUserProfile.role === 'User'"
+            class="stocklist-header"
           ></th>
-          <th></th>
-          <th></th>
-          <th align="left">Gains</th>
-          <th align="left">Value</th>
-          <th align="left">Volume</th>
-          <th align="left">Open</th>
-          <th align="left">Close</th>
-          <th align="left">Last Trade</th>
+          <th class="stocklist-header"></th>
+          <th class="stocklist-header"></th>
+          <th class="stocklist-header" align="left">Gains</th>
+          <th class="stocklist-header" align="left">Value</th>
+          <th class="stocklist-header" align="left">Volume</th>
+          <th class="stocklist-header" align="left">Open</th>
+          <th class="stocklist-header" align="left">Close</th>
+          <th class="stocklist-header" align="left">Last Trade</th>
           <th
             align="left"
             colspan="2"
@@ -483,7 +484,7 @@
         v-if="getStockData.length > 0"
       >
         <option>20</option>
-        <option>100</option>
+        <option>40</option>
         <option value="">All</option>
       </select>
       <div
@@ -573,6 +574,9 @@ export default defineComponent({
       this.buildCanSellList();
     }
     socket.on("stocks", (data) => {
+      if (this.getStockData.length === 0) {
+        this.applyFilters();
+      }
       this.actionUpdateStocksData([
         data.map((update: any) => {
           return {
@@ -676,7 +680,6 @@ export default defineComponent({
       if (resetPage) {
         this.filter.page = 1;
       }
-      console.log(this.filter);
       this.$router.replace({
         name: "home",
         query: {
@@ -694,7 +697,6 @@ export default defineComponent({
       this.applyFilters();
     },
     orderBy(field: string) {
-      console.log(field, this.filter.orderBy);
       if (
         this.filter.orderBy === undefined &&
         this.filter.orderDirection === undefined
@@ -810,6 +812,9 @@ export default defineComponent({
   width: 100%;
   border-collapse: collapse;
 }
+.stocklist-header {
+  text-align: center;
+}
 .trades-table {
   width: 100%;
   border-collapse: collapse;
@@ -834,7 +839,7 @@ export default defineComponent({
 }
 .filterheader > div {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: row;
 }
 .filterheader > div > input {

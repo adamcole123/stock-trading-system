@@ -526,9 +526,9 @@ describe("Trade Tests", () => {
 
 		//Assert
 		expect(tradeDto).toStrictEqual(expect.objectContaining({
-			"invested": 15474.4,
-			"portfolio": 50,
-			"return": -15424.4,
+			portfolio: 2400,
+			invested: 15474.4,
+			return: -13074.4,
 		}));
 	})
 })
