@@ -1,21 +1,23 @@
 import 'reflect-metadata';
 import { cleanUpMetadata, interfaces } from 'inversify-express-utils';
-import UserServiceLocator from '../../../configuration/UserServiceLocator';
-import UserController from '../UserController';
-import IUserReadOnlyRepository from '../../../application/repositories/IUserReadOnlyRepository';
-import IUserWriteOnlyRepository from '../../../application/repositories/IUserWriteOnlyRepository';
 import { Container } from 'inversify';
 import { TYPES } from '../../../constants/types';
 import { mockedHttpContext } from '../MockHttpContext';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import httpMocks from 'node-mocks-http';
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it, vi, beforeAll } from "vitest";
+import bcrypt from 'bcryptjs';
+
 import IUserDto from '../../../usecases/data_tranfer_objects/IUserDto';
-import { mock } from 'jest-mock-extended';
 import EmailServiceLocator from '../../../configuration/EmailServiceLocator';
 import Encrypter from '../../../infrastructure/Encrypter';
 import IEncrypter from '../../../infrastructure/IEncrypter';
-import bcrypt from 'bcryptjs';
+import UserServiceLocator from '../../../configuration/UserServiceLocator';
+import UserController from '../UserController';
+import IUserReadOnlyRepository from '../../../application/repositories/IUserReadOnlyRepository';
+import IUserWriteOnlyRepository from '../../../application/repositories/IUserWriteOnlyRepository';
 
 // set up container
 const container = new Container();
@@ -34,7 +36,7 @@ describe('UserController Tests', () => {
 	container.bind<interfaces.HttpContext>(Symbol.for("HttpContext")).toConstantValue(mockedHttpContext);
 
 	beforeAll(async () => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		cleanUpMetadata();
 		dotenv.config();
 		controller = new UserController(container.get<UserServiceLocator>(Symbol.for("UserServiceLocator")),

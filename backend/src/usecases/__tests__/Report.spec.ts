@@ -1,4 +1,5 @@
-import { mock } from 'jest-mock-extended';
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it } from "vitest";
 import IStockReadOnlyRepository from '../../application/repositories/IStockReadOnlyRepository';
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
 import IUserDto from '../data_tranfer_objects/IUserDto';
@@ -8,8 +9,6 @@ import GenerateReportUseCase from '../Reports/GenerateReportUseCase';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IReportDto from '../data_tranfer_objects/IReportDto';
 import ITradeReadOnlyRepository from 'src/application/repositories/ITradeReadOnlyRepository';
-import Report from '../entities/Report';
-import ReportType from '../entities/ReportType';
 
 let stockReadOnlyRepository: IStockReadOnlyRepository;
 let userWriteOnlyRepository: IUserWriteOnlyRepository;
@@ -20,7 +19,6 @@ describe('Report tests', () => {
 	it('Generate report use case: complete list of stock value of each company in ascending order', async () => {
 		//Arrange
 		let generateReportUseCase: IGenerateReportUseCase;
-		let reportDto: IReportDto;
 		let userDto: IUserDto;
 
 		userWriteOnlyRepository = mock<IUserWriteOnlyRepository>();
@@ -138,7 +136,6 @@ describe('Report tests', () => {
 	it('Generate report use case: complete list of stock value of each company in descending order', async () => {
 		//Arrange
 		let generateReportUseCase: IGenerateReportUseCase;
-		let reportDto: IReportDto;
 		let userDto: IUserDto;
 
 		userWriteOnlyRepository = mock<IUserWriteOnlyRepository>();

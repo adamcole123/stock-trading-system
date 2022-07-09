@@ -1,5 +1,6 @@
 import ISendEmailUseCase from "../Email/ISendEmailUseCase";
 import SendEmailUseCase from '../Email/SendEmailUseCase';
+import { describe, expect, it } from "vitest";
 
 describe('Email tests', () => {
 	it('Send email use case', async () => {

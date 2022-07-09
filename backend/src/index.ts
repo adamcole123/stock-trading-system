@@ -6,13 +6,11 @@ import { interfaces, InversifySocketServer, TYPE } from "inversify-socket-utils"
 import { Container } from 'inversify';
 import { TYPES } from './constants/types';
 import dotenv from 'dotenv';
-import * as prettyjson from "prettyjson";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import { SocketController } from "./SocketController";
 import * as swagger from "swagger-express-ts";
-import { SwaggerDefinitionConstant } from "swagger-express-ts";
 import * as SocketIO from 'socket.io';
 import fs from 'fs';
 import moment from "moment";
@@ -35,7 +33,6 @@ import TradeReadOnlyRepository from "./infrastructure/Trade/TradeReadOnlyReposit
 import ITradeReadOnlyRepository from "./application/repositories/ITradeReadOnlyRepository";
 import ReportServiceLocator from "./configuration/ReportServiceLocator";
 import ISendEmailUseCase from './usecases/Email/ISendEmailUseCase';
-import SendEmailUseCase from './usecases/Email/SendEmailUseCase';
 import EmailServiceLocator from './configuration/EmailServiceLocator';
 import IEncrypter from './infrastructure/IEncrypter';
 import Encrypter from './infrastructure/Encrypter';

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import 'reflect-metadata';
 import config from '../../../test/utils/config';
 import User from '../User/User';
+import { describe, expect, it, beforeAll, beforeEach, afterAll } from "vitest";
 
 import UserReadRepository from '../User/UserReadRepository';
 import UserWriteRepository from '../User/UserWriteRepository';

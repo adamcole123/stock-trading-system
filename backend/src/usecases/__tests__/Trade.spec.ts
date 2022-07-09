@@ -7,7 +7,8 @@ import IBuyStocksUseCase from "../Trades/IBuyStocksUseCase";
 import ITradeWriteOnlyRepository from '../../application/repositories/ITradeWriteOnlyRepository';
 import IStockWriteOnlyRepository from '../../application/repositories/IStockWriteOnlyRepository';
 import IStockReadOnlyRepository from "../../application/repositories/IStockReadOnlyRepository";
-import { mock } from 'jest-mock-extended';
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it, vi, beforeAll } from "vitest";
 import ISellStocksUseCase from '../Trades/ISellStocksUseCase';
 import SellStocksUseCase from '../Trades/SellStocksUseCase';
 import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteOnlyRepository';
@@ -32,7 +33,7 @@ let userReadOnlyRepository: IUserReadOnlyRepository;
 
 describe("Trade Tests", () => {
 	beforeAll(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	})
 	it("Buy stocks use case", async () => {
 		//Arrange

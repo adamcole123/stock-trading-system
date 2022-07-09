@@ -1,5 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose, { model } from 'mongoose';
+import mongoose from 'mongoose';
 import 'reflect-metadata';
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import config from '../../../test/utils/config';
@@ -8,9 +8,10 @@ import Trade from '../Trade/Trade';
 import TradeReadOnlyRepository from '../Trade/TradeReadOnlyRepository';
 import TradeWriteOnlyRepository from '../Trade/TradeWriteOnlyRepository';
 import User from '../User/User';
+import { describe, expect, it, vi, beforeAll, beforeEach, afterAll } from "vitest";
 
 
-jest.useRealTimers();
+vi.useRealTimers();
 
 describe('Trade Repositories', () => {
 	let tradeReadRepository = new TradeReadOnlyRepository();

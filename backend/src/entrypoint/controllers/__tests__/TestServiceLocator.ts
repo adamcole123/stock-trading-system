@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import { mock, objectContainsValue } from "jest-mock-extended";
+import { mock, objectContainsValue } from "vitest-mock-extended";
 import IStockReadOnlyRepository from "src/application/repositories/IStockReadOnlyRepository";
 import IStockWriteOnlyRepository from "src/application/repositories/IStockWriteOnlyRepository";
 import ITradeReadOnlyRepository from "src/application/repositories/ITradeReadOnlyRepository";
