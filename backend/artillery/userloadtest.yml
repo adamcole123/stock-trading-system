@@ -1,0 +1,56 @@
+config:
+  target: 'https://localhost:8000/user'
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    path: "users.csv"
+    fields:
+      - "_id"
+      - "username"
+      - "email"
+      - "password"
+      - "firstName"
+      - "lastName"
+      - "birthDate"
+      - "reports"
+      - "credit"
+      - "role"
+      - "isDeleted"
+      - "cardDetails"
+      - "activationDate"
+      - "banUntil"
+  
+scenarios:
+- name: "Test error"
+  flow:
+    - get:
+        url: "/test-error"
+- name: "Test error"
+  flow:
+    - get:
+        url: "/test-error"
+- name: "Test error"
+  flow:
+    - get:
+        url: "/test-error"
+- name: "Test error"
+  flow:
+    - get:
+        url: "/test-error"
+- name: "Test error"
+  flow:
+    - get:
+        url: "/test-error"
+- name: "Test error"
+  flow:
+    - get:
+        url: "/test-error"

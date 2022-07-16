@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Trade from '../../usecases/entities/Trade';
 
 var Schema = mongoose.Schema;
 

@@ -91,7 +91,12 @@ let server = new InversifyExpressServer(container);
 
 dotenv.config();
 
-let sendRealEmailUseCase: ISendEmailUseCase = new SendRealEmailUseCase();
+let sendRealEmailUseCase: ISendEmailUseCase;
+if(process.env.GMAILBOOL === "true") {
+  sendRealEmailUseCase = new SendRealEmailUseCase();
+} else {
+  sendRealEmailUseCase = new SendEmailUseCase();
+}
 
 // create server
 server.setErrorConfig((app: express.Application) => {

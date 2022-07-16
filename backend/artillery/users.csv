@@ -1,0 +1,5 @@
+__v,_id,activationDate,birthDate,cardDetails,credit,email,firstName,isDeleted,lastName,password,reports,role,username
+0,6282aec3316570c650fbadc9,2022-05-16T20:06:52.374Z,1998-06-05T00:00:00.000Z,[],50000,adamcole123@hotmail.co.uk,Adam,false,Cole,$2a$10$xAm0gROG/saPN30c6XiPTOU/8ScNvhpoXtAuETz9mWIRHy2O3EBpO,[],User,bebet
+0,62c71f6ab17001d5e4b32d44,2022-07-07T18:01:14.234Z,,[],50000,admin@stocktradingsystem.com,Admin,false,Account,$2a$10$KT8jfGCuIGS.YpYyNyQoQO23g50wKnjRCmRL4cTv6M12cVc5GJ9be,[],Admin,admin
+1,62c71f6ab17001d5e4b32da7,2022-07-07T18:01:14.589Z,,[],50000,user@stocktradingsystem.com,User,false,Account,$2a$10$WLGFU1EycdOWzdwMZd4R0.0EmRDDFhHZQeZz3S.EhBn6fCPVS73M6,"[{""report_data"":"""",""report_type"":""CSV"",""report_date"":""2022-07-07T18:02:52.042Z"",""_id"":""62c71fccb17001d5e4b3f8b7""}]",User,user
+0,62c71f6ab17001d5e4b32da9,2022-07-07T18:01:14.999Z,,[],50000,broker@stocktradingsystem.com,Broker,false,Account,$2a$10$PuJMHQA3hMq9JihpAtKjvO4tvvto9TJJqdffn.MVw2gvCI4Uu.X26,[],Broker,broker

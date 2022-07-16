@@ -10,7 +10,7 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 		let users = await User.find({});
 		return users.map(user => {
 			return {
-				id: user._id,
+				id: user._id.toString(),
 				username: user.username,
 				email: user.email,
 				firstName: user.firstName,

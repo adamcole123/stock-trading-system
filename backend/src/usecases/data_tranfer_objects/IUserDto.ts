@@ -12,10 +12,10 @@ export default interface IUserDto {
 	lastName?: string,
 	birthDate?: Date,
 	reports?: IReportDto[],
-	credit?: Number,
+	credit?: number,
 	role?: string,
 	isDeleted?: boolean,
-	cardDetails?: (CardDetails | { cardDetails: string, key: string })[],
+	cardDetails?: (CardDetails | { cardDetails?: string, key?: string })[],
 	activationDate?: Date,
 	banUntil?: Date
 }

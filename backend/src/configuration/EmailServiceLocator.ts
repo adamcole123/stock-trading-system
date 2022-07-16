@@ -6,6 +6,10 @@ import SendEmailUseCase from "../usecases/Email/SendEmailUseCase";
 @injectable()
 export default class EmailServiceLocator {
 	public GetSendEmailUseCase(): ISendEmailUseCase {
-		return new SendRealEmailUseCase();
+		if(process.env.GMAILBOOL === "true") {
+			return new SendRealEmailUseCase();
+		} else {
+			return new SendEmailUseCase();
+		}
 	}
 }
