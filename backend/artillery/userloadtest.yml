@@ -30,26 +30,13 @@ config:
       - "banUntil"
   
 scenarios:
-- name: "Test error"
+- name: "Password Reset"
   flow:
     - get:
-        url: "/test-error"
-- name: "Test error"
-  flow:
-    - get:
-        url: "/test-error"
-- name: "Test error"
-  flow:
-    - get:
-        url: "/test-error"
-- name: "Test error"
-  flow:
-    - get:
-        url: "/test-error"
-- name: "Test error"
-  flow:
-    - get:
-        url: "/test-error"
+        url: "/password-reset"
+        json: 
+          key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJwYXNzd29yZCI6IlBhc3N3b3JkMSEifQ.ZIX_2eC_1GV2iTkgC3MbrW2OpBjh23RnawLW0pfj1GE"
+          password: "Password1!2"
 - name: "Test error"
   flow:
     - get:
