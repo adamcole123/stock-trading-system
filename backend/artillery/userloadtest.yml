@@ -35,9 +35,38 @@ scenarios:
     - get:
         url: "/password-reset"
         json: 
-          key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJwYXNzd29yZCI6IlBhc3N3b3JkMSEifQ.ZIX_2eC_1GV2iTkgC3MbrW2OpBjh23RnawLW0pfj1GE"
-          password: "Password1!2"
+          key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAc3RvY2t0cmFkaW5nc3lzdGVtLmNvbSIsInJlcXVlc3REYXRlIjoiU2F0IEp1bCAyMyAyMDIyIDEyOjUxOjAyIEdNVCswMTAwIChCcml0aXNoIFN1bW1lciBUaW1lKSJ9.-Gk6FSneiFdfni_TExzCK-xVpbGIxGSuhf3ekwS0smc"
+          password: "{{ password }}"
+- name: "Password Reset Request Request"
+  flow:
+    - get:
+        url: "/password-reset-request"
+        json: 
+          email: "{{ email }}"
 - name: "Test error"
   flow:
     - get:
         url: "/test-error"
+- name: "Get all users"
+  flow:
+    - get:
+        url: "/all"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+- name: "Get one user"
+  flow:
+    - get:
+        url: "/one"
+        json: 
+          username: "{{ username }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+- name: "Sign in user"
+  flow:
+    - get:
+        url: "/signin"
+        json: 
+          username: "{{ username }}"
+          password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
