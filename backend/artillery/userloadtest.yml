@@ -12,8 +12,8 @@ config:
       arrivalRate: 50
       name: Sustained load
   payload:
-    path: "users.csv"
-    fields:
+    - path: "users.csv"
+      fields:
       - "_id"
       - "username"
       - "email"
@@ -28,6 +28,22 @@ config:
       - "cardDetails"
       - "activationDate"
       - "banUntil"
+    - path: "newUsers.csv"
+      fields:
+      - "_id"
+      - "newUsername"
+      - "newEmail"
+      - "newPassword"
+      - "newFirstName"
+      - "newLastName"
+      - "newBirthDate"
+      - "newReports"
+      - "newCredit"
+      - "newRole"
+      - "newIsDeleted"
+      - "newCardDetails"
+      - "newActivationDate"
+      - "newBanUntil"
   
 scenarios:
 - name: "Password Reset"
@@ -70,3 +86,14 @@ scenarios:
           password: "{{ password }}"
         cookie:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+- name: "Register user"
+  flow:
+    - get:
+        url: "/register"
+        json: 
+          username: "{{ username }}"
+          email: "{{ email }}"
+          firstName: "{{ firstName }}"
+          lastName: "{{ lastName }}"
+          birthDate: "{{ birthDate }}"
+          password: "{{ password }}"
