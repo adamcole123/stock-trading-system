@@ -44,7 +44,17 @@ config:
       - "newCardDetails"
       - "newActivationDate"
       - "newBanUntil"
-  
+    - path: "newCardDetails.csv"
+      fields:
+      - "newCardNumber"
+      - "newExpiryDate"
+      - "newCvv"
+      - "newNameOnCard"
+      - "newAddressLine1"
+      - "newCity"
+      - "newCounty"
+      - "newPostcode"
+      - "newCountry"
 scenarios:
 - name: "Password Reset"
   flow:
@@ -97,3 +107,17 @@ scenarios:
           lastName: "{{ lastName }}"
           birthDate: "{{ birthDate }}"
           password: "{{ password }}"
+- name: "Add new credit card"
+  flow:
+    - get:
+        url: "/credit-card"
+        json: 
+          cardNumber: "{{ newCardNumber }}"
+          expiryDate: "{{ newExpiryDate }}"
+          cvv: "{{ newCvv }}"
+          nameOnCard: "{{ newNameOnCard }}"
+          addressLine1: "{{ newAddressLine1 }}"
+          city: "{{ newCity }}"
+          county: "{{ newCounty }}"
+          postcode: "{{ newPostcode }}"
+          country: "{{ newCountry }}"

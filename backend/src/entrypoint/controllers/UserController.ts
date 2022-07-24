@@ -122,11 +122,7 @@ export default class UserController implements interfaces.Controller {
 		parameters: {
 			body: {
 				properties: {
-					key: {
-						required: false,
-						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
-					},
-					password: {
+					email: {
 						required: false,
 						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
 					}
@@ -205,11 +201,7 @@ export default class UserController implements interfaces.Controller {
 		parameters: {
 			query: {
 				properties: {
-					key: {
-						required: false,
-						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
-					},
-					password: {
+					username: {
 						required: false,
 						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
 					}
