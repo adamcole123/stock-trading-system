@@ -58,14 +58,14 @@ config:
 scenarios:
 - name: "Password Reset"
   flow:
-    - get:
+    - post:
         url: "/password-reset"
         json: 
           key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAc3RvY2t0cmFkaW5nc3lzdGVtLmNvbSIsInJlcXVlc3REYXRlIjoiU2F0IEp1bCAyMyAyMDIyIDEyOjUxOjAyIEdNVCswMTAwIChCcml0aXNoIFN1bW1lciBUaW1lKSJ9.-Gk6FSneiFdfni_TExzCK-xVpbGIxGSuhf3ekwS0smc"
           password: "{{ password }}"
 - name: "Password Reset Request Request"
   flow:
-    - get:
+    - post:
         url: "/password-reset-request"
         json: 
           email: "{{ email }}"
@@ -89,7 +89,7 @@ scenarios:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
 - name: "Sign in user"
   flow:
-    - get:
+    - post:
         url: "/signin"
         json: 
           username: "{{ username }}"
@@ -98,7 +98,7 @@ scenarios:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
 - name: "Register user"
   flow:
-    - get:
+    - post:
         url: "/register"
         json: 
           username: "{{ username }}"
@@ -109,7 +109,7 @@ scenarios:
           password: "{{ password }}"
 - name: "Add new credit card"
   flow:
-    - get:
+    - post:
         url: "/credit-card"
         json: 
           cardNumber: "{{ newCardNumber }}"
@@ -121,3 +121,48 @@ scenarios:
           county: "{{ newCounty }}"
           postcode: "{{ newPostcode }}"
           country: "{{ newCountry }}"
+- name: "Validate user token"
+  flow:
+    - get:
+        url: "/signin"
+        json: 
+          username: "{{ username }}"
+          password: "{{ password }}"
+    - post:
+        url: "/validate"
+- name: "Edit user details"
+  flow:
+    - get:
+        url: "/signin"
+        json: 
+          username: "{{ username }}"
+          password: "{{ password }}"
+    - post:
+        url: "/edit"
+        json: 
+          username: "{{ username }}"
+          firstName: "testchangedname"
+- name: "Sign out user"
+  flow:
+    - get:
+        url: "/signin"
+        json: 
+          username: "{{ username }}"
+          password: "{{ password }}"
+    - post:
+        url: "/signout"
+- name: "Activate user"
+  flow:
+    - post:
+        url: "/activate"
+        json: 
+          username: "{{ username }}"
+          password: "{{ password }}"
+- name: "Request deactivation"
+  flow:
+    - post:
+        url: "/requestdeactivation"
+        json: 
+          username: "{{ username }}"
+          password: "{{ password }}"
+        
