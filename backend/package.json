@@ -5,11 +5,12 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "jest --collectCoverage",
-    "start": "nodemon --legacy-watch --files"
+    "start": "nodemon --legacy-watch --files",
+    "loadtest": "artillery run artillery/userloadtest.yml --output user-load-report.json && artillery run artillery/stockloadtest.yml --output stock-load-report.json && artillery run artillery/reportloadtest.yml --output report-load-report.json && artillery run artillery/tradeloadtest.yml --output trade-load-report.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://g1                                                                                                                                                                                                                                thub.com/adamcole123/stock-trading-system.git"
+    "url": "git+https://github.com/adamcole123/stock-trading-system.git"
   },
   "keywords": [
     "stock",
