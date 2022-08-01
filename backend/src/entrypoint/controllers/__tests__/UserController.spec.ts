@@ -18,6 +18,7 @@ import UserServiceLocator from '../../../configuration/UserServiceLocator';
 import UserController from '../UserController';
 import IUserReadOnlyRepository from '../../../application/repositories/IUserReadOnlyRepository';
 import IUserWriteOnlyRepository from '../../../application/repositories/IUserWriteOnlyRepository';
+import FakeEmailServiceLocator from './FakeEmailServiceLocator';
 
 // set up container
 const container = new Container();
@@ -29,7 +30,7 @@ describe('UserController Tests', () => {
 
 	// set up bindings
 	container.bind<UserServiceLocator>(TYPES.UserServiceLocator).to(UserServiceLocator);
-	container.bind<EmailServiceLocator>(TYPES.EmailServiceLocator).to(EmailServiceLocator);
+	container.bind<FakeEmailServiceLocator>(TYPES.EmailServiceLocator).to(FakeEmailServiceLocator);
 	container.bind<IUserReadOnlyRepository>(Symbol.for("IUserReadOnlyRepository")).toConstantValue(userReadOnlyRepository);
 	container.bind<IUserWriteOnlyRepository>(Symbol.for("IUserWriteOnlyRepository")).toConstantValue(userWriteOnlyRepository);
 	container.bind<IEncrypter>(TYPES.IEncrypter).to(Encrypter);
