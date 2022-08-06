@@ -1,5 +1,5 @@
 config:
-  target: 'https://localhost:8000/report'
+  target: 'http://localhost:8000'
   phases:
     - duration: 60
       arrivalRate: 5
@@ -12,34 +12,15 @@ config:
       arrivalRate: 50
       name: Sustained load
   payload:
-    - path: "reports.csv"
-      fields:
-      - "_id"
-      - "username"
-      - "email"
-      - "password"
-      - "firstName"
-      - "lastName"
-      - "birthDate"
-      - "reports"
-      - "credit"
-      - "role"
-      - "isDeleted"
-      - "cardDetails"
-      - "activationDate"
-      - "banUntil"
     - path: "reportOptions.csv"
       fields:
       - "ascending"
       - "reportFormat"
-    - path: "stockids.csv"
-      fields:
-      - "stockid"
 scenarios:
 - name: "Generate company values report"
   flow:
     - get:
-        url: "/company-values"
+        url: "/report/company-values"
         cookies:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
         json: 
@@ -48,7 +29,7 @@ scenarios:
 - name: "Generate held shares report"
   flow:
     - get:
-        url: "/held-shares"
+        url: "/report/held-shares"
         cookies:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
         json: 
@@ -57,17 +38,26 @@ scenarios:
 - name: "Generate company details report"
   flow:
     - get:
-        url: "/company-details"
+        url: "/stock/getOne"
         cookies:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
         json: 
-          stockids: "{{ stockid }}"
+          symbol: "C"
+        capture:
+          json: "$.id"
+          as: "stockid"
+    - get:
+        url: "/report/company-details"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          stockids: "[{{ stockid }}]"
           reportformat: "{{ reportFormat }}"
           ascending: "{{ ascending }}"
 - name: "Generate and download report"
   flow:
     - get:
-        url: "/company-values"
+        url: "/report/company-values"
         cookies:
           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
         json: 

@@ -1,0 +1,1554 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.Get number of last page": 6778,
+      "vusers.created": 33681,
+      "errors.ERR_GOT_REQUEST_ERROR": 13502,
+      "vusers.failed": 33681,
+      "vusers.created_by_name.Get many stocks": 6683,
+      "http.requests": 20179,
+      "errors.EPROTO": 19358,
+      "vusers.created_by_name.Edit a stock": 6726,
+      "vusers.created_by_name.Get details of one stock": 6724,
+      "vusers.created_by_name.Create a stock": 6770,
+      "errors.ECONNREFUSED": 821
+    },
+    "rates": {
+      "http.request_rate": 44
+    },
+    "firstCounterAt": 1659717648858,
+    "lastCounterAt": 1659719555759,
+    "firstMetricAt": 1659717648858,
+    "lastMetricAt": 1659719555759,
+    "period": 1659719550000,
+    "summaries": {},
+    "histograms": {}
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 1,
+        "vusers.created": 8,
+        "errors.ERR_GOT_REQUEST_ERROR": 2,
+        "vusers.failed": 7,
+        "vusers.created_by_name.Get many stocks": 3,
+        "http.requests": 6,
+        "errors.EPROTO": 5,
+        "vusers.created_by_name.Create a stock": 2,
+        "vusers.created_by_name.Get details of one stock": 1,
+        "vusers.created_by_name.Edit a stock": 1
+      },
+      "rates": {
+        "http.request_rate": 6
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717648858,
+      "lastCounterAt": 1659717649994,
+      "firstMetricAt": 1659717648858,
+      "lastMetricAt": 1659717649994,
+      "period": "1659717640000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 7,
+        "vusers.created": 50,
+        "http.requests": 31,
+        "errors.EPROTO": 32,
+        "vusers.failed": 51,
+        "vusers.created_by_name.Edit a stock": 13,
+        "vusers.created_by_name.Get number of last page": 8,
+        "errors.ERR_GOT_REQUEST_ERROR": 19,
+        "vusers.created_by_name.Get details of one stock": 11,
+        "vusers.created_by_name.Create a stock": 11
+      },
+      "rates": {
+        "http.request_rate": 5
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717650006,
+      "lastCounterAt": 1659717659986,
+      "firstMetricAt": 1659717650006,
+      "lastMetricAt": 1659717659986,
+      "period": "1659717650000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 18,
+        "vusers.created": 50,
+        "http.requests": 35,
+        "errors.EPROTO": 35,
+        "vusers.failed": 50,
+        "vusers.created_by_name.Get number of last page": 9,
+        "errors.ERR_GOT_REQUEST_ERROR": 15,
+        "vusers.created_by_name.Edit a stock": 8,
+        "vusers.created_by_name.Get many stocks": 9,
+        "vusers.created_by_name.Get details of one stock": 6
+      },
+      "rates": {
+        "http.request_rate": 5
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717660037,
+      "lastCounterAt": 1659717669979,
+      "firstMetricAt": 1659717660037,
+      "lastMetricAt": 1659717669979,
+      "period": "1659717660000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 13,
+        "vusers.created": 50,
+        "http.requests": 35,
+        "errors.EPROTO": 35,
+        "vusers.failed": 50,
+        "vusers.created_by_name.Get details of one stock": 6,
+        "errors.ERR_GOT_REQUEST_ERROR": 15,
+        "vusers.created_by_name.Get many stocks": 15,
+        "vusers.created_by_name.Get number of last page": 9,
+        "vusers.created_by_name.Edit a stock": 7
+      },
+      "rates": {
+        "http.request_rate": 5
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717670037,
+      "lastCounterAt": 1659717679981,
+      "firstMetricAt": 1659717670037,
+      "lastMetricAt": 1659717679981,
+      "period": "1659717670000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 12,
+        "vusers.created": 50,
+        "http.requests": 33,
+        "errors.EPROTO": 33,
+        "vusers.failed": 50,
+        "vusers.created_by_name.Get number of last page": 6,
+        "errors.ERR_GOT_REQUEST_ERROR": 17,
+        "vusers.created_by_name.Create a stock": 9,
+        "vusers.created_by_name.Get details of one stock": 11,
+        "vusers.created_by_name.Edit a stock": 12
+      },
+      "rates": {
+        "http.request_rate": 5
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717680037,
+      "lastCounterAt": 1659717689980,
+      "firstMetricAt": 1659717680037,
+      "lastMetricAt": 1659717689980,
+      "period": "1659717680000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 6,
+        "vusers.created": 50,
+        "http.requests": 28,
+        "errors.EPROTO": 28,
+        "vusers.failed": 50,
+        "vusers.created_by_name.Get many stocks": 11,
+        "vusers.created_by_name.Get details of one stock": 11,
+        "errors.ERR_GOT_REQUEST_ERROR": 22,
+        "vusers.created_by_name.Create a stock": 11,
+        "vusers.created_by_name.Get number of last page": 11
+      },
+      "rates": {
+        "http.request_rate": 5
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717690038,
+      "lastCounterAt": 1659717699979,
+      "firstMetricAt": 1659717690038,
+      "lastMetricAt": 1659717699979,
+      "period": "1659717690000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 13,
+        "vusers.created": 60,
+        "http.requests": 40,
+        "errors.EPROTO": 40,
+        "vusers.failed": 60,
+        "vusers.created_by_name.Get details of one stock": 9,
+        "errors.ERR_GOT_REQUEST_ERROR": 20,
+        "vusers.created_by_name.Get number of last page": 11,
+        "vusers.created_by_name.Create a stock": 13,
+        "vusers.created_by_name.Get many stocks": 14
+      },
+      "rates": {
+        "http.request_rate": 7
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717700037,
+      "lastCounterAt": 1659717709660,
+      "firstMetricAt": 1659717700037,
+      "lastMetricAt": 1659717709660,
+      "period": "1659717700000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 13,
+        "vusers.created": 65,
+        "errors.ERR_GOT_REQUEST_ERROR": 22,
+        "vusers.failed": 65,
+        "vusers.created_by_name.Create a stock": 10,
+        "http.requests": 43,
+        "errors.EPROTO": 43,
+        "vusers.created_by_name.Get number of last page": 9,
+        "vusers.created_by_name.Get many stocks": 16,
+        "vusers.created_by_name.Edit a stock": 17
+      },
+      "rates": {
+        "http.request_rate": 7
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717710192,
+      "lastCounterAt": 1659717719888,
+      "firstMetricAt": 1659717710192,
+      "lastMetricAt": 1659717719888,
+      "period": "1659717710000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 20,
+        "vusers.created": 99,
+        "errors.ERR_GOT_REQUEST_ERROR": 41,
+        "vusers.failed": 98,
+        "vusers.created_by_name.Get many stocks": 18,
+        "http.requests": 57,
+        "errors.EPROTO": 57,
+        "vusers.created_by_name.Edit a stock": 20,
+        "vusers.created_by_name.Create a stock": 19,
+        "vusers.created_by_name.Get details of one stock": 22
+      },
+      "rates": {
+        "http.request_rate": 8
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717720010,
+      "lastCounterAt": 1659717729997,
+      "firstMetricAt": 1659717720010,
+      "lastMetricAt": 1659717729997,
+      "period": "1659717720000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "errors.ERR_GOT_REQUEST_ERROR": 56,
+        "vusers.failed": 144,
+        "vusers.created_by_name.Get number of last page": 24,
+        "vusers.created": 143,
+        "vusers.created_by_name.Edit a stock": 30,
+        "http.requests": 88,
+        "errors.EPROTO": 88,
+        "vusers.created_by_name.Get details of one stock": 31,
+        "vusers.created_by_name.Get many stocks": 35,
+        "vusers.created_by_name.Create a stock": 23
+      },
+      "rates": {
+        "http.request_rate": 9
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717730000,
+      "lastCounterAt": 1659717739910,
+      "firstMetricAt": 1659717730000,
+      "lastMetricAt": 1659717739910,
+      "period": "1659717730000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 42,
+        "vusers.created": 189,
+        "http.requests": 106,
+        "errors.EPROTO": 106,
+        "vusers.failed": 189,
+        "vusers.created_by_name.Get number of last page": 41,
+        "errors.ERR_GOT_REQUEST_ERROR": 83,
+        "vusers.created_by_name.Create a stock": 32,
+        "vusers.created_by_name.Edit a stock": 32,
+        "vusers.created_by_name.Get details of one stock": 42
+      },
+      "rates": {
+        "http.request_rate": 13
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717740076,
+      "lastCounterAt": 1659717749975,
+      "firstMetricAt": 1659717740076,
+      "lastMetricAt": 1659717749975,
+      "period": "1659717740000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 46,
+        "vusers.created": 228,
+        "errors.ERR_GOT_REQUEST_ERROR": 96,
+        "vusers.failed": 228,
+        "vusers.created_by_name.Create a stock": 46,
+        "http.requests": 132,
+        "errors.EPROTO": 132,
+        "vusers.created_by_name.Get number of last page": 50,
+        "vusers.created_by_name.Get many stocks": 38,
+        "vusers.created_by_name.Edit a stock": 48
+      },
+      "rates": {
+        "http.request_rate": 12
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717750079,
+      "lastCounterAt": 1659717759980,
+      "firstMetricAt": 1659717750079,
+      "lastMetricAt": 1659717759980,
+      "period": "1659717750000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 46,
+        "vusers.created": 275,
+        "errors.ERR_GOT_REQUEST_ERROR": 95,
+        "vusers.failed": 275,
+        "vusers.created_by_name.Create a stock": 66,
+        "http.requests": 180,
+        "errors.EPROTO": 180,
+        "vusers.created_by_name.Get many stocks": 63,
+        "vusers.created_by_name.Get details of one stock": 49,
+        "vusers.created_by_name.Edit a stock": 51
+      },
+      "rates": {
+        "http.request_rate": 20
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717760010,
+      "lastCounterAt": 1659717769993,
+      "firstMetricAt": 1659717760010,
+      "lastMetricAt": 1659717769993,
+      "period": "1659717760000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 67,
+        "vusers.created": 302,
+        "errors.ERR_GOT_REQUEST_ERROR": 132,
+        "vusers.failed": 302,
+        "vusers.created_by_name.Get details of one stock": 65,
+        "vusers.created_by_name.Edit a stock": 57,
+        "http.requests": 170,
+        "errors.EPROTO": 170,
+        "vusers.created_by_name.Get many stocks": 56,
+        "vusers.created_by_name.Create a stock": 57
+      },
+      "rates": {
+        "http.request_rate": 18
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717770007,
+      "lastCounterAt": 1659717779996,
+      "firstMetricAt": 1659717770007,
+      "lastMetricAt": 1659717779996,
+      "period": "1659717770000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 71,
+        "vusers.created": 346,
+        "errors.ERR_GOT_REQUEST_ERROR": 140,
+        "vusers.failed": 346,
+        "vusers.created_by_name.Create a stock": 55,
+        "http.requests": 206,
+        "errors.EPROTO": 206,
+        "vusers.created_by_name.Get details of one stock": 69,
+        "vusers.created_by_name.Get many stocks": 85,
+        "vusers.created_by_name.Edit a stock": 66
+      },
+      "rates": {
+        "http.request_rate": 23
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717780009,
+      "lastCounterAt": 1659717789988,
+      "firstMetricAt": 1659717780009,
+      "lastMetricAt": 1659717789988,
+      "period": "1659717780000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 82,
+        "vusers.created": 398,
+        "http.requests": 246,
+        "errors.EPROTO": 246,
+        "vusers.failed": 398,
+        "vusers.created_by_name.Edit a stock": 85,
+        "vusers.created_by_name.Create a stock": 79,
+        "vusers.created_by_name.Get details of one stock": 76,
+        "errors.ERR_GOT_REQUEST_ERROR": 152,
+        "vusers.created_by_name.Get number of last page": 76
+      },
+      "rates": {
+        "http.request_rate": 24
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717790001,
+      "lastCounterAt": 1659717799965,
+      "firstMetricAt": 1659717790001,
+      "lastMetricAt": 1659717799965,
+      "period": "1659717790000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 93,
+        "vusers.created": 415,
+        "http.requests": 253,
+        "errors.EPROTO": 253,
+        "vusers.failed": 415,
+        "vusers.created_by_name.Get many stocks": 78,
+        "vusers.created_by_name.Get details of one stock": 77,
+        "errors.ERR_GOT_REQUEST_ERROR": 162,
+        "vusers.created_by_name.Edit a stock": 82,
+        "vusers.created_by_name.Get number of last page": 85
+      },
+      "rates": {
+        "http.request_rate": 26
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717800005,
+      "lastCounterAt": 1659717809988,
+      "firstMetricAt": 1659717800005,
+      "lastMetricAt": 1659717809988,
+      "period": "1659717800000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 78,
+        "vusers.created": 495,
+        "errors.ERR_GOT_REQUEST_ERROR": 186,
+        "vusers.failed": 495,
+        "vusers.created_by_name.Get many stocks": 101,
+        "http.requests": 309,
+        "errors.EPROTO": 309,
+        "vusers.created_by_name.Edit a stock": 95,
+        "vusers.created_by_name.Create a stock": 113,
+        "vusers.created_by_name.Get number of last page": 108
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717810002,
+      "lastCounterAt": 1659717819989,
+      "firstMetricAt": 1659717810002,
+      "lastMetricAt": 1659717819989,
+      "period": "1659717810000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 107,
+        "vusers.created": 494,
+        "errors.ERR_GOT_REQUEST_ERROR": 205,
+        "vusers.failed": 494,
+        "vusers.created_by_name.Get number of last page": 98,
+        "vusers.created_by_name.Get many stocks": 93,
+        "http.requests": 289,
+        "errors.EPROTO": 289,
+        "vusers.created_by_name.Create a stock": 97,
+        "vusers.created_by_name.Edit a stock": 99
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717820001,
+      "lastCounterAt": 1659717829994,
+      "firstMetricAt": 1659717820001,
+      "lastMetricAt": 1659717829994,
+      "period": "1659717820000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 91,
+        "vusers.created": 500,
+        "http.requests": 300,
+        "errors.EPROTO": 300,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 102,
+        "vusers.created_by_name.Get number of last page": 96,
+        "errors.ERR_GOT_REQUEST_ERROR": 200,
+        "vusers.created_by_name.Get details of one stock": 104,
+        "vusers.created_by_name.Edit a stock": 107
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717830005,
+      "lastCounterAt": 1659717839994,
+      "firstMetricAt": 1659717830005,
+      "lastMetricAt": 1659717839994,
+      "period": "1659717830000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 101,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 208,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 89,
+        "http.requests": 292,
+        "errors.EPROTO": 292,
+        "vusers.created_by_name.Get details of one stock": 107,
+        "vusers.created_by_name.Get many stocks": 98,
+        "vusers.created_by_name.Edit a stock": 105
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717840010,
+      "lastCounterAt": 1659717849994,
+      "firstMetricAt": 1659717840010,
+      "lastMetricAt": 1659717849994,
+      "period": "1659717840000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 99,
+        "vusers.created": 500,
+        "http.requests": 322,
+        "errors.EPROTO": 321,
+        "vusers.failed": 499,
+        "vusers.created_by_name.Get number of last page": 88,
+        "errors.ERR_GOT_REQUEST_ERROR": 178,
+        "vusers.created_by_name.Create a stock": 112,
+        "vusers.created_by_name.Get many stocks": 111,
+        "vusers.created_by_name.Get details of one stock": 90
+      },
+      "rates": {
+        "http.request_rate": 33
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717850005,
+      "lastCounterAt": 1659717859996,
+      "firstMetricAt": 1659717850005,
+      "lastMetricAt": 1659717859996,
+      "period": "1659717850000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 117,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 215,
+        "vusers.failed": 501,
+        "vusers.created_by_name.Edit a stock": 100,
+        "http.requests": 285,
+        "errors.EPROTO": 286,
+        "vusers.created_by_name.Get many stocks": 104,
+        "vusers.created_by_name.Get number of last page": 98,
+        "vusers.created_by_name.Create a stock": 81
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717860000,
+      "lastCounterAt": 1659717869994,
+      "firstMetricAt": 1659717860000,
+      "lastMetricAt": 1659717869994,
+      "period": "1659717860000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 106,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 225,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Edit a stock": 86,
+        "http.requests": 275,
+        "errors.EPROTO": 275,
+        "vusers.created_by_name.Get number of last page": 119,
+        "vusers.created_by_name.Create a stock": 87,
+        "vusers.created_by_name.Get many stocks": 102
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717870005,
+      "lastCounterAt": 1659717879998,
+      "firstMetricAt": 1659717870005,
+      "lastMetricAt": 1659717879998,
+      "period": "1659717870000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 96,
+        "vusers.created": 500,
+        "http.requests": 294,
+        "errors.EPROTO": 294,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get details of one stock": 106,
+        "errors.ERR_GOT_REQUEST_ERROR": 206,
+        "vusers.created_by_name.Create a stock": 113,
+        "vusers.created_by_name.Edit a stock": 85,
+        "vusers.created_by_name.Get number of last page": 100
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717880005,
+      "lastCounterAt": 1659717889994,
+      "firstMetricAt": 1659717880005,
+      "lastMetricAt": 1659717889994,
+      "period": "1659717880000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 107,
+        "vusers.created": 500,
+        "http.requests": 313,
+        "errors.EPROTO": 313,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Edit a stock": 101,
+        "vusers.created_by_name.Get number of last page": 99,
+        "errors.ERR_GOT_REQUEST_ERROR": 187,
+        "vusers.created_by_name.Get many stocks": 105,
+        "vusers.created_by_name.Get details of one stock": 88
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717890004,
+      "lastCounterAt": 1659717899994,
+      "firstMetricAt": 1659717890004,
+      "lastMetricAt": 1659717899994,
+      "period": "1659717890000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 108,
+        "vusers.created": 500,
+        "http.requests": 307,
+        "errors.EPROTO": 304,
+        "vusers.failed": 497,
+        "vusers.created_by_name.Edit a stock": 98,
+        "vusers.created_by_name.Get number of last page": 103,
+        "errors.ERR_GOT_REQUEST_ERROR": 193,
+        "vusers.created_by_name.Get many stocks": 101,
+        "vusers.created_by_name.Get details of one stock": 90
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717900004,
+      "lastCounterAt": 1659717909995,
+      "firstMetricAt": 1659717900004,
+      "lastMetricAt": 1659717909995,
+      "period": "1659717900000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 101,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 177,
+        "vusers.failed": 501,
+        "vusers.created_by_name.Get many stocks": 109,
+        "http.requests": 323,
+        "errors.EPROTO": 324,
+        "vusers.created_by_name.Create a stock": 102,
+        "vusers.created_by_name.Get details of one stock": 76,
+        "vusers.created_by_name.Edit a stock": 112
+      },
+      "rates": {
+        "http.request_rate": 34
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717910004,
+      "lastCounterAt": 1659717919994,
+      "firstMetricAt": 1659717910004,
+      "lastMetricAt": 1659717919994,
+      "period": "1659717910000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 103,
+        "vusers.created": 500,
+        "http.requests": 284,
+        "errors.EPROTO": 286,
+        "vusers.failed": 502,
+        "vusers.created_by_name.Edit a stock": 102,
+        "vusers.created_by_name.Get many stocks": 79,
+        "vusers.created_by_name.Get details of one stock": 101,
+        "errors.ERR_GOT_REQUEST_ERROR": 216,
+        "vusers.created_by_name.Get number of last page": 115
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717920004,
+      "lastCounterAt": 1659717929994,
+      "firstMetricAt": 1659717920004,
+      "lastMetricAt": 1659717929994,
+      "period": "1659717920000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 83,
+        "vusers.created": 500,
+        "http.requests": 305,
+        "errors.EPROTO": 305,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 111,
+        "vusers.created_by_name.Get details of one stock": 95,
+        "errors.ERR_GOT_REQUEST_ERROR": 195,
+        "vusers.created_by_name.Get many stocks": 111,
+        "vusers.created_by_name.Get number of last page": 100
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717930004,
+      "lastCounterAt": 1659717939993,
+      "firstMetricAt": 1659717930004,
+      "lastMetricAt": 1659717939993,
+      "period": "1659717930000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 102,
+        "vusers.created": 500,
+        "http.requests": 286,
+        "errors.EPROTO": 286,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get details of one stock": 107,
+        "errors.ERR_GOT_REQUEST_ERROR": 214,
+        "vusers.created_by_name.Get number of last page": 107,
+        "vusers.created_by_name.Edit a stock": 96,
+        "vusers.created_by_name.Get many stocks": 88
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717940004,
+      "lastCounterAt": 1659717949994,
+      "firstMetricAt": 1659717940004,
+      "lastMetricAt": 1659717949994,
+      "period": "1659717940000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 102,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 212,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Edit a stock": 79,
+        "http.requests": 288,
+        "errors.EPROTO": 288,
+        "vusers.created_by_name.Get many stocks": 108,
+        "vusers.created_by_name.Get details of one stock": 110,
+        "vusers.created_by_name.Create a stock": 101
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717950005,
+      "lastCounterAt": 1659717959998,
+      "firstMetricAt": 1659717950005,
+      "lastMetricAt": 1659717959998,
+      "period": "1659717950000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 103,
+        "vusers.created": 500,
+        "http.requests": 314,
+        "errors.EPROTO": 314,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get many stocks": 101,
+        "vusers.created_by_name.Get number of last page": 93,
+        "errors.ERR_GOT_REQUEST_ERROR": 186,
+        "vusers.created_by_name.Edit a stock": 110,
+        "vusers.created_by_name.Get details of one stock": 93
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717960005,
+      "lastCounterAt": 1659717969994,
+      "firstMetricAt": 1659717960005,
+      "lastMetricAt": 1659717969994,
+      "period": "1659717960000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 103,
+        "vusers.created": 500,
+        "http.requests": 292,
+        "errors.EPROTO": 292,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 100,
+        "vusers.created_by_name.Get number of last page": 107,
+        "errors.ERR_GOT_REQUEST_ERROR": 208,
+        "vusers.created_by_name.Edit a stock": 89,
+        "vusers.created_by_name.Get details of one stock": 101
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717970005,
+      "lastCounterAt": 1659717979997,
+      "firstMetricAt": 1659717970005,
+      "lastMetricAt": 1659717979997,
+      "period": "1659717970000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 105,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 196,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get many stocks": 102,
+        "http.requests": 304,
+        "errors.EPROTO": 304,
+        "vusers.created_by_name.Create a stock": 99,
+        "vusers.created_by_name.Get number of last page": 91,
+        "vusers.created_by_name.Edit a stock": 103
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717980005,
+      "lastCounterAt": 1659717989994,
+      "firstMetricAt": 1659717980005,
+      "lastMetricAt": 1659717989994,
+      "period": "1659717980000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 91,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 175,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get many stocks": 105,
+        "http.requests": 325,
+        "errors.EPROTO": 325,
+        "vusers.created_by_name.Get number of last page": 84,
+        "vusers.created_by_name.Edit a stock": 115,
+        "vusers.created_by_name.Create a stock": 105
+      },
+      "rates": {
+        "http.request_rate": 33
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659717990005,
+      "lastCounterAt": 1659717999994,
+      "firstMetricAt": 1659717990005,
+      "lastMetricAt": 1659717999994,
+      "period": "1659717990000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 90,
+        "vusers.created": 500,
+        "http.requests": 299,
+        "errors.EPROTO": 299,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 96,
+        "vusers.created_by_name.Get number of last page": 110,
+        "errors.ERR_GOT_REQUEST_ERROR": 201,
+        "vusers.created_by_name.Edit a stock": 113,
+        "vusers.created_by_name.Get details of one stock": 91
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718000005,
+      "lastCounterAt": 1659718009993,
+      "firstMetricAt": 1659718000005,
+      "lastMetricAt": 1659718009993,
+      "period": "1659718000000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 95,
+        "vusers.created": 500,
+        "http.requests": 306,
+        "errors.EPROTO": 306,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get details of one stock": 91,
+        "errors.ERR_GOT_REQUEST_ERROR": 194,
+        "vusers.created_by_name.Get number of last page": 103,
+        "vusers.created_by_name.Edit a stock": 122,
+        "vusers.created_by_name.Create a stock": 89
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718010004,
+      "lastCounterAt": 1659718019999,
+      "firstMetricAt": 1659718010004,
+      "lastMetricAt": 1659718019999,
+      "period": "1659718010000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 95,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 199,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 100,
+        "http.requests": 301,
+        "errors.EPROTO": 301,
+        "vusers.created_by_name.Get number of last page": 104,
+        "vusers.created_by_name.Get many stocks": 82,
+        "vusers.created_by_name.Edit a stock": 119
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718020004,
+      "lastCounterAt": 1659718029998,
+      "firstMetricAt": 1659718020004,
+      "lastMetricAt": 1659718029998,
+      "period": "1659718020000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 115,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 219,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 108,
+        "http.requests": 281,
+        "errors.EPROTO": 281,
+        "vusers.created_by_name.Get number of last page": 104,
+        "vusers.created_by_name.Get many stocks": 88,
+        "vusers.created_by_name.Edit a stock": 85
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718030004,
+      "lastCounterAt": 1659718039998,
+      "firstMetricAt": 1659718030004,
+      "lastMetricAt": 1659718039998,
+      "period": "1659718030000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 105,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 204,
+        "vusers.failed": 498,
+        "vusers.created_by_name.Get many stocks": 97,
+        "http.requests": 296,
+        "errors.EPROTO": 294,
+        "vusers.created_by_name.Edit a stock": 107,
+        "vusers.created_by_name.Create a stock": 92,
+        "vusers.created_by_name.Get details of one stock": 99
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718040004,
+      "lastCounterAt": 1659718049997,
+      "firstMetricAt": 1659718040004,
+      "lastMetricAt": 1659718049997,
+      "period": "1659718040000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get many stocks": 90,
+        "vusers.created": 500,
+        "http.requests": 294,
+        "errors.EPROTO": 295,
+        "vusers.failed": 501,
+        "vusers.created_by_name.Get details of one stock": 88,
+        "errors.ERR_GOT_REQUEST_ERROR": 206,
+        "vusers.created_by_name.Edit a stock": 92,
+        "vusers.created_by_name.Create a stock": 112,
+        "vusers.created_by_name.Get number of last page": 118
+      },
+      "rates": {
+        "http.request_rate": 33
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718050000,
+      "lastCounterAt": 1659718059994,
+      "firstMetricAt": 1659718050000,
+      "lastMetricAt": 1659718059994,
+      "period": "1659718050000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 98,
+        "vusers.created": 500,
+        "http.requests": 289,
+        "errors.EPROTO": 290,
+        "vusers.failed": 501,
+        "vusers.created_by_name.Get details of one stock": 103,
+        "errors.ERR_GOT_REQUEST_ERROR": 211,
+        "vusers.created_by_name.Edit a stock": 90,
+        "vusers.created_by_name.Get number of last page": 108,
+        "vusers.created_by_name.Get many stocks": 101
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718060002,
+      "lastCounterAt": 1659718069994,
+      "firstMetricAt": 1659718060002,
+      "lastMetricAt": 1659718069994,
+      "period": "1659718060000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 98,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 197,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 87,
+        "http.requests": 303,
+        "errors.EPROTO": 303,
+        "vusers.created_by_name.Get number of last page": 99,
+        "vusers.created_by_name.Edit a stock": 107,
+        "vusers.created_by_name.Get many stocks": 109
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718070005,
+      "lastCounterAt": 1659718079994,
+      "firstMetricAt": 1659718070005,
+      "lastMetricAt": 1659718079994,
+      "period": "1659718070000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 96,
+        "vusers.created": 500,
+        "http.requests": 303,
+        "errors.EPROTO": 303,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get number of last page": 97,
+        "errors.ERR_GOT_REQUEST_ERROR": 197,
+        "vusers.created_by_name.Get many stocks": 96,
+        "vusers.created_by_name.Create a stock": 111,
+        "vusers.created_by_name.Get details of one stock": 100
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718080005,
+      "lastCounterAt": 1659718089994,
+      "firstMetricAt": 1659718080005,
+      "lastMetricAt": 1659718089994,
+      "period": "1659718080000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 115,
+        "vusers.created": 500,
+        "http.requests": 310,
+        "errors.EPROTO": 310,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get number of last page": 75,
+        "errors.ERR_GOT_REQUEST_ERROR": 190,
+        "vusers.created_by_name.Get many stocks": 90,
+        "vusers.created_by_name.Create a stock": 105,
+        "vusers.created_by_name.Get details of one stock": 115
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718090005,
+      "lastCounterAt": 1659718099996,
+      "firstMetricAt": 1659718090005,
+      "lastMetricAt": 1659718099996,
+      "period": "1659718090000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 90,
+        "vusers.created": 500,
+        "http.requests": 280,
+        "errors.EPROTO": 279,
+        "vusers.failed": 499,
+        "vusers.created_by_name.Get details of one stock": 104,
+        "errors.ERR_GOT_REQUEST_ERROR": 220,
+        "vusers.created_by_name.Create a stock": 101,
+        "vusers.created_by_name.Get many stocks": 89,
+        "vusers.created_by_name.Get number of last page": 116
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718100005,
+      "lastCounterAt": 1659718109995,
+      "firstMetricAt": 1659718100005,
+      "lastMetricAt": 1659718109995,
+      "period": "1659718100000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 111,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 210,
+        "vusers.failed": 501,
+        "vusers.created_by_name.Edit a stock": 88,
+        "http.requests": 290,
+        "errors.EPROTO": 291,
+        "vusers.created_by_name.Create a stock": 91,
+        "vusers.created_by_name.Get number of last page": 99,
+        "vusers.created_by_name.Get many stocks": 111
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718110002,
+      "lastCounterAt": 1659718119998,
+      "firstMetricAt": 1659718110002,
+      "lastMetricAt": 1659718119998,
+      "period": "1659718110000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 91,
+        "vusers.created": 500,
+        "http.requests": 305,
+        "errors.EPROTO": 305,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get details of one stock": 100,
+        "errors.ERR_GOT_REQUEST_ERROR": 195,
+        "vusers.created_by_name.Get many stocks": 104,
+        "vusers.created_by_name.Create a stock": 110,
+        "vusers.created_by_name.Get number of last page": 95
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718120005,
+      "lastCounterAt": 1659718129997,
+      "firstMetricAt": 1659718120005,
+      "lastMetricAt": 1659718129997,
+      "period": "1659718120000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 105,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 211,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 93,
+        "http.requests": 289,
+        "errors.EPROTO": 289,
+        "vusers.created_by_name.Get many stocks": 100,
+        "vusers.created_by_name.Edit a stock": 96,
+        "vusers.created_by_name.Get number of last page": 106
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718130004,
+      "lastCounterAt": 1659718139993,
+      "firstMetricAt": 1659718130004,
+      "lastMetricAt": 1659718139993,
+      "period": "1659718130000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 99,
+        "vusers.created": 500,
+        "http.requests": 293,
+        "errors.EPROTO": 293,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get number of last page": 108,
+        "errors.ERR_GOT_REQUEST_ERROR": 207,
+        "vusers.created_by_name.Get many stocks": 103,
+        "vusers.created_by_name.Edit a stock": 91,
+        "vusers.created_by_name.Get details of one stock": 99
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718140004,
+      "lastCounterAt": 1659718149997,
+      "firstMetricAt": 1659718140004,
+      "lastMetricAt": 1659718149997,
+      "period": "1659718140000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 101,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 208,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get many stocks": 109,
+        "http.requests": 292,
+        "errors.EPROTO": 292,
+        "vusers.created_by_name.Get number of last page": 107,
+        "vusers.created_by_name.Create a stock": 83,
+        "vusers.created_by_name.Edit a stock": 100
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718150004,
+      "lastCounterAt": 1659718159997,
+      "firstMetricAt": 1659718150004,
+      "lastMetricAt": 1659718159997,
+      "period": "1659718150000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 93,
+        "vusers.created": 500,
+        "http.requests": 303,
+        "errors.EPROTO": 303,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 106,
+        "vusers.created_by_name.Get number of last page": 100,
+        "errors.ERR_GOT_REQUEST_ERROR": 197,
+        "vusers.created_by_name.Get details of one stock": 97,
+        "vusers.created_by_name.Get many stocks": 104
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718160004,
+      "lastCounterAt": 1659718169996,
+      "firstMetricAt": 1659718160004,
+      "lastMetricAt": 1659718169996,
+      "period": "1659718160000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 126,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 228,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get number of last page": 102,
+        "vusers.created_by_name.Create a stock": 95,
+        "http.requests": 272,
+        "errors.EPROTO": 272,
+        "vusers.created_by_name.Get many stocks": 86,
+        "vusers.created_by_name.Edit a stock": 91
+      },
+      "rates": {
+        "http.request_rate": 28
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718170004,
+      "lastCounterAt": 1659718179993,
+      "firstMetricAt": 1659718170004,
+      "lastMetricAt": 1659718179993,
+      "period": "1659718170000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 91,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 205,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Create a stock": 104,
+        "http.requests": 295,
+        "errors.EPROTO": 295,
+        "vusers.created_by_name.Get number of last page": 114,
+        "vusers.created_by_name.Edit a stock": 91,
+        "vusers.created_by_name.Get many stocks": 100
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718180004,
+      "lastCounterAt": 1659718189997,
+      "firstMetricAt": 1659718180004,
+      "lastMetricAt": 1659718189997,
+      "period": "1659718180000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 95,
+        "vusers.created": 500,
+        "http.requests": 293,
+        "errors.EPROTO": 293,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get details of one stock": 110,
+        "errors.ERR_GOT_REQUEST_ERROR": 207,
+        "vusers.created_by_name.Get number of last page": 97,
+        "vusers.created_by_name.Create a stock": 95,
+        "vusers.created_by_name.Get many stocks": 103
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718190004,
+      "lastCounterAt": 1659718199999,
+      "firstMetricAt": 1659718190004,
+      "lastMetricAt": 1659718199999,
+      "period": "1659718190000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get number of last page": 94,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 198,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Edit a stock": 94,
+        "http.requests": 302,
+        "errors.EPROTO": 302,
+        "vusers.created_by_name.Get details of one stock": 104,
+        "vusers.created_by_name.Create a stock": 103,
+        "vusers.created_by_name.Get many stocks": 105
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718200004,
+      "lastCounterAt": 1659718209997,
+      "firstMetricAt": 1659718200004,
+      "lastMetricAt": 1659718209997,
+      "period": "1659718200000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Get details of one stock": 112,
+        "vusers.created": 500,
+        "errors.ERR_GOT_REQUEST_ERROR": 208,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get many stocks": 93,
+        "http.requests": 292,
+        "errors.EPROTO": 292,
+        "vusers.created_by_name.Get number of last page": 96,
+        "vusers.created_by_name.Create a stock": 100,
+        "vusers.created_by_name.Edit a stock": 99
+      },
+      "rates": {
+        "http.request_rate": 31
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718210004,
+      "lastCounterAt": 1659718219993,
+      "firstMetricAt": 1659718210004,
+      "lastMetricAt": 1659718219993,
+      "period": "1659718210000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 91,
+        "vusers.created": 500,
+        "http.requests": 292,
+        "errors.EPROTO": 292,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get details of one stock": 116,
+        "errors.ERR_GOT_REQUEST_ERROR": 208,
+        "vusers.created_by_name.Get many stocks": 100,
+        "vusers.created_by_name.Get number of last page": 92,
+        "vusers.created_by_name.Create a stock": 101
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718220004,
+      "lastCounterAt": 1659718229993,
+      "firstMetricAt": 1659718220004,
+      "lastMetricAt": 1659718229993,
+      "period": "1659718220000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Create a stock": 84,
+        "vusers.created": 500,
+        "http.requests": 272,
+        "errors.EPROTO": 272,
+        "vusers.failed": 500,
+        "vusers.created_by_name.Get many stocks": 97,
+        "vusers.created_by_name.Get number of last page": 127,
+        "errors.ERR_GOT_REQUEST_ERROR": 228,
+        "vusers.created_by_name.Edit a stock": 91,
+        "vusers.created_by_name.Get details of one stock": 101
+      },
+      "rates": {
+        "http.request_rate": 29
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718230004,
+      "lastCounterAt": 1659718239993,
+      "firstMetricAt": 1659718230004,
+      "lastMetricAt": 1659718239993,
+      "period": "1659718230000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Edit a stock": 97,
+        "vusers.created": 483,
+        "http.requests": 286,
+        "errors.EPROTO": 286,
+        "vusers.failed": 483,
+        "vusers.created_by_name.Get details of one stock": 114,
+        "errors.ERR_GOT_REQUEST_ERROR": 197,
+        "vusers.created_by_name.Create a stock": 100,
+        "vusers.created_by_name.Get many stocks": 89,
+        "vusers.created_by_name.Get number of last page": 83
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1659718240004,
+      "lastCounterAt": 1659718249666,
+      "firstMetricAt": 1659718240004,
+      "lastMetricAt": 1659718249666,
+      "period": "1659718240000",
+      "summaries": {},
+      "histograms": {}
+    }
+  ]
+}
