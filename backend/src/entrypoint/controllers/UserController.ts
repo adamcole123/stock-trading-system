@@ -122,11 +122,7 @@ export default class UserController implements interfaces.Controller {
 		parameters: {
 			body: {
 				properties: {
-					key: {
-						required: false,
-						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
-					},
-					password: {
+					email: {
 						required: false,
 						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
 					}
@@ -205,11 +201,7 @@ export default class UserController implements interfaces.Controller {
 		parameters: {
 			query: {
 				properties: {
-					key: {
-						required: false,
-						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
-					},
-					password: {
+					username: {
 						required: false,
 						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
 					}
@@ -560,7 +552,7 @@ export default class UserController implements interfaces.Controller {
 
 	@ApiOperationGet({
 		description: 'Sign out currently signed in user by removing their cookie',
-		path: '/signin',
+		path: '/signout',
 		responses: {
 			200: {
 				description: "Signed out successfully!",
@@ -619,20 +611,7 @@ export default class UserController implements interfaces.Controller {
 	@ApiOperationPost({
 		description: 'Send email to an admin to request deactivation',
 		path: '/requestdeactivation',
-		parameters: {
-			body: {
-				properties: {
-					username: {
-						required: false,
-						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
-					},
-					password: {
-						required: false,
-						type: SwaggerDefinitionConstant.Parameter.Type.STRING,
-					}
-				}
-			},
-		},
+		parameters: {},
 		responses: {
 			200: {
 				description: "Request sent to administrator.",

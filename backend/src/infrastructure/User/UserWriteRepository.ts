@@ -84,11 +84,13 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 		return new Promise((resolve, reject) => {
 			User.findOne({ username: username })
 			.then(user => {
+				if (user === null || user === undefined) {
+					throw new Error('Could not find user');
+				}
 				try{
-					let newCredit: number;
+					let newCredit;
 					if(userEditOptions.tradeMode !== undefined){
-						newCredit = userEditOptions.tradeMode === true ? user.credit + userDto.credit : userDto!.credit;
-						user.credit = newCredit;
+						user.credit = userEditOptions.tradeMode === true ? user!.credit! + userDto!.credit! : userDto!.credit;
 					} else {
 						user = Object.assign(user, userDto);
 					}
@@ -96,7 +98,7 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 					user.save();
 	
 					resolve({
-						id: user._id,
+						id: user._id.toString(),
 						firstName: user.firstName,
 						lastName: user.lastName,
 						credit: user.credit,

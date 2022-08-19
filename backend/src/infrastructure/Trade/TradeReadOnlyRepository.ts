@@ -18,7 +18,18 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 					if(populateStocks) foundTrade = await Trade.findById(tradeDto.id).populate('stock_id');
 					else foundTrade = await Trade.findById(tradeDto.id);
 	
-					resolve([foundTrade]);
+					if(foundTrade === null || foundTrade === undefined)
+						throw new Error('Could not find Trade')
+					resolve([{
+						id: foundTrade._id.toString(),
+						stock_id: foundTrade.stock_id.toString(),
+						user_id: foundTrade.user_id.toString(),
+						stock_value: foundTrade.stock_value,
+						stock_amount: foundTrade.stock_amount,
+						time_of_trade: foundTrade.time_of_trade,
+						trade_type: foundTrade.trade_type,
+						trade_status: foundTrade.trade_status
+					}]);
 				} catch (e) {
 					reject(e);
 				}
@@ -31,9 +42,9 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 
 				foundTrades = foundTrades.map(trade => {
 					return {
-						id: trade.id,
-						stock_id: trade.stock_id,
-						user_id: trade.user_id,
+						id: trade._id.toString(),
+						stock_id: trade.stock_id.toString(),
+						user_id: trade.user_id.toString(),
 						stock_value: trade.stock_value,
 						stock_amount: trade.stock_amount,
 						time_of_trade: trade.time_of_trade,

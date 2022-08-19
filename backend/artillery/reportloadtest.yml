@@ -1,0 +1,74 @@
+config:
+  target: 'http://localhost:8000'
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    - path: "reportOptions.csv"
+      fields:
+      - "ascending"
+      - "reportFormat"
+scenarios:
+- name: "Generate company values report"
+  flow:
+    - get:
+        url: "/report/company-values"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          reportformat: "{{ reportFormat }}"
+          ascending: "{{ ascending }}"
+- name: "Generate held shares report"
+  flow:
+    - get:
+        url: "/report/held-shares"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          reportformat: "{{ reportFormat }}"
+          ascending: "{{ ascending }}"
+- name: "Generate company details report"
+  flow:
+    - get:
+        url: "/stock/getOne"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          symbol: "C"
+        capture:
+          json: "$.id"
+          as: "stockid"
+    - get:
+        url: "/report/company-details"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          stockids: "[{{ stockid }}]"
+          reportformat: "{{ reportFormat }}"
+          ascending: "{{ ascending }}"
+- name: "Generate and download report"
+  flow:
+    - get:
+        url: "/report/company-values"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          reportformat: "{{ reportFormat }}"
+          ascending: "{{ ascending }}"
+        capture:
+          json: "$.id"
+          as: "reportid"
+    - get:
+        url: "/download"
+        cookies:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        json: 
+          report_id: "{{ reportid }}"

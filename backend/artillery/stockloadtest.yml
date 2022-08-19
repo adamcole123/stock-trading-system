@@ -1,0 +1,95 @@
+config:
+  target: 'http://localhost:8000/stock'
+  phases:
+    # - duration: 10
+    #   arrivalRate: 1
+    #   name: Test
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    - path: "stocks.csv"
+      fields:
+        - "id"
+        - "symbol"
+        - "name"
+        - "value"
+        - "volume"
+        - "open"
+        - "close"
+        - "gains"
+        - "latest_trade"
+    - path: "newStocks.csv"
+      fields:
+        - "newId"
+        - "newSymbol"
+        - "newName"
+        - "newValue"
+        - "newVolume"
+        - "newOpen"
+        - "newClose"
+        - "newGains"
+        - "newLatestTrade"
+    - path: "editStocks.csv"
+      fields:
+        - "editId"
+        - "editSymbol"
+        - "editName"
+        - "editValue"
+        - "editVolume"
+        - "editOpen"
+        - "editClose"
+        - "editGains"
+        - "editLatestTrade"
+scenarios:
+- name: "Get details of one stock"
+  flow:
+    - get:
+        url: "/getOne"
+        json: 
+          symbol: "{{ symbol }}"
+- name: "Get number of last page"
+  flow:
+    - get:
+        url: "/lastpagenum"
+        json: 
+          limit: "10"
+- name: "Get many stocks"
+  flow:
+    - post:
+        url: "/getMany"
+        json: 
+          filters:
+           - value: "10"
+          options:
+           - valueMode: "1"
+- name: "Create a stock"
+  flow:
+    - post:
+        url: "/create"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+        json: 
+          - symbol: "{{ newSymbol }}"
+          - name: "{{ newName }}"
+          - value: "{{ newValue }}"
+          - volume: "{{ newVolume }}"
+- name: "Edit a stock"
+  flow:
+    - post:
+        url: "/edit"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+        json: 
+          - symbol: "{{ editSymbol }}"
+          - name: "{{ editName }}"
+          - value: "{{ editValue }}"
+          - volume: "{{ editVolume }}"
+        

@@ -7,17 +7,19 @@ import Trade from './Trade';
 export default class TradeWriteOnlyRepository implements ITradeWriteOnlyRepository {
 	async edit(tradeDto: ITradeDto): Promise<ITradeDto> {
 		try {
-			let edditedTrade = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status })
+			let edittedTrade = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status })
 			
+			if(edittedTrade === null || edittedTrade === undefined)
+				throw new Error('Could not edit trade')
 			return Promise.resolve({
-				id: edditedTrade.id,
-				trade_status: edditedTrade.trade_status,
-				stock_amount: edditedTrade.stock_amount,
-				stock_id: edditedTrade.stock_id,
-				stock_value: edditedTrade.stock_value,
-				time_of_trade: edditedTrade.time_of_trade,
-				trade_type: edditedTrade.trade_type,
-				user_id: edditedTrade.user_id,
+				id: edittedTrade.id.toString(),
+				trade_status: edittedTrade.trade_status,
+				stock_amount: edittedTrade.stock_amount,
+				stock_id: edittedTrade.stock_id.toString(),
+				stock_value: edittedTrade.stock_value,
+				time_of_trade: edittedTrade.time_of_trade,
+				trade_type: edittedTrade.trade_type,
+				user_id: edittedTrade.user_id.toString(),
 			})
 		} catch (error) {
 			return Promise.reject('Could not edit trade: ' + error);
