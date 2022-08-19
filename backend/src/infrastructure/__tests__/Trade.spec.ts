@@ -193,7 +193,7 @@ describe('Trade Repositories', () => {
 		let user = await User.findOne({ username: "test2username" });
 		let stock = await Stock.findOne({ value: 500 });
 		let trade = await tradeWriteRepository.create({
-			user_id: user._id.toString(),
+			user_id: user!._id.toString(),
 			stock_id: stock!._id.toString(),
 			stock_amount: 50,
 			stock_value: 345.6,
@@ -207,6 +207,6 @@ describe('Trade Repositories', () => {
 		expect(trade.time_of_trade).toEqual(expect.any(Date));
 		expect(trade.trade_status).toEqual("Pending");
 		expect(trade.trade_type).toEqual("Buy");
-		expect(trade.user_id).toEqual(user._id);
+		expect(trade.user_id).toEqual(user!._id);
 	});
 });
