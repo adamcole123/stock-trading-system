@@ -62,6 +62,7 @@ import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
 import User from "./infrastructure/User/User";
 import bcrypt from 'bcryptjs';
 import SendRealEmailUseCase from "./usecases/Email/SendRealEmailUseCase";
+import SendEmailUseCase from "./usecases/Email/SendEmailUseCase";
 import morgan from "morgan";
 
 // set up bindings

@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "vitest --coverage",
-    "start": "nodemon --legacy-watch --files"
+    "start": "nodemon --legacy-watch --files",
+    "loadtest": "artillery run artillery/userloadtest.yml --output artillery/user-load-report.json && artillery run artillery/stockloadtest.yml --output artillery/stock-load-report.json && artillery run artillery/reportloadtest.yml --output artillery/report-load-report.json && artillery run artillery/tradeloadtest.yml --output artillery/trade-load-report.json"
   },
   "repository": {
     "type": "git",
