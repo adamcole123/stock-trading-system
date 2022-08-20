@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { cleanUpMetadata, interfaces, InversifyExpressServer } from 'inversify-express-utils';
+import { cleanUpMetadata, interfaces } from 'inversify-express-utils';
 import { Container } from 'inversify';
 import { TYPES } from '../../../constants/types';
 import { mockedHttpContext } from '../MockHttpContext';
@@ -10,7 +10,8 @@ import StockServiceLocator from '../../../configuration/StockServiceLocator';
 import IStockReadOnlyRepository from '../../../application/repositories/IStockReadOnlyRepository';
 import IStockWriteOnlyRepository from '../../../application/repositories/IStockWriteOnlyRepository';
 import EmailServiceLocator from '../../../configuration/EmailServiceLocator';
-import { mock } from 'jest-mock-extended';
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it, vi, beforeAll } from "vitest";
 import UserServiceLocator from '../../../configuration/UserServiceLocator';
 import IUserReadOnlyRepository from '../../../application/repositories/IUserReadOnlyRepository';
 import IUserWriteOnlyRepository from '../../../application/repositories/IUserWriteOnlyRepository';
@@ -41,7 +42,7 @@ describe('StockController Tests', () => {
 	container.bind<interfaces.HttpContext>(Symbol.for("HttpContext")).toConstantValue(mockedHttpContext);
 
 	beforeAll(async () => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		cleanUpMetadata();
 		dotenv.config();
 		controller = new StockController(container.get<StockServiceLocator>(Symbol.for("StockServiceLocator")), 

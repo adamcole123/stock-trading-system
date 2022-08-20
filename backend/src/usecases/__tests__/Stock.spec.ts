@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import IStockDto from '../data_tranfer_objects/IStockDto';
 import IGetAllStocksUseCase from '../Stocks/IGetAllStocksUseCase';
-import { mock } from "jest-mock-extended";
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it, vi, beforeAll } from "vitest";
 import dotenv from 'dotenv';
 
 import IStockReadOnlyRepository from '../../application/repositories/IStockReadOnlyRepository';
@@ -21,6 +22,7 @@ describe('Stock Use Cases', () => {
 	dotenv.config();
 
 	beforeAll(async () => {
+		vi.clearAllMocks();
 		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([new Stock("teststock1id", "teststock1symbol", "teststock1name", 434243, 44324324, 4324324, 43242),
 		new Stock("teststock2id", "teststock2symbol", "teststock2name", 434243, 44324324, 4324324, 43242), new Stock("teststock3id", "teststock3symbol", "teststock3name", 434243, 44324324, 4324324, 43242)]);
 	});

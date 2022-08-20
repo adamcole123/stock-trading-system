@@ -1,2 +1,4 @@
 {
+	"vitest.enable": true,
+	"testing.automaticallyOpenPeekView": "never",
 }

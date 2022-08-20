@@ -1,4 +1,3 @@
-import { objectContainsKey } from 'jest-mock-extended';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import 'reflect-metadata';
@@ -6,6 +5,7 @@ import config from '../../../test/utils/config';
 import Stock from '../Stock/Stock';
 import StockReadRepository from '../Stock/StockReadRepository';
 import StockWriteRepository from '../Stock/StockWriteRepository';
+import { describe, expect, it, beforeAll, beforeEach, afterAll } from "vitest";
 
 describe('Stock Repositories', () => {
 

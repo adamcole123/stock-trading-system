@@ -1,5 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import mongoose, { model } from 'mongoose';
+import mongoose from 'mongoose';
 import 'reflect-metadata';
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import config from '../../../test/utils/config';
@@ -8,9 +8,10 @@ import Trade from '../Trade/Trade';
 import TradeReadOnlyRepository from '../Trade/TradeReadOnlyRepository';
 import TradeWriteOnlyRepository from '../Trade/TradeWriteOnlyRepository';
 import User from '../User/User';
+import { describe, expect, it, vi, beforeAll, beforeEach, afterAll } from "vitest";
 
 
-jest.useRealTimers();
+vi.useRealTimers();
 
 describe('Trade Repositories', () => {
 	let tradeReadRepository = new TradeReadOnlyRepository();
@@ -192,7 +193,7 @@ describe('Trade Repositories', () => {
 		let user = await User.findOne({ username: "test2username" });
 		let stock = await Stock.findOne({ value: 500 });
 		let trade = await tradeWriteRepository.create({
-			user_id: user._id.toString(),
+			user_id: user!._id.toString(),
 			stock_id: stock!._id.toString(),
 			stock_amount: 50,
 			stock_value: 345.6,
@@ -206,6 +207,6 @@ describe('Trade Repositories', () => {
 		expect(trade.time_of_trade).toEqual(expect.any(Date));
 		expect(trade.trade_status).toEqual("Pending");
 		expect(trade.trade_type).toEqual("Buy");
-		expect(trade.user_id).toEqual(user._id);
+		expect(trade.user_id).toEqual(user!._id);
 	});
 });

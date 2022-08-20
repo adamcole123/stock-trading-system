@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { mock } from "jest-mock-extended";
-import "jest";
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it, beforeAll } from "vitest";
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';

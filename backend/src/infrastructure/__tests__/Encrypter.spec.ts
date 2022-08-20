@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { describe, expect, it } from "vitest";
 import Encrypter from '../Encrypter';
 import IEncrypter from '../IEncrypter';
 describe('Encrypter tests', () => {

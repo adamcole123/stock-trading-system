@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { cleanUpMetadata, interfaces } from "inversify-express-utils";
-import { mock } from "jest-mock-extended";
+import { mock } from "vitest-mock-extended";
+import { describe, expect, it, vi, beforeAll } from "vitest";
 import IStockReadOnlyRepository from "../../../../src/application/repositories/IStockReadOnlyRepository";
 import IStockWriteOnlyRepository from "../../../../src/application/repositories/IStockWriteOnlyRepository";
 import ITradeReadOnlyRepository from "../../../../src/application/repositories/ITradeReadOnlyRepository";
@@ -43,7 +44,7 @@ describe('Report Controller Tests', () => {
 	container.bind<interfaces.HttpContext>(Symbol.for("HttpContext")).toConstantValue(mockedHttpContext);
 
 	beforeAll(async () => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		cleanUpMetadata();
 		dotenv.config();
 		controller = new TradeController(container.get<TradeServiceLocator>(Symbol.for("TradeServiceLocator")),
