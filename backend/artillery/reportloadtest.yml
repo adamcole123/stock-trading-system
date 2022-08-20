@@ -1,16 +1,19 @@
 config:
   target: 'http://localhost:8000'
   phases:
-    - duration: 60
+    - duration: 10
       arrivalRate: 5
-      name: Warm up
-    - duration: 120
-      arrivalRate: 5
-      rampTo: 50
-      name: Ramp up load
-    - duration: 600
-      arrivalRate: 50
-      name: Sustained load
+      name: Test
+    # - duration: 60
+    #   arrivalRate: 5
+    #   name: Warm up
+    # - duration: 120
+    #   arrivalRate: 5
+    #   rampTo: 50
+    #   name: Ramp up load
+    # - duration: 600
+    #   arrivalRate: 50
+    #   name: Sustained load
   payload:
     - path: "reportOptions.csv"
       fields:
@@ -21,8 +24,8 @@ scenarios:
   flow:
     - get:
         url: "/report/company-values"
-        cookies:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         json: 
           reportformat: "{{ reportFormat }}"
           ascending: "{{ ascending }}"
@@ -30,8 +33,8 @@ scenarios:
   flow:
     - get:
         url: "/report/held-shares"
-        cookies:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         json: 
           reportformat: "{{ reportFormat }}"
           ascending: "{{ ascending }}"
@@ -39,8 +42,8 @@ scenarios:
   flow:
     - get:
         url: "/stock/getOne"
-        cookies:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         json: 
           symbol: "C"
         capture:
@@ -48,8 +51,8 @@ scenarios:
           as: "stockid"
     - get:
         url: "/report/company-details"
-        cookies:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         json: 
           stockids: "[{{ stockid }}]"
           reportformat: "{{ reportFormat }}"
@@ -58,8 +61,8 @@ scenarios:
   flow:
     - get:
         url: "/report/company-values"
-        cookies:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         json: 
           reportformat: "{{ reportFormat }}"
           ascending: "{{ ascending }}"
@@ -68,7 +71,7 @@ scenarios:
           as: "reportid"
     - get:
         url: "/download"
-        cookies:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlc3QiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiQWRtaW4ifQ.tjnSU4XtDSP1Ik59oCo2VKrgc-zeb0lcKK7BUEmw9lQ"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         json: 
           report_id: "{{ reportid }}"

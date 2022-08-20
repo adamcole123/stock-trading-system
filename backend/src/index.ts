@@ -101,9 +101,7 @@ if(process.env.GMAILBOOL === "true") {
 // create server
 server.setErrorConfig((app: express.Application) => {
   app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
-    console.error('Name', err.name)
-    console.error('Message', err.message)
-    console.error('Stack', err.stack)
+    console.log(prettyjson.render(err));
 
     sendRealEmailUseCase.invoke({
       to: ["admin@stock-trading-system.com"],

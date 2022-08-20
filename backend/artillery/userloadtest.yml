@@ -1,19 +1,19 @@
 config:
   target: 'http://localhost:8000/user'
   phases:
-    # - duration: 10
-    #   arrivalRate: 1
-    #   name: Test
-    - duration: 60
+    - duration: 10
       arrivalRate: 5
-      name: Warm up
-    - duration: 120
-      arrivalRate: 5
-      rampTo: 50
-      name: Ramp up load
-    - duration: 600
-      arrivalRate: 50
-      name: Sustained load
+      name: Test
+    # - duration: 60
+    #   arrivalRate: 5
+    #   name: Warm up
+    # - duration: 120
+    #   arrivalRate: 5
+    #   rampTo: 50
+    #   name: Ramp up load
+    # - duration: 600
+    #   arrivalRate: 50
+    #   name: Sustained load
   payload:
     - path: "users.csv"
       fields:
@@ -81,7 +81,7 @@ scenarios:
     - get:
         url: "/all"
         cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Get one user"
   flow:
     - get:
@@ -89,7 +89,7 @@ scenarios:
         json: 
           username: "{{ username }}"
         cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Sign in user"
   flow:
     - post:
@@ -98,7 +98,7 @@ scenarios:
           username: "{{ username }}"
           password: "{{ password }}"
         cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtaW4ifQ.eWPKdazMo3apas2nxUDq2H5Kx3Pw5_PTO-szXmylZ3w"
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Register user"
   flow:
     - post:
@@ -110,6 +110,8 @@ scenarios:
           lastName: "{{ lastName }}"
           birthDate: "{{ birthDate }}"
           password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Add new credit card"
   flow:
     - post:
@@ -124,6 +126,8 @@ scenarios:
           county: "{{ newCounty }}"
           postcode: "{{ newPostcode }}"
           country: "{{ newCountry }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Validate user token"
   flow:
     - get:
@@ -131,6 +135,8 @@ scenarios:
         json: 
           username: "{{ username }}"
           password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
     - post:
         url: "/validate"
 - name: "Edit user details"
@@ -140,11 +146,15 @@ scenarios:
         json: 
           username: "{{ username }}"
           password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
     - post:
         url: "/edit"
         json: 
           username: "{{ username }}"
           firstName: "testchangedname"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Sign out user"
   flow:
     - get:
@@ -152,8 +162,12 @@ scenarios:
         json: 
           username: "{{ username }}"
           password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
     - post:
         url: "/signout"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Activate user"
   flow:
     - post:
@@ -161,6 +175,8 @@ scenarios:
         json: 
           username: "{{ username }}"
           password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
 - name: "Request deactivation"
   flow:
     - post:
@@ -168,4 +184,6 @@ scenarios:
         json: 
           username: "{{ username }}"
           password: "{{ password }}"
+        cookie:
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
         
