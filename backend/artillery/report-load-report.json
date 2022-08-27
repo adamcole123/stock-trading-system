@@ -1,40 +1,40 @@
 {
   "aggregate": {
     "counters": {
-      "vusers.created_by_name.Generate company values report": 11,
+      "vusers.created_by_name.Generate and download report": 15,
       "vusers.created": 50,
       "errors.ERR_GOT_REQUEST_ERROR": 50,
       "vusers.failed": 50,
-      "vusers.created_by_name.Generate company details report": 15,
-      "vusers.created_by_name.Generate and download report": 8,
-      "vusers.created_by_name.Generate held shares report": 16
+      "vusers.created_by_name.Generate company values report": 8,
+      "vusers.created_by_name.Generate held shares report": 16,
+      "vusers.created_by_name.Generate company details report": 11
     },
     "rates": {},
-    "firstCounterAt": 1659894195961,
-    "lastCounterAt": 1659894205220,
-    "firstMetricAt": 1659894195961,
-    "lastMetricAt": 1659894205220,
-    "period": 1659894200000,
+    "firstCounterAt": 1661082076242,
+    "lastCounterAt": 1661082085489,
+    "firstMetricAt": 1661082076242,
+    "lastMetricAt": 1661082085489,
+    "period": 1661082080000,
     "summaries": {},
     "histograms": {}
   },
   "intermediate": [
     {
       "counters": {
-        "vusers.created_by_name.Generate company values report": 6,
-        "vusers.created": 21,
-        "errors.ERR_GOT_REQUEST_ERROR": 21,
-        "vusers.failed": 21,
-        "vusers.created_by_name.Generate company details report": 4,
-        "vusers.created_by_name.Generate and download report": 2,
-        "vusers.created_by_name.Generate held shares report": 9
+        "vusers.created_by_name.Generate and download report": 6,
+        "vusers.created": 20,
+        "errors.ERR_GOT_REQUEST_ERROR": 20,
+        "vusers.failed": 20,
+        "vusers.created_by_name.Generate company values report": 4,
+        "vusers.created_by_name.Generate held shares report": 7,
+        "vusers.created_by_name.Generate company details report": 3
       },
       "rates": {},
-      "firstCounterAt": 1659894195961,
-      "lastCounterAt": 1659894199960,
-      "firstMetricAt": 1659894195961,
-      "lastMetricAt": 1659894199960,
-      "period": "1659894190000",
+      "firstCounterAt": 1661082076242,
+      "lastCounterAt": 1661082079491,
+      "firstMetricAt": 1661082076242,
+      "lastMetricAt": 1661082079491,
+      "period": "1661082070000",
       "summaries": {},
       "histograms": {}
     }

@@ -15,6 +15,7 @@ import * as SocketIO from 'socket.io';
 import fs from 'fs';
 import moment from "moment";
 import modelDefinitions from './ModelDefinitions';
+import prettyjson from 'prettyjson';
 
 import UserServiceLocator from './configuration/UserServiceLocator';
 import IUserReadOnlyRepository from "./application/repositories/IUserReadOnlyRepository";
