@@ -65,6 +65,7 @@ services:
       - ./backend/stockdata.json:/home/node/app/backend/stockdata.json
       - ./backend/.env:/home/node/app/backend/.env 
       - ./backend/coverage/:/home/node/app/backend/coverage/
+      - ./backend/swagger/:/home/node/app/backend/swagger/
     restart: always
     expose:
       - "8000"
