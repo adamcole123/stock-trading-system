@@ -13,6 +13,8 @@ import { SocketController } from "./SocketController";
 import * as swagger from "swagger-express-ts";
 import * as SocketIO from 'socket.io';
 import fs from 'fs';
+import https from 'https';
+
 import moment from "moment";
 import modelDefinitions from './ModelDefinitions';
 import prettyjson from 'prettyjson';
@@ -42,6 +44,8 @@ import Stock from './infrastructure/Stock/Stock';
 // set up container
 const container = new Container();
 
+https.globalAgent.maxSockets = 1000;
+
 var allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8081',
@@ -61,7 +65,7 @@ import "./entrypoint/controllers/ReportController";
 
 import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
 import User from "./infrastructure/User/User";
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import SendRealEmailUseCase from "./usecases/Email/SendRealEmailUseCase";
 import SendEmailUseCase from "./usecases/Email/SendEmailUseCase";
 import morgan from "morgan";
@@ -239,14 +243,14 @@ async function changeStockValues() {
 
     let now = new Date();
 
-    if (now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+    if (now.getHours() === 8 && now.getMinutes() === 0 && (now.getSeconds() === 0 || now.getSeconds() === 1 || now.getSeconds() === 2)) {
       await Stock.updateMany(
         {},
         [{ $set: { open: "$value" } }]
       )
     }
 
-    if (now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0) {
+    if (now.getHours() === 16 && now.getMinutes() === 30 && (now.getSeconds() === 0 || now.getSeconds() === 1 || now.getSeconds() === 2)) {
       await Stock.updateMany(
         {},
         [{ $set: { close: "$value" } }]

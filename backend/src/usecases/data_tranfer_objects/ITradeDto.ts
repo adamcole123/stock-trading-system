@@ -1,8 +1,9 @@
 import TradeType from "../entities/TradeType";
+import IStockDto from "./IStockDto";
 
 export default interface ITradeDto {
 	id?: string,
-	stock_id?: string,
+	stock_id?: any,
 	user_id?: string,
 	stock_value?: number,
 	stock_amount?: number,

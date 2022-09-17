@@ -34,7 +34,6 @@ import IGetAllUsersUseCase from '../../../usecases/Users/IGetAllUsersUseCase';
 import IGetUserDetailsUseCase from '../../../usecases/Users/IGetUserDetailsUseCase';
 import IPasswordResetUseCase from '../../../usecases/Users/IPasswordResetUseCase';
 import ValidateUserTokenUseCase from '../../../usecases/Users/ValidateUserTokenUseCase';
-import bcrypt from 'bcryptjs';
 import Encrypter from '../../../infrastructure/Encrypter';
 import ISendEmailUseCase from '../../../usecases/Email/ISendEmailUseCase';
 

@@ -1,6 +1,5 @@
 import { injectable } from "inversify";
 import { controller, payload, connectedSocket, onConnect, onDisconnect, onMessage } from "inversify-socket-utils";
-import { emit } from "process";
 import "reflect-metadata";
 import Stock from "./infrastructure/Stock/Stock";
 
@@ -33,11 +32,5 @@ export class SocketController {
   @onDisconnect("disconnect")
   disconnect() {
     console.log("Client disconnected");
-  }
-
-  @onMessage("message")
-  message(@payload() payload: any, @connectedSocket() socket: any) {
-    console.log("Message received");
-    socket.emit("message", "Hello!");
   }
 }

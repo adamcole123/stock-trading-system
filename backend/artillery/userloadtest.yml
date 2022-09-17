@@ -9,10 +9,10 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 5
-      rampTo: 50
+      rampTo: 35
       name: Ramp up load
     - duration: 600
-      arrivalRate: 50
+      arrivalRate: 35
       name: Sustained load
   payload:
     - path: "users.csv"
@@ -59,158 +59,138 @@ config:
       - "newPostcode"
       - "newCountry"
 scenarios:
-- name: "Password Reset"
-  flow:
-    - post:
-        url: "/password-reset"
-        json: 
-          key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAc3RvY2t0cmFkaW5nc3lzdGVtLmNvbSIsInJlcXVlc3REYXRlIjoiU2F0IEp1bCAyMyAyMDIyIDEyOjUxOjAyIEdNVCswMTAwIChCcml0aXNoIFN1bW1lciBUaW1lKSJ9.-Gk6FSneiFdfni_TExzCK-xVpbGIxGSuhf3ekwS0smc"
-          password: "{{ password }}"
-- name: "Password Reset Request Request"
-  flow:
-    - post:
-        url: "/password-reset-request"
-        json: 
-          email: "{{ email }}"
-- name: "Test error"
-  flow:
-    - get:
-        url: "/test-error"
+# - name: "Password Reset"
+#   flow:
+#     - post:
+#         url: "/password-reset"
+#         json: 
+#           key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAc3RvY2t0cmFkaW5nc3lzdGVtLmNvbSIsInJlcXVlc3REYXRlIjoiU2F0IEp1bCAyMyAyMDIyIDEyOjUxOjAyIEdNVCswMTAwIChCcml0aXNoIFN1bW1lciBUaW1lKSJ9.-Gk6FSneiFdfni_TExzCK-xVpbGIxGSuhf3ekwS0smc"
+#           password: "{{ password }}"
+# - name: "Password Reset Request Request"
+#   flow:
+#     - post:
+#         url: "/password-reset-request"
+#         json: 
+#           email: "{{ email }}"
 - name: "Get all users"
   flow:
     - post:
-        url: "/user/signin"
+        url: "/signin"
         json: 
           username: "admin"
           password: "Password1!"
         jar: true
     - get:
         url: "/all"
-- name: "Get one user"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "admin"
-          password: "Password1!"
-        jar: true
     - get:
-        url: "/one"
-        json: 
-          username: "{{ username }}"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Sign in user"
-  flow:
-    - post:
-        url: "/signin"
-        json: 
-          username: "{{ username }}"
-          password: "{{ password }}"
-- name: "Register user"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        jar: true
-    - post:
-        url: "/register"
-        json: 
-          username: "{{ username }}"
-          email: "{{ email }}"
-          firstName: "{{ firstName }}"
-          lastName: "{{ lastName }}"
-          birthDate: "{{ birthDate }}"
-          password: "{{ password }}"
-- name: "Add new credit card"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        jar: true
-    - post:
-        url: "/credit-card"
-        json: 
-          cardNumber: "{{ newCardNumber }}"
-          expiryDate: "{{ newExpiryDate }}"
-          cvv: "{{ newCvv }}"
-          nameOnCard: "{{ newNameOnCard }}"
-          addressLine1: "{{ newAddressLine1 }}"
-          city: "{{ newCity }}"
-          county: "{{ newCounty }}"
-          postcode: "{{ newPostcode }}"
-          country: "{{ newCountry }}"
-- name: "Validate user token"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/validate"
-- name: "Edit user details"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/edit"
-        json: 
-          username: "{{ username }}"
-          firstName: "testchangedname"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Sign out user"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
         url: "/signout"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Activate user"
-  flow:
-    - post:
-        url: "/activate"
-        json: 
-          username: "{{ username }}"
-          password: "{{ password }}"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Request deactivation"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/requestdeactivation"
-        json: 
-          username: "{{ username }}"
-          password: "{{ password }}"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        
+# - name: "Get one user"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "admin"
+#           password: "Password1!"
+#         jar: true
+#     - get:
+#         url: "/one"
+#         json: 
+#           username: "{{ username }}"
+# - name: "Sign in user"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "{{ username }}"
+#           password: "{{ password }}"
+# - name: "Register user"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/register"
+#         json: 
+#           username: "{{ username }}"
+#           email: "{{ email }}"
+#           firstName: "{{ firstName }}"
+#           lastName: "{{ lastName }}"
+#           birthDate: "{{ birthDate }}"
+#           password: "{{ password }}"
+# - name: "Add new credit card"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/credit-card"
+#         json: 
+#           cardNumber: "{{ newCardNumber }}"
+#           expiryDate: "{{ newExpiryDate }}"
+#           cvv: "{{ newCvv }}"
+#           nameOnCard: "{{ newNameOnCard }}"
+#           addressLine1: "{{ newAddressLine1 }}"
+#           city: "{{ newCity }}"
+#           county: "{{ newCounty }}"
+#           postcode: "{{ newPostcode }}"
+#           country: "{{ newCountry }}"
+# - name: "Validate user token"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/validate"
+# - name: "Edit user details"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "admin"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/edit"
+#         json: 
+#           username: "{{ username }}"
+#           firstName: "testchangedname"
+# - name: "Sign out user"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/signout"
+# - name: "Activate user"
+#   flow:
+#     - post:
+#         url: "/activate"
+#         json: 
+#           username: "{{ username }}"
+#           password: "{{ password }}"
+#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
+# - name: "Request deactivation"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/requestdeactivation"
+#         json: 
+#           username: "{{ username }}"
+#           password: "{{ password }}"

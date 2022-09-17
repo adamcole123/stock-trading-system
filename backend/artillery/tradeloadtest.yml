@@ -26,145 +26,135 @@ config:
         - "trade_type"
         - "trade_status"
 scenarios:
-- name: "Create a new trade that is of trade_type 'Buy'"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/user/validate"
-        capture:
-          json: "$.id"
-          as: "id"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/trade/buystocks"
-        json: 
-          user_id: "{{ id }}"
-          stock_id: "{{ stock_id }}"
-          stock_amount: "{{ stock_amount }}"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Create a new trade that is of trade_type 'Sell'"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/user/validate"
-        capture:
-          json: "$.id"
-          as: "id"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/trade/sellstocks"
-        json: 
-          user_id: "{{ id }}"
-          stock_id: "{{ stock_id }}"
-          stock_amount: "{{ stock_amount }}"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Get transactions of the signed in user"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/user/validate"
-        capture:
-          json: "$.id"
-          as: "id"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        jar: true
-    - post:
-        url: "/trade/usertransactions"
-        json: 
-          user_id: "{{ id }}"
-          stock_id: "{{ stock_id }}"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-- name: "Convert a trade status from Pending to Approved when signed in as a Broker"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "broker"
-          password: "Password1!"
-        jar: true
-    - get:
-        url: "/trade/pendingtrades"
-        capture:
-          json: "$.[0].id"
-          as: "id"
-        jar: true
-    - post:
-        url: "/trade/approvetrade"
-        json: 
-         id: "{{ id }}"
-- name: "Convert a trade status from Pending to Rejected when signed in as a Broker"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "broker"
-          password: "Password1!"
-        jar: true    
-    - get:
-        url: "/trade/pendingtrades"
-        capture:
-          json: "$.results[0].id"
-          as: "id"
-        jar: true
-    - post:
-        url: "/trade/rejecttrade"
-        json: 
-          id: "{{ id }}"
-- name: "Get a list of trades that share the same user and the same stock"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "broker"
-          password: "Password1!"
-        jar: true
-    - post:
-        url: "/user/validate"
-        capture:
-          json: "$.id"
-          as: "id"
-        jar: true
-    - post:
-        url: "/trade/stocktradesforuser"
-        json: 
-         user_id: "{{ id }}"
-         stock_id: "{{ stockid }}"
-- name: "Get a list of trades that share the same user and the same stock"
-  flow:
-    - post:
-        url: "/user/signin"
-        json: 
-          username: "user"
-          password: "Password1!"
-        jar: true
-    - post:
-        url: "/trade/portfolio"
+# - name: "Create a new trade that is of trade_type 'Buy'"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         cookie:
+#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
+#         jar: true
+#     - post:
+#         url: "/user/validate"
+#         capture:
+#           json: "$.id"
+#           as: "id"
+#         cookie:
+#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
+#         jar: true
+#     - post:
+#         url: "/trade/buystocks"
+#         json: 
+#           user_id: "{{ id }}"
+#           stock_id: "{{ stock_id }}"
+#           stock_amount: "{{ stock_amount }}"
+# - name: "Create a new trade that is of trade_type 'Sell'"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/user/validate"
+#         capture:
+#           json: "$.id"
+#           as: "id"
+#         cookie:
+#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
+#         jar: true
+#     - post:
+#         url: "/trade/sellstocks"
+#         json: 
+#           user_id: "{{ id }}"
+#           stock_id: "{{ stock_id }}"
+#           stock_amount: "{{ stock_amount }}"
+#         cookie:
+#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
+# - name: "Get transactions of the signed in user"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/user/validate"
+#         capture:
+#           json: "$.id"
+#           as: "id"
+#         jar: true
+#     - post:
+#         url: "/trade/usertransactions"
+#         json: 
+#           user_id: "{{ id }}"
+#           stock_id: "{{ stock_id }}"
+# - name: "Convert a trade status from Pending to Approved when signed in as a Broker"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "broker"
+#           password: "Password1!"
+#         jar: true
+#     - get:
+#         url: "/trade/pendingtrades"
+#         capture:
+#           json: "$.[0].id"
+#           as: "id"
+#         jar: true
+#     - post:
+#         url: "/trade/approvetrade"
+#         json: 
+#          id: "{{ id }}"
+# - name: "Convert a trade status from Pending to Rejected when signed in as a Broker"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "broker"
+#           password: "Password1!"
+#         jar: true    
+#     - get:
+#         url: "/trade/pendingtrades"
+#         capture:
+#           json: "$.results[0].id"
+#           as: "id"
+#         jar: true
+#     - post:
+#         url: "/trade/rejecttrade"
+#         json: 
+#           id: "{{ id }}"
+# - name: "Get a list of trades that share the same user and the same stock"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "broker"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/user/validate"
+#         capture:
+#           json: "$.id"
+#           as: "id"
+#         jar: true
+#     - post:
+#         url: "/trade/stocktradesforuser"
+#         json: 
+#          user_id: "{{ id }}"
+#          stock_id: "{{ stockid }}"
+# - name: "Get a list of trades that share the same user and the same stock"
+#   flow:
+#     - post:
+#         url: "/user/signin"
+#         json: 
+#           username: "user"
+#           password: "Password1!"
+#         jar: true
+#     - post:
+#         url: "/trade/portfolio"

@@ -4,6 +4,7 @@ import ITradeDto from '../../usecases/data_tranfer_objects/ITradeDto';
 import Trade from './Trade';
 import TradeReadOptions from './TradeReadOptions';
 import { SortOrder } from 'mongoose';
+import IStockDto from 'src/usecases/data_tranfer_objects/IStockDto';
 
 @injectable()
 export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository {
@@ -15,14 +16,17 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 			if(tradeDto.id !== undefined){
 				try{
 					let foundTrade;
-					if(populateStocks) foundTrade = await Trade.findById(tradeDto.id).populate('stock_id');
-					else foundTrade = await Trade.findById(tradeDto.id);
+					if(populateStocks) {
+						foundTrade = await Trade.findById(tradeDto.id).populate('stock_id');
+					} else {
+						foundTrade = await Trade.findById(tradeDto.id);
+					}
 	
 					if(foundTrade === null || foundTrade === undefined)
 						throw new Error('Could not find Trade')
 					resolve([{
 						id: foundTrade._id.toString(),
-						stock_id: foundTrade.stock_id.toString(),
+						stock_id: foundTrade.stock_id,
 						user_id: foundTrade.user_id.toString(),
 						stock_value: foundTrade.stock_value,
 						stock_amount: foundTrade.stock_amount,

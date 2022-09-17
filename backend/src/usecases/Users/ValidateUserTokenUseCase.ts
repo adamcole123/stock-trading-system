@@ -29,9 +29,13 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 			let jwtSecretKey = process.env.JWT_SECRET_KEY;
 		
 			try {		
-				let verified = <IUserDto>jwt.verify(token, jwtSecretKey!);
+				console.log("token: ", token);
+				let verified = <IUserDto>jwt.verify(token, jwtSecretKey!)
+				console.log("verifieddata: ", verified);
 				if(verified){
 					verified = await this.userReadOnlyRepository.fetch({id: verified.id})
+
+					console.log("token: ", verified)
 
 					if(verified.isDeleted)
 						reject('User account is closed.');

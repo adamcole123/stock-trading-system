@@ -2,7 +2,7 @@ import IUserWriteOnlyRepository from '../../application/repositories/IUserWriteO
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 import User from './User';
 import { injectable } from 'inversify';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import UserEditOptions from '../../application/repositories/UserEditOptions';
 
 @injectable()

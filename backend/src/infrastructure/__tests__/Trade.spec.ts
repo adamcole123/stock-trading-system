@@ -135,29 +135,28 @@ describe('Trade Repositories', () => {
 
 	it('fetch populateStocks true without ID', async () => {
 		let stock = await Stock.findOne({ value: 500 })
-		let trades = await tradeReadRepository.fetch({
+		tradeReadRepository.fetch({
 			stock_id: stock?._id.toString()
-		}, true);
-
-		let trade = trades[0];
-		let populatedStock = <IStockDto>trade.stock_id;
-
-		expect(populatedStock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(populatedStock.name).toEqual("test1name");
-		expect(populatedStock.open).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(populatedStock.symbol).toEqual("TEST1SYMBOL");
-		expect(populatedStock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(populatedStock.volume).toEqual(500);
+		}, true)
+		.then(trades => {
+			let trade = trades[0];
+			let populatedStock = <IStockDto>trade.stock_id;
+			expect(populatedStock.name).toEqual("test1name");
+			expect(populatedStock.close).toStrictEqual(expect.objectContaining({
+				value: 500
+			}));
+			expect(populatedStock.open).toStrictEqual(expect.objectContaining({
+				value: 500
+			}));
+			expect(populatedStock.symbol).toEqual("TEST1SYMBOL");
+			expect(populatedStock.value).toStrictEqual(expect.objectContaining({
+				value: 500
+			}));
+			expect(populatedStock.volume).toEqual(500);
+		})
 	});
 
 	it('fetch populateStocks true with ID', async () => {
-		let stock = await Stock.findOne({ value: 500 })
 		let trades = await tradeReadRepository.fetch({
 			id: tradeToTest.id.toString(),
 		}, true);
@@ -165,9 +164,6 @@ describe('Trade Repositories', () => {
 		let trade = trades[0];
 		let populatedStock = <IStockDto>trade.stock_id;
 
-		expect(populatedStock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
 		expect(populatedStock.name).toEqual("test1name");
 		expect(populatedStock.open).toStrictEqual(expect.objectContaining({
 			value: 500
