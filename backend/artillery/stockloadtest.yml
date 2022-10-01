@@ -9,10 +9,10 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 5
-      rampTo: 50
+      rampTo: 35
       name: Ramp up load
     - duration: 600
-      arrivalRate: 50
+      arrivalRate: 35
       name: Sustained load
   payload:
     - path: "stocks.csv"
@@ -44,78 +44,70 @@ config:
         - "editName"
         - "editValue"
         - "editVolume"
-        - "editOpen"
-        - "editClose"
-        - "editGains"
-        - "editLatestTrade"
 scenarios:
-# - name: "Get details of one stock"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/stock/getOne"
-#         json: 
-#           symbol: "{{ symbol }}"
-# - name: "Get number of last page"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/stock/lastpagenum"
-#         json: 
-#           limit: "10"
-# - name: "Get many stocks"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/stock/getMany"
-#         json: 
-#           filters:
-#            - value: "10"
-#           options:
-#            - valueMode: "1"
-# - name: "Create a stock"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/stock/create"
-#         json: 
-#           - symbol: "{{ newSymbol }}"
-#           - name: "{{ newName }}"
-#           - value: "{{ newValue }}"
-#           - volume: "{{ newVolume }}"
-# - name: "Edit a stock"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/stock/edit"
-#         json: 
-#           - symbol: "{{ editSymbol }}"
-#           - name: "{{ editName }}"
-#           - value: "{{ editValue }}"
-#           - volume: "{{ editVolume }}"
+- name: "Get details of one stock"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - get:
+        url: "/stock/getOne?symbol={{ symbol }}"
+- name: "Get number of last page"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - get:
+        url: "/stock/lastpagenum?limit=10"
+- name: "Get many stocks"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - post:
+        url: "/stock/getMany"
+        json: 
+          filters:
+           - value: "10"
+          options:
+           - valueMode: "1"
+- name: "Create a stock"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - post:
+        url: "/stock/create"
+        json: 
+          symbol: "{{ newSymbol }}"
+          name: "{{ newName }}"
+          value: "{{ newValue }}"
+          volume: "{{ newVolume }}"
+- name: "Edit a stock"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - post:
+        url: "/stock/edit"
+        json: 
+          symbol: "{{ editSymbol }}"
+          name: "{{ editName }}"
+          value: "{{ editValue }}"
+          volume: "{{ editVolume }}"
         

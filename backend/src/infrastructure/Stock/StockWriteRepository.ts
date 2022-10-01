@@ -43,9 +43,15 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 			// 	resolve(await Stock.find({}));
 			// }
 
-			await Stock.findById(stockDto.id)
+			await Stock.findOne(stockDto.id ? { _id: stockDto.id } : { symbol: stockDto.symbol })
 				.then(stock => {
+					if(stock === null){
+						return reject('Could not find stock');
+					}
+
 					if (stockDto.volume) {
+						if(stock!.volume === null)
+							stock!.volume = 0
 						stock!.volume = options?.tradeMode ? stock!.volume! + stockDto!.volume! : stockDto.volume;
 					}
 

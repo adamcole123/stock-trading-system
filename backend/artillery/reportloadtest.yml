@@ -9,10 +9,10 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 5
-      rampTo: 50
+      rampTo: 35
       name: Ramp up load
     - duration: 600
-      arrivalRate: 50
+      arrivalRate: 35
       name: Sustained load
   payload:
     - path: "reportOptions.csv"
@@ -20,19 +20,16 @@ config:
       - "ascending"
       - "reportFormat"
 scenarios:
-# - name: "Generate company values report"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/report/company-values"
-#         json: 
-#           reportformat: "{{ reportFormat }}"
-#           ascending: "{{ ascending }}"
+- name: "Generate company values report"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - get:
+        url: "/report/company-values?reportformat={{ reportFormat }}&ascending={{ ascending }}"
 # - name: "Generate held shares report"
 #   flow:
 #     - post:

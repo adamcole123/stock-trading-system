@@ -72,18 +72,18 @@ scenarios:
 #         url: "/password-reset-request"
 #         json: 
 #           email: "{{ email }}"
-- name: "Get all users"
-  flow:
-    - post:
-        url: "/signin"
-        json: 
-          username: "admin"
-          password: "Password1!"
-        jar: true
-    - get:
-        url: "/all"
-    - get:
-        url: "/signout"
+# - name: "Get all users"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "admin"
+#           password: "Password1!"
+#         jar: true
+#     - get:
+#         url: "/all"
+#     - get:
+#         url: "/signout"
 # - name: "Get one user"
 #   flow:
 #     - post:
@@ -93,9 +93,7 @@ scenarios:
 #           password: "Password1!"
 #         jar: true
 #     - get:
-#         url: "/one"
-#         json: 
-#           username: "{{ username }}"
+#         url: "/one?username=user"
 # - name: "Sign in user"
 #   flow:
 #     - post:
@@ -171,8 +169,10 @@ scenarios:
 #           username: "user"
 #           password: "Password1!"
 #         jar: true
-#     - post:
+#     - get:
 #         url: "/signout"
+
+# leave commented
 # - name: "Activate user"
 #   flow:
 #     - post:

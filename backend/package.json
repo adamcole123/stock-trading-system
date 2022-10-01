@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest --coverage",
     "start": "tsc --build && node build/src/index.js",
-    "loadtest": "artillery run artillery/userloadtest.yml --output artillery/user-load-report.json && artillery report artillery/user-load-report.json && artillery run artillery/stockloadtest.yml --output artillery/stock-load-report.json && artillery report artillery/stock-load-report.json && artillery run artillery/reportloadtest.yml --output artillery/report-load-report.json && artillery report artillery/report-load-report.json && artillery run artillery/tradeloadtest.yml --output artillery/trade-load-report.json && artillery report artillery/trade-load-report.json"
+    "loadtest": "artillery run artillery/reportloadtest.yml --output artillery/report-load-report.json && artillery report artillery/report-load-report.json"
   },
   "repository": {
     "type": "git",

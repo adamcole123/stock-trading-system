@@ -177,7 +177,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 								stock!.gains
 							))
 						} else {
-							let stocks = await Stock.find(query)
+							let stocks = await Stock.find({ symbol: query.symbol })
 								.sort(sort)
 								.limit(options?.limit!)
 								.exec();
@@ -203,5 +203,9 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 			}
 			resolve(returnData!);
 		})
+	}
+
+	count() {
+		return Stock.count();
 	}
 }
