@@ -83,19 +83,22 @@ export default class UserWriteRepository implements IUserWriteOnlyRepository {
 	async edit(username: String, userDto: IUserDto, userEditOptions: UserEditOptions): Promise<IUserDto> {
 		return new Promise((resolve, reject) => {
 			User.findOne({ username: username })
-			.then(user => {
+			.then(async (user) => {
 				if (user === null || user === undefined) {
 					throw new Error('Could not find user');
 				}
 				try{
-					let newCredit;
 					if(userEditOptions.tradeMode !== undefined){
 						user.credit = userEditOptions.tradeMode === true ? user!.credit! + userDto!.credit! : userDto!.credit;
 					} else {
 						user = Object.assign(user, userDto);
 					}
 					
-					user.save();
+					try {
+						await user.save();
+					} catch (error) {
+						return reject("Couldn't edit user:" + error);
+					}
 	
 					resolve({
 						id: user._id.toString(),

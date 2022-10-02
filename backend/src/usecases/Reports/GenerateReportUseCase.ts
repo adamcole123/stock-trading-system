@@ -30,6 +30,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 
 	completeStockValues(user_id: string, ascending: boolean, report_type: string): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
+			report_type = report_type.toUpperCase();
 			try{
 				let stocks = await this.stockReadOnlyRepository.fetch({}, {
 					order: {
@@ -86,6 +87,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 	}
 	selectedCompanyDetails(user_id: string, ascending: boolean, stock_ids: string[], report_type: string): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
+			report_type = report_type.toUpperCase();
 			try {
 				let companyDetails: IStockDto[];
 	
@@ -145,6 +147,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 
 	usersHeldShares(user_id: string, ascending: boolean, report_type: string): Promise<IUserDto> {
 		return new Promise(async (resolve, reject) => {
+			report_type = report_type.toUpperCase();
 			this.tradeReadOnlyRepository.fetch({user_id: user_id}, false)
 			.then(async trades => {
 				let filteredUserTransactions = trades.filter(trade => !(trade.trade_status === "Rejected" || trade.trade_status === "Pending"));

@@ -30,57 +30,45 @@ scenarios:
         jar: true
     - get:
         url: "/report/company-values?reportformat={{ reportFormat }}&ascending={{ ascending }}"
-# - name: "Generate held shares report"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/report/held-shares"
-#         json: 
-#           reportformat: "{{ reportFormat }}"
-#           ascending: "{{ ascending }}"
-# - name: "Generate company details report"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/stock/getOne"
-#         json: 
-#           symbol: "C"
-#         capture:
-#           json: "$.id"
-#           as: "stockid"
-#     - get:
-#         url: "/report/company-details"
-#         json: 
-#           stockids: "[{{ stockid }}]"
-#           reportformat: "{{ reportFormat }}"
-#           ascending: "{{ ascending }}"
-# - name: "Generate and download report"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/report/company-values"
-#         json: 
-#           reportformat: "{{ reportFormat }}"
-#           ascending: "{{ ascending }}"
-#         capture:
-#           json: "$.id"
-#           as: "reportid"
-#     - get:
-#         url: "/download"
-#         json: 
-#           report_id: "{{ reportid }}"
+- name: "Generate held shares report"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - get:
+        url: "/report/held-shares?reportformat={{ reportFormat }}&ascending={{ ascending }}"
+- name: "Generate company details report"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - get:
+        url: "/stock/getOne"
+        json: 
+          symbol: "C"
+        capture:
+          json: "$.id"
+          as: "stockid"
+    - get:
+        url: "/report/company-details?stockids=[{{ stockid }}]&reportformat={{ reportFormat }}&ascending={{ ascending }}"
+- name: "Generate and download report"
+  flow:
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        jar: true
+    - get:
+        url: "/report/company-values?reportformat={{ reportFormat }}&ascending={{ ascending }}"
+        capture:
+          json: "$.id"
+          as: "reportid"
+    - get:
+        url: "/download?reportid={{ reportid }}"

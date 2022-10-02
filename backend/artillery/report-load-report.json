@@ -1,109 +1,342 @@
 {
   "aggregate": {
     "counters": {
-      "vusers.created_by_name.Generate and download report": 8343,
-      "vusers.created": 33703,
-      "http.requests": 33703,
-      "http.codes.200": 804,
-      "http.responses": 804,
-      "errors.ERR_GOT_REQUEST_ERROR": 804,
-      "vusers.failed": 33703,
-      "vusers.created_by_name.Generate held shares report": 8517,
-      "vusers.created_by_name.Generate company details report": 8521,
-      "vusers.created_by_name.Generate company values report": 8322,
-      "errors.ETIMEDOUT": 6609,
-      "errors.ECONNREFUSED": 26290
+      "vusers.created_by_name.Generate company details report": 5934,
+      "vusers.created": 23861,
+      "http.requests": 27621,
+      "http.codes.200": 5197,
+      "http.responses": 5609,
+      "errors.ERR_GOT_REQUEST_ERROR": 1228,
+      "vusers.failed": 23308,
+      "vusers.created_by_name.Generate held shares report": 5996,
+      "vusers.completed": 553,
+      "vusers.created_by_name.Generate and download report": 5976,
+      "http.codes.404": 108,
+      "vusers.created_by_name.Generate company values report": 5955,
+      "http.codes.500": 304,
+      "errors.ETIMEDOUT": 12262,
+      "errors.ECONNREFUSED": 9750
     },
     "rates": {
-      "http.request_rate": 43
+      "http.request_rate": 18
     },
-    "firstCounterAt": 1663079734088,
-    "firstHistogramAt": 1663079734236,
-    "lastCounterAt": 1663080520734,
-    "lastHistogramAt": 1663079844343,
-    "firstMetricAt": 1663079734088,
-    "lastMetricAt": 1663080520734,
-    "period": 1663080520000,
+    "firstCounterAt": 1664713289830,
+    "firstHistogramAt": 1664713290037,
+    "lastCounterAt": 1664714080385,
+    "lastHistogramAt": 1664714073725,
+    "firstMetricAt": 1664713289830,
+    "lastMetricAt": 1664714080385,
+    "period": 1664714080000,
     "summaries": {
       "http.response_time": {
-        "min": 83,
-        "max": 9994,
-        "count": 804,
-        "p50": 333.7,
-        "median": 333.7,
-        "p75": 3134.5,
-        "p90": 6838,
-        "p95": 8352,
-        "p99": 9607.1,
+        "min": 2,
+        "max": 9999,
+        "count": 5609,
+        "p50": 8352,
+        "median": 8352,
+        "p75": 8868.4,
+        "p90": 9416.8,
+        "p95": 9801.2,
+        "p99": 9999.2,
         "p999": 9999.2
+      },
+      "vusers.session_length": {
+        "min": 202.1,
+        "max": 19809.3,
+        "count": 553,
+        "p50": 584.2,
+        "median": 584.2,
+        "p75": 9801.2,
+        "p90": 18220,
+        "p95": 18963.6,
+        "p99": 19346.7,
+        "p999": 19737.6
       }
     },
     "histograms": {
       "http.response_time": {
-        "min": 83,
-        "max": 9994,
-        "count": 804,
-        "p50": 333.7,
-        "median": 333.7,
-        "p75": 3134.5,
-        "p90": 6838,
-        "p95": 8352,
-        "p99": 9607.1,
+        "min": 2,
+        "max": 9999,
+        "count": 5609,
+        "p50": 8352,
+        "median": 8352,
+        "p75": 8868.4,
+        "p90": 9416.8,
+        "p95": 9801.2,
+        "p99": 9999.2,
         "p999": 9999.2
+      },
+      "vusers.session_length": {
+        "min": 202.1,
+        "max": 19809.3,
+        "count": 553,
+        "p50": 584.2,
+        "median": 584.2,
+        "p75": 9801.2,
+        "p90": 18220,
+        "p95": 18963.6,
+        "p99": 19346.7,
+        "p999": 19737.6
       }
     }
   },
   "intermediate": [
     {
       "counters": {
-        "vusers.created_by_name.Generate and download report": 7,
-        "vusers.created": 30,
-        "http.requests": 30,
-        "http.codes.200": 30,
-        "http.responses": 30,
-        "errors.ERR_GOT_REQUEST_ERROR": 30,
-        "vusers.failed": 30,
-        "vusers.created_by_name.Generate held shares report": 5,
-        "vusers.created_by_name.Generate company details report": 13,
-        "vusers.created_by_name.Generate company values report": 5
+        "vusers.created_by_name.Generate company details report": 2,
+        "vusers.created": 3,
+        "http.requests": 3,
+        "vusers.created_by_name.Generate company values report": 1
       },
       "rates": {
-        "http.request_rate": 5
+        "http.request_rate": 3
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079734088,
-      "firstHistogramAt": 1663079734236,
-      "lastCounterAt": 1663079739624,
-      "lastHistogramAt": 1663079739622,
-      "firstMetricAt": 1663079734088,
-      "lastMetricAt": 1663079739624,
-      "period": "1663079730000",
+      "firstCounterAt": 1664713289830,
+      "lastCounterAt": 1664713289974,
+      "firstMetricAt": 1664713289830,
+      "lastMetricAt": 1664713289974,
+      "period": "1664713280000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "http.codes.200": 81,
+        "http.responses": 96,
+        "errors.ERR_GOT_REQUEST_ERROR": 15,
+        "vusers.failed": 18,
+        "vusers.created_by_name.Generate held shares report": 17,
+        "vusers.created": 50,
+        "http.requests": 96,
+        "vusers.completed": 32,
+        "vusers.created_by_name.Generate and download report": 13,
+        "http.codes.404": 10,
+        "vusers.created_by_name.Generate company details report": 14,
+        "vusers.created_by_name.Generate company values report": 6,
+        "http.codes.500": 5
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713290016,
+      "firstHistogramAt": 1664713290037,
+      "lastCounterAt": 1664713299953,
+      "lastHistogramAt": 1664713299946,
+      "firstMetricAt": 1664713290016,
+      "lastMetricAt": 1664713299953,
+      "period": "1664713290000",
       "summaries": {
         "http.response_time": {
-          "min": 95,
-          "max": 328,
-          "count": 30,
-          "p50": 210.6,
-          "median": 210.6,
-          "p75": 237.5,
-          "p90": 295.9,
-          "p95": 308,
-          "p99": 308,
-          "p999": 308
+          "min": 4,
+          "max": 447,
+          "count": 96,
+          "p50": 153,
+          "median": 153,
+          "p75": 202.4,
+          "p90": 252.2,
+          "p95": 295.9,
+          "p99": 368.8,
+          "p999": 368.8
+        },
+        "vusers.session_length": {
+          "min": 224.9,
+          "max": 708.4,
+          "count": 32,
+          "p50": 340.4,
+          "median": 340.4,
+          "p75": 407.5,
+          "p90": 487.9,
+          "p95": 550.1,
+          "p99": 671.9,
+          "p999": 671.9
         }
       },
       "histograms": {
         "http.response_time": {
-          "min": 95,
-          "max": 328,
-          "count": 30,
-          "p50": 210.6,
-          "median": 210.6,
-          "p75": 237.5,
-          "p90": 295.9,
-          "p95": 308,
-          "p99": 308,
-          "p999": 308
+          "min": 4,
+          "max": 447,
+          "count": 96,
+          "p50": 153,
+          "median": 153,
+          "p75": 202.4,
+          "p90": 252.2,
+          "p95": 295.9,
+          "p99": 368.8,
+          "p999": 368.8
+        },
+        "vusers.session_length": {
+          "min": 224.9,
+          "max": 708.4,
+          "count": 32,
+          "p50": 340.4,
+          "median": 340.4,
+          "p75": 407.5,
+          "p90": 487.9,
+          "p95": 550.1,
+          "p99": 671.9,
+          "p999": 671.9
+        }
+      }
+    },
+    {
+      "counters": {
+        "http.codes.200": 82,
+        "http.responses": 95,
+        "vusers.failed": 16,
+        "vusers.completed": 34,
+        "vusers.created_by_name.Generate company details report": 15,
+        "vusers.created": 50,
+        "http.requests": 95,
+        "errors.ERR_GOT_REQUEST_ERROR": 16,
+        "vusers.created_by_name.Generate and download report": 11,
+        "http.codes.404": 11,
+        "vusers.created_by_name.Generate held shares report": 12,
+        "vusers.created_by_name.Generate company values report": 12,
+        "http.codes.500": 2
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713300014,
+      "firstHistogramAt": 1664713300020,
+      "lastCounterAt": 1664713309952,
+      "lastHistogramAt": 1664713309934,
+      "firstMetricAt": 1664713300014,
+      "lastMetricAt": 1664713309952,
+      "period": "1664713300000",
+      "summaries": {
+        "http.response_time": {
+          "min": 2,
+          "max": 275,
+          "count": 95,
+          "p50": 135.7,
+          "median": 135.7,
+          "p75": 179.5,
+          "p90": 210.6,
+          "p95": 242.3,
+          "p99": 273.2,
+          "p999": 273.2
+        },
+        "vusers.session_length": {
+          "min": 222,
+          "max": 523.9,
+          "count": 34,
+          "p50": 320.6,
+          "median": 320.6,
+          "p75": 354.3,
+          "p90": 432.7,
+          "p95": 450.4,
+          "p99": 459.5,
+          "p999": 459.5
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 2,
+          "max": 275,
+          "count": 95,
+          "p50": 135.7,
+          "median": 135.7,
+          "p75": 179.5,
+          "p90": 210.6,
+          "p95": 242.3,
+          "p99": 273.2,
+          "p999": 273.2
+        },
+        "vusers.session_length": {
+          "min": 222,
+          "max": 523.9,
+          "count": 34,
+          "p50": 320.6,
+          "median": 320.6,
+          "p75": 354.3,
+          "p90": 432.7,
+          "p95": 450.4,
+          "p99": 459.5,
+          "p999": 459.5
+        }
+      }
+    },
+    {
+      "counters": {
+        "http.codes.200": 81,
+        "http.responses": 100,
+        "vusers.failed": 13,
+        "vusers.completed": 38,
+        "vusers.created_by_name.Generate company details report": 13,
+        "vusers.created": 50,
+        "http.requests": 99,
+        "errors.ERR_GOT_REQUEST_ERROR": 13,
+        "vusers.created_by_name.Generate and download report": 13,
+        "http.codes.404": 12,
+        "vusers.created_by_name.Generate company values report": 12,
+        "vusers.created_by_name.Generate held shares report": 12,
+        "http.codes.500": 7
+      },
+      "rates": {
+        "http.request_rate": 10
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713310014,
+      "firstHistogramAt": 1664713310045,
+      "lastCounterAt": 1664713319952,
+      "lastHistogramAt": 1664713319932,
+      "firstMetricAt": 1664713310014,
+      "lastMetricAt": 1664713319952,
+      "period": "1664713310000",
+      "summaries": {
+        "http.response_time": {
+          "min": 3,
+          "max": 292,
+          "count": 100,
+          "p50": 156,
+          "median": 156,
+          "p75": 198.4,
+          "p90": 219.2,
+          "p95": 237.5,
+          "p99": 284.3,
+          "p999": 284.3
+        },
+        "vusers.session_length": {
+          "min": 202.1,
+          "max": 509.2,
+          "count": 38,
+          "p50": 340.4,
+          "median": 340.4,
+          "p75": 376.2,
+          "p90": 432.7,
+          "p95": 441.5,
+          "p99": 450.4,
+          "p999": 450.4
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 3,
+          "max": 292,
+          "count": 100,
+          "p50": 156,
+          "median": 156,
+          "p75": 198.4,
+          "p90": 219.2,
+          "p95": 237.5,
+          "p99": 284.3,
+          "p999": 284.3
+        },
+        "vusers.session_length": {
+          "min": 202.1,
+          "max": 509.2,
+          "count": 38,
+          "p50": 340.4,
+          "median": 340.4,
+          "p75": 376.2,
+          "p90": 432.7,
+          "p95": 441.5,
+          "p99": 450.4,
+          "p999": 450.4
         }
       }
     },
@@ -111,566 +344,1304 @@
       "counters": {
         "vusers.created_by_name.Generate held shares report": 9,
         "vusers.created": 50,
-        "http.requests": 50,
-        "http.codes.200": 50,
-        "http.responses": 50,
-        "errors.ERR_GOT_REQUEST_ERROR": 50,
-        "vusers.failed": 50,
-        "vusers.created_by_name.Generate company details report": 21,
-        "vusers.created_by_name.Generate and download report": 9,
-        "vusers.created_by_name.Generate company values report": 11
-      },
-      "rates": {
-        "http.request_rate": 5
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079740086,
-      "firstHistogramAt": 1663079740192,
-      "lastCounterAt": 1663079749632,
-      "lastHistogramAt": 1663079749630,
-      "firstMetricAt": 1663079740086,
-      "lastMetricAt": 1663079749632,
-      "period": "1663079740000",
-      "summaries": {
-        "http.response_time": {
-          "min": 99,
-          "max": 304,
-          "count": 50,
-          "p50": 214.9,
-          "median": 214.9,
-          "p75": 262.5,
-          "p90": 295.9,
-          "p95": 295.9,
-          "p99": 301.9,
-          "p999": 301.9
-        }
-      },
-      "histograms": {
-        "http.response_time": {
-          "min": 99,
-          "max": 304,
-          "count": 50,
-          "p50": 214.9,
-          "median": 214.9,
-          "p75": 262.5,
-          "p90": 295.9,
-          "p95": 295.9,
-          "p99": 301.9,
-          "p999": 301.9
-        }
-      }
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 10,
-        "vusers.created": 50,
-        "http.requests": 50,
-        "http.codes.200": 50,
-        "http.responses": 50,
-        "errors.ERR_GOT_REQUEST_ERROR": 50,
-        "vusers.failed": 50,
-        "vusers.created_by_name.Generate and download report": 10,
-        "vusers.created_by_name.Generate company details report": 17,
-        "vusers.created_by_name.Generate company values report": 13
-      },
-      "rates": {
-        "http.request_rate": 5
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079750085,
-      "firstHistogramAt": 1663079750186,
-      "lastCounterAt": 1663079759650,
-      "lastHistogramAt": 1663079759649,
-      "firstMetricAt": 1663079750085,
-      "lastMetricAt": 1663079759650,
-      "period": "1663079750000",
-      "summaries": {
-        "http.response_time": {
-          "min": 97,
-          "max": 423,
-          "count": 50,
-          "p50": 228.2,
-          "median": 228.2,
-          "p75": 278.7,
-          "p90": 333.7,
-          "p95": 361.5,
-          "p99": 407.5,
-          "p999": 407.5
-        }
-      },
-      "histograms": {
-        "http.response_time": {
-          "min": 97,
-          "max": 423,
-          "count": 50,
-          "p50": 228.2,
-          "median": 228.2,
-          "p75": 278.7,
-          "p90": 333.7,
-          "p95": 361.5,
-          "p99": 407.5,
-          "p999": 407.5
-        }
-      }
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 11,
-        "vusers.created": 50,
-        "http.requests": 50,
-        "http.codes.200": 50,
-        "http.responses": 50,
-        "errors.ERR_GOT_REQUEST_ERROR": 50,
-        "vusers.failed": 50,
-        "vusers.created_by_name.Generate held shares report": 17,
-        "vusers.created_by_name.Generate and download report": 13,
-        "vusers.created_by_name.Generate company details report": 9
-      },
-      "rates": {
-        "http.request_rate": 5
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079760086,
-      "firstHistogramAt": 1663079760216,
-      "lastCounterAt": 1663079769615,
-      "lastHistogramAt": 1663079769614,
-      "firstMetricAt": 1663079760086,
-      "lastMetricAt": 1663079769615,
-      "period": "1663079760000",
-      "summaries": {
-        "http.response_time": {
-          "min": 100,
-          "max": 653,
-          "count": 50,
-          "p50": 247.2,
-          "median": 247.2,
-          "p75": 327.1,
-          "p90": 391.6,
-          "p95": 518.1,
-          "p99": 620.3,
-          "p999": 620.3
-        }
-      },
-      "histograms": {
-        "http.response_time": {
-          "min": 100,
-          "max": 653,
-          "count": 50,
-          "p50": 247.2,
-          "median": 247.2,
-          "p75": 327.1,
-          "p90": 391.6,
-          "p95": 518.1,
-          "p99": 620.3,
-          "p999": 620.3
-        }
-      }
-    },
-    {
-      "counters": {
+        "http.requests": 103,
+        "http.codes.200": 82,
+        "http.responses": 102,
+        "vusers.failed": 13,
+        "vusers.completed": 36,
+        "vusers.created_by_name.Generate company details report": 11,
+        "errors.ERR_GOT_REQUEST_ERROR": 11,
         "vusers.created_by_name.Generate and download report": 16,
-        "vusers.created": 50,
-        "http.requests": 50,
-        "http.codes.200": 50,
-        "http.responses": 50,
-        "errors.ERR_GOT_REQUEST_ERROR": 50,
-        "vusers.failed": 50,
-        "vusers.created_by_name.Generate company details report": 12,
-        "vusers.created_by_name.Generate held shares report": 16,
-        "vusers.created_by_name.Generate company values report": 6
+        "http.codes.404": 14,
+        "vusers.created_by_name.Generate company values report": 14,
+        "http.codes.500": 6
       },
       "rates": {
-        "http.request_rate": 5
+        "http.request_rate": 11
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079770086,
-      "firstHistogramAt": 1663079770190,
-      "lastCounterAt": 1663079779759,
-      "lastHistogramAt": 1663079779758,
-      "firstMetricAt": 1663079770086,
-      "lastMetricAt": 1663079779759,
-      "period": "1663079770000",
+      "firstCounterAt": 1664713320010,
+      "firstHistogramAt": 1664713320010,
+      "lastCounterAt": 1664713329952,
+      "lastHistogramAt": 1664713329936,
+      "firstMetricAt": 1664713320010,
+      "lastMetricAt": 1664713329952,
+      "period": "1664713320000",
       "summaries": {
         "http.response_time": {
-          "min": 100,
-          "max": 431,
-          "count": 50,
-          "p50": 210.6,
-          "median": 210.6,
-          "p75": 252.2,
-          "p90": 273.2,
-          "p95": 278.7,
-          "p99": 383.8,
-          "p999": 383.8
+          "min": 2,
+          "max": 311,
+          "count": 102,
+          "p50": 162.4,
+          "median": 162.4,
+          "p75": 206.5,
+          "p90": 247.2,
+          "p95": 284.3,
+          "p99": 301.9,
+          "p999": 308
+        },
+        "vusers.session_length": {
+          "min": 233.5,
+          "max": 606.3,
+          "count": 36,
+          "p50": 376.2,
+          "median": 376.2,
+          "p75": 450.4,
+          "p90": 478.3,
+          "p95": 497.8,
+          "p99": 550.1,
+          "p999": 550.1
         }
       },
       "histograms": {
         "http.response_time": {
-          "min": 100,
-          "max": 431,
-          "count": 50,
-          "p50": 210.6,
-          "median": 210.6,
-          "p75": 252.2,
-          "p90": 273.2,
-          "p95": 278.7,
-          "p99": 383.8,
-          "p999": 383.8
+          "min": 2,
+          "max": 311,
+          "count": 102,
+          "p50": 162.4,
+          "median": 162.4,
+          "p75": 206.5,
+          "p90": 247.2,
+          "p95": 284.3,
+          "p99": 301.9,
+          "p999": 308
+        },
+        "vusers.session_length": {
+          "min": 233.5,
+          "max": 606.3,
+          "count": 36,
+          "p50": 376.2,
+          "median": 376.2,
+          "p75": 450.4,
+          "p90": 478.3,
+          "p95": 497.8,
+          "p99": 550.1,
+          "p999": 550.1
         }
       }
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company details report": 12,
+        "http.codes.200": 84,
+        "http.responses": 103,
+        "vusers.failed": 12,
+        "vusers.completed": 38,
+        "vusers.created_by_name.Generate held shares report": 19,
         "vusers.created": 50,
-        "http.requests": 50,
-        "http.codes.200": 50,
-        "http.responses": 50,
-        "errors.ERR_GOT_REQUEST_ERROR": 50,
-        "vusers.failed": 50,
-        "vusers.created_by_name.Generate and download report": 17,
-        "vusers.created_by_name.Generate held shares report": 12,
-        "vusers.created_by_name.Generate company values report": 9
+        "http.requests": 103,
+        "vusers.created_by_name.Generate company details report": 9,
+        "errors.ERR_GOT_REQUEST_ERROR": 9,
+        "vusers.created_by_name.Generate company values report": 6,
+        "vusers.created_by_name.Generate and download report": 16,
+        "http.codes.404": 12,
+        "http.codes.500": 7
       },
       "rates": {
-        "http.request_rate": 5
+        "http.request_rate": 11
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079780086,
-      "firstHistogramAt": 1663079780199,
-      "lastCounterAt": 1663079789597,
-      "lastHistogramAt": 1663079789596,
-      "firstMetricAt": 1663079780086,
-      "lastMetricAt": 1663079789597,
-      "period": "1663079780000",
+      "firstCounterAt": 1664713330014,
+      "firstHistogramAt": 1664713330056,
+      "lastCounterAt": 1664713339954,
+      "lastHistogramAt": 1664713339952,
+      "firstMetricAt": 1664713330014,
+      "lastMetricAt": 1664713339954,
+      "period": "1664713330000",
       "summaries": {
         "http.response_time": {
-          "min": 101,
-          "max": 291,
-          "count": 50,
-          "p50": 206.5,
-          "median": 206.5,
-          "p75": 242.3,
-          "p90": 273.2,
-          "p95": 273.2,
-          "p99": 278.7,
-          "p999": 278.7
+          "min": 2,
+          "max": 323,
+          "count": 103,
+          "p50": 162.4,
+          "median": 162.4,
+          "p75": 210.6,
+          "p90": 257.3,
+          "p95": 284.3,
+          "p99": 308,
+          "p999": 314.2
+        },
+        "vusers.session_length": {
+          "min": 216.1,
+          "max": 561.6,
+          "count": 38,
+          "p50": 368.8,
+          "median": 368.8,
+          "p75": 415.8,
+          "p90": 487.9,
+          "p95": 561.2,
+          "p99": 561.2,
+          "p999": 561.2
         }
       },
       "histograms": {
         "http.response_time": {
-          "min": 101,
-          "max": 291,
-          "count": 50,
-          "p50": 206.5,
-          "median": 206.5,
-          "p75": 242.3,
-          "p90": 273.2,
-          "p95": 273.2,
-          "p99": 278.7,
-          "p999": 278.7
+          "min": 2,
+          "max": 323,
+          "count": 103,
+          "p50": 162.4,
+          "median": 162.4,
+          "p75": 210.6,
+          "p90": 257.3,
+          "p95": 284.3,
+          "p99": 308,
+          "p999": 314.2
+        },
+        "vusers.session_length": {
+          "min": 216.1,
+          "max": 561.6,
+          "count": 38,
+          "p50": 368.8,
+          "median": 368.8,
+          "p75": 415.8,
+          "p90": 487.9,
+          "p95": 561.2,
+          "p99": 561.2,
+          "p999": 561.2
         }
       }
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company values report": 19,
-        "vusers.created": 69,
-        "http.requests": 69,
-        "http.codes.200": 68,
-        "http.responses": 68,
-        "errors.ERR_GOT_REQUEST_ERROR": 68,
-        "vusers.failed": 68,
+        "http.codes.200": 85,
+        "http.responses": 104,
+        "http.requests": 104,
+        "http.codes.404": 13,
+        "vusers.failed": 20,
+        "vusers.completed": 33,
+        "vusers.created_by_name.Generate held shares report": 9,
+        "vusers.created": 53,
+        "vusers.created_by_name.Generate and download report": 18,
+        "vusers.created_by_name.Generate company details report": 15,
+        "errors.ERR_GOT_REQUEST_ERROR": 15,
+        "vusers.created_by_name.Generate company values report": 11,
+        "http.codes.500": 6
+      },
+      "rates": {
+        "http.request_rate": 12
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713340014,
+      "firstHistogramAt": 1664713340104,
+      "lastCounterAt": 1664713349961,
+      "lastHistogramAt": 1664713349961,
+      "firstMetricAt": 1664713340014,
+      "lastMetricAt": 1664713349961,
+      "period": "1664713340000",
+      "summaries": {
+        "http.response_time": {
+          "min": 3,
+          "max": 334,
+          "count": 104,
+          "p50": 159.2,
+          "median": 159.2,
+          "p75": 214.9,
+          "p90": 262.5,
+          "p95": 278.7,
+          "p99": 308,
+          "p999": 333.7
+        },
+        "vusers.session_length": {
+          "min": 212.7,
+          "max": 591.8,
+          "count": 33,
+          "p50": 354.3,
+          "median": 354.3,
+          "p75": 407.5,
+          "p90": 450.4,
+          "p95": 497.8,
+          "p99": 528.6,
+          "p999": 528.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 3,
+          "max": 334,
+          "count": 104,
+          "p50": 159.2,
+          "median": 159.2,
+          "p75": 214.9,
+          "p90": 262.5,
+          "p95": 278.7,
+          "p99": 308,
+          "p999": 333.7
+        },
+        "vusers.session_length": {
+          "min": 212.7,
+          "max": 591.8,
+          "count": 33,
+          "p50": 354.3,
+          "median": 354.3,
+          "p75": 407.5,
+          "p90": 450.4,
+          "p95": 497.8,
+          "p99": 528.6,
+          "p999": 528.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "http.codes.200": 98,
+        "http.responses": 116,
+        "http.requests": 114,
+        "http.codes.404": 11,
+        "vusers.failed": 20,
+        "vusers.completed": 42,
+        "vusers.created_by_name.Generate company values report": 17,
+        "vusers.created": 60,
+        "vusers.created_by_name.Generate company details report": 19,
+        "errors.ERR_GOT_REQUEST_ERROR": 18,
+        "vusers.created_by_name.Generate and download report": 11,
+        "vusers.created_by_name.Generate held shares report": 13,
+        "http.codes.500": 7
+      },
+      "rates": {
+        "http.request_rate": 14
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713350039,
+      "firstHistogramAt": 1664713350061,
+      "lastCounterAt": 1664713359944,
+      "lastHistogramAt": 1664713359942,
+      "firstMetricAt": 1664713350039,
+      "lastMetricAt": 1664713359944,
+      "period": "1664713350000",
+      "summaries": {
+        "http.response_time": {
+          "min": 2,
+          "max": 418,
+          "count": 116,
+          "p50": 172.5,
+          "median": 172.5,
+          "p75": 252.2,
+          "p90": 301.9,
+          "p95": 320.6,
+          "p99": 354.3,
+          "p999": 368.8
+        },
+        "vusers.session_length": {
+          "min": 216.2,
+          "max": 694.8,
+          "count": 42,
+          "p50": 391.6,
+          "median": 391.6,
+          "p75": 550.1,
+          "p90": 584.2,
+          "p95": 596,
+          "p99": 620.3,
+          "p999": 620.3
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 2,
+          "max": 418,
+          "count": 116,
+          "p50": 172.5,
+          "median": 172.5,
+          "p75": 252.2,
+          "p90": 301.9,
+          "p95": 320.6,
+          "p99": 354.3,
+          "p999": 368.8
+        },
+        "vusers.session_length": {
+          "min": 216.2,
+          "max": 694.8,
+          "count": 42,
+          "p50": 391.6,
+          "median": 391.6,
+          "p75": 550.1,
+          "p90": 584.2,
+          "p95": 596,
+          "p99": 620.3,
+          "p999": 620.3
+        }
+      }
+    },
+    {
+      "counters": {
         "vusers.created_by_name.Generate held shares report": 20,
-        "vusers.created_by_name.Generate and download report": 18,
-        "vusers.created_by_name.Generate company details report": 12
-      },
-      "rates": {
-        "http.request_rate": 8
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079790086,
-      "firstHistogramAt": 1663079790207,
-      "lastCounterAt": 1663079799988,
-      "lastHistogramAt": 1663079799968,
-      "firstMetricAt": 1663079790086,
-      "lastMetricAt": 1663079799988,
-      "period": "1663079790000",
-      "summaries": {
-        "http.response_time": {
-          "min": 83,
-          "max": 389,
-          "count": 68,
-          "p50": 194.4,
-          "median": 194.4,
-          "p75": 247.2,
-          "p90": 284.3,
-          "p95": 301.9,
-          "p99": 391.6,
-          "p999": 391.6
-        }
-      },
-      "histograms": {
-        "http.response_time": {
-          "min": 83,
-          "max": 389,
-          "count": 68,
-          "p50": 194.4,
-          "median": 194.4,
-          "p75": 247.2,
-          "p90": 284.3,
-          "p95": 301.9,
-          "p99": 391.6,
-          "p999": 391.6
-        }
-      }
-    },
-    {
-      "counters": {
-        "http.codes.200": 74,
-        "http.responses": 74,
-        "errors.ERR_GOT_REQUEST_ERROR": 74,
-        "vusers.failed": 74,
+        "vusers.created": 80,
+        "http.requests": 152,
+        "http.codes.200": 118,
+        "http.responses": 146,
+        "vusers.failed": 24,
+        "vusers.completed": 50,
         "vusers.created_by_name.Generate company details report": 18,
-        "vusers.created": 77,
-        "http.requests": 77,
-        "vusers.created_by_name.Generate and download report": 18,
-        "vusers.created_by_name.Generate company values report": 20,
-        "vusers.created_by_name.Generate held shares report": 21
+        "errors.ERR_GOT_REQUEST_ERROR": 18,
+        "vusers.created_by_name.Generate and download report": 21,
+        "http.codes.500": 16,
+        "vusers.created_by_name.Generate company values report": 21,
+        "http.codes.404": 12
       },
       "rates": {
-        "http.request_rate": 9
+        "http.request_rate": 18
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079800026,
-      "firstHistogramAt": 1663079800095,
-      "lastCounterAt": 1663079809985,
-      "lastHistogramAt": 1663079809926,
-      "firstMetricAt": 1663079800026,
-      "lastMetricAt": 1663079809985,
-      "period": "1663079800000",
+      "firstCounterAt": 1664713360024,
+      "firstHistogramAt": 1664713360024,
+      "lastCounterAt": 1664713369993,
+      "lastHistogramAt": 1664713369991,
+      "firstMetricAt": 1664713360024,
+      "lastMetricAt": 1664713369993,
+      "period": "1664713360000",
       "summaries": {
         "http.response_time": {
-          "min": 84,
-          "max": 486,
-          "count": 74,
-          "p50": 141.2,
-          "median": 141.2,
-          "p75": 247.2,
-          "p90": 320.6,
-          "p95": 432.7,
-          "p99": 478.3,
-          "p999": 478.3
+          "min": 2,
+          "max": 950,
+          "count": 146,
+          "p50": 242.3,
+          "median": 242.3,
+          "p75": 459.5,
+          "p90": 713.5,
+          "p95": 871.5,
+          "p99": 925.4,
+          "p999": 944
+        },
+        "vusers.session_length": {
+          "min": 230.2,
+          "max": 1558.7,
+          "count": 50,
+          "p50": 487.9,
+          "median": 487.9,
+          "p75": 982.6,
+          "p90": 1465.9,
+          "p95": 1495.5,
+          "p99": 1525.7,
+          "p999": 1525.7
         }
       },
       "histograms": {
         "http.response_time": {
-          "min": 84,
-          "max": 486,
-          "count": 74,
-          "p50": 141.2,
-          "median": 141.2,
-          "p75": 247.2,
-          "p90": 320.6,
-          "p95": 432.7,
-          "p99": 478.3,
-          "p999": 478.3
+          "min": 2,
+          "max": 950,
+          "count": 146,
+          "p50": 242.3,
+          "median": 242.3,
+          "p75": 459.5,
+          "p90": 713.5,
+          "p95": 871.5,
+          "p99": 925.4,
+          "p999": 944
+        },
+        "vusers.session_length": {
+          "min": 230.2,
+          "max": 1558.7,
+          "count": 50,
+          "p50": 487.9,
+          "median": 487.9,
+          "p75": 982.6,
+          "p90": 1465.9,
+          "p95": 1495.5,
+          "p99": 1525.7,
+          "p999": 1525.7
         }
       }
     },
     {
       "counters": {
-        "http.codes.200": 111,
-        "http.responses": 111,
-        "errors.ERR_GOT_REQUEST_ERROR": 111,
-        "vusers.failed": 111,
-        "vusers.created_by_name.Generate company values report": 30,
-        "vusers.created": 128,
-        "http.requests": 128,
-        "vusers.created_by_name.Generate and download report": 38,
-        "vusers.created_by_name.Generate company details report": 25,
-        "vusers.created_by_name.Generate held shares report": 35
+        "vusers.created_by_name.Generate company values report": 34,
+        "vusers.created": 143,
+        "http.requests": 239,
+        "http.codes.200": 146,
+        "http.responses": 197,
+        "http.codes.500": 41,
+        "vusers.failed": 52,
+        "vusers.completed": 49,
+        "vusers.created_by_name.Generate held shares report": 33,
+        "vusers.created_by_name.Generate and download report": 35,
+        "vusers.created_by_name.Generate company details report": 41,
+        "errors.ERR_GOT_REQUEST_ERROR": 37,
+        "http.codes.404": 10
       },
       "rates": {
-        "http.request_rate": 13
+        "http.request_rate": 25
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079810017,
-      "firstHistogramAt": 1663079810017,
-      "lastCounterAt": 1663079819991,
-      "lastHistogramAt": 1663079819985,
-      "firstMetricAt": 1663079810017,
-      "lastMetricAt": 1663079819991,
-      "period": "1663079810000",
+      "firstCounterAt": 1664713370042,
+      "firstHistogramAt": 1664713370201,
+      "lastCounterAt": 1664713379986,
+      "lastHistogramAt": 1664713379894,
+      "firstMetricAt": 1664713370042,
+      "lastMetricAt": 1664713379986,
+      "period": "1664713370000",
       "summaries": {
         "http.response_time": {
-          "min": 129,
-          "max": 1885,
-          "count": 111,
-          "p50": 632.8,
-          "median": 632.8,
-          "p75": 1224.4,
-          "p90": 1495.5,
-          "p95": 1620,
-          "p99": 1826.6,
-          "p999": 1826.6
+          "min": 19,
+          "max": 2650,
+          "count": 197,
+          "p50": 925.4,
+          "median": 925.4,
+          "p75": 1620,
+          "p90": 1901.1,
+          "p95": 2186.8,
+          "p99": 2566.3,
+          "p999": 2566.3
+        },
+        "vusers.session_length": {
+          "min": 507,
+          "max": 4477.9,
+          "count": 49,
+          "p50": 1755,
+          "median": 1755,
+          "p75": 3011.6,
+          "p90": 3605.5,
+          "p95": 3828.5,
+          "p99": 4147.4,
+          "p999": 4147.4
         }
       },
       "histograms": {
         "http.response_time": {
-          "min": 129,
-          "max": 1885,
-          "count": 111,
-          "p50": 632.8,
-          "median": 632.8,
-          "p75": 1224.4,
-          "p90": 1495.5,
-          "p95": 1620,
-          "p99": 1826.6,
-          "p999": 1826.6
+          "min": 19,
+          "max": 2650,
+          "count": 197,
+          "p50": 925.4,
+          "median": 925.4,
+          "p75": 1620,
+          "p90": 1901.1,
+          "p95": 2186.8,
+          "p99": 2566.3,
+          "p999": 2566.3
+        },
+        "vusers.session_length": {
+          "min": 507,
+          "max": 4477.9,
+          "count": 49,
+          "p50": 1755,
+          "median": 1755,
+          "p75": 3011.6,
+          "p90": 3605.5,
+          "p95": 3828.5,
+          "p99": 4147.4,
+          "p999": 4147.4
         }
       }
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate held shares report": 46,
-        "vusers.created": 166,
-        "http.requests": 166,
-        "http.codes.200": 110,
-        "http.responses": 110,
-        "errors.ERR_GOT_REQUEST_ERROR": 110,
-        "vusers.failed": 110,
+        "vusers.created_by_name.Generate company values report": 38,
+        "vusers.created": 151,
+        "http.requests": 242,
+        "vusers.created_by_name.Generate and download report": 42,
+        "http.codes.200": 119,
+        "http.responses": 180,
+        "http.codes.500": 59,
+        "vusers.failed": 40,
+        "vusers.completed": 49,
+        "vusers.created_by_name.Generate held shares report": 42,
+        "vusers.created_by_name.Generate company details report": 29,
+        "errors.ERR_GOT_REQUEST_ERROR": 22,
+        "http.codes.404": 2
+      },
+      "rates": {
+        "http.request_rate": 26
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713380047,
+      "firstHistogramAt": 1664713380234,
+      "lastCounterAt": 1664713389974,
+      "lastHistogramAt": 1664713389575,
+      "firstMetricAt": 1664713380047,
+      "lastMetricAt": 1664713389974,
+      "period": "1664713380000",
+      "summaries": {
+        "http.response_time": {
+          "min": 743,
+          "max": 6856,
+          "count": 180,
+          "p50": 3197.8,
+          "median": 3197.8,
+          "p75": 3905.8,
+          "p90": 5065.6,
+          "p95": 5598.4,
+          "p99": 6312.2,
+          "p999": 6838
+        },
+        "vusers.session_length": {
+          "min": 3995.7,
+          "max": 9226,
+          "count": 49,
+          "p50": 5944.6,
+          "median": 5944.6,
+          "p75": 7117,
+          "p90": 8352,
+          "p95": 8520.7,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 743,
+          "max": 6856,
+          "count": 180,
+          "p50": 3197.8,
+          "median": 3197.8,
+          "p75": 3905.8,
+          "p90": 5065.6,
+          "p95": 5598.4,
+          "p99": 6312.2,
+          "p999": 6838
+        },
+        "vusers.session_length": {
+          "min": 3995.7,
+          "max": 9226,
+          "count": 49,
+          "p50": 5944.6,
+          "median": 5944.6,
+          "p75": 7117,
+          "p90": 8352,
+          "p95": 8520.7,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 47,
+        "vusers.created": 178,
+        "http.requests": 278,
         "vusers.created_by_name.Generate company details report": 42,
-        "vusers.created_by_name.Generate company values report": 45,
-        "vusers.created_by_name.Generate and download report": 33
-      },
-      "rates": {
-        "http.request_rate": 17
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079820023,
-      "firstHistogramAt": 1663079820108,
-      "lastCounterAt": 1663079829987,
-      "lastHistogramAt": 1663079829957,
-      "firstMetricAt": 1663079820023,
-      "lastMetricAt": 1663079829987,
-      "period": "1663079820000",
-      "summaries": {
-        "http.response_time": {
-          "min": 1450,
-          "max": 4273,
-          "count": 110,
-          "p50": 2465.6,
-          "median": 2465.6,
-          "p75": 3605.5,
-          "p90": 3905.8,
-          "p95": 4065.2,
-          "p99": 4231.1,
-          "p999": 4231.1
-        }
-      },
-      "histograms": {
-        "http.response_time": {
-          "min": 1450,
-          "max": 4273,
-          "count": 110,
-          "p50": 2465.6,
-          "median": 2465.6,
-          "p75": 3605.5,
-          "p90": 3905.8,
-          "p95": 4065.2,
-          "p99": 4231.1,
-          "p999": 4231.1
-        }
-      }
-    },
-    {
-      "counters": {
-        "http.codes.200": 111,
-        "http.responses": 111,
-        "errors.ERR_GOT_REQUEST_ERROR": 111,
-        "vusers.failed": 111,
-        "vusers.created_by_name.Generate and download report": 70,
-        "vusers.created": 202,
-        "http.requests": 202,
+        "http.codes.500": 47,
+        "http.responses": 183,
+        "vusers.failed": 44,
+        "vusers.completed": 40,
+        "http.codes.200": 135,
+        "vusers.created_by_name.Generate held shares report": 47,
         "vusers.created_by_name.Generate company values report": 42,
-        "vusers.created_by_name.Generate company details report": 50,
-        "vusers.created_by_name.Generate held shares report": 40
+        "errors.ERR_GOT_REQUEST_ERROR": 32,
+        "errors.ETIMEDOUT": 1,
+        "http.codes.404": 1
       },
       "rates": {
-        "http.request_rate": 22
+        "http.request_rate": 30
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079830042,
-      "firstHistogramAt": 1663079830042,
-      "lastCounterAt": 1663079839983,
-      "lastHistogramAt": 1663079839932,
-      "firstMetricAt": 1663079830042,
-      "lastMetricAt": 1663079839983,
-      "period": "1663079830000",
+      "firstCounterAt": 1664713390115,
+      "firstHistogramAt": 1664713390334,
+      "lastCounterAt": 1664713399977,
+      "lastHistogramAt": 1664713399225,
+      "firstMetricAt": 1664713390115,
+      "lastMetricAt": 1664713399977,
+      "period": "1664713390000",
       "summaries": {
         "http.response_time": {
-          "min": 4176,
-          "max": 7944,
-          "count": 111,
-          "p50": 5944.6,
-          "median": 5944.6,
-          "p75": 6838,
-          "p90": 7407.5,
-          "p95": 7709.8,
-          "p99": 7865.6,
-          "p999": 7865.6
+          "min": 1209,
+          "max": 9418,
+          "count": 183,
+          "p50": 4770.6,
+          "median": 4770.6,
+          "p75": 5826.9,
+          "p90": 7260.8,
+          "p95": 8186.6,
+          "p99": 9230.4,
+          "p999": 9230.4
+        },
+        "vusers.session_length": {
+          "min": 7825.3,
+          "max": 13609.2,
+          "count": 40,
+          "p50": 10617.5,
+          "median": 10617.5,
+          "p75": 11734.2,
+          "p90": 12711.5,
+          "p95": 12968.3,
+          "p99": 12968.3,
+          "p999": 12968.3
         }
       },
       "histograms": {
         "http.response_time": {
-          "min": 4176,
-          "max": 7944,
-          "count": 111,
-          "p50": 5944.6,
-          "median": 5944.6,
-          "p75": 6838,
-          "p90": 7407.5,
-          "p95": 7709.8,
-          "p99": 7865.6,
-          "p999": 7865.6
+          "min": 1209,
+          "max": 9418,
+          "count": 183,
+          "p50": 4770.6,
+          "median": 4770.6,
+          "p75": 5826.9,
+          "p90": 7260.8,
+          "p95": 8186.6,
+          "p99": 9230.4,
+          "p999": 9230.4
+        },
+        "vusers.session_length": {
+          "min": 7825.3,
+          "max": 13609.2,
+          "count": 40,
+          "p50": 10617.5,
+          "median": 10617.5,
+          "p75": 11734.2,
+          "p90": 12711.5,
+          "p95": 12968.3,
+          "p99": 12968.3,
+          "p999": 12968.3
         }
       }
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate held shares report": 65,
-        "vusers.created": 255,
-        "http.requests": 255,
+        "vusers.created_by_name.Generate company details report": 46,
+        "vusers.created": 198,
+        "http.requests": 304,
+        "http.codes.500": 6,
+        "http.responses": 140,
+        "vusers.failed": 117,
+        "vusers.completed": 5,
+        "errors.ETIMEDOUT": 88,
+        "vusers.created_by_name.Generate held shares report": 48,
         "vusers.created_by_name.Generate company values report": 55,
-        "vusers.created_by_name.Generate company details report": 77,
-        "http.codes.200": 50,
-        "http.responses": 50,
-        "errors.ERR_GOT_REQUEST_ERROR": 50,
-        "vusers.failed": 181,
-        "vusers.created_by_name.Generate and download report": 58,
-        "errors.ETIMEDOUT": 118,
-        "errors.ECONNREFUSED": 13
+        "vusers.created_by_name.Generate and download report": 49,
+        "http.codes.200": 134,
+        "errors.ERR_GOT_REQUEST_ERROR": 27
+      },
+      "rates": {
+        "http.request_rate": 32
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713400038,
+      "firstHistogramAt": 1664713400438,
+      "lastCounterAt": 1664713409979,
+      "lastHistogramAt": 1664713407799,
+      "firstMetricAt": 1664713400038,
+      "lastMetricAt": 1664713409979,
+      "period": "1664713400000",
+      "summaries": {
+        "http.response_time": {
+          "min": 6238,
+          "max": 9753,
+          "count": 140,
+          "p50": 7260.8,
+          "median": 7260.8,
+          "p75": 7709.8,
+          "p90": 8186.6,
+          "p95": 8352,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 12130.3,
+          "max": 14191.5,
+          "count": 5,
+          "p50": 13497.6,
+          "median": 13497.6,
+          "p75": 13497.6,
+          "p90": 13497.6,
+          "p95": 13497.6,
+          "p99": 13497.6,
+          "p999": 13497.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 6238,
+          "max": 9753,
+          "count": 140,
+          "p50": 7260.8,
+          "median": 7260.8,
+          "p75": 7709.8,
+          "p90": 8186.6,
+          "p95": 8352,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 12130.3,
+          "max": 14191.5,
+          "count": 5,
+          "p50": 13497.6,
+          "median": 13497.6,
+          "p75": 13497.6,
+          "p90": 13497.6,
+          "p95": 13497.6,
+          "p99": 13497.6,
+          "p999": 13497.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 39,
+        "vusers.created": 193,
+        "http.requests": 338,
+        "http.codes.200": 193,
+        "http.responses": 193,
+        "vusers.created_by_name.Generate company values report": 58,
+        "vusers.created_by_name.Generate held shares report": 51,
+        "vusers.created_by_name.Generate and download report": 45,
+        "errors.ERR_GOT_REQUEST_ERROR": 48,
+        "vusers.failed": 156,
+        "errors.ETIMEDOUT": 108
+      },
+      "rates": {
+        "http.request_rate": 36
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713410056,
+      "firstHistogramAt": 1664713410403,
+      "lastCounterAt": 1664713419974,
+      "lastHistogramAt": 1664713418693,
+      "firstMetricAt": 1664713410056,
+      "lastMetricAt": 1664713419974,
+      "period": "1664713410000",
+      "summaries": {
+        "http.response_time": {
+          "min": 6496,
+          "max": 9038,
+          "count": 193,
+          "p50": 7865.6,
+          "median": 7865.6,
+          "p75": 8352,
+          "p90": 8692.8,
+          "p95": 8868.4,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 6496,
+          "max": 9038,
+          "count": 193,
+          "p50": 7865.6,
+          "median": 7865.6,
+          "p75": 8352,
+          "p90": 8692.8,
+          "p95": 8868.4,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 60,
+        "vusers.created": 273,
+        "http.requests": 333,
+        "errors.ETIMEDOUT": 246,
+        "vusers.failed": 258,
+        "vusers.created_by_name.Generate company values report": 81,
+        "vusers.created_by_name.Generate and download report": 61,
+        "http.codes.200": 72,
+        "http.responses": 72,
+        "errors.ERR_GOT_REQUEST_ERROR": 12,
+        "vusers.created_by_name.Generate company details report": 71
+      },
+      "rates": {
+        "http.request_rate": 34
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713420037,
+      "firstHistogramAt": 1664713421240,
+      "lastCounterAt": 1664713429985,
+      "lastHistogramAt": 1664713425731,
+      "firstMetricAt": 1664713420037,
+      "lastMetricAt": 1664713429985,
+      "period": "1664713420000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7994,
+          "max": 9939,
+          "count": 72,
+          "p50": 9047.6,
+          "median": 9047.6,
+          "p75": 9416.8,
+          "p90": 9607.1,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7994,
+          "max": 9939,
+          "count": 72,
+          "p50": 9047.6,
+          "median": 9047.6,
+          "p75": 9416.8,
+          "p90": 9607.1,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 63,
+        "vusers.created": 274,
+        "http.requests": 274,
+        "errors.ETIMEDOUT": 333,
+        "vusers.failed": 360,
+        "vusers.created_by_name.Generate company values report": 73,
+        "vusers.created_by_name.Generate held shares report": 72,
+        "vusers.created_by_name.Generate company details report": 66,
+        "errors.ECONNREFUSED": 27
       },
       "rates": {
         "http.request_rate": 27
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079840015,
-      "firstHistogramAt": 1663079840023,
-      "lastCounterAt": 1663079849989,
-      "lastHistogramAt": 1663079844343,
-      "firstMetricAt": 1663079840015,
-      "lastMetricAt": 1663079849989,
-      "period": "1663079840000",
+      "firstCounterAt": 1664713430032,
+      "lastCounterAt": 1664713439986,
+      "firstMetricAt": 1664713430032,
+      "lastMetricAt": 1664713439986,
+      "period": "1664713430000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 74,
+        "vusers.created": 307,
+        "http.requests": 307,
+        "errors.ETIMEDOUT": 247,
+        "vusers.failed": 443,
+        "errors.ECONNREFUSED": 196,
+        "vusers.created_by_name.Generate and download report": 73,
+        "vusers.created_by_name.Generate company values report": 82,
+        "vusers.created_by_name.Generate company details report": 78
+      },
+      "rates": {
+        "http.request_rate": 30
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713440045,
+      "lastCounterAt": 1664713449973,
+      "firstMetricAt": 1664713440045,
+      "lastMetricAt": 1664713449973,
+      "period": "1664713440000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 81,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate and download report": 81,
+        "vusers.created_by_name.Generate company details report": 94,
+        "vusers.created_by_name.Generate held shares report": 94,
+        "errors.ECONNREFUSED": 205,
+        "vusers.failed": 316,
+        "errors.ETIMEDOUT": 111
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713450036,
+      "lastCounterAt": 1664713459977,
+      "firstMetricAt": 1664713450036,
+      "lastMetricAt": 1664713459977,
+      "period": "1664713450000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 92,
+        "vusers.created": 347,
+        "http.requests": 347,
+        "errors.ETIMEDOUT": 145,
+        "vusers.failed": 347,
+        "errors.ECONNREFUSED": 202,
+        "vusers.created_by_name.Generate held shares report": 83,
+        "vusers.created_by_name.Generate company values report": 85,
+        "vusers.created_by_name.Generate company details report": 87
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713460037,
+      "lastCounterAt": 1664713469971,
+      "firstMetricAt": 1664713460037,
+      "lastMetricAt": 1664713469971,
+      "period": "1664713460000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 94,
+        "vusers.created": 346,
+        "http.requests": 403,
+        "vusers.created_by_name.Generate company details report": 69,
+        "vusers.created_by_name.Generate held shares report": 90,
+        "vusers.created_by_name.Generate company values report": 93,
+        "errors.ETIMEDOUT": 78,
+        "vusers.failed": 99,
+        "http.codes.200": 78,
+        "http.responses": 78,
+        "errors.ERR_GOT_REQUEST_ERROR": 21
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713470034,
+      "firstHistogramAt": 1664713476890,
+      "lastCounterAt": 1664713479979,
+      "lastHistogramAt": 1664713479613,
+      "firstMetricAt": 1664713470034,
+      "lastMetricAt": 1664713479979,
+      "period": "1664713470000",
       "summaries": {
         "http.response_time": {
-          "min": 8008,
-          "max": 9994,
-          "count": 50,
-          "p50": 9047.6,
-          "median": 9047.6,
-          "p75": 9416.8,
+          "min": 9172,
+          "max": 9995,
+          "count": 78,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 9172,
+          "max": 9995,
+          "count": 78,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 84,
+        "vusers.created": 350,
+        "http.requests": 418,
+        "vusers.created_by_name.Generate company values report": 92,
+        "errors.ETIMEDOUT": 301,
+        "vusers.failed": 508,
+        "http.codes.200": 88,
+        "http.responses": 91,
+        "errors.ERR_GOT_REQUEST_ERROR": 19,
+        "vusers.created_by_name.Generate and download report": 78,
+        "vusers.created_by_name.Generate held shares report": 96,
+        "errors.ECONNREFUSED": 188,
+        "vusers.completed": 4,
+        "http.codes.500": 3
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713480036,
+      "firstHistogramAt": 1664713480553,
+      "lastCounterAt": 1664713489981,
+      "lastHistogramAt": 1664713487387,
+      "firstMetricAt": 1664713480036,
+      "lastMetricAt": 1664713489981,
+      "period": "1664713480000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7782,
+          "max": 9980,
+          "count": 91,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17039.5,
+          "max": 19266.4,
+          "count": 4,
+          "p50": 18963.6,
+          "median": 18963.6,
+          "p75": 18963.6,
+          "p90": 18963.6,
+          "p95": 18963.6,
+          "p99": 18963.6,
+          "p999": 18963.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7782,
+          "max": 9980,
+          "count": 91,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17039.5,
+          "max": 19266.4,
+          "count": 4,
+          "p50": 18963.6,
+          "median": 18963.6,
+          "p75": 18963.6,
+          "p90": 18963.6,
+          "p95": 18963.6,
+          "p99": 18963.6,
+          "p999": 18963.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 84,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 230,
+        "vusers.failed": 448,
+        "errors.ECONNREFUSED": 218,
+        "vusers.created_by_name.Generate company details report": 66,
+        "vusers.created_by_name.Generate company values report": 107,
+        "vusers.created_by_name.Generate and download report": 93
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713490036,
+      "lastCounterAt": 1664713499979,
+      "firstMetricAt": 1664713490036,
+      "lastMetricAt": 1664713499979,
+      "period": "1664713490000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 92,
+        "vusers.created": 350,
+        "http.requests": 386,
+        "vusers.created_by_name.Generate company details report": 88,
+        "errors.ECONNREFUSED": 49,
+        "vusers.failed": 171,
+        "errors.ETIMEDOUT": 110,
+        "vusers.created_by_name.Generate and download report": 81,
+        "vusers.created_by_name.Generate held shares report": 89,
+        "http.codes.200": 48,
+        "http.responses": 48,
+        "errors.ERR_GOT_REQUEST_ERROR": 12
+      },
+      "rates": {
+        "http.request_rate": 40
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713500036,
+      "firstHistogramAt": 1664713509020,
+      "lastCounterAt": 1664713509980,
+      "lastHistogramAt": 1664713509948,
+      "firstMetricAt": 1664713500036,
+      "lastMetricAt": 1664713509980,
+      "period": "1664713500000",
+      "summaries": {
+        "http.response_time": {
+          "min": 9237,
+          "max": 9980,
+          "count": 48,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9607.1,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 9237,
+          "max": 9980,
+          "count": 48,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9607.1,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 84,
+        "vusers.created": 350,
+        "http.requests": 497,
+        "vusers.created_by_name.Generate held shares report": 92,
+        "http.codes.200": 201,
+        "http.responses": 205,
+        "errors.ERR_GOT_REQUEST_ERROR": 53,
+        "vusers.failed": 257,
+        "vusers.created_by_name.Generate and download report": 92,
+        "vusers.created_by_name.Generate company details report": 82,
+        "errors.ECONNREFUSED": 98,
+        "errors.ETIMEDOUT": 106,
+        "http.codes.500": 4,
+        "vusers.completed": 5
+      },
+      "rates": {
+        "http.request_rate": 50
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713510036,
+      "firstHistogramAt": 1664713510650,
+      "lastCounterAt": 1664713519980,
+      "lastHistogramAt": 1664713518350,
+      "firstMetricAt": 1664713510036,
+      "lastMetricAt": 1664713519980,
+      "period": "1664713510000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7886,
+          "max": 9876,
+          "count": 205,
+          "p50": 8692.8,
+          "median": 8692.8,
+          "p75": 9047.6,
+          "p90": 9607.1,
+          "p95": 9607.1,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 18503.3,
+          "max": 18958.7,
+          "count": 5,
+          "p50": 18588.1,
+          "median": 18588.1,
+          "p75": 18588.1,
+          "p90": 18588.1,
+          "p95": 18588.1,
+          "p99": 18588.1,
+          "p999": 18588.1
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7886,
+          "max": 9876,
+          "count": 205,
+          "p50": 8692.8,
+          "median": 8692.8,
+          "p75": 9047.6,
+          "p90": 9607.1,
+          "p95": 9607.1,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 18503.3,
+          "max": 18958.7,
+          "count": 5,
+          "p50": 18588.1,
+          "median": 18588.1,
+          "p75": 18588.1,
+          "p90": 18588.1,
+          "p95": 18588.1,
+          "p99": 18588.1,
+          "p999": 18588.1
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 86,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 399,
+        "vusers.failed": 635,
+        "errors.ECONNREFUSED": 236,
+        "vusers.created_by_name.Generate company values report": 103,
+        "vusers.created_by_name.Generate and download report": 86,
+        "vusers.created_by_name.Generate company details report": 75
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713520036,
+      "lastCounterAt": 1664713529980,
+      "firstMetricAt": 1664713520036,
+      "lastMetricAt": 1664713529980,
+      "period": "1664713520000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 102,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 224,
+        "vusers.failed": 338,
+        "vusers.created_by_name.Generate and download report": 88,
+        "vusers.created_by_name.Generate company values report": 71,
+        "vusers.created_by_name.Generate company details report": 89,
+        "errors.ETIMEDOUT": 114
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713530036,
+      "lastCounterAt": 1664713539980,
+      "firstMetricAt": 1664713530036,
+      "lastMetricAt": 1664713539980,
+      "period": "1664713530000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 86,
+        "vusers.created": 350,
+        "http.requests": 394,
+        "errors.ECONNREFUSED": 55,
+        "vusers.failed": 159,
+        "vusers.created_by_name.Generate company values report": 89,
+        "vusers.created_by_name.Generate held shares report": 90,
+        "vusers.created_by_name.Generate company details report": 85,
+        "errors.ETIMEDOUT": 86,
+        "http.codes.200": 62,
+        "http.responses": 62,
+        "errors.ERR_GOT_REQUEST_ERROR": 18
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713540036,
+      "firstHistogramAt": 1664713547790,
+      "lastCounterAt": 1664713549986,
+      "lastHistogramAt": 1664713549860,
+      "firstMetricAt": 1664713540036,
+      "lastMetricAt": 1664713549986,
+      "period": "1664713540000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7677,
+          "max": 9956,
+          "count": 62,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9607.1,
           "p90": 9801.2,
           "p95": 9801.2,
           "p99": 9999.2,
@@ -679,12 +1650,12 @@
       },
       "histograms": {
         "http.response_time": {
-          "min": 8008,
-          "max": 9994,
-          "count": 50,
-          "p50": 9047.6,
-          "median": 9047.6,
-          "p75": 9416.8,
+          "min": 7677,
+          "max": 9956,
+          "count": 62,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9607.1,
           "p90": 9801.2,
           "p95": 9801.2,
           "p99": 9999.2,
@@ -694,1611 +1665,2525 @@
     },
     {
       "counters": {
-        "errors.ETIMEDOUT": 242,
-        "vusers.failed": 405,
-        "vusers.created_by_name.Generate and download report": 69,
-        "vusers.created": 268,
-        "http.requests": 268,
-        "errors.ECONNREFUSED": 163,
-        "vusers.created_by_name.Generate company values report": 62,
-        "vusers.created_by_name.Generate company details report": 73,
-        "vusers.created_by_name.Generate held shares report": 64
+        "vusers.created_by_name.Generate and download report": 90,
+        "vusers.created": 350,
+        "http.requests": 462,
+        "vusers.created_by_name.Generate held shares report": 83,
+        "vusers.created_by_name.Generate company details report": 94,
+        "http.codes.200": 144,
+        "http.responses": 155,
+        "errors.ERR_GOT_REQUEST_ERROR": 31,
+        "vusers.failed": 319,
+        "vusers.created_by_name.Generate company values report": 83,
+        "errors.ECONNREFUSED": 126,
+        "errors.ETIMEDOUT": 162,
+        "vusers.completed": 12,
+        "http.codes.500": 11
       },
       "rates": {
-        "http.request_rate": 28
+        "http.request_rate": 49
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079850022,
-      "lastCounterAt": 1663079859978,
-      "firstMetricAt": 1663079850022,
-      "lastMetricAt": 1663079859978,
-      "period": "1663079850000",
-      "summaries": {},
-      "histograms": {}
+      "firstCounterAt": 1664713550036,
+      "firstHistogramAt": 1664713550680,
+      "lastCounterAt": 1664713559995,
+      "lastHistogramAt": 1664713558201,
+      "firstMetricAt": 1664713550036,
+      "lastMetricAt": 1664713559995,
+      "period": "1664713550000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7649,
+          "max": 9968,
+          "count": 155,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 9047.6,
+          "p90": 9607.1,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 18429.4,
+          "max": 19166.6,
+          "count": 12,
+          "p50": 18588.1,
+          "median": 18588.1,
+          "p75": 18588.1,
+          "p90": 18963.6,
+          "p95": 18963.6,
+          "p99": 18963.6,
+          "p999": 18963.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7649,
+          "max": 9968,
+          "count": 155,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 9047.6,
+          "p90": 9607.1,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 18429.4,
+          "max": 19166.6,
+          "count": 12,
+          "p50": 18588.1,
+          "median": 18588.1,
+          "p75": 18588.1,
+          "p90": 18963.6,
+          "p95": 18963.6,
+          "p99": 18963.6,
+          "p999": 18963.6
+        }
+      }
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate held shares report": 87,
-        "vusers.created": 333,
-        "http.requests": 333,
-        "errors.ECONNREFUSED": 205,
-        "vusers.failed": 310,
-        "vusers.created_by_name.Generate and download report": 78,
-        "vusers.created_by_name.Generate company values report": 82,
-        "vusers.created_by_name.Generate company details report": 86,
-        "errors.ETIMEDOUT": 105
+        "vusers.created_by_name.Generate held shares report": 82,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 336,
+        "vusers.failed": 565,
+        "errors.ECONNREFUSED": 229,
+        "vusers.created_by_name.Generate company details report": 89,
+        "vusers.created_by_name.Generate company values report": 85,
+        "vusers.created_by_name.Generate and download report": 94
       },
       "rates": {
         "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079860022,
-      "lastCounterAt": 1663079869993,
-      "firstMetricAt": 1663079860022,
-      "lastMetricAt": 1663079869993,
-      "period": "1663079860000",
+      "firstCounterAt": 1664713560036,
+      "lastCounterAt": 1664713569980,
+      "firstMetricAt": 1664713560036,
+      "lastMetricAt": 1664713569980,
+      "period": "1664713560000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
+        "vusers.created_by_name.Generate and download report": 86,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 168,
+        "vusers.failed": 289,
+        "vusers.created_by_name.Generate held shares report": 92,
+        "vusers.created_by_name.Generate company values report": 93,
+        "errors.ETIMEDOUT": 121,
+        "vusers.created_by_name.Generate company details report": 79
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713570036,
+      "lastCounterAt": 1664713579982,
+      "firstMetricAt": 1664713570036,
+      "lastMetricAt": 1664713579982,
+      "period": "1664713570000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 88,
+        "vusers.created": 350,
+        "http.requests": 461,
+        "vusers.created_by_name.Generate company details report": 91,
+        "vusers.created_by_name.Generate held shares report": 90,
+        "errors.ETIMEDOUT": 61,
+        "vusers.failed": 99,
+        "vusers.created_by_name.Generate and download report": 81,
+        "http.codes.200": 149,
+        "http.responses": 149,
+        "errors.ERR_GOT_REQUEST_ERROR": 38
+      },
+      "rates": {
+        "http.request_rate": 48
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713580036,
+      "firstHistogramAt": 1664713585812,
+      "lastCounterAt": 1664713589979,
+      "lastHistogramAt": 1664713589246,
+      "firstMetricAt": 1664713580036,
+      "lastMetricAt": 1664713589979,
+      "period": "1664713580000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8327,
+          "max": 9485,
+          "count": 149,
+          "p50": 8868.4,
+          "median": 8868.4,
+          "p75": 9047.6,
+          "p90": 9230.4,
+          "p95": 9230.4,
+          "p99": 9416.8,
+          "p999": 9416.8
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8327,
+          "max": 9485,
+          "count": 149,
+          "p50": 8868.4,
+          "median": 8868.4,
+          "p75": 9047.6,
+          "p90": 9230.4,
+          "p95": 9230.4,
+          "p99": 9416.8,
+          "p999": 9416.8
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 90,
+        "vusers.created": 350,
+        "http.requests": 420,
+        "vusers.created_by_name.Generate and download report": 96,
+        "vusers.created_by_name.Generate held shares report": 84,
+        "http.codes.200": 94,
+        "http.responses": 94,
+        "errors.ERR_GOT_REQUEST_ERROR": 24,
+        "vusers.failed": 609,
+        "errors.ECONNREFUSED": 246,
+        "vusers.created_by_name.Generate company values report": 80,
+        "errors.ETIMEDOUT": 339
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713590036,
+      "firstHistogramAt": 1664713590495,
+      "lastCounterAt": 1664713599981,
+      "lastHistogramAt": 1664713592092,
+      "firstMetricAt": 1664713590036,
+      "lastMetricAt": 1664713599981,
+      "period": "1664713590000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8642,
+          "max": 9862,
+          "count": 94,
+          "p50": 9230.4,
+          "median": 9230.4,
+          "p75": 9416.8,
+          "p90": 9607.1,
+          "p95": 9801.2,
+          "p99": 9801.2,
+          "p999": 9801.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8642,
+          "max": 9862,
+          "count": 94,
+          "p50": 9230.4,
+          "median": 9230.4,
+          "p75": 9416.8,
+          "p90": 9607.1,
+          "p95": 9801.2,
+          "p99": 9801.2,
+          "p999": 9801.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 82,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 174,
+        "vusers.failed": 396,
+        "errors.ECONNREFUSED": 222,
+        "vusers.created_by_name.Generate held shares report": 96,
         "vusers.created_by_name.Generate company details report": 93,
-        "vusers.created": 367,
-        "http.requests": 367,
-        "errors.ECONNREFUSED": 239,
-        "vusers.failed": 367,
+        "vusers.created_by_name.Generate and download report": 79
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713600036,
+      "lastCounterAt": 1664713609981,
+      "firstMetricAt": 1664713600036,
+      "lastMetricAt": 1664713609981,
+      "period": "1664713600000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 90,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 179,
+        "vusers.failed": 307,
+        "vusers.created_by_name.Generate company details report": 65,
+        "vusers.created_by_name.Generate and download report": 100,
+        "vusers.created_by_name.Generate company values report": 95,
+        "errors.ETIMEDOUT": 128
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713610036,
+      "lastCounterAt": 1664713619979,
+      "firstMetricAt": 1664713610036,
+      "lastMetricAt": 1664713619979,
+      "period": "1664713610000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 84,
+        "vusers.created": 350,
+        "http.requests": 488,
+        "vusers.created_by_name.Generate held shares report": 84,
+        "vusers.created_by_name.Generate company values report": 108,
+        "errors.ETIMEDOUT": 64,
+        "vusers.failed": 94,
+        "vusers.created_by_name.Generate and download report": 74,
+        "http.codes.200": 168,
+        "http.responses": 168,
+        "errors.ERR_GOT_REQUEST_ERROR": 30
+      },
+      "rates": {
+        "http.request_rate": 49
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713620038,
+      "firstHistogramAt": 1664713624602,
+      "lastCounterAt": 1664713629996,
+      "lastHistogramAt": 1664713629993,
+      "firstMetricAt": 1664713620038,
+      "lastMetricAt": 1664713629996,
+      "period": "1664713620000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7560,
+          "max": 9003,
+          "count": 168,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8352,
+          "p90": 8692.8,
+          "p95": 8868.4,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7560,
+          "max": 9003,
+          "count": 168,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8352,
+          "p90": 8692.8,
+          "p95": 8868.4,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "http.codes.200": 70,
+        "http.responses": 70,
+        "http.requests": 402,
+        "vusers.created_by_name.Generate held shares report": 101,
+        "vusers.created": 350,
+        "vusers.created_by_name.Generate company values report": 75,
+        "vusers.created_by_name.Generate company details report": 86,
+        "vusers.created_by_name.Generate and download report": 88,
+        "errors.ERR_GOT_REQUEST_ERROR": 18,
+        "vusers.failed": 573,
+        "errors.ECONNREFUSED": 199,
+        "errors.ETIMEDOUT": 356
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713630003,
+      "firstHistogramAt": 1664713630003,
+      "lastCounterAt": 1664713639992,
+      "lastHistogramAt": 1664713631508,
+      "firstMetricAt": 1664713630003,
+      "lastMetricAt": 1664713639992,
+      "period": "1664713630000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7797,
+          "max": 9164,
+          "count": 70,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8692.8,
+          "p90": 9047.6,
+          "p95": 9047.6,
+          "p99": 9230.4,
+          "p999": 9230.4
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7797,
+          "max": 9164,
+          "count": 70,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8692.8,
+          "p90": 9047.6,
+          "p95": 9047.6,
+          "p99": 9230.4,
+          "p999": 9230.4
+        }
+      }
+    },
+    {
+      "counters": {
+        "errors.ETIMEDOUT": 204,
+        "vusers.failed": 414,
+        "vusers.created_by_name.Generate held shares report": 98,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 210,
+        "vusers.created_by_name.Generate and download report": 78,
+        "vusers.created_by_name.Generate company values report": 88,
+        "vusers.created_by_name.Generate company details report": 86
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713640008,
+      "lastCounterAt": 1664713649979,
+      "firstMetricAt": 1664713640008,
+      "lastMetricAt": 1664713649979,
+      "period": "1664713640000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 97,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate held shares report": 83,
+        "vusers.created_by_name.Generate company details report": 88,
+        "errors.ECONNREFUSED": 231,
+        "vusers.failed": 371,
+        "vusers.created_by_name.Generate company values report": 82,
+        "errors.ETIMEDOUT": 140
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713650036,
+      "lastCounterAt": 1664713659981,
+      "firstMetricAt": 1664713650036,
+      "lastMetricAt": 1664713659981,
+      "period": "1664713650000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 100,
+        "vusers.created": 349,
+        "http.requests": 445,
+        "errors.ETIMEDOUT": 39,
+        "vusers.failed": 62,
+        "vusers.created_by_name.Generate and download report": 79,
+        "vusers.created_by_name.Generate company details report": 92,
+        "vusers.created_by_name.Generate company values report": 78,
+        "http.codes.200": 119,
+        "http.responses": 119,
+        "errors.ERR_GOT_REQUEST_ERROR": 23
+      },
+      "rates": {
+        "http.request_rate": 45
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713660036,
+      "firstHistogramAt": 1664713664980,
+      "lastCounterAt": 1664713669972,
+      "lastHistogramAt": 1664713668903,
+      "firstMetricAt": 1664713660036,
+      "lastMetricAt": 1664713669972,
+      "period": "1664713660000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7711,
+          "max": 9995,
+          "count": 119,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 9607.1,
+          "p90": 9801.2,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7711,
+          "max": 9995,
+          "count": 119,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 9607.1,
+          "p90": 9801.2,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 98,
+        "vusers.created": 351,
+        "http.requests": 425,
+        "http.codes.200": 100,
+        "http.responses": 107,
+        "vusers.created_by_name.Generate held shares report": 78,
+        "vusers.created_by_name.Generate and download report": 82,
+        "errors.ERR_GOT_REQUEST_ERROR": 25,
+        "vusers.failed": 515,
+        "vusers.created_by_name.Generate company details report": 93,
+        "errors.ECONNREFUSED": 191,
+        "errors.ETIMEDOUT": 299,
+        "http.codes.500": 7,
+        "vusers.completed": 8
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713670000,
+      "firstHistogramAt": 1664713670190,
+      "lastCounterAt": 1664713679980,
+      "lastHistogramAt": 1664713675940,
+      "firstMetricAt": 1664713670000,
+      "lastMetricAt": 1664713679980,
+      "period": "1664713670000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7822,
+          "max": 9821,
+          "count": 107,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 8868.4,
+          "p90": 9047.6,
+          "p95": 9416.8,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 17881.8,
+          "max": 19750.6,
+          "count": 8,
+          "p50": 19346.7,
+          "median": 19346.7,
+          "p75": 19346.7,
+          "p90": 19737.6,
+          "p95": 19737.6,
+          "p99": 19737.6,
+          "p999": 19737.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7822,
+          "max": 9821,
+          "count": 107,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 8868.4,
+          "p90": 9047.6,
+          "p95": 9416.8,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 17881.8,
+          "max": 19750.6,
+          "count": 8,
+          "p50": 19346.7,
+          "median": 19346.7,
+          "p75": 19346.7,
+          "p90": 19737.6,
+          "p95": 19737.6,
+          "p99": 19737.6,
+          "p999": 19737.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 95,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 234,
+        "vusers.failed": 477,
+        "errors.ECONNREFUSED": 243,
+        "vusers.created_by_name.Generate company details report": 95,
+        "vusers.created_by_name.Generate company values report": 93,
+        "vusers.created_by_name.Generate held shares report": 67
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713680006,
+      "lastCounterAt": 1664713689978,
+      "firstMetricAt": 1664713680006,
+      "lastMetricAt": 1664713689978,
+      "period": "1664713680000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 88,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate held shares report": 75,
+        "vusers.created_by_name.Generate and download report": 86,
+        "errors.ETIMEDOUT": 107,
+        "vusers.failed": 240,
+        "vusers.created_by_name.Generate company details report": 101,
+        "errors.ECONNREFUSED": 133
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713690036,
+      "lastCounterAt": 1664713699979,
+      "firstMetricAt": 1664713690036,
+      "lastMetricAt": 1664713699979,
+      "period": "1664713690000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 102,
+        "vusers.created": 350,
+        "http.requests": 484,
+        "errors.ETIMEDOUT": 60,
+        "vusers.failed": 130,
+        "vusers.created_by_name.Generate held shares report": 80,
+        "vusers.created_by_name.Generate company details report": 88,
+        "vusers.created_by_name.Generate company values report": 80,
+        "http.codes.200": 204,
+        "http.responses": 204,
+        "errors.ERR_GOT_REQUEST_ERROR": 70
+      },
+      "rates": {
+        "http.request_rate": 49
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713700036,
+      "firstHistogramAt": 1664713703432,
+      "lastCounterAt": 1664713709979,
+      "lastHistogramAt": 1664713709130,
+      "firstMetricAt": 1664713700036,
+      "lastMetricAt": 1664713709979,
+      "period": "1664713700000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7629,
+          "max": 9688,
+          "count": 204,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 8868.4,
+          "p90": 9230.4,
+          "p95": 9416.8,
+          "p99": 9607.1,
+          "p999": 9607.1
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7629,
+          "max": 9688,
+          "count": 204,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 8868.4,
+          "p90": 9230.4,
+          "p95": 9416.8,
+          "p99": 9607.1,
+          "p999": 9607.1
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 115,
+        "vusers.created": 350,
+        "http.requests": 386,
+        "errors.ECONNREFUSED": 281,
+        "vusers.failed": 675,
+        "vusers.created_by_name.Generate company values report": 76,
+        "http.codes.200": 45,
+        "http.responses": 51,
+        "errors.ERR_GOT_REQUEST_ERROR": 8,
+        "vusers.created_by_name.Generate and download report": 89,
+        "vusers.created_by_name.Generate company details report": 70,
+        "errors.ETIMEDOUT": 386,
+        "http.codes.500": 6,
+        "vusers.completed": 7
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713710041,
+      "firstHistogramAt": 1664713710745,
+      "lastCounterAt": 1664713719980,
+      "lastHistogramAt": 1664713714566,
+      "firstMetricAt": 1664713710041,
+      "lastMetricAt": 1664713719980,
+      "period": "1664713710000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8214,
+          "max": 9964,
+          "count": 51,
+          "p50": 8868.4,
+          "median": 8868.4,
+          "p75": 9230.4,
+          "p90": 9416.8,
+          "p95": 9416.8,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17992.2,
+          "max": 19462.8,
+          "count": 7,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18220,
+          "p90": 19346.7,
+          "p95": 19346.7,
+          "p99": 19346.7,
+          "p999": 19346.7
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8214,
+          "max": 9964,
+          "count": 51,
+          "p50": 8868.4,
+          "median": 8868.4,
+          "p75": 9230.4,
+          "p90": 9416.8,
+          "p95": 9416.8,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17992.2,
+          "max": 19462.8,
+          "count": 7,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18220,
+          "p90": 19346.7,
+          "p95": 19346.7,
+          "p99": 19346.7,
+          "p999": 19346.7
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 84,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 105,
+        "vusers.failed": 323,
+        "errors.ECONNREFUSED": 218,
+        "vusers.created_by_name.Generate and download report": 99,
+        "vusers.created_by_name.Generate held shares report": 84,
+        "vusers.created_by_name.Generate company values report": 83
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713720036,
+      "lastCounterAt": 1664713729981,
+      "firstMetricAt": 1664713720036,
+      "lastMetricAt": 1664713729981,
+      "period": "1664713720000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 91,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 123,
+        "vusers.failed": 255,
+        "vusers.created_by_name.Generate company values report": 83,
+        "errors.ETIMEDOUT": 132,
+        "vusers.created_by_name.Generate and download report": 94,
+        "vusers.created_by_name.Generate held shares report": 82
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713730036,
+      "lastCounterAt": 1664713739979,
+      "firstMetricAt": 1664713730036,
+      "lastMetricAt": 1664713739979,
+      "period": "1664713730000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 98,
+        "vusers.created": 350,
+        "http.requests": 511,
+        "vusers.created_by_name.Generate and download report": 75,
+        "errors.ETIMEDOUT": 64,
+        "vusers.failed": 126,
+        "vusers.created_by_name.Generate company details report": 96,
+        "vusers.created_by_name.Generate held shares report": 81,
+        "http.codes.200": 224,
+        "http.responses": 224,
+        "errors.ERR_GOT_REQUEST_ERROR": 62
+      },
+      "rates": {
+        "http.request_rate": 52
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713740048,
+      "firstHistogramAt": 1664713743836,
+      "lastCounterAt": 1664713749999,
+      "lastHistogramAt": 1664713749999,
+      "firstMetricAt": 1664713740048,
+      "lastMetricAt": 1664713749999,
+      "period": "1664713740000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7719,
+          "max": 9445,
+          "count": 224,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 8692.8,
+          "p90": 9047.6,
+          "p95": 9230.4,
+          "p99": 9230.4,
+          "p999": 9416.8
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7719,
+          "max": 9445,
+          "count": 224,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 8692.8,
+          "p90": 9047.6,
+          "p95": 9230.4,
+          "p99": 9230.4,
+          "p999": 9416.8
+        }
+      }
+    },
+    {
+      "counters": {
+        "http.codes.200": 10,
+        "http.responses": 10,
+        "errors.ERR_GOT_REQUEST_ERROR": 4,
+        "vusers.failed": 658,
+        "vusers.created_by_name.Generate held shares report": 96,
+        "vusers.created": 350,
+        "http.requests": 357,
+        "vusers.created_by_name.Generate company values report": 76,
+        "vusers.created_by_name.Generate and download report": 98,
+        "errors.ECONNREFUSED": 220,
+        "vusers.created_by_name.Generate company details report": 80,
+        "errors.ETIMEDOUT": 434
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713750000,
+      "firstHistogramAt": 1664713750000,
+      "lastCounterAt": 1664713759984,
+      "lastHistogramAt": 1664713750057,
+      "firstMetricAt": 1664713750000,
+      "lastMetricAt": 1664713759984,
+      "period": "1664713750000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8019,
+          "max": 8227,
+          "count": 10,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8186.6,
+          "p90": 8186.6,
+          "p95": 8186.6,
+          "p99": 8186.6,
+          "p999": 8186.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8019,
+          "max": 8227,
+          "count": 10,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8186.6,
+          "p90": 8186.6,
+          "p95": 8186.6,
+          "p99": 8186.6,
+          "p999": 8186.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "errors.ETIMEDOUT": 143,
+        "vusers.failed": 400,
+        "vusers.created_by_name.Generate company details report": 96,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate held shares report": 85,
+        "vusers.created_by_name.Generate and download report": 87,
+        "errors.ECONNREFUSED": 257,
+        "vusers.created_by_name.Generate company values report": 82
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713760001,
+      "lastCounterAt": 1664713769980,
+      "firstMetricAt": 1664713760001,
+      "lastMetricAt": 1664713769980,
+      "period": "1664713760000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 97,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 93,
+        "vusers.failed": 198,
+        "errors.ECONNREFUSED": 105,
+        "vusers.created_by_name.Generate held shares report": 76,
+        "vusers.created_by_name.Generate company details report": 96,
+        "vusers.created_by_name.Generate company values report": 81
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713770036,
+      "lastCounterAt": 1664713779978,
+      "firstMetricAt": 1664713770036,
+      "lastMetricAt": 1664713779978,
+      "period": "1664713770000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 82,
+        "vusers.created": 350,
+        "http.requests": 515,
+        "vusers.created_by_name.Generate company details report": 108,
+        "vusers.created_by_name.Generate and download report": 82,
+        "vusers.created_by_name.Generate company values report": 78,
+        "http.codes.200": 230,
+        "http.responses": 230,
+        "errors.ERR_GOT_REQUEST_ERROR": 65,
+        "vusers.failed": 166,
+        "errors.ETIMEDOUT": 18,
+        "errors.ECONNREFUSED": 83
+      },
+      "rates": {
+        "http.request_rate": 52
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713780036,
+      "firstHistogramAt": 1664713781298,
+      "lastCounterAt": 1664713789980,
+      "lastHistogramAt": 1664713788469,
+      "firstMetricAt": 1664713780036,
+      "lastMetricAt": 1664713789980,
+      "period": "1664713780000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7967,
+          "max": 9994,
+          "count": 230,
+          "p50": 9047.6,
+          "median": 9047.6,
+          "p75": 9607.1,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7967,
+          "max": 9994,
+          "count": 230,
+          "p50": 9047.6,
+          "median": 9047.6,
+          "p75": 9607.1,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 91,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 190,
+        "vusers.failed": 608,
+        "vusers.created_by_name.Generate company values report": 105,
+        "errors.ETIMEDOUT": 418,
+        "vusers.created_by_name.Generate company details report": 83,
+        "vusers.created_by_name.Generate held shares report": 71,
+        "http.codes.500": 10,
+        "http.responses": 11,
+        "vusers.completed": 11,
+        "http.codes.200": 1
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713790036,
+      "firstHistogramAt": 1664713790268,
+      "lastCounterAt": 1664713799980,
+      "lastHistogramAt": 1664713792057,
+      "firstMetricAt": 1664713790036,
+      "lastMetricAt": 1664713799980,
+      "period": "1664713790000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8935,
+          "max": 9888,
+          "count": 11,
+          "p50": 9047.6,
+          "median": 9047.6,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9801.2,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 18250.3,
+          "max": 19809.3,
+          "count": 11,
+          "p50": 18963.6,
+          "median": 18963.6,
+          "p75": 19346.7,
+          "p90": 19737.6,
+          "p95": 19737.6,
+          "p99": 19737.6,
+          "p999": 19737.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8935,
+          "max": 9888,
+          "count": 11,
+          "p50": 9047.6,
+          "median": 9047.6,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9801.2,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 18250.3,
+          "max": 19809.3,
+          "count": 11,
+          "p50": 18963.6,
+          "median": 18963.6,
+          "p75": 19346.7,
+          "p90": 19737.6,
+          "p95": 19737.6,
+          "p99": 19737.6,
+          "p999": 19737.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 97,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 236,
+        "vusers.failed": 396,
+        "vusers.created_by_name.Generate company details report": 93,
+        "errors.ETIMEDOUT": 160,
+        "vusers.created_by_name.Generate company values report": 72,
+        "vusers.created_by_name.Generate and download report": 88
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713800036,
+      "lastCounterAt": 1664713809978,
+      "firstMetricAt": 1664713800036,
+      "lastMetricAt": 1664713809978,
+      "period": "1664713800000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 79,
+        "vusers.created": 350,
+        "http.requests": 406,
+        "vusers.created_by_name.Generate company details report": 85,
+        "vusers.created_by_name.Generate held shares report": 91,
+        "vusers.created_by_name.Generate and download report": 95,
+        "errors.ECONNREFUSED": 54,
+        "vusers.failed": 134,
+        "errors.ETIMEDOUT": 58,
+        "http.codes.200": 78,
+        "http.responses": 78,
+        "errors.ERR_GOT_REQUEST_ERROR": 22
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713810036,
+      "firstHistogramAt": 1664713817966,
+      "lastCounterAt": 1664713819978,
+      "lastHistogramAt": 1664713819939,
+      "firstMetricAt": 1664713810036,
+      "lastMetricAt": 1664713819978,
+      "period": "1664713810000",
+      "summaries": {
+        "http.response_time": {
+          "min": 9283,
+          "max": 9990,
+          "count": 78,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 9283,
+          "max": 9990,
+          "count": 78,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 90,
+        "vusers.created": 350,
+        "http.requests": 461,
+        "vusers.created_by_name.Generate held shares report": 76,
+        "vusers.created_by_name.Generate company details report": 92,
+        "errors.ETIMEDOUT": 170,
+        "vusers.failed": 344,
+        "http.codes.200": 153,
+        "http.responses": 160,
+        "errors.ERR_GOT_REQUEST_ERROR": 41,
+        "vusers.created_by_name.Generate and download report": 92,
+        "errors.ECONNREFUSED": 133,
+        "http.codes.500": 7,
+        "vusers.completed": 8
+      },
+      "rates": {
+        "http.request_rate": 48
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713820036,
+      "firstHistogramAt": 1664713820941,
+      "lastCounterAt": 1664713829981,
+      "lastHistogramAt": 1664713827618,
+      "firstMetricAt": 1664713820036,
+      "lastMetricAt": 1664713829981,
+      "period": "1664713820000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7847,
+          "max": 9564,
+          "count": 160,
+          "p50": 8692.8,
+          "median": 8692.8,
+          "p75": 9047.6,
+          "p90": 9230.4,
+          "p95": 9416.8,
+          "p99": 9416.8,
+          "p999": 9416.8
+        },
+        "vusers.session_length": {
+          "min": 18781.9,
+          "max": 19084.3,
+          "count": 8,
+          "p50": 18963.6,
+          "median": 18963.6,
+          "p75": 18963.6,
+          "p90": 18963.6,
+          "p95": 18963.6,
+          "p99": 18963.6,
+          "p999": 18963.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7847,
+          "max": 9564,
+          "count": 160,
+          "p50": 8692.8,
+          "median": 8692.8,
+          "p75": 9047.6,
+          "p90": 9230.4,
+          "p95": 9416.8,
+          "p99": 9416.8,
+          "p999": 9416.8
+        },
+        "vusers.session_length": {
+          "min": 18781.9,
+          "max": 19084.3,
+          "count": 8,
+          "p50": 18963.6,
+          "median": 18963.6,
+          "p75": 18963.6,
+          "p90": 18963.6,
+          "p95": 18963.6,
+          "p99": 18963.6,
+          "p999": 18963.6
+        }
+      }
+    },
+    {
+      "counters": {
         "vusers.created_by_name.Generate held shares report": 88,
-        "vusers.created_by_name.Generate company values report": 96,
-        "vusers.created_by_name.Generate and download report": 90,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 38
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079870016,
-      "lastCounterAt": 1663079879996,
-      "firstMetricAt": 1663079870016,
-      "lastMetricAt": 1663079879996,
-      "period": "1663079870000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 115,
-        "vusers.created": 431,
-        "http.requests": 431,
-        "errors.ECONNREFUSED": 367,
-        "vusers.failed": 495,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 328,
+        "vusers.failed": 586,
+        "errors.ECONNREFUSED": 258,
         "vusers.created_by_name.Generate company values report": 99,
-        "vusers.created_by_name.Generate company details report": 114,
-        "vusers.created_by_name.Generate held shares report": 103,
-        "errors.ETIMEDOUT": 128
+        "vusers.created_by_name.Generate and download report": 82,
+        "vusers.created_by_name.Generate company details report": 81
       },
       "rates": {
-        "http.request_rate": 43
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079880034,
-      "lastCounterAt": 1663079889991,
-      "firstMetricAt": 1663079880034,
-      "lastMetricAt": 1663079889991,
-      "period": "1663079880000",
+      "firstCounterAt": 1664713830036,
+      "lastCounterAt": 1664713839980,
+      "firstMetricAt": 1664713830036,
+      "lastMetricAt": 1664713839980,
+      "period": "1664713830000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company values report": 128,
-        "vusers.created": 459,
-        "http.requests": 458,
-        "errors.ECONNREFUSED": 394,
-        "vusers.failed": 458,
-        "vusers.created_by_name.Generate company details report": 110,
-        "vusers.created_by_name.Generate and download report": 118,
-        "vusers.created_by_name.Generate held shares report": 103,
-        "errors.ETIMEDOUT": 64
+        "vusers.created_by_name.Generate held shares report": 79,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 233,
+        "vusers.failed": 325,
+        "vusers.created_by_name.Generate company details report": 90,
+        "vusers.created_by_name.Generate and download report": 100,
+        "vusers.created_by_name.Generate company values report": 81,
+        "errors.ETIMEDOUT": 92
       },
       "rates": {
-        "http.request_rate": 47
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663079890023,
-      "lastCounterAt": 1663079899999,
-      "firstMetricAt": 1663079890023,
-      "lastMetricAt": 1663079899999,
-      "period": "1663079890000",
+      "firstCounterAt": 1664713840036,
+      "lastCounterAt": 1664713849981,
+      "firstMetricAt": 1664713840036,
+      "lastMetricAt": 1664713849981,
+      "period": "1664713840000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate held shares report": 134,
-        "vusers.created": 499,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 433,
-        "vusers.failed": 497,
-        "vusers.created_by_name.Generate company values report": 109,
-        "vusers.created_by_name.Generate company details report": 131,
-        "vusers.created_by_name.Generate and download report": 125,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079900005,
-      "lastCounterAt": 1663079909986,
-      "firstMetricAt": 1663079900005,
-      "lastMetricAt": 1663079909986,
-      "period": "1663079900000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 126,
-        "vusers.created": 494,
-        "http.requests": 494,
-        "vusers.created_by_name.Generate held shares report": 131,
-        "vusers.created_by_name.Generate company values report": 121,
-        "errors.ECONNREFUSED": 368,
-        "vusers.failed": 435,
-        "vusers.created_by_name.Generate company details report": 116,
-        "errors.ETIMEDOUT": 67
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079910018,
-      "lastCounterAt": 1663079919997,
-      "firstMetricAt": 1663079910018,
-      "lastMetricAt": 1663079919997,
-      "period": "1663079910000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "errors.ETIMEDOUT": 125,
-        "vusers.failed": 562,
-        "vusers.created_by_name.Generate held shares report": 136,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 437,
-        "vusers.created_by_name.Generate and download report": 127,
-        "vusers.created_by_name.Generate company values report": 124,
-        "vusers.created_by_name.Generate company details report": 113
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079920000,
-      "lastCounterAt": 1663079929996,
-      "firstMetricAt": 1663079920000,
-      "lastMetricAt": 1663079929996,
-      "period": "1663079920000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 146,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 419,
-        "vusers.failed": 483,
-        "vusers.created_by_name.Generate company details report": 119,
-        "vusers.created_by_name.Generate company values report": 99,
-        "vusers.created_by_name.Generate and download report": 136,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079930014,
-      "lastCounterAt": 1663079939995,
-      "firstMetricAt": 1663079930014,
-      "lastMetricAt": 1663079939995,
-      "period": "1663079930000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 118,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate and download report": 154,
-        "vusers.created_by_name.Generate company values report": 118,
-        "vusers.created_by_name.Generate company details report": 110,
-        "errors.ECONNREFUSED": 389,
-        "vusers.failed": 470,
-        "errors.ETIMEDOUT": 81
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079940014,
-      "lastCounterAt": 1663079949998,
-      "firstMetricAt": 1663079940014,
-      "lastMetricAt": 1663079949998,
-      "period": "1663079940000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 124,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 547,
-        "errors.ETIMEDOUT": 111,
-        "vusers.created_by_name.Generate held shares report": 128,
-        "vusers.created_by_name.Generate company details report": 127,
-        "vusers.created_by_name.Generate and download report": 121
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079950014,
-      "lastCounterAt": 1663079959997,
-      "firstMetricAt": 1663079950014,
-      "lastMetricAt": 1663079959997,
-      "period": "1663079950000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 133,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company values report": 125,
-        "vusers.created_by_name.Generate company details report": 124,
-        "vusers.created_by_name.Generate and download report": 118,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079960014,
-      "lastCounterAt": 1663079969997,
-      "firstMetricAt": 1663079960014,
-      "lastMetricAt": 1663079969997,
-      "period": "1663079960000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 131,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate held shares report": 129,
-        "vusers.created_by_name.Generate company values report": 130,
-        "errors.ETIMEDOUT": 128,
-        "vusers.created_by_name.Generate and download report": 110
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079970014,
-      "lastCounterAt": 1663079979996,
-      "firstMetricAt": 1663079970014,
-      "lastMetricAt": 1663079979996,
-      "period": "1663079970000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 138,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company details report": 137,
-        "vusers.created_by_name.Generate held shares report": 103,
-        "vusers.created_by_name.Generate company values report": 122,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079980014,
-      "lastCounterAt": 1663079989996,
-      "firstMetricAt": 1663079980014,
-      "lastMetricAt": 1663079989996,
-      "period": "1663079980000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 130,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate held shares report": 120,
-        "vusers.created_by_name.Generate and download report": 114,
-        "vusers.created_by_name.Generate company details report": 136,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663079990016,
-      "lastCounterAt": 1663079999996,
-      "firstMetricAt": 1663079990016,
-      "lastMetricAt": 1663079999996,
-      "period": "1663079990000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 121,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 500,
-        "vusers.created_by_name.Generate and download report": 118,
-        "vusers.created_by_name.Generate held shares report": 142,
-        "vusers.created_by_name.Generate company details report": 119,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080000014,
-      "lastCounterAt": 1663080009996,
-      "firstMetricAt": 1663080000014,
-      "lastMetricAt": 1663080009996,
-      "period": "1663080000000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 114,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate and download report": 120,
-        "vusers.created_by_name.Generate company details report": 156,
-        "vusers.created_by_name.Generate held shares report": 110,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080010014,
-      "lastCounterAt": 1663080019996,
-      "firstMetricAt": 1663080010014,
-      "lastMetricAt": 1663080019996,
-      "period": "1663080010000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 135,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate held shares report": 127,
-        "vusers.created_by_name.Generate and download report": 116,
-        "vusers.created_by_name.Generate company values report": 122,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080020014,
-      "lastCounterAt": 1663080029997,
-      "firstMetricAt": 1663080020014,
-      "lastMetricAt": 1663080029997,
-      "period": "1663080020000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 139,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 500,
-        "vusers.created_by_name.Generate and download report": 122,
-        "vusers.created_by_name.Generate company values report": 122,
-        "vusers.created_by_name.Generate company details report": 117,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080030014,
-      "lastCounterAt": 1663080039997,
-      "firstMetricAt": 1663080030014,
-      "lastMetricAt": 1663080039997,
-      "period": "1663080030000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 121,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate and download report": 127,
-        "vusers.created_by_name.Generate held shares report": 129,
-        "vusers.created_by_name.Generate company details report": 123,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080040014,
-      "lastCounterAt": 1663080049997,
-      "firstMetricAt": 1663080040014,
-      "lastMetricAt": 1663080049997,
-      "period": "1663080040000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 115,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company details report": 133,
-        "vusers.created_by_name.Generate held shares report": 118,
-        "vusers.created_by_name.Generate and download report": 134,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080050014,
-      "lastCounterAt": 1663080059997,
-      "firstMetricAt": 1663080050014,
-      "lastMetricAt": 1663080059997,
-      "period": "1663080050000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 121,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 383,
-        "vusers.failed": 447,
-        "vusers.created_by_name.Generate company values report": 115,
-        "vusers.created_by_name.Generate held shares report": 137,
-        "vusers.created_by_name.Generate and download report": 127,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080060014,
-      "lastCounterAt": 1663080069995,
-      "firstMetricAt": 1663080060014,
-      "lastMetricAt": 1663080069995,
-      "period": "1663080060000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 140,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate company values report": 135,
-        "errors.ECONNREFUSED": 425,
-        "vusers.failed": 542,
-        "vusers.created_by_name.Generate and download report": 126,
-        "vusers.created_by_name.Generate company details report": 99,
+        "vusers.created_by_name.Generate company details report": 83,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 61,
+        "vusers.failed": 178,
+        "vusers.created_by_name.Generate held shares report": 82,
+        "vusers.created_by_name.Generate and download report": 83,
+        "vusers.created_by_name.Generate company values report": 102,
         "errors.ETIMEDOUT": 117
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080070014,
-      "lastCounterAt": 1663080079998,
-      "firstMetricAt": 1663080070014,
-      "lastMetricAt": 1663080079998,
-      "period": "1663080070000",
+      "firstCounterAt": 1664713850036,
+      "lastCounterAt": 1664713859979,
+      "firstMetricAt": 1664713850036,
+      "lastMetricAt": 1664713859979,
+      "period": "1664713850000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate held shares report": 122,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ETIMEDOUT": 75,
-        "vusers.failed": 511,
-        "errors.ECONNREFUSED": 436,
-        "vusers.created_by_name.Generate company details report": 132,
-        "vusers.created_by_name.Generate company values report": 117,
-        "vusers.created_by_name.Generate and download report": 129
+        "vusers.created_by_name.Generate and download report": 82,
+        "vusers.created": 350,
+        "http.requests": 522,
+        "vusers.created_by_name.Generate held shares report": 86,
+        "http.codes.200": 231,
+        "http.responses": 231,
+        "errors.ERR_GOT_REQUEST_ERROR": 59,
+        "vusers.failed": 212,
+        "vusers.created_by_name.Generate company values report": 89,
+        "vusers.created_by_name.Generate company details report": 93,
+        "errors.ECONNREFUSED": 95,
+        "errors.ETIMEDOUT": 58
+      },
+      "rates": {
+        "http.request_rate": 53
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713860046,
+      "firstHistogramAt": 1664713860387,
+      "lastCounterAt": 1664713869981,
+      "lastHistogramAt": 1664713866111,
+      "firstMetricAt": 1664713860046,
+      "lastMetricAt": 1664713869981,
+      "period": "1664713860000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7731,
+          "max": 9050,
+          "count": 231,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 8520.7,
+          "p90": 8692.8,
+          "p95": 8868.4,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7731,
+          "max": 9050,
+          "count": 231,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 8520.7,
+          "p90": 8692.8,
+          "p95": 8868.4,
+          "p99": 9047.6,
+          "p999": 9047.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 83,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 421,
+        "vusers.failed": 642,
+        "errors.ECONNREFUSED": 221,
+        "vusers.created_by_name.Generate held shares report": 97,
+        "vusers.created_by_name.Generate company details report": 87,
+        "vusers.created_by_name.Generate and download report": 83,
+        "http.codes.500": 5,
+        "http.responses": 6,
+        "vusers.completed": 6,
+        "http.codes.200": 1
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713870036,
+      "firstHistogramAt": 1664713870271,
+      "lastCounterAt": 1664713879979,
+      "lastHistogramAt": 1664713870335,
+      "firstMetricAt": 1664713870036,
+      "lastMetricAt": 1664713879979,
+      "period": "1664713870000",
+      "summaries": {
+        "http.response_time": {
+          "min": 9848,
+          "max": 9933,
+          "count": 6,
+          "p50": 9999.2,
+          "median": 9999.2,
+          "p75": 9999.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17869.2,
+          "max": 18484.5,
+          "count": 6,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18220,
+          "p90": 18220,
+          "p95": 18220,
+          "p99": 18220,
+          "p999": 18220
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 9848,
+          "max": 9933,
+          "count": 6,
+          "p50": 9999.2,
+          "median": 9999.2,
+          "p75": 9999.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17869.2,
+          "max": 18484.5,
+          "count": 6,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18220,
+          "p90": 18220,
+          "p95": 18220,
+          "p99": 18220,
+          "p999": 18220
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 93,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 129,
+        "vusers.failed": 372,
+        "vusers.created_by_name.Generate and download report": 84,
+        "vusers.created_by_name.Generate company details report": 87,
+        "errors.ECONNREFUSED": 243,
+        "vusers.created_by_name.Generate held shares report": 86
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713880036,
+      "lastCounterAt": 1664713889981,
+      "firstMetricAt": 1664713880036,
+      "lastMetricAt": 1664713889981,
+      "period": "1664713880000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 88,
+        "vusers.created": 350,
+        "http.requests": 358,
+        "errors.ETIMEDOUT": 107,
+        "vusers.failed": 135,
+        "errors.ECONNREFUSED": 27,
+        "vusers.created_by_name.Generate held shares report": 88,
+        "vusers.created_by_name.Generate and download report": 83,
+        "vusers.created_by_name.Generate company values report": 91,
+        "http.codes.200": 9,
+        "http.responses": 9,
+        "errors.ERR_GOT_REQUEST_ERROR": 1
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713890036,
+      "firstHistogramAt": 1664713899146,
+      "lastCounterAt": 1664713899979,
+      "lastHistogramAt": 1664713899160,
+      "firstMetricAt": 1664713890036,
+      "lastMetricAt": 1664713899979,
+      "period": "1664713890000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8121,
+          "max": 8366,
+          "count": 9,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8352,
+          "p90": 8352,
+          "p95": 8352,
+          "p99": 8352,
+          "p999": 8352
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8121,
+          "max": 8366,
+          "count": 9,
+          "p50": 8186.6,
+          "median": 8186.6,
+          "p75": 8352,
+          "p90": 8352,
+          "p95": 8352,
+          "p99": 8352,
+          "p999": 8352
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 91,
+        "vusers.created": 350,
+        "http.requests": 503,
+        "http.codes.200": 210,
+        "http.responses": 215,
+        "errors.ERR_GOT_REQUEST_ERROR": 56,
+        "vusers.failed": 263,
+        "vusers.created_by_name.Generate company details report": 93,
+        "vusers.created_by_name.Generate company values report": 78,
+        "vusers.created_by_name.Generate and download report": 88,
+        "errors.ECONNREFUSED": 97,
+        "errors.ETIMEDOUT": 110,
+        "http.codes.500": 5,
+        "vusers.completed": 6
       },
       "rates": {
         "http.request_rate": 50
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080080014,
-      "lastCounterAt": 1663080089996,
-      "firstMetricAt": 1663080080014,
-      "lastMetricAt": 1663080089996,
-      "period": "1663080080000",
-      "summaries": {},
-      "histograms": {}
+      "firstCounterAt": 1664713900036,
+      "firstHistogramAt": 1664713900172,
+      "lastCounterAt": 1664713909990,
+      "lastHistogramAt": 1664713909990,
+      "firstMetricAt": 1664713900036,
+      "lastMetricAt": 1664713909990,
+      "period": "1664713900000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8023,
+          "max": 9972,
+          "count": 215,
+          "p50": 8692.8,
+          "median": 8692.8,
+          "p75": 8868.4,
+          "p90": 9416.8,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 16707.8,
+          "max": 18804,
+          "count": 6,
+          "p50": 16819.2,
+          "median": 16819.2,
+          "p75": 18220,
+          "p90": 18588.1,
+          "p95": 18588.1,
+          "p99": 18588.1,
+          "p999": 18588.1
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8023,
+          "max": 9972,
+          "count": 215,
+          "p50": 8692.8,
+          "median": 8692.8,
+          "p75": 8868.4,
+          "p90": 9416.8,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 16707.8,
+          "max": 18804,
+          "count": 6,
+          "p50": 16819.2,
+          "median": 16819.2,
+          "p75": 18220,
+          "p90": 18588.1,
+          "p95": 18588.1,
+          "p99": 18588.1,
+          "p999": 18588.1
+        }
+      }
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company details report": 132,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 380,
-        "vusers.failed": 444,
-        "vusers.created_by_name.Generate held shares report": 116,
-        "vusers.created_by_name.Generate and download report": 125,
-        "vusers.created_by_name.Generate company values report": 127,
-        "errors.ETIMEDOUT": 64
+        "vusers.created_by_name.Generate company values report": 94,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 400,
+        "vusers.failed": 640,
+        "errors.ECONNREFUSED": 240,
+        "vusers.created_by_name.Generate company details report": 100,
+        "vusers.created_by_name.Generate and download report": 74,
+        "vusers.created_by_name.Generate held shares report": 82,
+        "http.codes.500": 3,
+        "http.responses": 3,
+        "vusers.completed": 3
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080090014,
-      "lastCounterAt": 1663080099995,
-      "firstMetricAt": 1663080090014,
-      "lastMetricAt": 1663080099995,
-      "period": "1663080090000",
+      "firstCounterAt": 1664713910028,
+      "firstHistogramAt": 1664713910028,
+      "lastCounterAt": 1664713919979,
+      "lastHistogramAt": 1664713910032,
+      "firstMetricAt": 1664713910028,
+      "lastMetricAt": 1664713919979,
+      "period": "1664713910000",
+      "summaries": {
+        "http.response_time": {
+          "min": 9813,
+          "max": 9827,
+          "count": 3,
+          "p50": 9801.2,
+          "median": 9801.2,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9801.2,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 18123.9,
+          "max": 18519.8,
+          "count": 3,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18220,
+          "p90": 18220,
+          "p95": 18220,
+          "p99": 18220,
+          "p999": 18220
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 9813,
+          "max": 9827,
+          "count": 3,
+          "p50": 9801.2,
+          "median": 9801.2,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9801.2,
+          "p99": 9801.2,
+          "p999": 9801.2
+        },
+        "vusers.session_length": {
+          "min": 18123.9,
+          "max": 18519.8,
+          "count": 3,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18220,
+          "p90": 18220,
+          "p95": 18220,
+          "p99": 18220,
+          "p999": 18220
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 75,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate held shares report": 93,
+        "vusers.created_by_name.Generate company values report": 86,
+        "errors.ECONNREFUSED": 252,
+        "vusers.failed": 362,
+        "vusers.created_by_name.Generate company details report": 96,
+        "errors.ETIMEDOUT": 110
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713920036,
+      "lastCounterAt": 1664713929979,
+      "firstMetricAt": 1664713920036,
+      "lastMetricAt": 1664713929979,
+      "period": "1664713920000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate and download report": 132,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate company details report": 113,
-        "errors.ECONNREFUSED": 428,
-        "vusers.failed": 548,
-        "vusers.created_by_name.Generate held shares report": 103,
-        "vusers.created_by_name.Generate company values report": 152,
+        "vusers.created_by_name.Generate and download report": 89,
+        "vusers.created": 350,
+        "http.requests": 412,
+        "errors.ETIMEDOUT": 82,
+        "vusers.failed": 102,
+        "vusers.created_by_name.Generate company values report": 80,
+        "vusers.created_by_name.Generate company details report": 89,
+        "vusers.created_by_name.Generate held shares report": 92,
+        "http.codes.200": 82,
+        "http.responses": 82,
+        "errors.ERR_GOT_REQUEST_ERROR": 20
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713930036,
+      "firstHistogramAt": 1664713937864,
+      "lastCounterAt": 1664713939979,
+      "lastHistogramAt": 1664713939605,
+      "firstMetricAt": 1664713930036,
+      "lastMetricAt": 1664713939979,
+      "period": "1664713930000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7727,
+          "max": 8540,
+          "count": 82,
+          "p50": 8024.5,
+          "median": 8024.5,
+          "p75": 8352,
+          "p90": 8352,
+          "p95": 8520.7,
+          "p99": 8520.7,
+          "p999": 8520.7
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7727,
+          "max": 8540,
+          "count": 82,
+          "p50": 8024.5,
+          "median": 8024.5,
+          "p75": 8352,
+          "p90": 8352,
+          "p95": 8520.7,
+          "p99": 8520.7,
+          "p999": 8520.7
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 90,
+        "vusers.created": 350,
+        "http.requests": 474,
+        "vusers.created_by_name.Generate and download report": 92,
+        "http.codes.200": 164,
+        "http.responses": 171,
+        "errors.ERR_GOT_REQUEST_ERROR": 39,
+        "vusers.failed": 354,
+        "vusers.created_by_name.Generate held shares report": 88,
+        "vusers.created_by_name.Generate company values report": 80,
+        "errors.ECONNREFUSED": 140,
+        "errors.ETIMEDOUT": 175,
+        "http.codes.500": 7,
+        "vusers.completed": 8
+      },
+      "rates": {
+        "http.request_rate": 49
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713940036,
+      "firstHistogramAt": 1664713940375,
+      "lastCounterAt": 1664713949981,
+      "lastHistogramAt": 1664713947260,
+      "firstMetricAt": 1664713940036,
+      "lastMetricAt": 1664713949981,
+      "period": "1664713940000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7634,
+          "max": 9564,
+          "count": 171,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 8868.4,
+          "p90": 9230.4,
+          "p95": 9416.8,
+          "p99": 9416.8,
+          "p999": 9607.1
+        },
+        "vusers.session_length": {
+          "min": 17004.8,
+          "max": 17644.6,
+          "count": 8,
+          "p50": 17158.9,
+          "median": 17158.9,
+          "p75": 17505.6,
+          "p90": 17505.6,
+          "p95": 17505.6,
+          "p99": 17505.6,
+          "p999": 17505.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7634,
+          "max": 9564,
+          "count": 171,
+          "p50": 8520.7,
+          "median": 8520.7,
+          "p75": 8868.4,
+          "p90": 9230.4,
+          "p95": 9416.8,
+          "p99": 9416.8,
+          "p999": 9607.1
+        },
+        "vusers.session_length": {
+          "min": 17004.8,
+          "max": 17644.6,
+          "count": 8,
+          "p50": 17158.9,
+          "median": 17158.9,
+          "p75": 17505.6,
+          "p90": 17505.6,
+          "p95": 17505.6,
+          "p99": 17505.6,
+          "p999": 17505.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 100,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 334,
+        "vusers.failed": 564,
+        "errors.ECONNREFUSED": 230,
+        "vusers.created_by_name.Generate company values report": 88,
+        "vusers.created_by_name.Generate company details report": 71,
+        "vusers.created_by_name.Generate held shares report": 91
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713950036,
+      "lastCounterAt": 1664713959979,
+      "firstMetricAt": 1664713950036,
+      "lastMetricAt": 1664713959979,
+      "period": "1664713950000",
+      "summaries": {},
+      "histograms": {}
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company details report": 83,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate held shares report": 83,
+        "vusers.created_by_name.Generate and download report": 95,
+        "errors.ECONNREFUSED": 266,
+        "vusers.failed": 386,
+        "vusers.created_by_name.Generate company values report": 89,
         "errors.ETIMEDOUT": 120
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080100014,
-      "lastCounterAt": 1663080109997,
-      "firstMetricAt": 1663080100014,
-      "lastMetricAt": 1663080109997,
-      "period": "1663080100000",
+      "firstCounterAt": 1664713960036,
+      "lastCounterAt": 1664713969981,
+      "firstMetricAt": 1664713960036,
+      "lastMetricAt": 1664713969981,
+      "period": "1664713960000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "errors.ETIMEDOUT": 72,
-        "vusers.failed": 464,
-        "vusers.created_by_name.Generate company details report": 110,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 392,
-        "vusers.created_by_name.Generate company values report": 120,
-        "vusers.created_by_name.Generate and download report": 128,
-        "vusers.created_by_name.Generate held shares report": 142
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080110014,
-      "lastCounterAt": 1663080119995,
-      "firstMetricAt": 1663080110014,
-      "lastMetricAt": 1663080119995,
-      "period": "1663080110000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 135,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate and download report": 130,
-        "errors.ECONNREFUSED": 416,
-        "vusers.failed": 524,
-        "vusers.created_by_name.Generate held shares report": 100,
-        "vusers.created_by_name.Generate company details report": 135,
-        "errors.ETIMEDOUT": 108
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080120014,
-      "lastCounterAt": 1663080129996,
-      "firstMetricAt": 1663080120014,
-      "lastMetricAt": 1663080129996,
-      "period": "1663080120000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 120,
-        "vusers.created": 500,
-        "http.requests": 500,
+        "vusers.created_by_name.Generate company values report": 95,
+        "vusers.created": 350,
+        "http.requests": 358,
         "errors.ETIMEDOUT": 84,
-        "vusers.failed": 467,
-        "errors.ECONNREFUSED": 383,
-        "vusers.created_by_name.Generate and download report": 124,
-        "vusers.created_by_name.Generate company details report": 130,
-        "vusers.created_by_name.Generate held shares report": 126
+        "vusers.failed": 155,
+        "errors.ECONNREFUSED": 67,
+        "vusers.created_by_name.Generate and download report": 95,
+        "vusers.created_by_name.Generate company details report": 76,
+        "vusers.created_by_name.Generate held shares report": 84,
+        "http.codes.200": 12,
+        "http.responses": 12,
+        "errors.ERR_GOT_REQUEST_ERROR": 4
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080130014,
-      "lastCounterAt": 1663080139995,
-      "firstMetricAt": 1663080130014,
-      "lastMetricAt": 1663080139995,
-      "period": "1663080130000",
+      "firstCounterAt": 1664713970036,
+      "firstHistogramAt": 1664713979891,
+      "lastCounterAt": 1664713979979,
+      "lastHistogramAt": 1664713979920,
+      "firstMetricAt": 1664713970036,
+      "lastMetricAt": 1664713979979,
+      "period": "1664713970000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7668,
+          "max": 7979,
+          "count": 12,
+          "p50": 7865.6,
+          "median": 7865.6,
+          "p75": 7865.6,
+          "p90": 7865.6,
+          "p95": 7865.6,
+          "p99": 7865.6,
+          "p999": 7865.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7668,
+          "max": 7979,
+          "count": 12,
+          "p50": 7865.6,
+          "median": 7865.6,
+          "p75": 7865.6,
+          "p90": 7865.6,
+          "p95": 7865.6,
+          "p99": 7865.6,
+          "p999": 7865.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate and download report": 84,
+        "vusers.created": 350,
+        "http.requests": 533,
+        "vusers.created_by_name.Generate company details report": 93,
+        "vusers.created_by_name.Generate held shares report": 88,
+        "http.codes.200": 232,
+        "http.responses": 234,
+        "vusers.created_by_name.Generate company values report": 85,
+        "errors.ERR_GOT_REQUEST_ERROR": 48,
+        "vusers.failed": 179,
+        "errors.ECONNREFUSED": 86,
+        "errors.ETIMEDOUT": 45,
+        "http.codes.500": 2,
+        "vusers.completed": 3
+      },
+      "rates": {
+        "http.request_rate": 55
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713980036,
+      "firstHistogramAt": 1664713980981,
+      "lastCounterAt": 1664713989979,
+      "lastHistogramAt": 1664713988911,
+      "firstMetricAt": 1664713980036,
+      "lastMetricAt": 1664713989979,
+      "period": "1664713980000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7712,
+          "max": 9220,
+          "count": 234,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 8520.7,
+          "p90": 8868.4,
+          "p95": 9047.6,
+          "p99": 9047.6,
+          "p999": 9230.4
+        },
+        "vusers.session_length": {
+          "min": 16663,
+          "max": 16796.8,
+          "count": 3,
+          "p50": 16819.2,
+          "median": 16819.2,
+          "p75": 16819.2,
+          "p90": 16819.2,
+          "p95": 16819.2,
+          "p99": 16819.2,
+          "p999": 16819.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7712,
+          "max": 9220,
+          "count": 234,
+          "p50": 8352,
+          "median": 8352,
+          "p75": 8520.7,
+          "p90": 8868.4,
+          "p95": 9047.6,
+          "p99": 9047.6,
+          "p999": 9230.4
+        },
+        "vusers.session_length": {
+          "min": 16663,
+          "max": 16796.8,
+          "count": 3,
+          "p50": 16819.2,
+          "median": 16819.2,
+          "p75": 16819.2,
+          "p90": 16819.2,
+          "p95": 16819.2,
+          "p99": 16819.2,
+          "p999": 16819.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 86,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 445,
+        "vusers.failed": 702,
+        "vusers.created_by_name.Generate company details report": 78,
+        "vusers.created_by_name.Generate and download report": 81,
+        "errors.ECONNREFUSED": 257,
+        "vusers.created_by_name.Generate held shares report": 105,
+        "http.codes.500": 2,
+        "http.responses": 2,
+        "vusers.completed": 2
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664713990036,
+      "firstHistogramAt": 1664713991085,
+      "lastCounterAt": 1664713999981,
+      "lastHistogramAt": 1664713991089,
+      "firstMetricAt": 1664713990036,
+      "lastMetricAt": 1664713999981,
+      "period": "1664713990000",
+      "summaries": {
+        "http.response_time": {
+          "min": 9998,
+          "max": 9999,
+          "count": 2,
+          "p50": 9999.2,
+          "median": 9999.2,
+          "p75": 9999.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17840.9,
+          "max": 17842.1,
+          "count": 2,
+          "p50": 17859.2,
+          "median": 17859.2,
+          "p75": 17859.2,
+          "p90": 17859.2,
+          "p95": 17859.2,
+          "p99": 17859.2,
+          "p999": 17859.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 9998,
+          "max": 9999,
+          "count": 2,
+          "p50": 9999.2,
+          "median": 9999.2,
+          "p75": 9999.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17840.9,
+          "max": 17842.1,
+          "count": 2,
+          "p50": 17859.2,
+          "median": 17859.2,
+          "p75": 17859.2,
+          "p90": 17859.2,
+          "p95": 17859.2,
+          "p99": 17859.2,
+          "p999": 17859.2
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 85,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ETIMEDOUT": 93,
+        "vusers.failed": 315,
+        "errors.ECONNREFUSED": 222,
+        "vusers.created_by_name.Generate held shares report": 85,
+        "vusers.created_by_name.Generate company details report": 91,
+        "vusers.created_by_name.Generate and download report": 89
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664714000036,
+      "lastCounterAt": 1664714009981,
+      "firstMetricAt": 1664714000036,
+      "lastMetricAt": 1664714009981,
+      "period": "1664714000000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company values report": 121,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate company details report": 122,
-        "errors.ECONNREFUSED": 425,
-        "vusers.failed": 542,
-        "vusers.created_by_name.Generate held shares report": 130,
-        "vusers.created_by_name.Generate and download report": 127,
-        "errors.ETIMEDOUT": 117
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080140014,
-      "lastCounterAt": 1663080149996,
-      "firstMetricAt": 1663080140014,
-      "lastMetricAt": 1663080149996,
-      "period": "1663080140000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "errors.ETIMEDOUT": 75,
-        "vusers.failed": 447,
-        "vusers.created_by_name.Generate and download report": 116,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.created_by_name.Generate company details report": 137,
-        "vusers.created_by_name.Generate company values report": 109,
-        "vusers.created_by_name.Generate held shares report": 138
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080150014,
-      "lastCounterAt": 1663080159999,
-      "firstMetricAt": 1663080150014,
-      "lastMetricAt": 1663080159999,
-      "period": "1663080150000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 126,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate and download report": 138,
-        "vusers.created_by_name.Generate held shares report": 103,
-        "vusers.created_by_name.Generate company values report": 133,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080160014,
-      "lastCounterAt": 1663080169997,
-      "firstMetricAt": 1663080160014,
-      "lastMetricAt": 1663080169997,
-      "period": "1663080160000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 114,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate held shares report": 148,
-        "vusers.created_by_name.Generate company details report": 115,
-        "vusers.created_by_name.Generate and download report": 123,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080170014,
-      "lastCounterAt": 1663080179996,
-      "firstMetricAt": 1663080170014,
-      "lastMetricAt": 1663080179996,
-      "period": "1663080170000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 128,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company values report": 136,
-        "vusers.created_by_name.Generate company details report": 115,
-        "vusers.created_by_name.Generate held shares report": 121,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080180014,
-      "lastCounterAt": 1663080189996,
-      "firstMetricAt": 1663080180014,
-      "lastMetricAt": 1663080189996,
-      "period": "1663080180000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 120,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate and download report": 135,
-        "vusers.created_by_name.Generate held shares report": 127,
-        "vusers.created_by_name.Generate company details report": 118,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080190014,
-      "lastCounterAt": 1663080199997,
-      "firstMetricAt": 1663080190014,
-      "lastMetricAt": 1663080199997,
-      "period": "1663080190000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 108,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate held shares report": 137,
-        "vusers.created_by_name.Generate company values report": 135,
-        "vusers.created_by_name.Generate and download report": 120,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080200014,
-      "lastCounterAt": 1663080209995,
-      "firstMetricAt": 1663080200014,
-      "lastMetricAt": 1663080209995,
-      "period": "1663080200000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 124,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company details report": 134,
-        "vusers.created_by_name.Generate and download report": 109,
-        "vusers.created_by_name.Generate company values report": 133,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080210023,
-      "lastCounterAt": 1663080219996,
-      "firstMetricAt": 1663080210023,
-      "lastMetricAt": 1663080219996,
-      "period": "1663080210000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 135,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate and download report": 121,
-        "vusers.created_by_name.Generate company details report": 117,
-        "vusers.created_by_name.Generate company values report": 127,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080220013,
-      "lastCounterAt": 1663080229996,
-      "firstMetricAt": 1663080220013,
-      "lastMetricAt": 1663080229996,
-      "period": "1663080220000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 118,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 379,
-        "vusers.failed": 443,
-        "vusers.created_by_name.Generate company details report": 137,
-        "vusers.created_by_name.Generate held shares report": 133,
-        "vusers.created_by_name.Generate and download report": 112,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080230013,
-      "lastCounterAt": 1663080239994,
-      "firstMetricAt": 1663080230013,
-      "lastMetricAt": 1663080239994,
-      "period": "1663080230000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 111,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate and download report": 123,
-        "errors.ECONNREFUSED": 429,
-        "vusers.failed": 550,
-        "vusers.created_by_name.Generate company values report": 117,
-        "vusers.created_by_name.Generate company details report": 149,
-        "errors.ETIMEDOUT": 121
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080240023,
-      "lastCounterAt": 1663080249996,
-      "firstMetricAt": 1663080240023,
-      "lastMetricAt": 1663080249996,
-      "period": "1663080240000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 123,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ETIMEDOUT": 71,
-        "vusers.failed": 443,
-        "errors.ECONNREFUSED": 372,
-        "vusers.created_by_name.Generate company details report": 128,
-        "vusers.created_by_name.Generate company values report": 125,
-        "vusers.created_by_name.Generate held shares report": 124
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080250013,
-      "lastCounterAt": 1663080259996,
-      "firstMetricAt": 1663080250013,
-      "lastMetricAt": 1663080259996,
-      "period": "1663080250000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 127,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company details report": 124,
-        "vusers.created_by_name.Generate and download report": 122,
-        "vusers.created_by_name.Generate held shares report": 127,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080260013,
-      "lastCounterAt": 1663080269995,
-      "firstMetricAt": 1663080260013,
-      "lastMetricAt": 1663080269995,
-      "period": "1663080260000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 140,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company values report": 130,
-        "vusers.created_by_name.Generate and download report": 105,
-        "vusers.created_by_name.Generate held shares report": 125,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080270013,
-      "lastCounterAt": 1663080279996,
-      "firstMetricAt": 1663080270013,
-      "lastMetricAt": 1663080279996,
-      "period": "1663080270000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 135,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company details report": 141,
-        "vusers.created_by_name.Generate company values report": 105,
-        "vusers.created_by_name.Generate and download report": 119,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080280013,
-      "lastCounterAt": 1663080289995,
-      "firstMetricAt": 1663080280013,
-      "lastMetricAt": 1663080289995,
-      "period": "1663080280000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 138,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 383,
-        "vusers.failed": 447,
-        "vusers.created_by_name.Generate company details report": 114,
-        "vusers.created_by_name.Generate company values report": 138,
-        "vusers.created_by_name.Generate and download report": 110,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080290013,
-      "lastCounterAt": 1663080299994,
-      "firstMetricAt": 1663080290013,
-      "lastMetricAt": 1663080299994,
-      "period": "1663080290000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 127,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 425,
-        "vusers.failed": 542,
-        "vusers.created_by_name.Generate company values report": 129,
-        "vusers.created_by_name.Generate held shares report": 129,
-        "vusers.created_by_name.Generate company details report": 115,
-        "errors.ETIMEDOUT": 117
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080300013,
-      "lastCounterAt": 1663080309995,
-      "firstMetricAt": 1663080300013,
-      "lastMetricAt": 1663080309995,
-      "period": "1663080300000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 113,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ETIMEDOUT": 75,
-        "vusers.failed": 447,
-        "errors.ECONNREFUSED": 372,
-        "vusers.created_by_name.Generate company details report": 134,
-        "vusers.created_by_name.Generate held shares report": 130,
-        "vusers.created_by_name.Generate and download report": 123
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080310013,
-      "lastCounterAt": 1663080319995,
-      "firstMetricAt": 1663080310013,
-      "lastMetricAt": 1663080319995,
-      "period": "1663080310000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 129,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company details report": 117,
-        "vusers.created_by_name.Generate and download report": 129,
-        "vusers.created_by_name.Generate company values report": 125,
-        "errors.ETIMEDOUT": 128
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080320021,
-      "lastCounterAt": 1663080329996,
-      "firstMetricAt": 1663080320021,
-      "lastMetricAt": 1663080329996,
-      "period": "1663080320000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 131,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company details report": 125,
-        "vusers.created_by_name.Generate held shares report": 128,
-        "vusers.created_by_name.Generate and download report": 116,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080330014,
-      "lastCounterAt": 1663080339996,
-      "firstMetricAt": 1663080330014,
-      "lastMetricAt": 1663080339996,
-      "period": "1663080330000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 140,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company details report": 115,
-        "vusers.created_by_name.Generate and download report": 111,
+        "vusers.created_by_name.Generate company values report": 91,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 121,
+        "vusers.failed": 249,
+        "vusers.created_by_name.Generate company details report": 87,
         "errors.ETIMEDOUT": 128,
-        "vusers.created_by_name.Generate held shares report": 134
+        "vusers.created_by_name.Generate and download report": 98,
+        "vusers.created_by_name.Generate held shares report": 74
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080340014,
-      "lastCounterAt": 1663080349996,
-      "firstMetricAt": 1663080340014,
-      "lastMetricAt": 1663080349996,
-      "period": "1663080340000",
+      "firstCounterAt": 1664714010036,
+      "lastCounterAt": 1664714019980,
+      "firstMetricAt": 1664714010036,
+      "lastMetricAt": 1664714019980,
+      "period": "1664714010000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company details report": 139,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company values report": 135,
-        "vusers.created_by_name.Generate held shares report": 114,
-        "vusers.created_by_name.Generate and download report": 112,
-        "errors.ETIMEDOUT": 64
+        "vusers.created_by_name.Generate company values report": 83,
+        "vusers.created": 350,
+        "http.requests": 491,
+        "vusers.created_by_name.Generate held shares report": 88,
+        "vusers.created_by_name.Generate and download report": 91,
+        "vusers.created_by_name.Generate company details report": 88,
+        "errors.ETIMEDOUT": 53,
+        "vusers.failed": 139,
+        "http.codes.200": 196,
+        "http.responses": 199,
+        "errors.ERR_GOT_REQUEST_ERROR": 54,
+        "errors.ECONNREFUSED": 32,
+        "http.codes.500": 3,
+        "vusers.completed": 4
       },
       "rates": {
         "http.request_rate": 50
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080350022,
-      "lastCounterAt": 1663080359995,
-      "firstMetricAt": 1663080350022,
-      "lastMetricAt": 1663080359995,
-      "period": "1663080350000",
+      "firstCounterAt": 1664714020036,
+      "firstHistogramAt": 1664714021523,
+      "lastCounterAt": 1664714029980,
+      "lastHistogramAt": 1664714029221,
+      "firstMetricAt": 1664714020036,
+      "lastMetricAt": 1664714029980,
+      "period": "1664714020000",
+      "summaries": {
+        "http.response_time": {
+          "min": 7548,
+          "max": 9976,
+          "count": 199,
+          "p50": 8024.5,
+          "median": 8024.5,
+          "p75": 8352,
+          "p90": 9047.6,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17520.4,
+          "max": 17643.4,
+          "count": 4,
+          "p50": 17505.6,
+          "median": 17505.6,
+          "p75": 17505.6,
+          "p90": 17505.6,
+          "p95": 17505.6,
+          "p99": 17505.6,
+          "p999": 17505.6
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 7548,
+          "max": 9976,
+          "count": 199,
+          "p50": 8024.5,
+          "median": 8024.5,
+          "p75": 8352,
+          "p90": 9047.6,
+          "p95": 9801.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17520.4,
+          "max": 17643.4,
+          "count": 4,
+          "p50": 17505.6,
+          "median": 17505.6,
+          "p75": 17505.6,
+          "p90": 17505.6,
+          "p95": 17505.6,
+          "p99": 17505.6,
+          "p999": 17505.6
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate company values report": 77,
+        "vusers.created": 350,
+        "http.requests": 386,
+        "errors.ECONNREFUSED": 225,
+        "vusers.failed": 619,
+        "vusers.created_by_name.Generate held shares report": 99,
+        "vusers.created_by_name.Generate and download report": 74,
+        "errors.ETIMEDOUT": 383,
+        "http.codes.200": 46,
+        "http.responses": 53,
+        "http.codes.500": 7,
+        "vusers.created_by_name.Generate company details report": 100,
+        "vusers.completed": 6,
+        "errors.ERR_GOT_REQUEST_ERROR": 10
+      },
+      "rates": {
+        "http.request_rate": 42
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664714030036,
+      "firstHistogramAt": 1664714030753,
+      "lastCounterAt": 1664714039980,
+      "lastHistogramAt": 1664714033354,
+      "firstMetricAt": 1664714030036,
+      "lastMetricAt": 1664714039980,
+      "period": "1664714030000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8117,
+          "max": 9980,
+          "count": 53,
+          "p50": 9416.8,
+          "median": 9416.8,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17504,
+          "max": 19238.2,
+          "count": 6,
+          "p50": 17859.2,
+          "median": 17859.2,
+          "p75": 17859.2,
+          "p90": 18220,
+          "p95": 18220,
+          "p99": 18220,
+          "p999": 18220
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8117,
+          "max": 9980,
+          "count": 53,
+          "p50": 9416.8,
+          "median": 9416.8,
+          "p75": 9801.2,
+          "p90": 9801.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17504,
+          "max": 19238.2,
+          "count": 6,
+          "p50": 17859.2,
+          "median": 17859.2,
+          "p75": 17859.2,
+          "p90": 18220,
+          "p95": 18220,
+          "p99": 18220,
+          "p999": 18220
+        }
+      }
+    },
+    {
+      "counters": {
+        "vusers.created_by_name.Generate held shares report": 84,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "errors.ECONNREFUSED": 229,
+        "vusers.failed": 390,
+        "vusers.created_by_name.Generate company values report": 93,
+        "vusers.created_by_name.Generate company details report": 92,
+        "errors.ETIMEDOUT": 161,
+        "vusers.created_by_name.Generate and download report": 81
+      },
+      "rates": {
+        "http.request_rate": 35
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1664714040036,
+      "lastCounterAt": 1664714049978,
+      "firstMetricAt": 1664714040036,
+      "lastMetricAt": 1664714049978,
+      "period": "1664714040000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate held shares report": 124,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 426,
-        "vusers.failed": 554,
-        "vusers.created_by_name.Generate company details report": 130,
-        "errors.ETIMEDOUT": 128,
-        "vusers.created_by_name.Generate and download report": 129,
-        "vusers.created_by_name.Generate company values report": 117
+        "vusers.created_by_name.Generate held shares report": 106,
+        "vusers.created": 350,
+        "http.requests": 350,
+        "vusers.created_by_name.Generate and download report": 87,
+        "vusers.created_by_name.Generate company values report": 78,
+        "errors.ECONNREFUSED": 119,
+        "vusers.failed": 240,
+        "errors.ETIMEDOUT": 121,
+        "vusers.created_by_name.Generate company details report": 79
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 35
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080360014,
-      "lastCounterAt": 1663080369994,
-      "firstMetricAt": 1663080360014,
-      "lastMetricAt": 1663080369994,
-      "period": "1663080360000",
+      "firstCounterAt": 1664714050036,
+      "lastCounterAt": 1664714059980,
+      "firstMetricAt": 1664714050036,
+      "lastMetricAt": 1664714059980,
+      "period": "1664714050000",
       "summaries": {},
       "histograms": {}
     },
     {
       "counters": {
-        "vusers.created_by_name.Generate company details report": 129,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate company values report": 121,
-        "vusers.created_by_name.Generate and download report": 124,
-        "vusers.created_by_name.Generate held shares report": 126,
-        "errors.ECONNREFUSED": 382,
-        "vusers.failed": 456,
-        "errors.ETIMEDOUT": 74
+        "vusers.created_by_name.Generate company values report": 88,
+        "vusers.created": 350,
+        "http.requests": 514,
+        "errors.ETIMEDOUT": 20,
+        "vusers.failed": 117,
+        "vusers.created_by_name.Generate held shares report": 93,
+        "vusers.created_by_name.Generate company details report": 84,
+        "vusers.created_by_name.Generate and download report": 85,
+        "http.codes.200": 212,
+        "http.responses": 212,
+        "errors.ERR_GOT_REQUEST_ERROR": 48,
+        "errors.ECONNREFUSED": 49
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 52
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080370014,
-      "lastCounterAt": 1663080379996,
-      "firstMetricAt": 1663080370014,
-      "lastMetricAt": 1663080379996,
-      "period": "1663080370000",
-      "summaries": {},
-      "histograms": {}
+      "firstCounterAt": 1664714060036,
+      "firstHistogramAt": 1664714062914,
+      "lastCounterAt": 1664714069986,
+      "lastHistogramAt": 1664714068382,
+      "firstMetricAt": 1664714060036,
+      "lastMetricAt": 1664714069986,
+      "period": "1664714060000",
+      "summaries": {
+        "http.response_time": {
+          "min": 8251,
+          "max": 9850,
+          "count": 212,
+          "p50": 8868.4,
+          "median": 8868.4,
+          "p75": 9047.6,
+          "p90": 9230.4,
+          "p95": 9607.1,
+          "p99": 9801.2,
+          "p999": 9801.2
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 8251,
+          "max": 9850,
+          "count": 212,
+          "p50": 8868.4,
+          "median": 8868.4,
+          "p75": 9047.6,
+          "p90": 9230.4,
+          "p95": 9607.1,
+          "p99": 9801.2,
+          "p999": 9801.2
+        }
+      }
     },
     {
       "counters": {
-        "errors.ETIMEDOUT": 118,
-        "vusers.failed": 554,
-        "vusers.created_by_name.Generate held shares report": 157,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.created_by_name.Generate company details report": 131,
-        "vusers.created_by_name.Generate and download report": 115,
-        "vusers.created_by_name.Generate company values report": 97
+        "vusers.created_by_name.Generate and download report": 2,
+        "vusers.created": 5,
+        "http.requests": 18,
+        "errors.ECONNREFUSED": 5,
+        "vusers.failed": 442,
+        "errors.ETIMEDOUT": 425,
+        "http.codes.200": 26,
+        "http.responses": 39,
+        "errors.ERR_GOT_REQUEST_ERROR": 12,
+        "http.codes.500": 13,
+        "vusers.completed": 14,
+        "vusers.created_by_name.Generate held shares report": 1,
+        "vusers.created_by_name.Generate company values report": 2
       },
       "rates": {
-        "http.request_rate": 50
+        "http.request_rate": 18
       },
       "http.request_rate": null,
-      "firstCounterAt": 1663080380014,
-      "lastCounterAt": 1663080389996,
-      "firstMetricAt": 1663080380014,
-      "lastMetricAt": 1663080389996,
-      "period": "1663080380000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 130,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company values report": 121,
-        "vusers.created_by_name.Generate and download report": 122,
-        "vusers.created_by_name.Generate held shares report": 127,
-        "errors.ETIMEDOUT": 64
+      "firstCounterAt": 1664714070036,
+      "firstHistogramAt": 1664714070353,
+      "lastCounterAt": 1664714078594,
+      "lastHistogramAt": 1664714073725,
+      "firstMetricAt": 1664714070036,
+      "lastMetricAt": 1664714078594,
+      "period": "1664714070000",
+      "summaries": {
+        "http.response_time": {
+          "min": 9333,
+          "max": 9987,
+          "count": 39,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17922.6,
+          "max": 19019.6,
+          "count": 14,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18588.1,
+          "p90": 18588.1,
+          "p95": 18588.1,
+          "p99": 18588.1,
+          "p999": 18588.1
+        }
       },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080390014,
-      "lastCounterAt": 1663080399995,
-      "firstMetricAt": 1663080390014,
-      "lastMetricAt": 1663080399995,
-      "period": "1663080390000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 119,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate company details report": 124,
-        "errors.ETIMEDOUT": 128,
-        "vusers.created_by_name.Generate held shares report": 121,
-        "vusers.created_by_name.Generate company values report": 136
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080400014,
-      "lastCounterAt": 1663080409996,
-      "firstMetricAt": 1663080400014,
-      "lastMetricAt": 1663080409996,
-      "period": "1663080400000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 139,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company details report": 127,
-        "vusers.created_by_name.Generate company values report": 131,
-        "vusers.created_by_name.Generate held shares report": 103,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080410014,
-      "lastCounterAt": 1663080419995,
-      "firstMetricAt": 1663080410014,
-      "lastMetricAt": 1663080419995,
-      "period": "1663080410000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 133,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 436,
-        "vusers.failed": 564,
-        "vusers.created_by_name.Generate held shares report": 115,
-        "vusers.created_by_name.Generate and download report": 129,
-        "errors.ETIMEDOUT": 128,
-        "vusers.created_by_name.Generate company details report": 123
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080420014,
-      "lastCounterAt": 1663080429995,
-      "firstMetricAt": 1663080420014,
-      "lastMetricAt": 1663080429995,
-      "period": "1663080420000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 144,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 372,
-        "vusers.failed": 436,
-        "vusers.created_by_name.Generate company values report": 119,
-        "vusers.created_by_name.Generate company details report": 123,
-        "vusers.created_by_name.Generate and download report": 114,
-        "errors.ETIMEDOUT": 64
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080430014,
-      "lastCounterAt": 1663080439996,
-      "firstMetricAt": 1663080430014,
-      "lastMetricAt": 1663080439996,
-      "period": "1663080430000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 123,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 430,
-        "vusers.failed": 558,
-        "vusers.created_by_name.Generate company details report": 135,
-        "vusers.created_by_name.Generate held shares report": 124,
-        "errors.ETIMEDOUT": 128,
-        "vusers.created_by_name.Generate and download report": 118
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080440014,
-      "lastCounterAt": 1663080449994,
-      "firstMetricAt": 1663080440014,
-      "lastMetricAt": 1663080449994,
-      "period": "1663080440000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 120,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate held shares report": 110,
-        "vusers.created_by_name.Generate company details report": 132,
-        "vusers.created_by_name.Generate company values report": 138,
-        "errors.ECONNREFUSED": 378,
-        "vusers.failed": 448,
-        "errors.ETIMEDOUT": 70
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080450013,
-      "lastCounterAt": 1663080459995,
-      "firstMetricAt": 1663080450013,
-      "lastMetricAt": 1663080459995,
-      "period": "1663080450000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "errors.ETIMEDOUT": 122,
-        "vusers.failed": 541,
-        "vusers.created_by_name.Generate held shares report": 110,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 419,
-        "vusers.created_by_name.Generate and download report": 136,
-        "vusers.created_by_name.Generate company details report": 117,
-        "vusers.created_by_name.Generate company values report": 137
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080460013,
-      "lastCounterAt": 1663080469994,
-      "firstMetricAt": 1663080460013,
-      "lastMetricAt": 1663080469994,
-      "period": "1663080460000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate held shares report": 132,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate company details report": 129,
-        "vusers.created_by_name.Generate and download report": 123,
-        "errors.ECONNREFUSED": 389,
-        "vusers.failed": 470,
-        "vusers.created_by_name.Generate company values report": 116,
-        "errors.ETIMEDOUT": 81
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080470013,
-      "lastCounterAt": 1663080479996,
-      "firstMetricAt": 1663080470013,
-      "lastMetricAt": 1663080479996,
-      "period": "1663080470000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company details report": 136,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ETIMEDOUT": 111,
-        "vusers.failed": 508,
-        "errors.ECONNREFUSED": 397,
-        "vusers.created_by_name.Generate company values report": 124,
-        "vusers.created_by_name.Generate held shares report": 133,
-        "vusers.created_by_name.Generate and download report": 107
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080480013,
-      "lastCounterAt": 1663080489994,
-      "firstMetricAt": 1663080480013,
-      "lastMetricAt": 1663080489994,
-      "period": "1663080480000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate company values report": 113,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "vusers.created_by_name.Generate held shares report": 120,
-        "vusers.created_by_name.Generate company details report": 126,
-        "errors.ECONNREFUSED": 411,
-        "vusers.failed": 514,
-        "vusers.created_by_name.Generate and download report": 141,
-        "errors.ETIMEDOUT": 103
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080490013,
-      "lastCounterAt": 1663080499995,
-      "firstMetricAt": 1663080490013,
-      "lastMetricAt": 1663080499995,
-      "period": "1663080490000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "errors.ETIMEDOUT": 89,
-        "vusers.failed": 497,
-        "vusers.created_by_name.Generate and download report": 112,
-        "vusers.created": 500,
-        "http.requests": 500,
-        "errors.ECONNREFUSED": 408,
-        "vusers.created_by_name.Generate held shares report": 130,
-        "vusers.created_by_name.Generate company values report": 122,
-        "vusers.created_by_name.Generate company details report": 136
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080500013,
-      "lastCounterAt": 1663080509994,
-      "firstMetricAt": 1663080500013,
-      "lastMetricAt": 1663080509994,
-      "period": "1663080500000",
-      "summaries": {},
-      "histograms": {}
-    },
-    {
-      "counters": {
-        "vusers.created_by_name.Generate and download report": 42,
-        "vusers.created": 175,
-        "http.requests": 175,
-        "vusers.created_by_name.Generate held shares report": 51,
-        "vusers.created_by_name.Generate company values report": 42,
-        "errors.ECONNREFUSED": 139,
-        "vusers.failed": 230,
-        "vusers.created_by_name.Generate company details report": 40,
-        "errors.ETIMEDOUT": 91
-      },
-      "rates": {
-        "http.request_rate": 50
-      },
-      "http.request_rate": null,
-      "firstCounterAt": 1663080510013,
-      "lastCounterAt": 1663080519989,
-      "firstMetricAt": 1663080510013,
-      "lastMetricAt": 1663080519989,
-      "period": "1663080510000",
-      "summaries": {},
-      "histograms": {}
+      "histograms": {
+        "http.response_time": {
+          "min": 9333,
+          "max": 9987,
+          "count": 39,
+          "p50": 9607.1,
+          "median": 9607.1,
+          "p75": 9801.2,
+          "p90": 9999.2,
+          "p95": 9999.2,
+          "p99": 9999.2,
+          "p999": 9999.2
+        },
+        "vusers.session_length": {
+          "min": 17922.6,
+          "max": 19019.6,
+          "count": 14,
+          "p50": 18220,
+          "median": 18220,
+          "p75": 18588.1,
+          "p90": 18588.1,
+          "p95": 18588.1,
+          "p99": 18588.1,
+          "p999": 18588.1
+        }
+      }
     }
   ]
 }

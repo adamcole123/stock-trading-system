@@ -19,7 +19,8 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 		return new Promise(async (resolve, reject) => {
 			let returnData: IStockDto[] = [];
 			await Stock.find({})
-				.then(res => {+
+				.then(res => {
+					+
 
 					res.forEach(stock => {
 						returnData.push(this.transformMongoose(stock))
@@ -62,7 +63,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 	// 				resolve([this.transformMongoose(returnStock)])
 	// 			}
 	// 			let query: StockFetchQuery = stockDto!;
-				
+
 
 	// 			switch (options?.gainsMode) {
 	// 				case 0:
@@ -104,7 +105,7 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 	// 				options!.limit = await Stock.count({});
 	// 			}
 
-				
+
 
 	// 			if (options?.page) {
 	// 				try {
@@ -143,63 +144,63 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 	// 	})
 	// }
 
-	
+
 	fetch(stockDto?: IStockDto | IStockDto[], options: StockOptions = {}): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
-			try { 
+			try {
 				let sort: { [key: string]: SortOrder | { $meta: "textScore"; }; } = {};
-				
+
 				let result: IStockDto[];
-				
-				if(options.order !== undefined && 
-					options.order.orderBy !== undefined && 
-					options.order.orderDirection !== undefined){
+
+				if (options.order !== undefined &&
+					options.order.orderBy !== undefined &&
+					options.order.orderDirection !== undefined) {
 					sort[options!.order!.orderBy!] = options?.order?.orderDirection === 0 ? -1 : 1;
 				}
-				
-				if(Array.isArray(stockDto)){
+
+				if (Array.isArray(stockDto)) {
 					let ids = stockDto.map(stock => stock.id);
 					let stocks = await Stock.find({ _id: { $in: ids } })
 						.sort(sort)
 						.limit(options?.limit!)
 						.exec();
-						
-						result = stocks.map(stock => {
-							return this.transformMongoose(stock);
-						})
-					} else {
+
+					result = stocks.map(stock => {
+						return this.transformMongoose(stock);
+					})
+				} else {
 					let query = this.buildQuery(stockDto!, options);
-					
+
 					if (!options?.limit) {
 						options!.limit = await Stock.count({});
 					}
-	
+
 					result = await this.queryDB(options, query, sort, stockDto);
-	
+
 					return resolve(result);
 				}
-			} catch(e) {
+			} catch (e) {
 				return reject(e);
 			}
 		})
 	}
-	
+
 	private async queryDB(
-		options: StockOptions, query: IStockDto | StockFetchQuery, 
-		sort: { [key: string]: SortOrder | { $meta: "textScore"; }; }, 
+		options: StockOptions, query: IStockDto | StockFetchQuery,
+		sort: { [key: string]: SortOrder | { $meta: "textScore"; }; },
 		stockDto: IStockDto | undefined
-		): Promise<IStockDto[]> {
+	): Promise<IStockDto[]> {
 		let queryResult: IStockDto[] = [];
 		if (options?.page) {
 			try {
 				let returnStocks = await Stock
-				.find({ ...query })
-				.sort(sort)
+					.find({ ...query })
+					.sort(sort)
 					.skip((options?.page * options.limit!) - (options.limit!))
 					.limit(options.limit!);
-					returnStocks.forEach(stock => {
-						queryResult.push(this.transformMongoose(stock));
-					});
+				returnStocks.forEach(stock => {
+					queryResult.push(this.transformMongoose(stock));
+				});
 			} catch (error: any) {
 				throw new Error(error);
 			}
@@ -209,36 +210,36 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 					let stock = await Stock.findOne({ _id: stockDto.id }).exec();
 					queryResult.push(this.transformMongoose(stock));
 				} else {
-					let stocks = await Stock.find({ symbol: query.symbol })
-					.sort(sort)
-					.limit(options?.limit!)
+					let stocks = await Stock.find(query)
+						.sort(sort)
+						.limit(options?.limit!)
 						.exec();
-						queryResult = stocks.map(stock => {
-							return this.transformMongoose(stock);
+					queryResult = stocks.map(stock => {
+						return this.transformMongoose(stock);
 					});
 				}
 			} catch (error: any) {
 				throw new Error(error);
 			}
 		}
-		
+
 		return queryResult;
 	}
-	
+
 	private buildQuery(stockDto: IStockDto, options: StockOptions = {}): StockFetchQuery {
 		let query: StockFetchQuery = stockDto;
-		
+
 		switch (options?.gainsMode) {
 			case 0:
 				query.gains = { $lt: stockDto?.gains };
 				break;
-				case 1:
-					query.gains = stockDto?.gains;
-					break;
-					case 2:
-						query.gains = { $gt: stockDto?.gains };
-						break;
-					}
+			case 1:
+				query.gains = stockDto?.gains;
+				break;
+			case 2:
+				query.gains = { $gt: stockDto?.gains };
+				break;
+		}
 
 		switch (options?.valueMode) {
 			case 0:
@@ -247,30 +248,30 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 			case 1:
 				query.value = stockDto?.value;
 				break;
-				case 2:
-					query.value = { $gt: stockDto?.value };
-					break;
-				}
-				
-				switch (options?.volumeMode) {
-					case 0:
-						query.volume = { $lt: stockDto?.volume };
+			case 2:
+				query.value = { $gt: stockDto?.value };
+				break;
+		}
+
+		switch (options?.volumeMode) {
+			case 0:
+				query.volume = { $lt: stockDto?.volume };
 				break;
 			case 1:
 				query.volume = stockDto?.volume;
 				break;
-				case 2:
+			case 2:
 				query.volume = { $gt: stockDto?.volume };
 				break;
 		}
-		
+
 		return query;
 	}
-	
+
 	count() {
 		return Stock.count();
 	}
-	
+
 	private transformMongoose(doc: any): IStockDto {
 		const { _id, ...rest } = doc;
 		return { id: _id.toString(), ...rest };
