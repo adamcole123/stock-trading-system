@@ -71,4 +71,4 @@ scenarios:
           json: "$.id"
           as: "reportid"
     - get:
-        url: "/download?reportid={{ reportid }}"
+        url: "/report/download?reportid={{ reportid }}"

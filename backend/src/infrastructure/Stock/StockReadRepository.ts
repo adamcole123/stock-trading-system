@@ -20,11 +20,9 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 			let returnData: IStockDto[] = [];
 			await Stock.find({})
 				.then(res => {
-					+
-
-					res.forEach(stock => {
-						returnData.push(this.transformMongoose(stock))
-					});
+						res.forEach(stock => {
+							returnData.push(this.transformMongoose(stock))
+						});
 				})
 				.catch(error => {
 					reject(error);
@@ -33,117 +31,6 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 			resolve(returnData);
 		})
 	}
-
-	// fetch(stockDto?: IStockDto | IStockDto[], options: StockOptions = {}): Promise<IStockDto[]> {
-	// 	return new Promise(async (resolve, reject) => {
-	// 		let returnData: IStockDto[] = [];
-
-	// 		let sort: { [key: string]: SortOrder | { $meta: "textScore"; }; } = {};
-
-	// 		if(options.order !== undefined && 
-	// 			options.order.orderBy !== undefined && 
-	// 			options.order.orderDirection !== undefined){
-	// 			sort[options!.order!.orderBy!] = options?.order?.orderDirection === 0 ? -1 : 1;
-	// 		}
-
-	// 		if (Array.isArray(stockDto)) {
-	// 			let ids = stockDto.map(stock => stock.id);
-	// 			let stocks = await Stock.find({ _id: { $in: ids } })
-	// 				.sort(sort)
-	// 				.limit(options?.limit!)
-	// 				.exec();
-
-	// 			returnData = stocks.map(stock => {
-	// 				return this.transformMongoose(stock);
-	// 			})
-	// 		} else {
-	// 			if (options.lowestValue) {
-	// 				let returnStock: any = await Stock.find().sort({ value: 1 }).limit(1);
-	// 				returnStock = returnStock[0];
-	// 				resolve([this.transformMongoose(returnStock)])
-	// 			}
-	// 			let query: StockFetchQuery = stockDto!;
-
-
-	// 			switch (options?.gainsMode) {
-	// 				case 0:
-	// 					query.gains = { $lt: stockDto?.gains };
-	// 					break;
-	// 				case 1:
-	// 					query.gains = stockDto?.gains;
-	// 					break;
-	// 				case 2:
-	// 					query.gains = { $gt: stockDto?.gains };
-	// 					break;
-	// 			}
-
-	// 			switch (options?.valueMode) {
-	// 				case 0:
-	// 					query.value = { $lt: stockDto?.value };
-	// 					break;
-	// 				case 1:
-	// 					query.value = stockDto?.value;
-	// 					break;
-	// 				case 2:
-	// 					query.value = { $gt: stockDto?.value };
-	// 					break;
-	// 			}
-
-	// 			switch (options?.volumeMode) {
-	// 				case 0:
-	// 					query.volume = { $lt: stockDto?.volume };
-	// 					break;
-	// 				case 1:
-	// 					query.volume = stockDto?.volume;
-	// 					break;
-	// 				case 2:
-	// 					query.volume = { $gt: stockDto?.volume };
-	// 					break;
-	// 			}
-
-	// 			if (!options?.limit) {
-	// 				options!.limit = await Stock.count({});
-	// 			}
-
-
-
-	// 			if (options?.page) {
-	// 				try {
-	// 					let returnStocks = await Stock
-	// 						.find({ ...query })
-	// 						.sort(sort)
-	// 						.skip((options?.page * options.limit!) - (options.limit!))
-	// 						.limit(options.limit!);
-	// 					returnStocks.forEach(stock => {
-	// 						returnData.push(this.transformMongoose(stock));
-	// 					})
-	// 				} catch (error) {
-	// 					reject(error);
-	// 				}
-	// 			} else {
-	// 				try {
-	// 					if (stockDto?.id) {
-	// 						let stock = await Stock.findOne({ _id: stockDto.id }).exec();
-	// 						returnData.push(this.transformMongoose(stock))
-	// 					} else {
-	// 						let stocks = await Stock.find({ symbol: query.symbol })
-	// 							.sort(sort)
-	// 							.limit(options?.limit!)
-	// 							.exec();
-	// 						returnData = stocks.map(stock => {
-	// 							return this.transformMongoose(stock);
-	// 						});
-	// 					}
-	// 				} catch (e) {
-	// 					reject(e);
-	// 				}
-	// 			}
-
-	// 		}
-	// 		resolve(returnData!);
-	// 	})
-	// }
-
 
 	fetch(stockDto?: IStockDto | IStockDto[], options: StockOptions = {}): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
@@ -191,36 +78,31 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 		stockDto: IStockDto | undefined
 	): Promise<IStockDto[]> {
 		let queryResult: IStockDto[] = [];
-		if (options?.page) {
-			try {
-				let returnStocks = await Stock
+		try {
+			if (options?.page) {
+				let stocks = await Stock
 					.find({ ...query })
 					.sort(sort)
 					.skip((options?.page * options.limit!) - (options.limit!))
 					.limit(options.limit!);
-				returnStocks.forEach(stock => {
-					queryResult.push(this.transformMongoose(stock));
+				stocks.forEach((stock: any) => {
+					queryResult.push(this.transformMongoose(stock._doc));
 				});
-			} catch (error: any) {
-				throw new Error(error);
-			}
-		} else {
-			try {
+			} else {
 				if (stockDto?.id) {
-					let stock = await Stock.findOne({ _id: stockDto.id }).exec();
-					queryResult.push(this.transformMongoose(stock));
+					queryResult.push(this.transformMongoose(await Stock.findOne({ _id: stockDto.id }).exec() as IStockDto));
 				} else {
 					let stocks = await Stock.find(query)
 						.sort(sort)
 						.limit(options?.limit!)
 						.exec();
-					queryResult = stocks.map(stock => {
-						return this.transformMongoose(stock);
+					stocks.forEach((stock: any) => {
+						queryResult.push(this.transformMongoose(stock._doc));
 					});
 				}
-			} catch (error: any) {
-				throw new Error(error);
 			}
+		} catch (error: any) {
+			throw new Error(error);
 		}
 
 		return queryResult;

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "vitest --coverage",
     "start": "tsc --build && node build/src/index.js",
-    "loadtest": "artillery run artillery/reportloadtest.yml --output artillery/report-load-report.json && artillery report artillery/report-load-report.json"
+    "loadtest": "artillery run artillery/tradeloadtest.yml --output artillery/trade-load-report.json && artillery report artillery/trade-load-report.json"
   },
   "repository": {
     "type": "git",

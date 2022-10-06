@@ -25,27 +25,54 @@ config:
         - "time_of_trade"
         - "trade_type"
         - "trade_status"
+    - path: "stocks.csv"
+      fields:
+        - "id"
+        - "symbol"
+        - "name"
+        - "value"
+        - "volume"
+        - "open"
+        - "close"
+        - "gains"
+        - "latest_trade"
 scenarios:
-# - name: "Create a new trade that is of trade_type 'Buy'"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/user/validate"
-#         capture:
-#           json: "$.id"
-#           as: "id"
-#         jar: true
-#     - post:
-#         url: "/trade/buystocks"
-#         json: 
-#           user_id: "{{ id }}"
-#           stock_id: "{{ stock_id }}"
-#           stock_amount: "{{ stock_amount }}"
+- name: "Create a new trade that is of trade_type 'Buy'"
+  flow:
+  - post:
+      url: "/user/signin"
+      json: 
+        username: "admin"
+        password: "Password1!"
+      jar: true
+  - get:
+      url: "/stock/getOne?symbol={{ symbol }}"
+      capture:
+        json: "$.id"
+        as: "captured_stock_id"
+      jar: true
+  - get:
+      url: "/user/signout"
+  - post:
+      url: "/user/signin"
+      json: 
+        username: "user"
+        password: "Password1!"
+      jar: true
+  - post:
+      url: "/user/validate"
+      capture:
+        json: "$.id"
+        as: "captured_user_id"
+      jar: true
+  # - post:
+  #     url: "/trade/buystocks"
+  #     json: 
+  #       user_id: "{{ captured_user_id }}"
+  #       stock_id: "{{ captured_stock_id }}"
+  #       stock_amount: "1"
+  # - get:
+  #     url: "/signout"
 # - name: "Create a new trade that is of trade_type 'Sell'"
 #   flow:
 #     - post:

@@ -156,7 +156,7 @@ server.setConfig((app: express.Application) => {
       },
     })
   );
-  app.use(morgan("tiny"));
+  app.use(morgan("dev"));
 });
 
 process.on('uncaughtExceptionMonitor', err => {

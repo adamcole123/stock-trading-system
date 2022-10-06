@@ -13,17 +13,19 @@ export default class GetOneStockUseCase implements IGetOneStockUseCase {
 	}
 
 	async invoke(criteria?: IStockDto): Promise<IStockDto> {
-		let returnedStocks = await this.stockReadOnlyRepository.fetch({
-			id: criteria?.id!,
-			symbol: criteria?.symbol!,
-			name: ''
-		});
+		try{
+			let returnedStocks = await this.stockReadOnlyRepository.fetch({
+				...criteria
+			});
+	
+			if(returnedStocks.length > 0){
+				return returnedStocks[0];
+			}
 
-		if(returnedStocks.length > 0){
-			return returnedStocks[0];
+			throw new Error('Could not get stock');
+		} catch (e: any) {
+			throw new Error(e);
 		}
-
-		throw new Error('Could not get stock');
 	}
 	
 }
