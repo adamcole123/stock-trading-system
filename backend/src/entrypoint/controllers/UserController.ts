@@ -430,6 +430,7 @@ export default class UserController implements interfaces.Controller {
 					.json("New card added successfully");
 			})
 			.catch((err: Error) => {
+				console.log(err)
 				res.status(500).json(err)
 			});
 	}
@@ -467,7 +468,9 @@ export default class UserController implements interfaces.Controller {
 				})
 					.status(200).json(validated)
 			})
-			.catch((err: Error) => res.status(401).send(err));
+			.catch((err: Error) => {
+				res.status(401).send(err)
+			});
 	}
 
 	@ApiOperationPost({
@@ -537,6 +540,7 @@ export default class UserController implements interfaces.Controller {
 						res.status(200).json("Email sent to confirm changes!");
 					})
 					.catch((err) => {
+						console.log("User edit error: ", err);
 						res.status(500).json(err);
 					})
 			}
@@ -547,7 +551,9 @@ export default class UserController implements interfaces.Controller {
 			.then((userDto: IUserDto) => {
 				res.status(200).json(userDto)
 			})
-			.catch((err: Error) => res.status(400).json(err));
+			.catch((err: Error) => {
+				res.status(400).json(err);
+			});
 	}
 
 	@ApiOperationGet({

@@ -1,5 +1,5 @@
 config:
-  target: 'http://localhost:8000/user'
+  target: 'http://localhost:8000'
   phases:
     # - duration: 10
     #   arrivalRate: 5
@@ -17,20 +17,12 @@ config:
   payload:
     - path: "users.csv"
       fields:
-      - "_id"
       - "username"
       - "email"
       - "password"
       - "firstName"
       - "lastName"
       - "birthDate"
-      - "reports"
-      - "credit"
-      - "role"
-      - "isDeleted"
-      - "cardDetails"
-      - "activationDate"
-      - "banUntil"
     - path: "newUsers.csv"
       fields:
       - "_id"
@@ -58,59 +50,124 @@ config:
       - "newCounty"
       - "newPostcode"
       - "newCountry"
+before:
+  flow:
+    - log: 'Get user auth tokens'
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "user"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "user_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "user_data"
+        headers: 
+          Cookie: "{{ user_token }}"
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "admin_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "admin_data"
+        headers: 
+          Cookie: "{{ admin_token }}"
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "broker"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "broker_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "broker_data"
+        headers: 
+          Cookie: "{{ broker_token }}"
+    - log: "user token: {{ user_token }}"
+    - log: "admin token: {{ admin_token }}"
+    - log: "broker token: {{ broker_token }}"
 scenarios:
-# - name: "Password Reset"
+- name: "Get all users"
+  flow:
+    - get:
+        url: "/user/all"
+        headers: 
+          Cookie: "{{ admin_token }}"
+- name: "Get one user"
+  flow:
+    - get:
+        url: "/user/one?username=user"
+        headers: 
+          Cookie: "{{ admin_token }}"
+- name: "Validate user token"
+  flow:
+    - post:
+        url: "/user/validate"
+        headers: 
+          Cookie: "{{ user_token }}"
+- name: "Edit user details"
+  flow:
+    - post:
+        url: "/user/edit"
+        json: 
+          username: "{{ user_data.username }}"
+          firstName: "{{ firstName }}"
+        headers: 
+          Cookie: "{{ admin_token }}"
+- name: "Sign out user"
+  flow:
+    - get:
+        url: "/user/signout"
+        headers: 
+            Cookie: "{{ user_token }}"
+
+
+# leave commented
+# - name: "Add new credit card"
 #   flow:
 #     - post:
-#         url: "/password-reset"
+#         url: "/user/credit-card"
 #         json: 
-#           key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAc3RvY2t0cmFkaW5nc3lzdGVtLmNvbSIsInJlcXVlc3REYXRlIjoiU2F0IEp1bCAyMyAyMDIyIDEyOjUxOjAyIEdNVCswMTAwIChCcml0aXNoIFN1bW1lciBUaW1lKSJ9.-Gk6FSneiFdfni_TExzCK-xVpbGIxGSuhf3ekwS0smc"
-#           password: "{{ password }}"
+#           userId: "{{ user_data.id }}"
+#           cardDetails:
+#             cardNumber: "{{ newCardNumber }}"
+#             expiryDate: "{{ newExpiryDate }}"
+#             cvv: "{{ newCvv }}"
+#             nameOnCard: "{{ newNameOnCard }}"
+#             addressLine1: "{{ newAddressLine1 }}"
+#             city: "{{ newCity }}"
+#             county: "{{ newCounty }}"
+#             postcode: "{{ newPostcode }}"
+#             country: "{{ newCountry }}"
+#         headers: 
+#           Cookie: "{{ user_token }}"
 # - name: "Password Reset Request Request"
 #   flow:
 #     - post:
-#         url: "/password-reset-request"
+#         url: "/user/password-reset-request"
 #         json: 
-#           email: "{{ email }}"
-# - name: "Get all users"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/all"
-#     - get:
-#         url: "/signout"
-# - name: "Get one user"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/one?username=user"
-# - name: "Sign in user"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "{{ username }}"
-#           password: "{{ password }}"
+#           email: "{{ user_data.email }}"
+#         headers: 
+#           Cookie: "{{ user_token }}"
 # - name: "Register user"
 #   flow:
 #     - post:
-#         url: "/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/register"
+#         url: "/user/register"
 #         json: 
 #           username: "{{ username }}"
 #           email: "{{ email }}"
@@ -118,61 +175,6 @@ scenarios:
 #           lastName: "{{ lastName }}"
 #           birthDate: "{{ birthDate }}"
 #           password: "{{ password }}"
-# - name: "Add new credit card"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/credit-card"
-#         json: 
-#           cardNumber: "{{ newCardNumber }}"
-#           expiryDate: "{{ newExpiryDate }}"
-#           cvv: "{{ newCvv }}"
-#           nameOnCard: "{{ newNameOnCard }}"
-#           addressLine1: "{{ newAddressLine1 }}"
-#           city: "{{ newCity }}"
-#           county: "{{ newCounty }}"
-#           postcode: "{{ newPostcode }}"
-#           country: "{{ newCountry }}"
-# - name: "Validate user token"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/validate"
-# - name: "Edit user details"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "admin"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/edit"
-#         json: 
-#           username: "{{ username }}"
-#           firstName: "testchangedname"
-# - name: "Sign out user"
-#   flow:
-#     - post:
-#         url: "/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/signout"
-
-# leave commented
 # - name: "Activate user"
 #   flow:
 #     - post:
@@ -193,4 +195,18 @@ scenarios:
 #         url: "/requestdeactivation"
 #         json: 
 #           username: "{{ username }}"
+#           password: "{{ password }}"
+# - name: "Sign in user"
+#   flow:
+#     - post:
+#         url: "/signin"
+#         json: 
+#           username: "{{ username }}"
+#           password: "{{ password }}"
+# - name: "Password Reset"
+#   flow:
+#     - post:
+#         url: "/password-reset"
+#         json: 
+#           key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAc3RvY2t0cmFkaW5nc3lzdGVtLmNvbSIsInJlcXVlc3REYXRlIjoiU2F0IEp1bCAyMyAyMDIyIDEyOjUxOjAyIEdNVCswMTAwIChCcml0aXNoIFN1bW1lciBUaW1lKSJ9.-Gk6FSneiFdfni_TExzCK-xVpbGIxGSuhf3ekwS0smc"
 #           password: "{{ password }}"

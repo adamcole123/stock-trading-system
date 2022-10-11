@@ -14,9 +14,10 @@ export default class GetUserDetailsUseCase implements IGetUserDetailsUseCase{
 	async invoke(userDto: IUserDto): Promise<IUserDto> {
 		let user = await this.userReadOnlyRepository.fetch({ username: userDto.username });
 
-		user.password = undefined;
-		user.cardDetails = undefined;
-		user.reports = undefined;
+		delete user.password;
+		delete user.cardDetails;
+		delete user.reports;
+
 		return Promise.resolve(user);
 	}
 

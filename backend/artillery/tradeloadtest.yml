@@ -9,10 +9,10 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 5
-      rampTo: 35
+      rampTo: 15
       name: Ramp up load
     - duration: 600
-      arrivalRate: 35
+      arrivalRate: 15
       name: Sustained load
   payload:
     - path: "trades.csv"
@@ -36,148 +36,193 @@ config:
         - "close"
         - "gains"
         - "latest_trade"
+before:
+  flow:
+    - log: 'Get user auth tokens'
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "user"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "user_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "user_data"
+        headers: 
+          Cookie: "{{ user_token }}"
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "admin"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "admin_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "admin_data"
+        headers: 
+          Cookie: "{{ admin_token }}"
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "broker"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "broker_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "broker_data"
+        headers: 
+          Cookie: "{{ broker_token }}"
+    - get:
+        url: "/stock/getOne?symbol={{ symbol }}"
+        capture:
+          json: "$.id"
+          as: "captured_stock_id"
+        headers: 
+          Cookie: "{{ admin_token }}"
+    - post:
+        url: "/user/signin"
+        json: 
+          username: "loadtest"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "loadtest_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "loadtest_data"
+        headers: 
+          Cookie: "{{ loadtest_token }}"
+    - loop:
+      - post:
+          url: "/trade/buystocks"
+          json: 
+            user_id: "{{ loadtest_data.id }}"
+            stock_id: "{{ captured_stock_id }}"
+            stock_amount: "1"
+          headers: 
+            Cookie: "{{ loadtest_token }}"
+      count: 10
+    - log: "stock id: {{ captured_stock_id }}"
+    - log: "loadtest token: {{ loadtest_token }}"
+    - log: "user token: {{ user_token }}"
+    - log: "admin token: {{ admin_token }}"
+    - log: "broker token: {{ broker_token }}"
 scenarios:
 - name: "Create a new trade that is of trade_type 'Buy'"
   flow:
   - post:
-      url: "/user/signin"
+      url: "/trade/buystocks"
       json: 
-        username: "admin"
-        password: "Password1!"
-      jar: true
-  - get:
-      url: "/stock/getOne?symbol={{ symbol }}"
-      capture:
-        json: "$.id"
-        as: "captured_stock_id"
-      jar: true
-  - get:
-      url: "/user/signout"
+        user_id: "{{ user_data.id }}"
+        stock_id: "{{ captured_stock_id }}"
+        stock_amount: "1"
+      headers: 
+        Cookie: "{{ user_token }}"
+- name: "Create a new trade that is of trade_type 'Sell'"
+  flow:
   - post:
-      url: "/user/signin"
+      url: "/trade/buystocks"
       json: 
-        username: "user"
-        password: "Password1!"
-      jar: true
-  - post:
-      url: "/user/validate"
+        user_id: "{{ user_data.id }}"
+        stock_id: "{{ captured_stock_id }}"
+        stock_amount: "1"
       capture:
-        json: "$.id"
-        as: "captured_user_id"
-      jar: true
-  # - post:
-  #     url: "/trade/buystocks"
-  #     json: 
-  #       user_id: "{{ captured_user_id }}"
-  #       stock_id: "{{ captured_stock_id }}"
-  #       stock_amount: "1"
-  # - get:
-  #     url: "/signout"
-# - name: "Create a new trade that is of trade_type 'Sell'"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/user/validate"
-#         capture:
-#           json: "$.id"
-#           as: "id"
-#         cookie:
-#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-#         jar: true
-#     - post:
-#         url: "/trade/sellstocks"
-#         json: 
-#           user_id: "{{ id }}"
-#           stock_id: "{{ stock_id }}"
-#           stock_amount: "{{ stock_amount }}"
-#         cookie:
-#           token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-# - name: "Get transactions of the signed in user"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/user/validate"
-#         capture:
-#           json: "$.id"
-#           as: "id"
-#         jar: true
-#     - post:
-#         url: "/trade/usertransactions"
-#         json: 
-#           user_id: "{{ id }}"
-#           stock_id: "{{ stock_id }}"
-# - name: "Convert a trade status from Pending to Approved when signed in as a Broker"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "broker"
-#           password: "Password1!"
-#         jar: true
-#     - get:
-#         url: "/trade/pendingtrades"
-#         capture:
-#           json: "$.[0].id"
-#           as: "id"
-#         jar: true
-#     - post:
-#         url: "/trade/approvetrade"
-#         json: 
-#          id: "{{ id }}"
-# - name: "Convert a trade status from Pending to Rejected when signed in as a Broker"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "broker"
-#           password: "Password1!"
-#         jar: true    
-#     - get:
-#         url: "/trade/pendingtrades"
-#         capture:
-#           json: "$.results[0].id"
-#           as: "id"
-#         jar: true
-#     - post:
-#         url: "/trade/rejecttrade"
-#         json: 
-#           id: "{{ id }}"
-# - name: "Get a list of trades that share the same user and the same stock"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "broker"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/user/validate"
-#         capture:
-#           json: "$.id"
-#           as: "id"
-#         jar: true
-#     - post:
-#         url: "/trade/stocktradesforuser"
-#         json: 
-#          user_id: "{{ id }}"
-#          stock_id: "{{ stockid }}"
-# - name: "Get a list of trades that share the same user and the same stock"
-#   flow:
-#     - post:
-#         url: "/user/signin"
-#         json: 
-#           username: "user"
-#           password: "Password1!"
-#         jar: true
-#     - post:
-#         url: "/trade/portfolio"
+        json: "$"
+        as: "trade"
+      headers: 
+        Cookie: "{{ user_token }}"
+  - post:
+      url: "/trade/approvetrade"
+      json: 
+        id: "{{ trade.id }}"
+      headers: 
+        Cookie: "{{ broker_token }}"
+  - post:
+      url: "/trade/sellstocks"
+      json: 
+        user_id: "{{ user_data.id }}"
+        stock_id: "{{ captured_stock_id }}"
+        stock_amount: "1"
+      headers: 
+        Cookie: "{{ user_token }}"
+- name: "Get transactions of the signed in user"
+  flow:
+    - get:
+        url: "/trade/usertransactions?user_id={{ loadtest_data.id }}&stock_id={{ captured_stock_id }}"
+        headers: 
+          Cookie: "{{ loadtest_token }}"
+- name: "Convert a trade status from Pending to Approved when signed in as a Broker"
+  flow:
+    - post:
+        url: "/trade/buystocks"
+        json: 
+          user_id: "{{ user_data.id }}"
+          stock_id: "{{ captured_stock_id }}"
+          stock_amount: "1"
+        capture:
+          json: "$"
+          as: "approvetrade"
+        headers: 
+          Cookie: "{{ user_token }}"
+    - post:
+        url: "/trade/approvetrade"
+        json: 
+         id: "{{ approvetrade.id }}"
+        headers: 
+          Cookie: "{{ broker_token }}"
+- name: "Convert a trade status from Pending to Rejected when signed in as a Broker"
+  flow:  
+    - post:
+        url: "/trade/buystocks"
+        json: 
+          user_id: "{{ user_data.id }}"
+          stock_id: "{{ captured_stock_id }}"
+          stock_amount: "1"
+        capture:
+          json: "$"
+          as: "rejecttrade"
+        headers: 
+          Cookie: "{{ user_token }}"
+    - post:
+        url: "/trade/rejecttrade"
+        json: 
+         id: "{{ rejecttrade.id }}"
+        headers: 
+          Cookie: "{{ broker_token }}"
+- name: "Get a list of trades that share the same user and the same stock"
+  flow:
+    - post:
+        url: "/trade/buystocks"
+        json: 
+          user_id: "{{ user_data.id }}"
+          stock_id: "{{ captured_stock_id }}"
+          stock_amount: "1"
+        headers: 
+          Cookie: "{{ user_token }}"
+    - post:
+        url: "/trade/stocktradesforuser"
+        json: 
+         user_id: "{{ user_data.id }}"
+         stock_id: "{{ captured_stock_id }}"
+        headers: 
+          Cookie: "{{ user_token }}"
+- name: "Get user portfolio"
+  flow:
+    - get:
+        url: "/trade/portfolio"
+        headers: 
+          Cookie: "{{ user_token }}"

@@ -37,33 +37,29 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 
 	async invoke(tradeDto: ITradeDto): Promise<ITradeDto> {
 		return new Promise(async (resolve, reject) => {
-			//First i need to check
-			// Does the user have enough credit for the trade?
-			// Does the stock have enough volume?
-			let user: any;
-			let stock: any;
-			let tradeObj: any;
-			let userTrades: ITradeDto[];
+			try{
+				var [stock, user] = await this.readFromDb(tradeDto);
+			} catch (e) {
+				return reject('Could not retreive the necessary data for trade')
+			}
 
-			Promise.all([
-				stock = await this.stockReadOnlyRepository.fetch({id: tradeDto.stock_id}),
-				user = await this.userReadOnlyRepository.fetch({
-					id: tradeDto.user_id
-				}),
-				userTrades = await this.tradeReadOnlyRepository.fetch({ user_id: tradeDto.user_id })
-			])
+			if(user.credit === undefined || user.credit === null){
+				return reject('Could not get user data.');
+			}
+
+			if(stock[0].value === undefined || stock[0].value === null){
+				return reject('Could not get stock data.');
+			}
 
 			if(!(user.credit >= stock[0].value * tradeDto.stock_amount!)){
 				return reject('User does not have enough credit for this trade');
 			}
-
 			let lowestValueStock: IStockDto[] = await this.stockReadOnlyRepository.fetch({}, {
 				lowestValue: true,
 			})
-
-			if(calcNumUserOwnedStock(userTrades) < 1 && lowestValueStock[0].value! > user.credit){
+			if(await this.tradeReadOnlyRepository.getNumUserTotalOwnedStock({ user_id: tradeDto.user_id }) < 1 && lowestValueStock[0].value! > user.credit!){
 				try {
-					await this.userWriteOnlyRepository.edit(user.username, {
+					await this.userWriteOnlyRepository.edit(user.username!, {
 						isDeleted: true,
 					}, {});
 					
@@ -73,45 +69,62 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 				}
 			}
 
-			if(!(stock[0].volume >= tradeDto.stock_amount!)){
+			if(!(stock[0].volume! >= tradeDto.stock_amount!)){
 				return reject('Stock does not have enough volume for this trade');
 			}
 
+			
 			try{
-				Promise.all([
-					await this.userWriteOnlyRepository.edit(user.username!, {
-						credit: -tradeDto.stock_amount! * stock[0].value!
-					}, {
-						tradeMode: true
-					}),
-					await this.stockWriteOnlyRepository.edit({
-						id: tradeDto.stock_id,
-						volume: -tradeDto.stock_amount!,
-						latest_trade: new Date
-					}, {
-						tradeMode: true
-					}),
-					tradeObj = await this.tradeWriteOnlyRepository.create({
-						stock_id: tradeDto.stock_id,
-						user_id: tradeDto.user_id,
-						stock_amount: tradeDto.stock_amount,
-						stock_value: stock[0].value,
-						time_of_trade: new Date(),
-						trade_type: 'Buy'
-					})
-				]);
+				let [edittedUser, edittedStock, tradeObj] = await this.writeToDb(user, tradeDto, stock);
 				resolve(tradeObj);
 			} catch (e) {
 				return reject(e);
 			}
 		});
 	}
+	
+	private async readFromDb(tradeDto: ITradeDto) {
+		return Promise.all([
+			this.stockReadOnlyRepository.fetch({
+				id: tradeDto.stock_id
+			}),
+			this.userReadOnlyRepository.fetch({
+				id: tradeDto.user_id
+			})
+		]);
+	}
+
+	private async writeToDb(user: any, tradeDto: ITradeDto, stock: any) {
+		return Promise.all([
+			this.userWriteOnlyRepository.edit(user.username!, {
+				credit: -tradeDto.stock_amount! * stock[0].value!
+			}, {
+				tradeMode: true
+			}),
+			this.stockWriteOnlyRepository.edit({
+				id: tradeDto.stock_id,
+				volume: -tradeDto.stock_amount!,
+				latest_trade: new Date
+			}, {
+				tradeMode: true
+			}),
+			this.tradeWriteOnlyRepository.create({
+				stock_id: tradeDto.stock_id,
+				user_id: tradeDto.user_id,
+				stock_amount: tradeDto.stock_amount,
+				stock_value: stock[0].value,
+				time_of_trade: new Date(),
+				trade_type: 'Buy'
+			})
+		]);
+	}
+
+	private async calcNumUserOwnedStock(userTrades: ITradeDto[]): Promise<number> {
+		return userTrades.reduce((acc, currValue) => {
+			return currValue.trade_type === "Buy" && currValue.trade_status === "Approved" ? 
+					acc + currValue.stock_amount! : 
+					acc - currValue.stock_amount!; 
+		}, 0)
+	}
 }
 
-function calcNumUserOwnedStock(userTrades: ITradeDto[]): number {
-	return userTrades.reduce((acc, currValue) => {
-		return currValue.trade_type === "Buy" && currValue.trade_status === "Approved" ? 
-				acc + currValue.stock_amount! : 
-				acc - currValue.stock_amount!; 
-	}, 0)
-}

@@ -69,14 +69,12 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 						report_data: report_type === 'CSV' ? jsonToCsv.convertArrayOfObjects(plainStockObjs, columnDef) : plainStockObjs.reduce((acc: string, obj: XmlElement | XmlElement[] | undefined) => {return acc + `<stock>${toXML(obj)}</stock>`}, initialValue) + "</stocks>",
 						report_type: report_type
 					}
+
+					let userEditted = await this.userWriteOnlyRepository.addReport(user.username!, newReport)
 	
-					user.reports?.push(newReport);
-	
-					let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
-						reports: user.reports
-					}, {})
-	
-					resolve(userEditted);
+					if(userEditted){
+						resolve(userEditted);
+					}
 				} catch (error) {
 					reject("Cannot add report to user: " + error);
 				}
@@ -91,7 +89,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 			try {
 				let companyDetails: IStockDto[];
 	
-				companyDetails = await this.stockReadOnlyRepository.fetch(stock_ids.map(stock_id => { return { id: stock_id }}), { order: { orderBy: 'name', orderDirection: ascending ? 1 : 0 }})
+				companyDetails = await this.stockReadOnlyRepository.fetch(stock_ids.map(stock_id => { return { id: stock_id }}), { order: { orderBy: 'name', orderDirection: ascending ? 1 : 0 }});
 
 				companyDetails = companyDetails.map(stock => {
 					return {
@@ -132,11 +130,7 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 				}
 				let user = await this.userReadOnlyRepository.fetch({id: user_id})
 	
-				user.reports?.push(newReport);
-	
-				let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
-					reports: user.reports
-				}, {})
+				let userEditted = await this.userWriteOnlyRepository.addReport(user.username!, newReport)
 	
 				resolve(userEditted);
 			} catch (error) {
@@ -154,17 +148,15 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 				if(filteredUserTransactions.length < 1) {
 					let user = await this.userReadOnlyRepository.fetch({id: user_id})
 			
-					user.reports?.push({
+					let newReport = {
 						report_date: new Date(),
 						report_data:"",
 						report_type: report_type
-					});
+					};
 		
-					let returnUser = await this.userWriteOnlyRepository.edit(user.username!, {
-						reports: user.reports
-					}, {})
+					let userEditted = await this.userWriteOnlyRepository.addReport(user.username!, newReport)
 					
-					return resolve(returnUser);
+					return resolve(userEditted);
 				}
 				let numSharesPerCompany: any[] = await this.groupByCompany(filteredUserTransactions);
 
@@ -205,14 +197,9 @@ export default class GenerateReportUseCase implements IGenerateReportUseCase {
 						}
 						let user = await this.userReadOnlyRepository.fetch({id: user_id})
 			
-						user.reports?.push(newReport);
-			
-						let userEditted = await this.userWriteOnlyRepository.edit(user.username!, {
-							reports: user.reports
-						}, {})
+						let userEditted = await this.userWriteOnlyRepository.addReport(user.username!, newReport)
 			
 						resolve(userEditted);
-	
 					})
 					.catch(err => {
 						reject(err);

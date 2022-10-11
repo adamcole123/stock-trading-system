@@ -2,8 +2,6 @@ import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnl
 import IUserDto from '../../usecases/data_tranfer_objects/IUserDto';
 import User from './User';
 import { injectable } from 'inversify';
-import cardDetailsSchema from './CardDetailsSchema';
-import { QueryWithHelpers } from 'mongoose';
 
 @injectable()
 export default class UserReadRepository implements IUserReadOnlyRepository {
@@ -28,13 +26,14 @@ export default class UserReadRepository implements IUserReadOnlyRepository {
 			} catch (err) {
 				return reject("No user with that username, id, or email exists");
 			}
-
-
-			if (user! !== null) {
+			
+			
+			if (user !== null) {
 				let transformedUser = this.transformMongoose(user._doc);
+				if(transformedUser.reports !== null || transformedUser.reports !== undefined) transformedUser.reports = transformedUser.reports!.map((report: any) => this.transformMongoose(report._doc));
 				return resolve(transformedUser);
 			}
-
+			
 			return reject("Could not find user");
 		})
 	}

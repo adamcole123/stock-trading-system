@@ -101,20 +101,6 @@ if(process.env.GMAILBOOL === "true") {
   sendRealEmailUseCase = new SendEmailUseCase();
 }
 
-// create server
-server.setErrorConfig((app: express.Application) => {
-  app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
-    console.log(prettyjson.render(err));
-
-    sendRealEmailUseCase.invoke({
-      to: ["admin@stock-trading-system.com"],
-      from: "error-logger@stock-trading-system.com",
-      subject: "An error was caused in the system",
-      bodyText: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace \n${err.stack}`,
-      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with details:<br />Name: <pre>${err.name}</pre><br />Message: <pre>${err.message}</pre><br />Stack trace: <pre>${err.stack}</pre>`
-    })
-  });
-});
 server.setConfig((app: express.Application) => {
   app.use('/api-docs/swagger', express.static('swagger'));
   app.use(
@@ -157,6 +143,20 @@ server.setConfig((app: express.Application) => {
     })
   );
   app.use(morgan("dev"));
+});
+
+server.setErrorConfig((app: express.Application) => {
+  app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
+    console.log(prettyjson.render(err));
+
+    sendRealEmailUseCase.invoke({
+      to: ["admin@stock-trading-system.com"],
+      from: "error-logger@stock-trading-system.com",
+      subject: "An error was caused in the system",
+      bodyText: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace \n${err.stack}`,
+      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with details:<br />Name: <pre>${err.name}</pre><br />Message: <pre>${err.message}</pre><br />Stack trace: <pre>${err.stack}</pre><br />Full object:<br /><pre>${prettyjson.render(err)}</pre>`
+    })
+  });
 });
 
 process.on('uncaughtExceptionMonitor', err => {
@@ -276,7 +276,7 @@ async function initDb(): Promise<boolean> {
     if (!(await User.exists({
       email: "admin@stocktradingsystem.com"
     }))) {
-      console.warn('Generating admin account');
+      console.warn('Generating base accounts');
       await User.create({
         "username": "admin",
         "email": "admin@stocktradingsystem.com",
@@ -312,6 +312,19 @@ async function initDb(): Promise<boolean> {
         "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
         "credit": 50000,
         "role": "Broker",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+      await User.create({
+        "username": "loadtest",
+        "email": "loadtest@stocktradingsystem.com",
+        "firstName": "Load",
+        "lastName": "Test",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "User",
         "isDeleted": false,
         "cardDetails": [],
         "activationDate": new Date(),

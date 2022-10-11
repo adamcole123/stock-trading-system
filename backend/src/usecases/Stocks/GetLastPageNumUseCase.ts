@@ -13,7 +13,7 @@ export default class GetLastPageNumUseCase implements IGetLastPageNumUseCase {
 	}
 
 	async invoke(limit: number): Promise<number> {
-		let count = this.stockReadOnlyRepository.count()
+		let count = await this.stockReadOnlyRepository.count()
 		return Math.ceil(count / limit);
 	}
 

@@ -3,7 +3,7 @@ import StockWriteOptions from '../../application/repositories/StockWriteOptions'
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import Stock from './Stock';
 import { injectable } from 'inversify';
-import TradeMode from '../../application/repositories/TradeMode';
+import { Console } from 'console';
 
 @injectable()
 export default class StockWriteRepository implements IStockWriteOnlyRepository {
@@ -52,7 +52,7 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 					if (stockDto.volume) {
 						if(stock!.volume === null)
 							stock!.volume = 0
-						stock!.volume = options?.tradeMode ? stock!.volume! + stockDto!.volume! : stockDto.volume;
+						stock!.volume = options?.tradeMode ? Number(stock!.volume!) + Number(stockDto!.volume!) : stockDto.volume;
 					}
 
 					if (stockDto.close)
@@ -75,11 +75,17 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 
 					stock!.save();
 
-					resolve(<IStockDto[]>[stock]);
+					resolve(<IStockDto[]>[this.transformMongoose(stock)]);
 				})
 				.catch(err => {
 					reject(err);
 				})
 		})
+
+	}
+	
+	private transformMongoose(doc: any): IStockDto {
+		const { _id, ...rest } = doc;
+		return { id: _id.toString(), ...rest };
 	}
 }

@@ -8,13 +8,15 @@ const tradeSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 		required: true,
-		unique: false
+		unique: false,
+		index: true
 	},
 	stock_id: {
 		type: Schema.Types.ObjectId,
 		ref: 'Stock',
 		required: true,
-		unique: false
+		unique: false,
+		index: true
 	},
 	stock_amount: {
 		type: Number,
@@ -41,5 +43,6 @@ const tradeSchema = new Schema({
 		required: true,
 	}
 }, { collection: 'trades' })
+
 
 export default tradeSchema;

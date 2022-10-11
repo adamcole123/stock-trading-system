@@ -39,7 +39,7 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 			if(userDto!.password && foundUser!.password) {
 				passwordCheck = await this.bc.compare(userDto.password, foundUser!.password);
 			}
-			
+
 			if(passwordCheck){
 				foundUser!.password = '';
 

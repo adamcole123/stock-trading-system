@@ -3,9 +3,7 @@ import IStockDto from './../../usecases/data_tranfer_objects/IStockDto';
 import StockOptions from './../../application/repositories/StockReadOptions';
 import IStockReadOnlyRepository from './../../application/repositories/IStockReadOnlyRepository';
 import Stock from './Stock';
-import { resolve } from 'dns';
 import StockFetchQuery from './StockFetchQuery';
-import StockType from './../../usecases/entities/Stock';
 import { SortOrder } from 'mongoose';
 
 @injectable()
@@ -20,9 +18,9 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 			let returnData: IStockDto[] = [];
 			await Stock.find({})
 				.then(res => {
-						res.forEach(stock => {
-							returnData.push(this.transformMongoose(stock))
-						});
+					res.forEach((stock: any) => {
+						returnData.push(this.transformMongoose(stock._doc))
+					});
 				})
 				.catch(error => {
 					reject(error);
@@ -34,10 +32,11 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 
 	fetch(stockDto?: IStockDto | IStockDto[], options: StockOptions = {}): Promise<IStockDto[]> {
 		return new Promise(async (resolve, reject) => {
+			let result: IStockDto[];
+
 			try {
 				let sort: { [key: string]: SortOrder | { $meta: "textScore"; }; } = {};
 
-				let result: IStockDto[];
 
 				if (options.order !== undefined &&
 					options.order.orderBy !== undefined &&
@@ -52,8 +51,8 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 						.limit(options?.limit!)
 						.exec();
 
-					result = stocks.map(stock => {
-						return this.transformMongoose(stock);
+					result = stocks.map((stock: any) => {
+						return this.transformMongoose(stock._doc);
 					})
 				} else {
 					let query = this.buildQuery(stockDto!, options);
@@ -63,12 +62,12 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 					}
 
 					result = await this.queryDB(options, query, sort, stockDto);
-
-					return resolve(result);
 				}
 			} catch (e) {
 				return reject(e);
 			}
+			
+			return resolve(result);
 		})
 	}
 
@@ -79,25 +78,31 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 	): Promise<IStockDto[]> {
 		let queryResult: IStockDto[] = [];
 		try {
+			if (options.lowestValue) {
+				let returnStock: any = await Stock.find().sort({ value: 1 }).limit(1);
+				returnStock = returnStock[0];
+				return [this.transformMongoose(returnStock._doc)]
+			}
 			if (options?.page) {
 				let stocks = await Stock
 					.find({ ...query })
 					.sort(sort)
 					.skip((options?.page * options.limit!) - (options.limit!))
 					.limit(options.limit!);
-				stocks.forEach((stock: any) => {
-					queryResult.push(this.transformMongoose(stock._doc));
+				queryResult = stocks.map((stock: any) => {
+					return this.transformMongoose(stock._doc);
 				});
 			} else {
 				if (stockDto?.id) {
-					queryResult.push(this.transformMongoose(await Stock.findOne({ _id: stockDto.id }).exec() as IStockDto));
+					let stock: any = await Stock.findOne({ _id: stockDto.id }).exec();
+					queryResult.push(this.transformMongoose(stock._doc));
 				} else {
 					let stocks = await Stock.find(query)
 						.sort(sort)
 						.limit(options?.limit!)
 						.exec();
-					stocks.forEach((stock: any) => {
-						queryResult.push(this.transformMongoose(stock._doc));
+					queryResult = stocks.map((stock: any) => {
+						return this.transformMongoose(stock._doc);
 					});
 				}
 			}

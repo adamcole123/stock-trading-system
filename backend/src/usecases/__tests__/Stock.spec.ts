@@ -2491,51 +2491,7 @@ describe('Stock Use Cases', () => {
 		let lastPageNum: number;
 		const stockReadOnlyRepository = mock<IStockReadOnlyRepository>();
 
-		mock(stockReadOnlyRepository).fetchAll.mockResolvedValue([{
-			id: 'teststockid',
-			symbol: 'teststocksymbol',
-			name: 'teststockname',
-			volume: 50000,
-			value: 45.6,
-			open: 41.2,
-			close: 39.6
-		},
-		{
-			id: 'teststockid',
-			symbol: 'teststocksymbol',
-			name: 'teststockname',
-			volume: 50000,
-			value: 45.6,
-			open: 41.2,
-			close: 39.6
-		},
-		{
-			id: 'teststockid',
-			symbol: 'teststocksymbol',
-			name: 'teststockname',
-			volume: 50000,
-			value: 45.6,
-			open: 41.2,
-			close: 39.6
-		},
-		{
-			id: 'teststockid',
-			symbol: 'teststocksymbol',
-			name: 'teststockname',
-			volume: 50000,
-			value: 45.6,
-			open: 41.2,
-			close: 39.6
-		},
-		{
-			id: 'teststockid',
-			symbol: 'teststocksymbol',
-			name: 'teststockname',
-			volume: 50000,
-			value: 45.6,
-			open: 41.2,
-			close: 39.6
-		}]);
+		mock(stockReadOnlyRepository).count.mockResolvedValue(5);
 
 		getLastPageNumUseCase = new GetLastPageNumUseCase(stockReadOnlyRepository);
 

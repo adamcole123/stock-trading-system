@@ -194,6 +194,9 @@ describe("Trade Tests", () => {
 			time_of_trade: newDate,
 		})
 
+		mock(tradeReadOnlyRepository).getNumUserSpecificOwnedStock.mockResolvedValue(2)
+		mock(tradeReadOnlyRepository).getNumUserTotalOwnedStock.mockResolvedValue(2)
+
 		mock(userWriteOnlyRepository).edit.mockResolvedValue({
 			username: "test1_username",
 			email: "test1email@test.com",
@@ -222,9 +225,8 @@ describe("Trade Tests", () => {
 		//Assert
 		expect(tradeDto).toStrictEqual(expect.objectContaining({
 			"stock_amount": 50,
-			"stock_id": "testid1",
+			"stock_id": "teststock1id",
 			"stock_value": 956.9,
-			"trade_type": "Sell",
 			"user_id": "testid1",
 		}));
 	})

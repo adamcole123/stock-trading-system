@@ -6,7 +6,11 @@
   "scripts": {
     "test": "vitest --coverage",
     "start": "tsc --build && node build/src/index.js",
-    "loadtest": "artillery run artillery/tradeloadtest.yml --output artillery/trade-load-report.json && artillery report artillery/trade-load-report.json"
+    "tradeloadtest": "artillery run artillery/tradeloadtest.yml --output artillery/trade-load-report.json && artillery report artillery/trade-load-report.json",
+    "userloadtest": "artillery run artillery/userloadtest.yml --output artillery/user-load-report.json && artillery report artillery/user-load-report.json",
+    "stockloadtest": "artillery run artillery/stockloadtest.yml --output artillery/stock-load-report.json && artillery report artillery/stock-load-report.json",
+    "reportloadtest": "artillery run artillery/reportloadtest.yml --output artillery/report-load-report.json && artillery report artillery/report-load-report.json",
+    "loadtest": "concurrently --kill-others \"npm run tradeloadtest\" \"npm run userloadtest\" \"npm run stockloadtest\" \"npm run reportloadtest\""
   },
   "repository": {
     "type": "git",
@@ -74,6 +78,7 @@
     "@types/supertest": "^2.0.11",
     "@vitest/ui": "^0.22.1",
     "c8": "^7.11.3",
+    "concurrently": "^7.4.0",
     "google-auth-library": "^8.0.2",
     "jest": "^27.4.7",
     "jest-mock-extended": "^2.0.4",
