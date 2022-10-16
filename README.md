@@ -16,6 +16,7 @@ This app is set up to run on a docker container. First install docker and then r
 URLs:
 - `localhost:8080`: application frontend
 - `localhost:1234`: database UI
+- `http://localhost:8000/api-docs/swagger/#/`: API documentation via Swagger
 
 If you wish to install the application manually without docker then follow 'Local Setup'
 ## Local Setup
