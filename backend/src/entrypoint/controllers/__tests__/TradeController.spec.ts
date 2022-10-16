@@ -21,7 +21,7 @@ import IEncrypter from '../../../infrastructure/IEncrypter';
 import Encrypter from '../../../infrastructure/Encrypter';
 
 const container = new Container();
-describe('Report Controller Tests', () => {
+describe('Tradee Controller Tests', () => {
 	let controller: TradeController;
 
 	let stockWriteOnlyRepository: IStockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
@@ -263,7 +263,12 @@ describe('Report Controller Tests', () => {
 		mock(tradeReadOnlyRepository).fetch.mockResolvedValue(
 			[{
 				id: "test_id",
-				stock_id: "teststockid1",
+				stock_id: {
+					id: "teststock1id",
+					name: "teststock1name",
+					value: 956.9,
+					symbol: "teststock1symbol"
+				},
 				user_id: "testuserid1",
 				stock_amount: 2,
 				stock_value: 242.08,
@@ -287,14 +292,17 @@ describe('Report Controller Tests', () => {
 		await controller.userTransactions(requestObj, responseObj);
 
 		expect(responseObj._getJSONData()[0]).toStrictEqual(expect.objectContaining({
+			"current_value": 956.9,
 			"id": "test_id",
 			"stock_amount": 2,
-			"stock_id": "teststockid1",
+			"stock_id": "teststock1id",
+			"stock_name": "teststock1name",
 			"stock_value": 242.08,
+			"symbol": "teststock1symbol",
 			"time_of_trade": "2000-01-01T00:00:00.000Z",
 			"trade_status": "Pending",
 			"trade_type": "Buy",
-			"user_id": "testuserid1"
+			"user_id": "testuserid1",
 		}));
 	})
 
@@ -456,6 +464,9 @@ describe('Report Controller Tests', () => {
 			}]
 		);
 
+		mock(tradeReadOnlyRepository).getNumUserSpecificOwnedStock.mockResolvedValue(2);
+		mock(tradeReadOnlyRepository).getNumUserTotalOwnedStock.mockResolvedValue(2);
+
 		mock(tradeWriteOnlyRepository).create.mockResolvedValue(
 			{
 				id: "test_id",
@@ -505,11 +516,14 @@ describe('Report Controller Tests', () => {
 		await controller.sellStock(requestObj, responseObj);
 
 		expect(responseObj._getJSONData()).toStrictEqual(expect.objectContaining({
+			"id": "test_id",
 			"stock_amount": 2,
-			"stock_id": "teststockid",
-			"stock_value": 600,
+			"stock_id": "teststockid1",
+			"stock_value": 242.08,
+			"time_of_trade": "2000-01-01T00:00:00.000Z",
+			"trade_status": "Pending",
 			"trade_type": "Sell",
-			"user_id": "testid",
+			"user_id": "testuserid1",
 		}));
 	});
 

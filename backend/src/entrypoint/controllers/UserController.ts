@@ -177,7 +177,7 @@ export default class UserController implements interfaces.Controller {
 		},
 	})
 	@httpGet('/all')
-	public async getAllUsers(@request() req: express.Request, @response() res: express.Response) {
+	public getAllUsers(@request() req: express.Request, @response() res: express.Response) {
 		let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 		let verified = <IUserDto>jwt.verify(req.cookies.token, jwtSecretKey!);
@@ -186,7 +186,7 @@ export default class UserController implements interfaces.Controller {
 			return res.status(401).json('User is not an admin');
 		}
 
-		return await this.getAllUsersUseCase.invoke()
+		return this.getAllUsersUseCase.invoke()
 			.then((userDtos: IUserDto[]) => {
 				res.status(200).json(userDtos);
 			})
@@ -265,14 +265,14 @@ export default class UserController implements interfaces.Controller {
 		},
 	})
 	@httpPost('/signin')
-	public async signInUser(@request() req: express.Request, @response() res: express.Response) {
+	public signInUser(@request() req: express.Request, @response() res: express.Response) {
 		if (!req.body.username || !req.body.password) {
 			return res.status(400).json('Username or password not inputted');
 		}
 
 		let reqUser: IUserDto = req.body;
 
-		return await this.userSignInUseCase.invoke(reqUser)
+		return this.userSignInUseCase.invoke(reqUser)
 			.then((userDto: IUserDto) => {
 				let jwtSecretKey = process.env.JWT_SECRET_KEY;
 
@@ -430,6 +430,7 @@ export default class UserController implements interfaces.Controller {
 					.json("New card added successfully");
 			})
 			.catch((err: Error) => {
+				console.log(err)
 				res.status(500).json(err)
 			});
 	}
@@ -467,7 +468,9 @@ export default class UserController implements interfaces.Controller {
 				})
 					.status(200).json(validated)
 			})
-			.catch((err: Error) => res.status(401).send(err));
+			.catch((err: Error) => {
+				res.status(401).send(err)
+			});
 	}
 
 	@ApiOperationPost({
@@ -537,6 +540,7 @@ export default class UserController implements interfaces.Controller {
 						res.status(200).json("Email sent to confirm changes!");
 					})
 					.catch((err) => {
+						console.log("User edit error: ", err);
 						res.status(500).json(err);
 					})
 			}
@@ -547,7 +551,9 @@ export default class UserController implements interfaces.Controller {
 			.then((userDto: IUserDto) => {
 				res.status(200).json(userDto)
 			})
-			.catch((err: Error) => res.status(400).json(err));
+			.catch((err: Error) => {
+				res.status(400).json(err);
+			});
 	}
 
 	@ApiOperationGet({

@@ -5,11 +5,18 @@ var Schema = mongoose.Schema;
 
 const stockSchema = new Schema<Stock>({
 	id: mongoose.SchemaTypes.ObjectId,
-	symbol: String,
-	name: String,
+	symbol: {
+		type: String,
+		index: true
+	},
+	name: {
+		type: String,
+		index: true
+	},
 	value: {
 		type: Double,
 		min: 0,
+		index: true
 	},
 	volume: Number,
 	open: {

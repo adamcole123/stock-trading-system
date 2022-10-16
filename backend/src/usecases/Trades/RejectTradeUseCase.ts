@@ -35,36 +35,37 @@ export default class RejectTradeUseCase implements IRejectTradeUseCase {
 	}
 	async invoke(tradeDto: ITradeDto): Promise<ITradeDto> {
 		try{
-			let trade: ITradeDto[];
-			let stock: IStockDto[];
-			let user: IUserDto;
+			let trade: ITradeDto[] = await this.tradeReadOnlyRepository.fetch({ id: tradeDto.id });
 
-			Promise.all([
-				trade = await this.tradeReadOnlyRepository.fetch({ id: tradeDto.id }),
-				stock = await this.stockReadOnlyRepository.fetch({id: trade[0].stock_id}),
-				user = await this.userReadOnlyRepository.fetch({
+			if(!trade){
+				return Promise.reject('Could not get trades')
+			}
+
+			let [stock, user] = await Promise.all([
+				this.stockReadOnlyRepository.fetch({id: trade[0].stock_id}),
+				this.userReadOnlyRepository.fetch({
 					id: trade[0].user_id
 				})
 			])
 
-			Promise.all([
-				await this.userWriteOnlyRepository.edit(user.username!, {
+			let [edittedUser, edittedStock, edittedTrade] = await Promise.all([
+				this.userWriteOnlyRepository.edit(user.username!, {
 					credit: trade[0].trade_type === "Buy" ? trade[0].stock_amount! * stock[0].value! : -trade[0].stock_amount! * stock[0].value!
 				}, {
 					tradeMode: true
 				}),
-				await this.stockWriteOnlyRepository.edit({
+				this.stockWriteOnlyRepository.edit({
 					id: trade[0].stock_id,
 					volume: trade[0].trade_type === "Buy" ? trade[0].stock_amount! : -trade[0].stock_amount!,
 				}, {
 					tradeMode: true
 				}),
-				trade[0] = await this.tradeWriteOnlyRepository.edit({
+				this.tradeWriteOnlyRepository.edit({
 					id: tradeDto.id,
 					trade_status: "Rejected"
 				})
 			]);
-			return Promise.resolve(trade[0]);
+			return Promise.resolve(edittedTrade);
 		} catch (e) {
 			return Promise.reject(e);
 		}

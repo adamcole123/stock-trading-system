@@ -28,8 +28,8 @@ export default class ValidateUserTokenUseCase implements IValidateUserTokenUseCa
 
 			let jwtSecretKey = process.env.JWT_SECRET_KEY;
 		
-			try {		
-				let verified = <IUserDto>jwt.verify(token, jwtSecretKey!);
+			try {
+				let verified = <IUserDto>jwt.verify(token, jwtSecretKey!)
 				if(verified){
 					verified = await this.userReadOnlyRepository.fetch({id: verified.id})
 

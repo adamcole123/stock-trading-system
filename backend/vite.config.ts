@@ -4,9 +4,9 @@ import EnvironmentPlugin from 'vite-plugin-environment';
 
 export default defineConfig({
   test: {
-    environment: 'jsdom',
+    environment: 'node',
     coverage: {
-      reporter: ['text', 'html'],
+      reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
         'src/SocketController.ts',

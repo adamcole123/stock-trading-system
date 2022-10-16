@@ -4,6 +4,7 @@ import ITradeDto from '../../usecases/data_tranfer_objects/ITradeDto';
 import Trade from './Trade';
 import TradeReadOptions from './TradeReadOptions';
 import { SortOrder } from 'mongoose';
+import IStockDto from 'src/usecases/data_tranfer_objects/IStockDto';
 
 @injectable()
 export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository {
@@ -12,24 +13,18 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 	}
 	fetch(tradeDto: ITradeDto, populateStocks?: boolean, options?: TradeReadOptions): Promise<ITradeDto[]> {
 		return new Promise(async (resolve, reject) => {
-			if(tradeDto.id !== undefined){
-				try{
-					let foundTrade;
-					if(populateStocks) foundTrade = await Trade.findById(tradeDto.id).populate('stock_id');
-					else foundTrade = await Trade.findById(tradeDto.id);
-	
-					if(foundTrade === null || foundTrade === undefined)
+			if (tradeDto.id !== undefined) {
+				try {
+					let foundTrade: any;
+					if (populateStocks) {
+						foundTrade = await Trade.findById(tradeDto.id).populate('stock_id');
+					} else {
+						foundTrade = await Trade.findById(tradeDto.id);
+					}
+
+					if (foundTrade === null || foundTrade === undefined)
 						throw new Error('Could not find Trade')
-					resolve([{
-						id: foundTrade._id.toString(),
-						stock_id: foundTrade.stock_id.toString(),
-						user_id: foundTrade.user_id.toString(),
-						stock_value: foundTrade.stock_value,
-						stock_amount: foundTrade.stock_amount,
-						time_of_trade: foundTrade.time_of_trade,
-						trade_type: foundTrade.trade_type,
-						trade_status: foundTrade.trade_status
-					}]);
+					resolve([this.transformMongoose(foundTrade._doc)]);
 				} catch (e) {
 					reject(e);
 				}
@@ -37,20 +32,11 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 
 			try {
 				let foundTrades;
-				if(populateStocks) foundTrades = await Trade.find(tradeDto).populate('stock_id');
+				if (populateStocks) foundTrades = await Trade.find(tradeDto).populate('stock_id');
 				else foundTrades = await Trade.find(tradeDto).sort(options?.orderBy as { [key: string]: SortOrder | { $meta: "textScore"; }; });
 
-				foundTrades = foundTrades.map(trade => {
-					return {
-						id: trade._id.toString(),
-						stock_id: trade.stock_id.toString(),
-						user_id: trade.user_id.toString(),
-						stock_value: trade.stock_value,
-						stock_amount: trade.stock_amount,
-						time_of_trade: trade.time_of_trade,
-						trade_type: trade.trade_type,
-						trade_status: trade.trade_status
-					}
+				foundTrades = foundTrades.map((trade: any) => {
+					return this.transformMongoose(trade._doc)
 				})
 				resolve(foundTrades);
 			} catch (e) {
@@ -59,4 +45,27 @@ export default class TradeReadOnlyRepository implements ITradeReadOnlyRepository
 		})
 	}
 
+	async getNumUserTotalOwnedStock(tradeDto: ITradeDto): Promise<number> {
+		let numApprovedBuys = await Trade.countDocuments({ user_id: tradeDto.user_id, trade_type: "Buy", trade_status: "Approved"});
+		let totalTrades = await Trade.countDocuments({ user_id: tradeDto.user_id});
+
+		return numApprovedBuys-totalTrades;
+	}
+
+	async getNumUserSpecificOwnedStock(tradeDto: ITradeDto): Promise<number> {
+		let buyTrades = await Trade.countDocuments({ user_id: tradeDto.user_id, trade_status: "Approved", stock_id: tradeDto.stock_id, trade_type: "Buy" });
+		let sellTrades = await Trade.countDocuments({ user_id: tradeDto.user_id, trade_status: "Approved", stock_id: tradeDto.stock_id, trade_type: "Sell" });
+
+		return buyTrades-sellTrades;
+	}
+
+	private transformMongoose(doc: any): ITradeDto {
+		const { _id, ...rest } = doc;
+		return { 
+			id: _id.toString(),
+			stock_id: rest.stock_id.toString(),
+			user_id: rest.user_id.toString(), 
+			...rest 
+		};
+	}
 }

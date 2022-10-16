@@ -70,6 +70,7 @@ export default class ReportController implements interfaces.Controller {
 				res.status(200).json(userDto)
 			})
 			.catch((err: Error) => {
+				console.log(err);
 				res.status(500).json(err);
 			});
 	}
@@ -116,6 +117,7 @@ export default class ReportController implements interfaces.Controller {
 				res.status(200).json(userDto)
 			})
 			.catch((err: Error) => {
+				console.log(err)
 				res.status(500).json(err);
 			});
 	}
@@ -172,6 +174,7 @@ export default class ReportController implements interfaces.Controller {
 				res.status(200).json(userDto)
 			})
 			.catch((err: Error) => {
+				console.log(err)
 				res.status(500).json(err);
 			});
 	}
@@ -216,6 +219,7 @@ export default class ReportController implements interfaces.Controller {
 				res.send(filedata);
 			})
 			.catch((err: Error) => {
+				console.log(err);
 				res.status(500).json(err);
 			});
 	}

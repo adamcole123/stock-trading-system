@@ -3,7 +3,6 @@ import StockWriteOptions from '../../application/repositories/StockWriteOptions'
 import IStockDto from '../../usecases/data_tranfer_objects/IStockDto';
 import Stock from './Stock';
 import { injectable } from 'inversify';
-import TradeMode from '../../application/repositories/TradeMode';
 
 @injectable()
 export default class StockWriteRepository implements IStockWriteOnlyRepository {
@@ -43,37 +42,60 @@ export default class StockWriteRepository implements IStockWriteOnlyRepository {
 			// 	resolve(await Stock.find({}));
 			// }
 
-			await Stock.findById(stockDto.id)
-				.then(stock => {
-					if (stockDto.volume) {
-						stock!.volume = options?.tradeMode ? stock!.volume! + stockDto!.volume! : stockDto.volume;
+
+			// if (stockDto.close)
+			// 	stock!.close = stockDto.close;
+
+			// if (stockDto.open)
+			// 	stock!.open = stockDto.open;
+
+			// if (stockDto.name)
+			// 	stock!.name = stockDto.name;
+
+			// if (stockDto.symbol)
+			// 	stock!.symbol = stockDto.symbol;
+
+			// if (stockDto.value)
+			// 	stock!.value = stockDto.value;
+
+			// if (stockDto.latest_trade)
+			// 	stock!.latest_trade = stockDto.latest_trade;
+
+			try {
+				if (stockDto.volume && options?.tradeMode) {
+					let dtoWithTrade: any = {
+						...stockDto, 
+						$inc: {
+							volume: stockDto.volume
+						}
 					}
+					delete dtoWithTrade.volume
+					await this.executeEdit(dtoWithTrade, reject, resolve);
+				} else {
+					await this.executeEdit(stockDto, reject, resolve);
+				}
+			} catch (error) {
+				return reject("Couldn't edit stock:" + error);
+			}
+		});
+	}
 
-					if (stockDto.close)
-						stock!.close = stockDto.close;
+	private async executeEdit(stockDto: IStockDto, reject: (reason?: any) => void, resolve: (value: IStockDto[] | PromiseLike<IStockDto[]>) => void) {
+		await Stock.findOneAndUpdate(stockDto.id ? { _id: stockDto.id } : { symbol: stockDto.symbol }, stockDto, { new: true })
+			.then(async (stock: any) => {
+				if (stock === null) {
+					return reject('Could not find stock');
+				}
 
-					if (stockDto.open)
-						stock!.open = stockDto.open;
+				return resolve(<IStockDto[]>[this.transformMongoose(stock._doc)]);
+			})
+			.catch(err => {
+				return reject(err);
+			});
+	}
 
-					if (stockDto.name)
-						stock!.name = stockDto.name;
-
-					if (stockDto.symbol)
-						stock!.symbol = stockDto.symbol;
-
-					if (stockDto.value)
-						stock!.value = stockDto.value;
-
-					if (stockDto.latest_trade)
-						stock!.latest_trade = stockDto.latest_trade;
-
-					stock!.save();
-
-					resolve(<IStockDto[]>[stock]);
-				})
-				.catch(err => {
-					reject(err);
-				})
-		})
+	private transformMongoose(doc: any): IStockDto {
+		const { _id, ...rest } = doc;
+		return { id: _id.toString(), ...rest };
 	}
 }

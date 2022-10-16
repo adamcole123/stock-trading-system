@@ -1,5 +1,5 @@
 config:
-  target: 'http://localhost:8000'
+  target: "http://localhost:8000"
   phases:
     # - duration: 10
     #   arrivalRate: 5
@@ -9,69 +9,106 @@ config:
       name: Warm up
     - duration: 120
       arrivalRate: 5
-      rampTo: 50
+      rampTo: 35
       name: Ramp up load
     - duration: 600
-      arrivalRate: 50
+      arrivalRate: 35
       name: Sustained load
   payload:
     - path: "reportOptions.csv"
       fields:
-      - "ascending"
-      - "reportFormat"
+        - "ascending"
+        - "reportFormat"
+before:
+  flow:
+    - log: "Get user auth tokens"
+    - post:
+        url: "/user/signin"
+        json:
+          username: "user"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "user_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "user_data"
+        headers:
+          Cookie: "{{ user_token }}"
+    - get:
+        url: "/report/company-values?reportformat={{ reportFormat }}&ascending={{ ascending }}"
+        capture:
+          json: "$.reports[0]._id"
+          as: "report_id"
+        headers:
+          Cookie: "{{ user_token }}"
+    - post:
+        url: "/user/signin"
+        json:
+          username: "admin"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "admin_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "admin_data"
+        headers:
+          Cookie: "{{ admin_token }}"
+    - post:
+        url: "/user/signin"
+        json:
+          username: "broker"
+          password: "Password1!"
+        capture:
+          header: "set-cookie"
+          as: "broker_token"
+    - post:
+        url: "/user/validate"
+        capture:
+          json: "$"
+          as: "broker_data"
+        headers:
+          Cookie: "{{ broker_token }}"
+    - log: "report: {{ report_id }}"
+    - log: "user token: {{ user_token }}"
+    - log: "admin token: {{ admin_token }}"
+    - log: "broker token: {{ broker_token }}"
 scenarios:
-- name: "Generate company values report"
-  flow:
-    - get:
-        url: "/report/company-values"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        json: 
-          reportformat: "{{ reportFormat }}"
-          ascending: "{{ ascending }}"
-- name: "Generate held shares report"
-  flow:
-    - get:
-        url: "/report/held-shares"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        json: 
-          reportformat: "{{ reportFormat }}"
-          ascending: "{{ ascending }}"
-- name: "Generate company details report"
-  flow:
-    - get:
-        url: "/stock/getOne"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        json: 
-          symbol: "C"
-        capture:
-          json: "$.id"
-          as: "stockid"
-    - get:
-        url: "/report/company-details"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        json: 
-          stockids: "[{{ stockid }}]"
-          reportformat: "{{ reportFormat }}"
-          ascending: "{{ ascending }}"
-- name: "Generate and download report"
-  flow:
-    - get:
-        url: "/report/company-values"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        json: 
-          reportformat: "{{ reportFormat }}"
-          ascending: "{{ ascending }}"
-        capture:
-          json: "$.id"
-          as: "reportid"
-    - get:
-        url: "/download"
-        cookie:
-          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZlMTNmZTA4YmIzNzYyY2U1YTdjYiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHN0b2NrdHJhZGluZ3N5c3RlbS5jb20iLCJmaXJzdE5hbWUiOiJBZG1pbiIsImxhc3ROYW1lIjoiQWNjb3VudCIsInJlcG9ydHMiOltdLCJjcmVkaXQiOjUwMDAwLCJyb2xlIjoiQWRtaW4iLCJpc0RlbGV0ZWQiOmZhbHNlLCJjYXJkRGV0YWlscyI6W10sInBhc3N3b3JkIjoiIiwiYWN0aXZhdGlvbkRhdGUiOiIyMDIyLTA4LTA3VDE1OjU4OjU1LjYwM1oiLCJpYXQiOjE2NTk4OTI5NjMsImV4cCI6MTY2MDQ5Nzc2M30.xTl-ipbyrno7HBbNVcNhoVA8NNflfXfHlbF-a7ox7Xs"
-        json: 
-          report_id: "{{ reportid }}"
+  - name: "Generate company values report"
+    flow:
+      - get:
+          url: "/report/company-values?reportformat={{ reportFormat }}&ascending={{ ascending }}"
+          headers:
+            Cookie: "{{ user_token }}"
+  - name: "Generate held shares report"
+    flow:
+      - get:
+          url: "/report/held-shares?reportformat={{ reportFormat }}&ascending={{ ascending }}"
+          headers:
+            Cookie: "{{ user_token }}"
+  - name: "Generate company details report"
+    flow:
+      - get:
+          url: "/stock/getOne?symbol=C"
+          # json:
+          #   symbol: "C"
+          capture:
+            json: "$.id"
+            as: "stockid"
+          headers:
+            Cookie: "{{ admin_token }}"
+      - get:
+          url: "/report/company-details?stockids[]={{ stockid }}&reportformat={{ reportFormat }}&ascending={{ ascending }}"
+          headers:
+            Cookie: "{{ user_token }}"
+  - name: "Generate and download report"
+    flow:
+      - get:
+          url: "/report/download?report_id={{ report_id }}&user_id={{ user_data.id }}"
+          headers:
+            Cookie: "{{ user_token }}"

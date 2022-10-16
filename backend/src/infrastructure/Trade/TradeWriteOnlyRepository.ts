@@ -7,20 +7,11 @@ import Trade from './Trade';
 export default class TradeWriteOnlyRepository implements ITradeWriteOnlyRepository {
 	async edit(tradeDto: ITradeDto): Promise<ITradeDto> {
 		try {
-			let edittedTrade = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status })
+			let edittedTrade: any = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status }, { new: true })
 			
 			if(edittedTrade === null || edittedTrade === undefined)
 				throw new Error('Could not edit trade')
-			return Promise.resolve({
-				id: edittedTrade.id.toString(),
-				trade_status: edittedTrade.trade_status,
-				stock_amount: edittedTrade.stock_amount,
-				stock_id: edittedTrade.stock_id.toString(),
-				stock_value: edittedTrade.stock_value,
-				time_of_trade: edittedTrade.time_of_trade,
-				trade_type: edittedTrade.trade_type,
-				user_id: edittedTrade.user_id.toString(),
-			})
+			return Promise.resolve(this.transformMongoose(edittedTrade._doc))
 		} catch (error) {
 			return Promise.reject('Could not edit trade: ' + error);
 		}
@@ -40,15 +31,20 @@ export default class TradeWriteOnlyRepository implements ITradeWriteOnlyReposito
 				newTrade
 					.save()
 					.then((trade: any) => {
-						resolve(trade);
+						return resolve(this.transformMongoose(trade._doc));
 					})
 					.catch((err: any) => {
 						console.log(err);
-						reject(err);
+						return reject(err);
 					});
 			} catch (err) {
-				reject(err);
+				return reject(err);
 			}
 		});
+	}
+
+	private transformMongoose(doc: any): ITradeDto {
+		const { _id, ...rest } = doc;
+		return { id: _id.toString(), user_id: rest.user_id.toString(), stock_id: rest.stock_id.toString(), ...rest };
 	}
 }

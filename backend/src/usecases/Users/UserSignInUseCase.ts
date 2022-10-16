@@ -1,5 +1,5 @@
 import IUserSignInUseCase from './IUserSignInUseCase';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import IUserReadOnlyRepository from '../../application/repositories/IUserReadOnlyRepository';
 import IUserDto from '../data_tranfer_objects/IUserDto';
 
@@ -37,9 +37,9 @@ export default class UserSignInUseCase implements IUserSignInUseCase{
 			let passwordCheck;
 			
 			if(userDto!.password && foundUser!.password) {
-				passwordCheck = this.bc.compareSync(userDto.password, foundUser!.password);
+				passwordCheck = await this.bc.compare(userDto.password, foundUser!.password);
 			}
-			
+
 			if(passwordCheck){
 				foundUser!.password = '';
 

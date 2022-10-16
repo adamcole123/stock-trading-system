@@ -13,6 +13,8 @@ import { SocketController } from "./SocketController";
 import * as swagger from "swagger-express-ts";
 import * as SocketIO from 'socket.io';
 import fs from 'fs';
+import https from 'https';
+
 import moment from "moment";
 import modelDefinitions from './ModelDefinitions';
 import prettyjson from 'prettyjson';
@@ -42,6 +44,8 @@ import Stock from './infrastructure/Stock/Stock';
 // set up container
 const container = new Container();
 
+https.globalAgent.maxSockets = 1000;
+
 var allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8081',
@@ -61,7 +65,7 @@ import "./entrypoint/controllers/ReportController";
 
 import CreateStockUseCase from './usecases/Stocks/CreateStockUseCase';
 import User from "./infrastructure/User/User";
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import SendRealEmailUseCase from "./usecases/Email/SendRealEmailUseCase";
 import SendEmailUseCase from "./usecases/Email/SendEmailUseCase";
 import morgan from "morgan";
@@ -97,20 +101,6 @@ if(process.env.GMAILBOOL === "true") {
   sendRealEmailUseCase = new SendEmailUseCase();
 }
 
-// create server
-server.setErrorConfig((app: express.Application) => {
-  app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
-    console.log(prettyjson.render(err));
-
-    sendRealEmailUseCase.invoke({
-      to: ["admin@stock-trading-system.com"],
-      from: "error-logger@stock-trading-system.com",
-      subject: "An error was caused in the system",
-      bodyText: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace \n${err.stack}`,
-      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with details:<br />Name: <pre>${err.name}</pre><br />Message: <pre>${err.message}</pre><br />Stack trace: <pre>${err.stack}</pre>`
-    })
-  });
-});
 server.setConfig((app: express.Application) => {
   app.use('/api-docs/swagger', express.static('swagger'));
   app.use(
@@ -152,7 +142,21 @@ server.setConfig((app: express.Application) => {
       },
     })
   );
-  app.use(morgan("tiny"));
+  app.use(morgan("dev"));
+});
+
+server.setErrorConfig((app: express.Application) => {
+  app.use((err: Error, req: express.Request, res: express.Response, nextFunc: express.NextFunction) => {
+    console.log(prettyjson.render(err));
+
+    sendRealEmailUseCase.invoke({
+      to: ["admin@stock-trading-system.com"],
+      from: "error-logger@stock-trading-system.com",
+      subject: "An error was caused in the system",
+      bodyText: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with stack trace \n${err.stack}`,
+      bodyHtml: `Error occured at ${moment(new Date()).format("DD/MM/YYYY hh:mm:ss")} with details:<br />Name: <pre>${err.name}</pre><br />Message: <pre>${err.message}</pre><br />Stack trace: <pre>${err.stack}</pre><br />Full object:<br /><pre>${prettyjson.render(err)}</pre>`
+    })
+  });
 });
 
 process.on('uncaughtExceptionMonitor', err => {
@@ -239,14 +243,14 @@ async function changeStockValues() {
 
     let now = new Date();
 
-    if (now.getHours() === 8 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+    if (now.getHours() === 8 && now.getMinutes() === 0 && (now.getSeconds() === 0 || now.getSeconds() === 1 || now.getSeconds() === 2)) {
       await Stock.updateMany(
         {},
         [{ $set: { open: "$value" } }]
       )
     }
 
-    if (now.getHours() === 16 && now.getMinutes() === 30 && now.getSeconds() === 0) {
+    if (now.getHours() === 16 && now.getMinutes() === 30 && (now.getSeconds() === 0 || now.getSeconds() === 1 || now.getSeconds() === 2)) {
       await Stock.updateMany(
         {},
         [{ $set: { close: "$value" } }]
@@ -272,7 +276,7 @@ async function initDb(): Promise<boolean> {
     if (!(await User.exists({
       email: "admin@stocktradingsystem.com"
     }))) {
-      console.warn('Generating admin account');
+      console.warn('Generating base accounts');
       await User.create({
         "username": "admin",
         "email": "admin@stocktradingsystem.com",
@@ -308,6 +312,19 @@ async function initDb(): Promise<boolean> {
         "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
         "credit": 50000,
         "role": "Broker",
+        "isDeleted": false,
+        "cardDetails": [],
+        "activationDate": new Date(),
+      })
+      await User.create({
+        "username": "loadtest",
+        "email": "loadtest@stocktradingsystem.com",
+        "firstName": "Load",
+        "lastName": "Test",
+        "reports": [],
+        "password": await bcrypt.hashSync("Password1!", await bcrypt.genSalt(10)),
+        "credit": 50000,
+        "role": "User",
         "isDeleted": false,
         "cardDetails": [],
         "activationDate": new Date(),
