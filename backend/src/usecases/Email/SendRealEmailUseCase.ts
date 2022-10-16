@@ -13,6 +13,10 @@ export default class SendReadEmailUseCase implements ISendEmailUseCase {
 	 *
 	 */
 	constructor() {
+		console.log('Email User', process.env.EMAIL_USER);
+		console.log('Client Id', process.env.CLIENT_ID);
+		console.log('Client Secret', process.env.CLIENT_SECRET);
+		console.log('Refresh Token', process.env.REFRESH_TOKEN);
 		dotenv.config();
 		this.oAuth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.REDIRECT_URI);
 		this.oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
@@ -20,6 +24,7 @@ export default class SendReadEmailUseCase implements ISendEmailUseCase {
 	async invoke(email: IEmailDto): Promise<IEmailDto> {
 		try {
 			const accessToken = (await this.oAuth2Client.getAccessToken()).token;
+
 
 			const transporter = nodemailer.createTransport({
 				host: 'smtp.gmail.com',
@@ -49,7 +54,8 @@ export default class SendReadEmailUseCase implements ISendEmailUseCase {
 
 			return Promise.resolve(email);
 		} catch (error: any) {
-			return Promise.reject(error);
+			console.log(error);
+			return Promise.reject('Could not send validation email.');
 		}
 	}
 }
