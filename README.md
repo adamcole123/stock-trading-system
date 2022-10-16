@@ -15,7 +15,7 @@ This app is set up to run on a docker container. First install docker and then r
 
 URLs:
 - `localhost:8080`: application frontend
-- `localhost:8888`: database UI
+- `localhost:1234`: database UI
 
 If you wish to install the application manaully without docker then follow 'Local Setup'
 ## Local Setup
