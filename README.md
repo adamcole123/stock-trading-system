@@ -17,7 +17,7 @@ URLs:
 - `localhost:8080`: application frontend
 - `localhost:1234`: database UI
 
-If you wish to install the application manaully without docker then follow 'Local Setup'
+If you wish to install the application manually without docker then follow 'Local Setup'
 ## Local Setup
 
 ### Before 'getting the app running'!
