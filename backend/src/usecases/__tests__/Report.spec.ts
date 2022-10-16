@@ -57,7 +57,7 @@ describe('Report tests', () => {
 			password: bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			username: "test1_username", 
 			email: "test1email@test.com", 
 			firstName: "test1fname", 
@@ -174,7 +174,7 @@ describe('Report tests', () => {
 			password: bcrypt.hashSync('test1password', bcrypt.genSaltSync(10))
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			username: "test1_username", 
 			email: "test1email@test.com", 
 			firstName: "test1fname", 
@@ -349,7 +349,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -475,7 +475,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -601,7 +601,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -727,7 +727,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -853,7 +853,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -979,7 +979,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -1105,7 +1105,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",
@@ -1168,7 +1168,7 @@ describe('Report tests', () => {
 			cardDetails: []
 		})
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue({
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue({
 			id: "testid",
 			username: "testusername",
 			email: "testemail@test.com",

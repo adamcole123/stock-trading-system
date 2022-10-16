@@ -255,21 +255,36 @@ describe("Trade Tests", () => {
 		mock(tradeReadOnlyRepository).fetch.mockResolvedValue([
 			{
 				user_id: "testid1",
-				stock_id: "teststock1id",
+				stock_id: {
+					id: "teststock1id",
+					name: "teststock1name",
+					value: 956.9,
+					symbol: "teststock1symbol"
+				},
 				stock_amount: 50,
 				stock_value: 345.6,
 				time_of_trade: newDate,
 			},
 			{
 				user_id: "testid1",
-				stock_id: "teststock12id",
+				stock_id: {
+					id: "teststock12id",
+					name: "teststock1name",
+					value: 956.9,
+					symbol: "teststock1symbol"
+				},
 				stock_amount: 6,
 				stock_value: 87,
 				time_of_trade: newDate,
 			},
 			{
 				user_id: "testid1",
-				stock_id: "teststock14id",
+				stock_id: {
+					id: "teststock14id",
+					name: "teststock1name",
+					value: 956.9,
+					symbol: "teststock1symbol"
+				},
 				stock_amount: 4,
 				stock_value: 67,
 				time_of_trade: newDate,

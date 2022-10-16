@@ -500,7 +500,7 @@ describe('UserController Tests', () => {
 				token: jwt.sign({ role: "Admin" }, process.env.JWT_SECRET_KEY!)
 			}
 		});
-		mock(userWriteOnlyRepository).edit.mockResolvedValue(
+		mock(userWriteOnlyRepository).addNewCard.mockResolvedValue(
 			{
 				username: "newusername",
 				firstName: "newfirstname",

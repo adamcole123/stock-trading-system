@@ -7,7 +7,7 @@ import Trade from './Trade';
 export default class TradeWriteOnlyRepository implements ITradeWriteOnlyRepository {
 	async edit(tradeDto: ITradeDto): Promise<ITradeDto> {
 		try {
-			let edittedTrade: any = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status })
+			let edittedTrade: any = await Trade.findOneAndUpdate({ _id: tradeDto.id }, { trade_status: tradeDto.trade_status }, { new: true })
 			
 			if(edittedTrade === null || edittedTrade === undefined)
 				throw new Error('Could not edit trade')
@@ -31,14 +31,14 @@ export default class TradeWriteOnlyRepository implements ITradeWriteOnlyReposito
 				newTrade
 					.save()
 					.then((trade: any) => {
-						resolve(this.transformMongoose(trade._doc));
+						return resolve(this.transformMongoose(trade._doc));
 					})
 					.catch((err: any) => {
 						console.log(err);
-						reject(err);
+						return reject(err);
 					});
 			} catch (err) {
-				reject(err);
+				return reject(err);
 			}
 		});
 	}

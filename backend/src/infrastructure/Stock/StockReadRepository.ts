@@ -88,9 +88,10 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 					.find({ ...query })
 					.sort(sort)
 					.skip((options?.page * options.limit!) - (options.limit!))
-					.limit(options.limit!);
+					.limit(options.limit!)
+					.lean();
 				queryResult = stocks.map((stock: any) => {
-					return this.transformMongoose(stock._doc);
+					return this.transformMongoose(stock);
 				});
 			} else {
 				if (stockDto?.id) {
@@ -100,9 +101,10 @@ export default class StockReadRepository implements IStockReadOnlyRepository {
 					let stocks = await Stock.find(query)
 						.sort(sort)
 						.limit(options?.limit!)
+						.lean()
 						.exec();
 					queryResult = stocks.map((stock: any) => {
-						return this.transformMongoose(stock._doc);
+						return this.transformMongoose(stock);
 					});
 				}
 			}

@@ -15,6 +15,8 @@ import ICreateStockUseCase from '../Stocks/ICreateStockUseCase';
 import CreateStockUseCase from '../Stocks/CreateStockUseCase';
 import GetLastPageNumUseCase from '../Stocks/GetLastPageNumUseCase';
 import IGetLastPageNumUseCase from '../Stocks/IGetLastPageNumUseCase';
+import EditStockUseCase from '../Stocks/EditStockUseCase';
+import IEditStockUseCase from '../Stocks/IEditStockUseCase';
 
 describe('Stock Use Cases', () => {
 	let stockReadOnlyRepository: IStockReadOnlyRepository = mock<IStockReadOnlyRepository>();
@@ -2477,6 +2479,41 @@ describe('Stock Use Cases', () => {
 		expect(stockDto).toStrictEqual({
 			id: 'testaddedstockid',
 			symbol: 'testaddedstocksymbol',
+			name: 'testaddedstockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		});
+	})
+	it('Edit stock use case', async () => {
+		// Arrangei
+		let editStockUseCase: IEditStockUseCase;
+		let stockDto: IStockDto[];
+		const stockWriteOnlyRepository = mock<IStockWriteOnlyRepository>();
+
+		mock(stockWriteOnlyRepository).edit.mockResolvedValue([{
+			id: 'testaddedstockid',
+			symbol: 'TEST',
+			name: 'testaddedstockname',
+			volume: 50000,
+			value: 45.6,
+			open: 41.2,
+			close: 39.6
+		}]);
+
+		editStockUseCase = new EditStockUseCase(stockWriteOnlyRepository);
+
+		// Act
+		stockDto = await editStockUseCase.invoke({
+			symbol: 'TEST',
+			name: 'testaddedstockname',
+		});
+
+		// Assert
+		expect(stockDto[0]).toStrictEqual({
+			id: 'testaddedstockid',
+			symbol: 'TEST',
 			name: 'testaddedstockname',
 			volume: 50000,
 			value: 45.6,

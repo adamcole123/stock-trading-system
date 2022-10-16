@@ -70,6 +70,13 @@ before:
         headers: 
           Cookie: "{{ admin_token }}"
     - post:
+        url: "/user/edit"
+        json:
+          username: "user"
+          credit: 100000000
+        headers: 
+          Cookie: "{{ admin_token }}"
+    - post:
         url: "/user/signin"
         json: 
           username: "broker"

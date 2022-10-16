@@ -76,7 +76,7 @@ export default class BuyStocksUseCase implements IBuyStocksUseCase {
 			
 			try{
 				let [edittedUser, edittedStock, tradeObj] = await this.writeToDb(user, tradeDto, stock);
-				resolve(tradeObj);
+				return resolve(tradeObj);
 			} catch (e) {
 				return reject(e);
 			}

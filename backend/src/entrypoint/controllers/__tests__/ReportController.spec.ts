@@ -72,7 +72,7 @@ describe('Report Controller Tests', () => {
 			}
 		)
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue(
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue(
 			{
 				username: "newusername",
 				firstName: "newfirstname",
@@ -185,7 +185,7 @@ describe('Report Controller Tests', () => {
 			}
 		)
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue(
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue(
 			{
 				username: "newusername",
 				firstName: "newfirstname",
@@ -412,7 +412,7 @@ describe('Report Controller Tests', () => {
 			trade_type: "Sell"
 		}])
 
-		mock(userWriteOnlyRepository).edit.mockResolvedValue(
+		mock(userWriteOnlyRepository).addReport.mockResolvedValue(
 			{
 				username: "newusername",
 				firstName: "newfirstname",

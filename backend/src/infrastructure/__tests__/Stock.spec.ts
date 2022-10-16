@@ -70,20 +70,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+	
 	it('fetch gainsMode 0', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -92,20 +87,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch gainsMode 1', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -114,20 +104,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch gainsMode 2', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -136,20 +121,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch valueMode 0', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -158,20 +138,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch valueMode 1', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -180,20 +155,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch valueMode 2', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -202,20 +172,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch volumeMode 0', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -224,20 +189,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch volumeMode 1', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -246,20 +206,15 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('fetch volumeMode 2', async () => {
 		let stocks = await stockReadRepository.fetch({
 			name: "test1name",
@@ -268,27 +223,22 @@ describe('Stock Repositories', () => {
 
 		let stock = stocks[0];
 
-		expect(stock.close).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
-		expect(stock.gains).toStrictEqual(expect.objectContaining({ "value": 10 }));
+		expect(stock.close).toStrictEqual(500);
+		expect(stock.gains).toStrictEqual(10);
 		expect(stock.name).toEqual("test1name");
-		expect(stock.open).toStrictEqual(expect.objectContaining({
-			value: 490
-		}));
+		expect(stock.open).toStrictEqual(490);
 		expect(stock.symbol).toEqual("TEST1SYMBOL");
-		expect(stock.value).toStrictEqual(expect.objectContaining({
-			value: 500
-		}));
+		expect(stock.value).toStrictEqual(500);
 		expect(stock.volume).toEqual(500);
-	})
+	});
+
 	it('edit', async () => {
 		let stockToTest = await Stock.findOne({ name: "test1name" });
 		let newDate = new Date();
 		let stock = await stockWriteRepository.edit({
 			id: stockToTest!._id.toString(),
 			value: 5000,
-			symbol: "TST",
+			symbol: "TEST1SYMBOL",
 			latest_trade: newDate,
 			name: "NewTest",
 			open: 50000,
@@ -308,11 +258,12 @@ describe('Stock Repositories', () => {
 			"_bsontype": "Double",
 			"value": 40000
 		}));
-		expect(stock[0].symbol).toEqual("TST");
+		expect(stock[0].symbol).toEqual("TEST1SYMBOL");
 		expect(stock[0].name).toEqual("NewTest");
 		expect(stock[0].volume).toEqual(20);
 		expect(stock[0].latest_trade).toEqual(newDate);
-	})
+	});
+
 	it('edit with tradeMode', async () => {
 		let stockToTest = await Stock.findOne({ name: "test1name" });
 		let newDate = new Date();
@@ -322,7 +273,7 @@ describe('Stock Repositories', () => {
 		}, { tradeMode: true });
 
 		expect(stock[0].volume).toEqual(520);
-	})
+	});
 	it('create', async () => {
 		let stock = await stockWriteRepository.create({
 			"close": 600,
@@ -341,5 +292,5 @@ describe('Stock Repositories', () => {
 		expect(stock.symbol).toEqual("test2symbol");
 		expect(stock.value).toEqual(600);
 		expect(stock.volume).toEqual(600);
-	})
+	});
 })
