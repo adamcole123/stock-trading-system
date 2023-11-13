@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ azure_deploy ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to ACR
+      uses: docker/login-action@v1
+      with:
+        registry: stocktradingsystem.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Build and push backend Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./backend
+        push: true
+        tags: stocktradingsystem.azurecr.io/stock-trading-system-backend:latest
+
+    - name: Build and push frontend Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./frontend
+        push: true
+        tags: stocktradingsystem.azurecr.io/stock-trading-system-frontend:latest
+        
+    - name: Build and push mongosetup Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./mongo_setup
+        push: true
+        tags: stocktradingsystem.azurecr.io/mongosetup:latest
